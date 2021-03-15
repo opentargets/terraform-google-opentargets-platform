@@ -58,3 +58,7 @@ variable "config_vm_clickhouse_image" {
   description = "Image to use for launching Clickhouse instances"
 }
 
+variable "config_vm_clickhouse_image_project" {
+  description = "Project where to find the instance image to use"
+}
+
