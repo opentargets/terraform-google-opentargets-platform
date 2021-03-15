@@ -88,3 +88,8 @@ variable "config_dns_managed_zone_dns_name" {
   // TODO validation mechanism
 }
 
+variable "config_dns_platform_api_subdomain" {
+  description = "Subdomain for platform API DNS entry"
+  default = "api"
+}
+
