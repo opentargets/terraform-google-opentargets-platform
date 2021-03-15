@@ -29,3 +29,7 @@ variable "config_vm_elastic_search_vcpus" {
   description = "CPU count configuration for the deployed Elastic Search Instances"
 }
 
+variable "config_vm_elastic_search_mem" {
+  description = "RAM configuration for the deployed Elastic Search Instances"
+}
+
