@@ -83,3 +83,8 @@ variable "config_dns_managed_zone_name" {
   // TODO validation mechanism
 }
 
+variable "config_dns_managed_zone_dns_name" {
+  description = "Domain name that is being managed in the given managed DNS zone, a.k.a. Cloud DNS -> Managed Zone -> DNS Name"
+  // TODO validation mechanism
+}
+
