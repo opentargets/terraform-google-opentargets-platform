@@ -98,3 +98,7 @@ variable "config_webapp_repo_name" {
   description = "Web Application repository name"
 }
 
+variable "config_webapp_release" {
+  description = "Release version of the web application to deploy"
+}
+
