@@ -50,3 +50,7 @@ variable "config_vm_clickhouse_vcpus" {
   description = "CPU count for Clickhouse instances"
 }
 
+variable "config_vm_clickhouse_mem" {
+  description = "Amount of memory allocated for Clickhouse instances"
+}
+
