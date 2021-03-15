@@ -78,3 +78,8 @@ variable "config_dns_subdomain_prefix" {
   // TODO validation mechanism
 }
 
+variable "config_dns_managed_zone_name" {
+  description = "Name of the Cloud DNS managed zone to use for DNS changes"
+  // TODO validation mechanism
+}
+
