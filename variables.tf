@@ -94,3 +94,7 @@ variable "config_dns_platform_api_subdomain" {
 }
 
 // --- WEB APP Configuration --- //
+variable "config_webapp_repo_name" {
+  description = "Web Application repository name"
+}
+
