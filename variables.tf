@@ -66,3 +66,4 @@ variable "config_vm_clickhouse_boot_disk_size" {
   description = "Boot disk size to be used in Clickhouse instances"
 }
 
+// --- DNS Configuration --- //
