@@ -20,3 +20,4 @@ variable "config_deployment_regions" {
   description = "A list of regions where to deploy the OT Platform"
 }
 
+// --- ELASTIC SEARCH CONFIGURATION --- //
