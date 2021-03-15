@@ -54,3 +54,7 @@ variable "config_vm_clickhouse_mem" {
   description = "Amount of memory allocated for Clickhouse instances"
 }
 
+variable "config_vm_clickhouse_image" {
+  description = "Image to use for launching Clickhouse instances"
+}
+
