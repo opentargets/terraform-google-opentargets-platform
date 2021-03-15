@@ -62,3 +62,7 @@ variable "config_vm_clickhouse_image_project" {
   description = "Project where to find the instance image to use"
 }
 
+variable "config_vm_clickhouse_boot_disk_size" {
+  description = "Boot disk size to be used in Clickhouse instances"
+}
+
