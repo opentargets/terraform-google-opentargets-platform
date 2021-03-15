@@ -37,3 +37,7 @@ variable "config_vm_elastic_search_image" {
   description = "Disk image to use for the deployed Elastic Search Instances"
 }
 
+variable "config_vm_elastic_search_version" {
+  description = "Elastic search version to deploy"
+}
+
