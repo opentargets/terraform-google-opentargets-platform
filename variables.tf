@@ -25,3 +25,7 @@ variable "config_vm_elastic_search_image_project" {
   description = "This allows to specify a different than deployment project for the deployed Elastic Search Instance image to be used."
 }
 
+variable "config_vm_elastic_search_vcpus" {
+  description = "CPU count configuration for the deployed Elastic Search Instances"
+}
+
