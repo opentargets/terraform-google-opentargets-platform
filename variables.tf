@@ -72,3 +72,9 @@ variable "config_dns_project_id" {
   // TODO validation mechanism
 }
 
+variable "config_dns_subdomain_prefix" {
+  description = "DNS subdomain prefix to use for anything this deployment definition adds to the DNS information"
+  default = null
+  // TODO validation mechanism
+}
+
