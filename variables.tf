@@ -21,3 +21,7 @@ variable "config_deployment_regions" {
 }
 
 // --- ELASTIC SEARCH CONFIGURATION --- //
+variable "config_vm_elastic_search_image_project" {
+  description = "This allows to specify a different than deployment project for the deployed Elastic Search Instance image to be used."
+}
+
