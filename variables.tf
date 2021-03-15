@@ -67,3 +67,8 @@ variable "config_vm_clickhouse_boot_disk_size" {
 }
 
 // --- DNS Configuration --- //
+variable "config_dns_project_id" {
+  description = "Project ID to use when making changes to Cloud DNS service"
+  // TODO validation mechanism
+}
+
