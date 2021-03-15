@@ -69,23 +69,19 @@ variable "config_vm_clickhouse_boot_disk_size" {
 // --- DNS Configuration --- //
 variable "config_dns_project_id" {
   description = "Project ID to use when making changes to Cloud DNS service"
-  // TODO validation mechanism
 }
 
 variable "config_dns_subdomain_prefix" {
   description = "DNS subdomain prefix to use for anything this deployment definition adds to the DNS information"
   default = null
-  // TODO validation mechanism
 }
 
 variable "config_dns_managed_zone_name" {
   description = "Name of the Cloud DNS managed zone to use for DNS changes"
-  // TODO validation mechanism
 }
 
 variable "config_dns_managed_zone_dns_name" {
   description = "Domain name that is being managed in the given managed DNS zone, a.k.a. Cloud DNS -> Managed Zone -> DNS Name"
-  // TODO validation mechanism
 }
 
 variable "config_dns_platform_api_subdomain" {
@@ -104,5 +100,4 @@ variable "config_webapp_release" {
 
 variable "config_webapp_deployment_context_map" {
   description = "A map with values for those parameters that need to be customized in the deployment of the web application, see module defaults as an example"
-  // TODO - Validation mechanism
 }
