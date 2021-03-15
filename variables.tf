@@ -8,3 +8,7 @@ variable "config_gcp_default_region" {
   description = "Default region when not specified in the module"
 }
 
+variable "config_gcp_default_zone" {
+  description = "Default zone when not specified in the module"
+}
+
