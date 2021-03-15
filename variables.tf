@@ -45,3 +45,4 @@ variable "config_vm_elastic_search_boot_disk_size" {
   description = "Boot disk size to use for the deployed Elastic Search Instances"
 }
 
+// --- Clickhouse configuration --- //
