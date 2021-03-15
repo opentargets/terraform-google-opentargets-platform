@@ -93,3 +93,4 @@ variable "config_dns_platform_api_subdomain" {
   default = "api"
 }
 
+// --- WEB APP Configuration --- //
