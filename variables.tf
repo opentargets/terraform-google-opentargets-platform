@@ -46,3 +46,7 @@ variable "config_vm_elastic_search_boot_disk_size" {
 }
 
 // --- Clickhouse configuration --- //
+variable "config_vm_clickhouse_vcpus" {
+  description = "CPU count for Clickhouse instances"
+}
+
