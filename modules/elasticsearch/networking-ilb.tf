@@ -36,3 +36,14 @@ resource "google_compute_region_backend_service" "ilb_backend_service" {
   health_checks = [ google_compute_region_health_check.ilb_backend_healthcheck.id ]
 }
 
+// Health Checks
+resource "google_compute_region_health_check" "ilb_backend_healthcheck" {
+  name = "${var.module_wide_prefix_scope}-ilb-backend-healthcheck"
+  region = var.deployment_region
+
+  tcp_health_check {
+    // Elastic Search Requests Port
+    port = local.elastic_search_port_requests
+  }
+}
+
