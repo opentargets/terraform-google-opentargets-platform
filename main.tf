@@ -16,7 +16,6 @@ provider "google" {
 }
 
 // --- Elastic Search Backend --- //
-
 module "backend_elastic_search" {
   source = "./modules/elasticsearch"
   count = length(var.config_deployment_regions)
@@ -37,6 +36,28 @@ module "backend_elastic_search" {
   vm_elastic_search_image = var.config_vm_elastic_search_image
   vm_elastic_search_image_project = var.config_vm_elastic_search_image_project
   vm_elastic_search_boot_disk_size = var.config_vm_elastic_search_boot_disk_size
+  deployment_region = var.config_deployment_regions[count.index]
+  deployment_target_size = 1
+}
+
+// --- Clickhouse Backend --- //
+module "backend_clickhouse" {
+  source = "./modules/clickhouse"
+  count = length(var.config_deployment_regions)
+
+  depends_on = [ module.vpc_network ]
+  module_wide_prefix_scope = "${var.config_release_name}-ch-${count.index}"
+  network_name = module.vpc_network.network_name
+  network_self_link = module.vpc_network.network_self_link
+  network_subnet_name = local.vpc_network_main_subnet_name
+  network_source_ranges = [ 
+    local.vpc_network_region_subnet_map[var.config_deployment_regions[count.index]].subnet_ip
+  ]
+  vm_clickhouse_vcpus = var.config_vm_clickhouse_vcpus
+  vm_clickhouse_mem = var.config_vm_clickhouse_mem
+  vm_clickhouse_image = var.config_vm_clickhouse_image
+  vm_clickhouse_image_project = var.config_vm_clickhouse_image_project
+  vm_clickhouse_boot_disk_size = var.config_vm_clickhouse_boot_disk_size
   deployment_region = var.config_deployment_regions[count.index]
   deployment_target_size = 1
 }
