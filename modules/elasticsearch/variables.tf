@@ -52,3 +52,7 @@ variable "vm_elastic_search_mem" {
   description = "Amount of memory assigned to every Elastic Search Instance (MiB)"
 }
 
+variable "vm_elastic_search_image" {
+  description = "VM Image to use for Elastic Search instances"
+}
+
