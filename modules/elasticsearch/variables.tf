@@ -44,3 +44,7 @@ variable "vm_elastic_search_version" {
   description = "Elastic Search Docker Image version to use"
 }
 
+variable "vm_elastic_search_vcpus" {
+  description = "CPU count for each Elastic Search Node VM"
+}
+
