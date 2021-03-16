@@ -16,18 +16,18 @@ output "ilb_ip_address" {
 }
 
 // Named Ports --- //
-variable "port_clickhouse_http" {
+output "port_clickhouse_http" {
   value = local.clickhouse_http_req_port
 }
 
-variable "port_clickhouse_http_name" {
+output "port_clickhouse_http_name" {
   value = local.clickhouse_http_req_port_name
 }
 
-variable "port_clickhouse_cli" {
+output "port_clickhouse_cli" {
   value = local.clickhouse_cli_req_port
 }
 
-variable "port_clickhouse_cli_name" {
+output "port_clickhouse_cli_name" {
   value = local.clickhouse_cli_req_port_name
 }
