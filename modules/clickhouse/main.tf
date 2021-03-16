@@ -56,3 +56,16 @@ resource "google_compute_instance_template" "clickhouse_template" {
   // There is no startup script for Clickhouse, it's just available in the image
 }
 
+// --- Health Check definition --- //
+resource "google_compute_health_check" "clickhouse_healthcheck" {
+  name = "${var.module_wide_prefix_scope}-clickhouse-healthcheck"
+  check_interval_sec = 5
+  timeout_sec = 5
+  healthy_threshold = 2
+  unhealthy_threshold = 10
+
+  tcp_health_check {
+    port = local.clickhouse_http_req_port
+  }
+}
+
