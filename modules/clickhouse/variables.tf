@@ -30,3 +30,8 @@ variable "deployment_region" {
 }
 
 // --- Clickhouse Instance Configuration --- //
+variable "vm_firewall_tags" {
+  description = "Additional tags to attach to deployed Clickhouse nodes, by default, no additional tags will be attached"
+  default = [ ]
+}
+
