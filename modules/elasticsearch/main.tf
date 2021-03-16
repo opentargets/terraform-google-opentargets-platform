@@ -64,3 +64,17 @@ resource "google_compute_instance_template" "elastic_search_template" {
   }
 }
 
+// --- Health Check for instance group --- //
+resource "google_compute_health_check" "elastic_search_healthcheck" {
+  name = "${var.module_wide_prefix_scope}-elastic-search-healthcheck"
+  check_interval_sec = 5
+  timeout_sec = 5
+  healthy_threshold = 2
+  unhealthy_threshold = 10
+
+  tcp_health_check {
+    // Elastic Search Requests Port
+    port = local.elastic_search_port_requests
+  }
+}
+
