@@ -29,3 +29,4 @@ variable "deployment_region" {
   description = "Region where resources should be deployed"
 }
 
+// --- Clickhouse Instance Configuration --- //
