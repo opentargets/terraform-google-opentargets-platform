@@ -35,3 +35,8 @@ variable "deployment_target_size" {
   default = 1
 }
 
+variable "vm_firewall_tags" {
+  description = "Additional tags that should be attached to any Elastic Search Node deployed by this module"
+  default = [ ]
+}
+
