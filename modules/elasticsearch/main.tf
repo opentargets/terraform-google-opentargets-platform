@@ -21,3 +21,46 @@ resource "random_string" "random" {
   }
 }
 
+resource "google_compute_instance_template" "elastic_search_template" {
+  name = "${var.module_wide_prefix_scope}-elastic-search-template-${random_string.random.result}"
+  description = "Open Targets Platform Elastic Search node template, release ${var.vm_elastic_search_image}"
+  instance_description = "Open Targets Platform Elastic Search node - release ${var.vm_elastic_search_image}"
+  region = var.deployment_region
+    
+  tags = local.elastic_search_template_tags
+
+  machine_type = local.elastic_search_template_machine_type
+  can_ip_forward = false
+
+  scheduling {
+    automatic_restart = true
+    on_host_maintenance = "MIGRATE"
+  }
+
+  disk {
+    source_image = local.elastic_search_template_source_image
+    auto_delete = true
+    disk_type = "pd-ssd"
+    boot = true
+    mode = "READ_WRITE"
+  }
+
+  network_interface {
+    network = var.network_name
+    subnetwork = var.network_subnet_name
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  metadata = {
+    startup-script = templatefile(
+      "${path.module}/scripts/instance_startup.sh",
+      {
+        ELASTIC_SEARCH_VERSION = var.vm_elastic_search_version
+      }
+    )
+  }
+}
+
