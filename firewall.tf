@@ -42,3 +42,18 @@ resource "google_compute_firewall" "vpc_netfw_allow_https" {
 
   target_tags = [ local.fw_tag_https ]
 }
+
+// Allow SSH traffic to tagged nodes --- //
+resource "google_compute_firewall" "vpc_netfw_allow_ssh" {
+  name = "${module.vpc_network.network_name}-allow-ssh"
+  description = "VPC-wide firewall configuration to allow SSH on VMs tagged accrodingly"
+  network = module.vpc_network.network_self_link
+  depends_on = [ module.vpc_network ]
+
+  allow {
+      protocol = "tcp"
+      ports = [ "22" ]
+  }
+
+  target_tags = [ local.fw_tag_ssh ]
+}
