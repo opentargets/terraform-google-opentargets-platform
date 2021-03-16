@@ -5,3 +5,4 @@
     This module defines a Regional Elasctic Search deployment behind a ILB
 */
 
+// --- Machine Template --- //
