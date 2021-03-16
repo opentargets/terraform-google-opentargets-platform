@@ -25,3 +25,7 @@ variable "network_source_ranges" {
   default = [ "10.0.0.0/9" ]
 }
 
+variable "deployment_region" {
+  description = "Region where resources should be deployed"
+}
+
