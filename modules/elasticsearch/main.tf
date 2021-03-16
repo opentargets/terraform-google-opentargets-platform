@@ -78,3 +78,27 @@ resource "google_compute_health_check" "elastic_search_healthcheck" {
   }
 }
 
+// --- Regional Instance Group Manager --- //
+resource "google_compute_region_instance_group_manager" "regmig_elastic_search" {
+  name = "${var.module_wide_prefix_scope}-regmig-elastic-search"
+  region = var.deployment_region
+  base_instance_name = "${var.module_wide_prefix_scope}-esearch"
+  depends_on = [ 
+      google_compute_instance_template.elastic_search_template,
+      google_compute_firewall.vpc_netfw_elasticsearch_requests,
+      google_compute_firewall.vpc_netfw_elasticsearch_comms
+    ]
+
+  // Instance Template
+  version {
+    instance_template = google_compute_instance_template.elastic_search_template.id
+  }
+
+  target_size = var.deployment_target_size
+
+  auto_healing_policies {
+    health_check = google_compute_health_check.elastic_search_healthcheck.id
+    initial_delay_sec = 300
+  }
+}
+
