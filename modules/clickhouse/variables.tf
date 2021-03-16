@@ -40,3 +40,8 @@ variable "vm_clickhouse_vcpus" {
   default = "4"
 }
 
+variable "vm_clickhouse_mem" {
+  description = "Amount of memory allocated for Clickhouse instances (MiB), default '26624'"
+  default = "26624"
+}
+
