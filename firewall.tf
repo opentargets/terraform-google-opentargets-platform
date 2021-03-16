@@ -28,3 +28,17 @@ resource "google_compute_firewall" "vpc_netfw_allow_http" {
   target_tags = [ local.fw_tag_http ]
 }
 
+// Allow HTTPS traffic to tagged nodes --- //
+resource "google_compute_firewall" "vpc_netfw_allow_https" {
+  name = "${module.vpc_network.network_name}-allow-https"
+  description = "VPC-wide firewall configuration to allow HTTPS on VMs tagged accrodingly"
+  network = module.vpc_network.network_self_link
+  depends_on = [ module.vpc_network ]
+
+  allow {
+      protocol = "tcp"
+      ports = [ "443" ]
+  }
+
+  target_tags = [ local.fw_tag_https ]
+}
