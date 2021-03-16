@@ -20,3 +20,39 @@ resource "random_string" "random" {
   }
 }
 
+resource "google_compute_instance_template" "clickhouse_template" {
+  name = "${var.module_wide_prefix_scope}-clickhouse-template-${random_string.random.result}"
+  description = "Open Targets Platform Clickhouse node template, release ${var.vm_clickhouse_image}"
+  instance_description = "Open Targets Platform Clickhouse node, release ${var.vm_clickhouse_image}"
+  region = var.deployment_region
+  
+  tags = local.clickhouse_template_tags
+
+  machine_type = local.clickhouse_template_machine_type
+  can_ip_forward = false
+
+  scheduling {
+    automatic_restart = true
+    on_host_maintenance = "MIGRATE"
+  }
+
+  disk {
+    source_image = local.clickhouse_template_source_image
+    auto_delete = true
+    disk_type = "pd-ssd"
+    boot = true
+    mode = "READ_WRITE"
+  }
+
+  network_interface {
+    network = var.network_name
+    subnetwork = var.network_subnet_name
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  // There is no startup script for Clickhouse, it's just available in the image
+}
+
