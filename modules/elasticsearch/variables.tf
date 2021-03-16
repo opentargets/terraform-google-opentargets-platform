@@ -60,3 +60,7 @@ variable "vm_elastic_search_image_project" {
   description = "Project hosting the Elastic Search VM Instance image"
 }
 
+variable "vm_elastic_search_boot_disk_size" {
+  description = "Elastic Search instances boot disk size"
+  default = "500GB"
+}
