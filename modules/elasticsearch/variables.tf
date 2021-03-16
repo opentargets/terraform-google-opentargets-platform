@@ -20,3 +20,8 @@ variable "network_subnet_name" {
   default = "main-subnet"
 }
 
+variable "network_source_ranges" {
+  description = "CIDR that represents which IPs we want to grant access to the deployed resources, default '10.0.0.0/9'"
+  default = [ "10.0.0.0/9" ]
+}
+
