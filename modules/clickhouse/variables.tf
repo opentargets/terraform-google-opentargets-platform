@@ -58,3 +58,7 @@ variable "vm_clickhouse_boot_disk_size" {
   default = "250GB"
 }
 
+variable "deployment_target_size" {
+  description = "This number configures how many instances should be running, default '1'"
+  default = 1
+}
