@@ -48,3 +48,7 @@ variable "vm_elastic_search_vcpus" {
   description = "CPU count for each Elastic Search Node VM"
 }
 
+variable "vm_elastic_search_mem" {
+  description = "Amount of memory assigned to every Elastic Search Instance (MiB)"
+}
+
