@@ -10,3 +10,8 @@ variable "network_name" {
   default = "default"
 }
 
+variable "network_self_link" {
+  description = "Self link to the network where resources should be connected when deployed"
+  default = "default"
+}
+
