@@ -18,7 +18,7 @@ provider "google" {
 // --- Elastic Search Backend --- //
 
 module "backend_elastic_search" {
-  source = "./module/elasticsearch"
+  source = "./modules/elasticsearch"
   count = length(var.config_deployment_regions)
 
   depends_on = [ module.vpc_network ]
