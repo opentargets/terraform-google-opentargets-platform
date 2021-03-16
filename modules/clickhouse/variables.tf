@@ -45,3 +45,11 @@ variable "vm_clickhouse_mem" {
   default = "26624"
 }
 
+variable "vm_clickhouse_image" {
+  description = "VM image to use for Clickhouse nodes"
+}
+
+variable "vm_clickhouse_image_project" {
+  description = "Project hosting Clickhouse VM image"
+}
+
