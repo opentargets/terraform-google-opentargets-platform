@@ -56,3 +56,7 @@ variable "vm_elastic_search_image" {
   description = "VM Image to use for Elastic Search instances"
 }
 
+variable "vm_elastic_search_image_project" {
+  description = "Project hosting the Elastic Search VM Instance image"
+}
+
