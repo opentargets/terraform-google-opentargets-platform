@@ -96,6 +96,16 @@ resource "google_compute_region_instance_group_manager" "regmig_elastic_search" 
 
   target_size = var.deployment_target_size
 
+  named_port {
+    name = local.elastic_search_port_requests_name
+    port = local.elastic_search_port_requests
+  }
+
+  named_port {
+    name = local.elastic_search_port_comms_name
+    port = local.elastic_search_port_comms
+  }
+
   auto_healing_policies {
     health_check = google_compute_health_check.elastic_search_healthcheck.id
     initial_delay_sec = 300
