@@ -35,3 +35,8 @@ variable "vm_firewall_tags" {
   default = [ ]
 }
 
+variable "vm_clickhouse_vcpus" {
+  description = "CPU count for Clickhouse instances, default '4'"
+  default = "4"
+}
+
