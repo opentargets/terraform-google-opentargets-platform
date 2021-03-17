@@ -91,3 +91,13 @@ variable "backend_connection_map" {
   */
 }
 
+// --- Load Balancer configuration --- //
+variable "load_balancer_type" {
+  type = string
+  description = "This will tell the module whether an ILB, GLB or no load balancer at all should be created"
+  validation {
+    condition = contains([ "INTERNAL", "GLOBAL", "NONE" ], var.load_balancer_type)
+    error_message = "Allowed values for 'load_balancer_type' are [ 'INTERNAL', 'GLOBAL', 'NONE' ]."
+  }
+}
+
