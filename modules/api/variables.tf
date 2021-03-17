@@ -5,3 +5,7 @@ variable "module_wide_prefix_scope" {
   default = "otpdevapi"
 }
 
+variable "project_id" {
+  description = "Project ID where to deploy resources"
+}
+
