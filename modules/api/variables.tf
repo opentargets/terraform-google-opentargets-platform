@@ -73,3 +73,8 @@ variable "vm_api_boot_disk_size" {
   default = "10GB"
 }
 
+variable "deployment_target_size" {
+  description = "Initial API node count per region"
+  default = 1
+}
+
