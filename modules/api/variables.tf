@@ -78,3 +78,16 @@ variable "deployment_target_size" {
   default = 1
 }
 
+// --- Backend Connection Information --- //
+variable "backend_connection_map" {
+  description = "Information on where to connect to data backend services"
+  /*
+  {
+    "region" = {
+      "host_clickhouse" = "127.0.0.0",
+      "host_elastic_search" = "127.0.0.0"
+    }
+  }
+  */
+}
+
