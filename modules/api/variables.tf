@@ -101,3 +101,7 @@ variable "load_balancer_type" {
   }
 }
 
+// --- DNS configuration --- //
+variable "dns_domain_api" {
+  description = "This is the baseline DNS to use for all the forwarding rules that will be configured in the GLB, if chosen"
+}
