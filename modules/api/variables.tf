@@ -35,3 +35,7 @@ variable "network_source_ranges_map" {
 }
 
 // --- API Instances configuration --- //
+variable "deployment_regions" {
+  description = "List of regions where the API nodes should be deployed"
+}
+
