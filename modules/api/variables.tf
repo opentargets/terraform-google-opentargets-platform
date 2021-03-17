@@ -48,3 +48,13 @@ variable "vm_platform_api_image_version" {
   description = "API Docker image version to use in deployment"
 }
 
+variable "vm_api_vcpus" {
+  description = "CPU count for API nodes, default '2'"
+  default = "2"
+}
+
+variable "vm_api_mem" {
+  description = "Amount of memory allocated for API nodes (MiB), default '7680'"
+  default = "7680"
+}
+
