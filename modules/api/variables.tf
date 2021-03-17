@@ -39,3 +39,8 @@ variable "deployment_regions" {
   description = "List of regions where the API nodes should be deployed"
 }
 
+variable "vm_firewall_tags" {
+  description = "List of additional tags to attach to API nodes"
+  default = [ ]
+}
+
