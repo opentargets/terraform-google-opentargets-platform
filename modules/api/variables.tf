@@ -58,3 +58,18 @@ variable "vm_api_mem" {
   default = "7680"
 }
 
+variable "vm_api_image" {
+  description = "VM image to use for API nodes, default 'cos-stable'"
+  default = "cos-stable"
+}
+
+variable "vm_api_image_project" {
+  description = "Project hosting the VM image, default 'cos-cloud'"
+  default = "cos-cloud"
+}
+
+variable "vm_api_boot_disk_size" {
+  description = "Boot disk size for API nodes, default '10GB'"
+  default = "10GB"
+}
+
