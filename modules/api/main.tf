@@ -70,3 +70,16 @@ resource "google_compute_instance_template" "otpapi_template" {
   }
 }
 
+// --- Health Check definition --- //
+resource "google_compute_health_check" "otpapi_healthcheck" {
+  name = "${var.module_wide_prefix_scope}-otpapi-healthcheck"
+  check_interval_sec = 5
+  timeout_sec = 5
+  healthy_threshold = 2
+  unhealthy_threshold = 10
+
+  tcp_health_check {
+    port = local.otp_api_port
+  }
+}
+
