@@ -113,3 +113,20 @@ resource "google_compute_region_instance_group_manager" "regmig_otpapi" {
   }
 }
 
+// --- AUTOSCALERS --- //
+resource "google_compute_region_autoscaler" "autoscaler_otpapi" {
+  count = length(var.deployment_regions)
+
+  name = "${var.module_wide_prefix_scope}-${count.index}-autoscaler"
+  region = var.deployment_regions[count.index]
+  target = google_compute_region_instance_group_manager.regmig_otpapi[count.index].id
+
+  autoscaling_policy {
+    max_replicas = 6
+    min_replicas = 1
+    cooldown_period = 60
+    cpu_utilization {
+      target = 0.5
+    }
+  }
+}
