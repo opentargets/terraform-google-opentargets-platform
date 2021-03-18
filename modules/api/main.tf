@@ -83,3 +83,33 @@ resource "google_compute_health_check" "otpapi_healthcheck" {
   }
 }
 
+// --- Regional Instance Group Manager --- //
+resource "google_compute_region_instance_group_manager" "regmig_otpapi" {
+  count = length(var.deployment_regions)
+
+  name = "${var.module_wide_prefix_scope}-${count.index}-regmig-otpapi"
+  region = var.deployment_regions[count.index]
+  base_instance_name = "${var.module_wide_prefix_scope}-${count.index}-api"
+  depends_on = [ 
+      google_compute_instance_template.otpapi_template,
+      google_compute_firewall.vpc_netfw_otpapi_node
+    ]
+
+  // Instance Template
+  version {
+    instance_template = google_compute_instance_template.otpapi_template[count.index].id
+  }
+
+  target_size = var.deployment_target_size
+
+  named_port {
+    name = local.otp_api_port_name
+    port = local.otp_api_port
+  }
+
+  auto_healing_policies {
+    health_check = google_compute_health_check.otpapi_healthcheck.id
+    initial_delay_sec = 300
+  }
+}
+
