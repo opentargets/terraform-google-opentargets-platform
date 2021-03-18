@@ -111,3 +111,17 @@ module "backend_api" {
   // I have to pass this value until I implement a validation mechanism, but the module won't use it, because it's set to 'NONE' LB
   dns_domain_api = local.dns_platform_api_dns_name
 }
+
+// --- Web Application --- //
+module "web_app" {
+   source = "./modules/webapp"
+   project_id = var.config_project_id
+   // The Web Application can be distributed, without ties to anything else
+   // depends_on = [ ]
+   module_wide_prefix_scope = "${var.config_release_name}-web"
+   folder_tmp = local.folder_tmp
+   location = var.config_webapp_location
+   webapp_repo_name = var.config_webapp_repo_name
+   webapp_release = var.config_webapp_release
+   webapp_deployment_context = var.config_webapp_deployment_context_map
+}

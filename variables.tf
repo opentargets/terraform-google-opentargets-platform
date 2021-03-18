@@ -101,3 +101,8 @@ variable "config_webapp_release" {
 variable "config_webapp_deployment_context_map" {
   description = "A map with values for those parameters that need to be customized in the deployment of the web application, see module defaults as an example"
 }
+
+variable "config_webapp_location" {
+  description = "This input parameter defines the location of the Web Application (bucket), default 'EU'"
+  default = "EU"
+}
