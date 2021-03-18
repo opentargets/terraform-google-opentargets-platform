@@ -46,3 +46,7 @@ variable "website_not_found_page" {
   default = "index.html"
 }
 
+// --- Temporary assets --- //
+variable "folder_tmp" {
+  description = "Path to a temporary folder where to deploy working directories"
+}
