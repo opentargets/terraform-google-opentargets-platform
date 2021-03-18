@@ -14,3 +14,35 @@ variable "location" {
   default = "EUROPE-WEST4"
 }
 
+// --- Web APP Configuration --- //
+variable "webapp_repo_name" {
+  description = "Web Application repository name"
+}
+
+variable "webapp_release" {
+  description = "Release version of the web application to deploy"
+}
+
+variable "webapp_deployment_context_placeholder" {
+  description = "This defines the placeholder to replace within the public index.html, with the deployment context, default 'DEVOPS_CONTEXT_DEPLOYMENT' (DEPRECATED)"
+  default = "DEVOPS_CONTEXT_DEPLOYMENT"
+}
+
+variable "webapp_deployment_context" {
+  description = "Values for parameterising the deployment of the web application, see defaults as an example"
+  default = {
+    DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_APOLLO_CLIENT = "undefined"
+    DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_APOLLO_CLIENT_BETA = "undefined"
+  }
+}
+
+variable "webapp_docker_node_version" {
+  description = "Node version to use for building the bundle"
+  default = 12
+}
+
+variable "website_not_found_page" {
+  description = "It defines the website 'not found' page"
+  default = "index.html"
+}
+
