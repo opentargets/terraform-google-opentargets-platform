@@ -24,7 +24,7 @@ config_dns_project_id                       = "open-targets-eu-dev"
 config_dns_subdomain_prefix                 = "mbdev"
 config_dns_managed_zone_name                = "opentargets-xyz"
 config_dns_managed_zone_dns_name            = "opentargets.xyz."
-//config_dns_platform_api_subdomain           = "api"
+config_dns_platform_api_subdomain           = "api"
 // --- Web App configuration --- //
 config_webapp_repo_name                     = "mbdebian/platform-app"
 config_webapp_release                       = "1.0.7"
