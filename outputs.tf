@@ -37,9 +37,9 @@ output "dns_records" {
 }
 
 // --- Development Mode output information --- //
-output "dev_vms" {
+output "inspection_vms" {
   value = zipmap(
     var.config_deployment_regions,
-    google_compute_instance.dev_testvm.*
+    google_compute_instance.inspection_vm.*
   )
 }
