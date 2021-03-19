@@ -41,6 +41,14 @@ variable "network_source_ranges_map" {
  */
 }
 
+variable "network_sources_health_checks" {
+  description = "Source CIDR for health checks, default '[ 130.211.0.0/22, 35.191.0.0/16 ]'"
+  default = [
+    "130.211.0.0/22",
+    "35.191.0.0/16"
+  ]
+}
+
 // --- API Instances configuration --- //
 variable "deployment_regions" {
   description = "List of regions where the API nodes should be deployed"
