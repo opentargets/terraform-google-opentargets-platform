@@ -25,7 +25,7 @@ variable "config_deployment_regions" {
   type = list(string)
 }
 
-// --- ELASTIC SEARCH CONFIGURATION --- //
+// --- Elastic Search Configuration --- //
 variable "config_vm_elastic_search_image_project" {
   description = "This allows to specify a different than deployment project for the deployed Elastic Search Instance image to be used."
   type = string
@@ -79,6 +79,32 @@ variable "config_vm_clickhouse_image_project" {
 
 variable "config_vm_clickhouse_boot_disk_size" {
   description = "Boot disk size to be used in Clickhouse instances"
+  type = string
+}
+
+// --- API Configuration --- //
+variable "config_vm_platform_api_image_version" {
+  description = "Platform API docker image version to use"
+  type = string
+}
+variable "config_vm_api_vcpus" {
+  description = "CPU count for API nodes"
+  type = number
+}
+variable "config_vm_api_mem" {
+  description = "Memory allocation for API VMs (MiB)"
+  type = number
+}
+variable "config_vm_api_image" {
+  description = "VM image to use for running API nodes"
+  type = string
+}
+variable "config_vm_api_image_project" {
+  description = "Project hosting the API VM image"
+  type = string
+}
+variable "config_vm_api_boot_disk_size" {
+  description = "Boot disk size for API VM nodes"
   type = string
 }
 

@@ -19,6 +19,13 @@ config_vm_clickhouse_mem                    = "26624"
 config_vm_clickhouse_image                  = "clickhouse-ot-platform-ch-21-02"
 config_vm_clickhouse_image_project          = "open-targets-platform"
 config_vm_clickhouse_boot_disk_size         = "250GB"
+// --- API configuration --- //
+config_vm_platform_api_image_version        = "0.55.8"
+config_vm_api_vcpus                         = "2"
+config_vm_api_mem                           = "7680"
+config_vm_api_image                         = "cos-stable"
+config_vm_api_image_project                 = "cos-cloud"
+config_vm_api_boot_disk_size                = "10GB"
 // --- DNS --- //
 config_dns_project_id                       = "open-targets-eu-dev"
 config_dns_subdomain_prefix                 = "mbdev"

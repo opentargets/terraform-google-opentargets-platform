@@ -90,12 +90,12 @@ module "backend_api" {
   // We are using an root module defined GLB, so we need this tag to be appended to api nodes, for them to be visible to the GLB. Include development mode firewall tags
   vm_firewall_tags = concat([ local.tag_glb_target_node ], local.dev_mode_fw_tags)
   // API VMs configuration
-  vm_platform_api_image_version = "0.55.8"
-  vm_api_vcpus = "2"
-  vm_api_mem = "7680"
-  vm_api_image = "cos-stable"
-  vm_api_image_project = "cos-cloud"
-  vm_api_boot_disk_size = "10GB"
+  vm_platform_api_image_version = var.config_vm_platform_api_image_version
+  vm_api_vcpus = var.config_vm_api_vcpus
+  vm_api_mem = var.config_vm_api_mem
+  vm_api_image = var.config_vm_api_image
+  vm_api_image_project = var.config_vm_api_image_project
+  vm_api_boot_disk_size = var.config_vm_api_boot_disk_size
   backend_connection_map = zipmap(
     var.config_deployment_regions,
     [
