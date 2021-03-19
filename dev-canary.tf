@@ -1,6 +1,6 @@
 // --- This file contains resources that will be activated when development mode is 'ON', for debugging purposes --- //
 // Canary for the infrastructure mine --- //
-resource "google_compute_instance" "gce_testvm" {
+resource "google_compute_instance" "dev_testvm" {
   // This definition will deploy a small VM in each deployment region for debugging communication and other infrastructure issues
   count = length(var.config_deployment_regions) * local.dev_mode_conditional_deployment
 

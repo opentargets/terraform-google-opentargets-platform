@@ -35,3 +35,11 @@ output "dns_records" {
     google_dns_record_set.dns_a_webapp_glb
   )
 }
+
+// --- Development Mode output information --- //
+output "dev_vms" {
+  value = zipmap(
+    var.config_deployment_regions,
+    google_compute_instance.dev_testvm.*
+  )
+}
