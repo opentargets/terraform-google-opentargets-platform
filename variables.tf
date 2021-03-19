@@ -22,7 +22,7 @@ variable "config_project_id" {
 
 variable "config_deployment_regions" {
   description = "A list of regions where to deploy the OT Platform"
-  type = list
+  type = list(string)
 }
 
 // --- ELASTIC SEARCH CONFIGURATION --- //
