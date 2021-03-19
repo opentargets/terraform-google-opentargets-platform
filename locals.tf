@@ -35,7 +35,7 @@ locals {
   // --- Global Load Balancer --- //
   // GLB tagging for traffic destination
   tag_glb_target_node = "glb-serve-target"
-  glb_dns_platform_api_dns_name = [ trimsuffix(local.dns_platform_api_dns_name, ".") ]
+  glb_dns_platform_api_dns_names = [ trimsuffix(local.dns_platform_api_dns_name, ".") ]
   glb_dns_platform_webapp_domain_names = [ for hostname in local.dns_platform_webapp_domain_names: trimsuffix(hostname, ".") ]
 
   // --- Debugging --- // 
