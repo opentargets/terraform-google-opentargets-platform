@@ -64,10 +64,10 @@ module "glb_platform" {
   url_map = google_compute_url_map.url_map_platform_glb.self_link
 
   // SSL Configuration
-  //ssl = true
-  //managed_ssl_certificate_domains = concat(local.dns_platform_webapp_domain_names, [ local.dns_platform_api_dns_name ])
-  //use_ssl_certificates = false
-  //https_redirect = true
+  ssl = true
+  managed_ssl_certificate_domains = concat(local.dns_platform_webapp_domain_names, [ local.dns_platform_api_dns_name ])
+  use_ssl_certificates = false
+  https_redirect = true
   
   backends = {
     // Web application is the default backend
