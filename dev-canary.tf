@@ -2,7 +2,7 @@
 // Canary for the infrastructure mine --- //
 resource "google_compute_instance" "dev_testvm" {
   // This definition will deploy a small VM in each deployment region for debugging communication and other infrastructure issues
-  count = length(var.config_deployment_regions) * local.dev_mode_conditional_deployment
+  count = length(var.config_deployment_regions) * local.inspection_conditional_deployment
 
   name = "mbdev-vm-test-${count.index}"
   machine_type = "e2-small"

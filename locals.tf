@@ -42,6 +42,11 @@ locals {
   canaryvm_zone = "${var.config_deployment_regions[0]}-b"
 
   // --- Development Mode --- //
-  dev_mode_conditional_deployment = var.config_set_dev_mode_on ? 1 : 0
-  dev_mode_fw_tags = var.config_set_dev_mode_on ? [ local.fw_tag_ssh ] : [ ]
+  dev_mode_on = var.config_set_dev_mode_on
+  dev_mode_conditional_deployment = local.dev_mode_on ? 1 : 0
+  dev_mode_fw_tags = local.dev_mode_on ? [ local.fw_tag_ssh ] : [ ]
+
+  // --- Infrastructure Inspection Configuration --- //
+  inspection_enabled = ( var.config_enable_inspection || local.dev_mode_on )
+  inspection_conditional_deployment = local.inspection_enabled ? 1 : 0
 }

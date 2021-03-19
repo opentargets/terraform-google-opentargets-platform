@@ -137,3 +137,8 @@ variable "config_set_dev_mode_on" {
   description = "If 'true', it will set the deployment to 'development mode', default is 'false'"
   default = false
 }
+
+variable "config_enable_inspection" {
+  description = "If 'true', it will deploy additional VMs for infrastructure inspection, 'false'"
+  default = false
+}
