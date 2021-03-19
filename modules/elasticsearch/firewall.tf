@@ -29,3 +29,18 @@ resource "google_compute_firewall" "vpc_netfw_elasticsearch_comms" {
   target_tags = [ local.fw_tag_elasticsearch_comms ]
   source_ranges = var.network_source_ranges
 }
+
+// Health Checks Traffic --- //
+resource "google_compute_firewall" "vpc_netfw_elasticsearch_healthchecks" {
+  name = "${var.network_name}-${var.deployment_region}-allow-elasticsearch-healthchecks"
+  description = "Firewall rule for allowing Health Checks traffic to Elastic Search Nodes"
+  network = var.network_self_link
+
+  allow {
+      protocol = "tcp"
+      ports = [ local.elastic_search_port_requests ]
+  }
+
+  target_tags = [ local.fw_tag_elasticsearch_comms ]
+  source_ranges = concat(var.network_source_ranges, var.network_sources_health_checks)
+}

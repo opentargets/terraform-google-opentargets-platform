@@ -30,6 +30,14 @@ variable "network_source_ranges" {
   default = [ "10.0.0.0/9" ]
 }
 
+variable "network_sources_health_checks" {
+  description = "Source CIDR for health checks, default '[ 130.211.0.0/22, 35.191.0.0/16 ]'"
+  default = [
+    "130.211.0.0/22",
+    "35.191.0.0/16"
+  ]
+}
+
 variable "deployment_region" {
   description = "Region where resources should be deployed"
   type = string
