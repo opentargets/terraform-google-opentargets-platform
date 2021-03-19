@@ -36,6 +36,8 @@ module "backend_elastic_search" {
   vm_elastic_search_image = var.config_vm_elastic_search_image
   vm_elastic_search_image_project = var.config_vm_elastic_search_image_project
   vm_elastic_search_boot_disk_size = var.config_vm_elastic_search_boot_disk_size
+  // Additional firewall tags if development mode is 'ON'
+  vm_firewall_tags = local.dev_mode_fw_tags
   deployment_region = var.config_deployment_regions[count.index]
   deployment_target_size = 1
 }
@@ -58,6 +60,8 @@ module "backend_clickhouse" {
   vm_clickhouse_image = var.config_vm_clickhouse_image
   vm_clickhouse_image_project = var.config_vm_clickhouse_image_project
   vm_clickhouse_boot_disk_size = var.config_vm_clickhouse_boot_disk_size
+  // Additional firewall tags if development mode is 'ON'
+  vm_firewall_tags = local.dev_mode_fw_tags
   deployment_region = var.config_deployment_regions[count.index]
   deployment_target_size = 1
 }
@@ -83,8 +87,8 @@ module "backend_api" {
       } 
     ]
   )
-  // We are using an root module defined GLB, so we need this tag to be appended to api nodes, for them to be visible to the GLB
-  vm_firewall_tags = [ local.tag_glb_target_node ]
+  // We are using an root module defined GLB, so we need this tag to be appended to api nodes, for them to be visible to the GLB. Include development mode firewall tags
+  vm_firewall_tags = concat([ local.tag_glb_target_node ], local.dev_mode_fw_tags)
   // API VMs configuration
   vm_platform_api_image_version = "0.55.8"
   vm_api_vcpus = "2"

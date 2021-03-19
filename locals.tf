@@ -40,4 +40,8 @@ locals {
 
   // --- Debugging --- // 
   canaryvm_zone = "${var.config_deployment_regions[0]}-b"
+
+  // --- Development Mode --- //
+  dev_mode_conditional_deployment = var.config_set_dev_mode_on ? 1 : 0
+  dev_mode_fw_tags = var.config_set_dev_mode_on ? [ local.fw_tag_ssh ] : [ ]
 }

@@ -131,3 +131,9 @@ variable "config_webapp_location" {
   type = string
   default = "EU"
 }
+
+// --- Development --- //
+variable "config_set_dev_mode_on" {
+  description = "If 'true', it will set the deployment to 'development mode', default is 'false'"
+  default = false
+}
