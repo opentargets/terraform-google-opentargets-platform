@@ -130,9 +130,15 @@ variable "config_dns_managed_zone_dns_name" {
 }
 
 variable "config_dns_platform_api_subdomain" {
-  description = "Subdomain for platform API DNS entry"
+  description = "Subdomain for platform API DNS entry, default 'api'"
   type = string
   default = "api"
+}
+
+variable "config_dns_platform_subdomain" {
+  description = "Subdomain for Open Targets Platform Web App, default 'platform'"
+  type = string
+  default = "platform"
 }
 
 // --- WEB APP Configuration --- //
