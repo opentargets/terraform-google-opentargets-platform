@@ -40,3 +40,4 @@ config_webapp_deployment_context_map        = {
 }
 // --- Development Mode --- //
 config_set_dev_mode_on                      = true
+//config_enable_inspection                    = true
