@@ -9,7 +9,7 @@ config_deployment_regions                   = [ "europe-west2" ]
 // --- Elastic Search configuration --- //
 config_vm_elastic_search_image_project      = "open-targets-platform"
 config_vm_elastic_search_vcpus              = "4"
-config_vm_elastic_search_mem                = "32832"
+config_vm_elastic_search_mem                = "32768"
 config_vm_elastic_search_image              = "platform-etl-21-02-es"
 config_vm_elastic_search_version            = "7.9.0"
 config_vm_elastic_search_boot_disk_size     = "500GB"
