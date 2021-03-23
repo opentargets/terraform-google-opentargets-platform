@@ -110,5 +110,14 @@ resource "google_compute_region_instance_group_manager" "regmig_elastic_search" 
     health_check = google_compute_health_check.elastic_search_healthcheck.id
     initial_delay_sec = 300
   }
+
+  update_policy {
+    type                         = "PROACTIVE"
+    instance_redistribution_type = "PROACTIVE"
+    minimal_action               = "REPLACE"
+    max_surge_percent            = 20
+    max_unavailable_fixed        = 0
+    min_ready_sec                = 30
+  }
 }
 
