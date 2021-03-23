@@ -120,7 +120,7 @@ resource "google_compute_region_instance_group_manager" "regmig_elastic_search" 
     type                         = "PROACTIVE"
     instance_redistribution_type = "PROACTIVE"
     minimal_action               = "REPLACE"
-    max_surge_fixed              = 1
+    max_surge_fixed              = length(data.google_compute_zones.available.names)
     max_unavailable_fixed        = 0
     min_ready_sec                = 30
   }
