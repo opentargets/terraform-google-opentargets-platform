@@ -21,6 +21,11 @@ resource "random_string" "random" {
   }
 }
 
+// Access to Available compute zones in the given region --- //
+data "google_compute_zones" "available" {
+  region = var.deployment_region
+}
+
 resource "google_compute_instance_template" "elastic_search_template" {
   name = "${var.module_wide_prefix_scope}-elastic-search-template-${random_string.random.result}"
   description = "Open Targets Platform Elastic Search node template, release ${var.vm_elastic_search_image}"
