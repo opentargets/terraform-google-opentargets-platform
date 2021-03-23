@@ -59,6 +59,9 @@ resource "google_compute_instance_template" "clickhouse_template" {
   }
 
   // There is no startup script for Clickhouse, it's just available in the image
+  metadata = {
+    google-logging-enabled = true
+  }
 }
 
 // --- Health Check definition --- //
