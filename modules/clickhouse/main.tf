@@ -20,6 +20,11 @@ resource "random_string" "random" {
   }
 }
 
+// Access to Available compute zones in the given region --- //
+data "google_compute_zones" "available" {
+  region = var.deployment_region
+}
+
 resource "google_compute_instance_template" "clickhouse_template" {
   name = "${var.module_wide_prefix_scope}-clickhouse-template-${random_string.random.result}"
   description = "Open Targets Platform Clickhouse node template, release ${var.vm_clickhouse_image}"
@@ -101,13 +106,12 @@ resource "google_compute_region_instance_group_manager" "regmig_clickhouse" {
     initial_delay_sec = 300
   }
 
-  // TODO - Define an update policy
-  /*update_policy {
+  update_policy {
     type                         = "PROACTIVE"
     instance_redistribution_type = "PROACTIVE"
     minimal_action               = "REPLACE"
-    max_surge_percent            = 20
-    max_unavailable_fixed        = 2
-    min_ready_sec                = 50
-  }*/
+    max_surge_fixed              = length(data.google_compute_zones.available.names)
+    max_unavailable_fixed        = 0
+    min_ready_sec                = 30
+  }
 }
