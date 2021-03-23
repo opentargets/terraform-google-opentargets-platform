@@ -8,10 +8,10 @@ config_project_id                           = "open-targets-eu-dev"
 config_deployment_regions                   = [ "europe-west2" ]
 // --- Elastic Search configuration --- //
 config_vm_elastic_search_image_project      = "open-targets-platform"
-config_vm_elastic_search_vcpus              = "8"
-config_vm_elastic_search_mem                = "53248"
-config_vm_elastic_search_image              = "platform-210210-105028-21-02-3-es"
-config_vm_elastic_search_version            = "7.7.0"
+config_vm_elastic_search_vcpus              = "4"
+config_vm_elastic_search_mem                = "32832"
+config_vm_elastic_search_image              = "platform-etl-21-02-es"
+config_vm_elastic_search_version            = "7.9.0"
 config_vm_elastic_search_boot_disk_size     = "500GB"
 // --- Clickhouse configuration --- //
 config_vm_clickhouse_vcpus                  = "4"
