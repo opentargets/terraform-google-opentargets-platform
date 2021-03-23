@@ -66,6 +66,7 @@ resource "google_compute_instance_template" "elastic_search_template" {
         ELASTIC_SEARCH_VERSION = var.vm_elastic_search_version
       }
     )
+    google-logging-enabled = true
   }
 }
 
