@@ -4,7 +4,8 @@ echo "[START] --- Open Targets Platform Web Application Provisioner (Bundle Vers
 echo "[PWD] Current directory `pwd`"
 mkdir -p ${working_dir}
 cd ${working_dir}
-echo "[WORKDIR] Working dir at '${working_dir}'"
+echo "[WORKDIR] Working dir at '${working_dir}', cleaning possible previous runs"
+rm -rf *
 echo "[BUILD] Create build target at '${path_build}'"
 mkdir -p ${path_build}
 echo "[BUILD] Download bundle from '${url_bundle_download}'"
