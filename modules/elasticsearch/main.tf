@@ -121,9 +121,24 @@ resource "google_compute_region_instance_group_manager" "regmig_elastic_search" 
     type                         = "PROACTIVE"
     instance_redistribution_type = "PROACTIVE"
     minimal_action               = "REPLACE"
-    max_surge_fixed              = length(data.google_compute_zones.available.names)
+    max_surge_fixed              = local.compute_zones_n_total
     max_unavailable_fixed        = 0
     min_ready_sec                = 30
   }
 }
 
+// --- AUTOSCALERS --- //
+resource "google_compute_region_autoscaler" "autoscaler_elastic_search" {
+  name = "${var.module_wide_prefix_scope}-autoscaler"
+  region = var.deployment_region
+  target = google_compute_region_instance_group_manager.regmig_elastic_search.id
+
+  autoscaling_policy {
+    max_replicas = local.compute_zones_n_total * 2
+    min_replicas = 1
+    cooldown_period = 60
+    cpu_utilization {
+      target = 0.75
+    }
+  }
+}
