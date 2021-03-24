@@ -139,11 +139,14 @@ resource "google_compute_region_autoscaler" "autoscaler_otpapi" {
   target = google_compute_region_instance_group_manager.regmig_otpapi[count.index].id
 
   autoscaling_policy {
-    max_replicas = 6
+    max_replicas = length(data.google_compute_zones.available[count.index].names) * 2
     min_replicas = 1
     cooldown_period = 60
+    load_balancing_utilization {
+      target = 0.6
+    }
     cpu_utilization {
-      target = 0.5
+      target = 0.75
     }
   }
 }

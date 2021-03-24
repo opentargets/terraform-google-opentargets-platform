@@ -10,6 +10,13 @@ output "map_region_to_instance_group_manager" {
   )
 }
 
+output "capacity_scalers" {
+  value = zipmap(
+    var.deployment_regions,
+    google_compute_region_autoscaler.autoscaler_otpapi.*
+  )
+}
+
 output "api_port" {
   // Output the listening port for the Open Targets Platform API
   value = local.otp_api_port

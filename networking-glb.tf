@@ -146,14 +146,14 @@ module "glb_platform" {
       groups = [
         for region, regmig in module.backend_api.map_region_to_instance_group_manager : {
             group                        = regmig.instance_group
-            balancing_mode               = null
+            balancing_mode               = "RATE"
             capacity_scaler              = null
-            description                  = null
+            description                  = "API backend for region '${region}'"
             max_connections              = null
             max_connections_per_instance = null
             max_connections_per_endpoint = null
             max_rate                     = null
-            max_rate_per_instance        = null
+            max_rate_per_instance        = 50
             max_rate_per_endpoint        = null
             max_utilization              = null
         }
