@@ -1,5 +1,19 @@
 // --- Platform Global Load Balancer --- //
 // This file defines a Global Load Balancer for the platform (L7 with SSL Termination)
+// --- GLB Randomization for the resource --- //
+resource "random_string" "random" {
+  length = 8
+  lower = true
+  upper = false
+  special = false
+  keepers = {
+    release_name = var.config_release_name
+    dns_subdomain_prefix = var.config_dns_subdomain_prefix
+    dns_managed_zone_name = var.config_dns_managed_zone_name
+    dns_managed_zone_dns_name = var.config_dns_managed_zone_dns_name
+    dns_platform_api_subdomain = var.config_dns_platform_api_subdomain
+  }
+}
 
 // --- Web App backend --- //
 resource "google_compute_backend_bucket" "webapp" {
@@ -16,7 +30,7 @@ resource "google_compute_backend_bucket" "webapp" {
 // --- Platform Global Load Balancer --- //
 // URL Map
 resource "google_compute_url_map" "url_map_platform_glb" {
-  name = "${var.config_release_name}-glb-platform"
+  name = "${var.config_release_name}-glb-platform-${random_string.random.result}"
   // Web frontend as default service
   default_service = google_compute_backend_bucket.webapp.self_link
 
@@ -55,7 +69,7 @@ module "glb_platform" {
   ]
 
   project           = var.config_project_id
-  name              = "${var.config_release_name}-glb"
+  name              = "${var.config_release_name}-glb-${random_string.random.result}"
   target_tags       = [ local.tag_glb_target_node ]
   firewall_networks = [ module.vpc_network.network_name ]
 
