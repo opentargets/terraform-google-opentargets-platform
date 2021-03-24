@@ -21,6 +21,13 @@ resource "random_string" "random" {
   }
 }
 
+// Access to Available compute zones in the given region --- //
+data "google_compute_zones" "available" {
+  count = length(var.deployment_regions)
+  
+  region = var.deployment_regions[count.index]
+}
+
 resource "google_compute_instance_template" "otpapi_template" {
   count = length(var.deployment_regions)
 
@@ -67,6 +74,7 @@ resource "google_compute_instance_template" "otpapi_template" {
         OTP_API_PORT = local.otp_api_port
       }
     )
+    google-logging-enabled = true
   }
 }
 
@@ -110,6 +118,15 @@ resource "google_compute_region_instance_group_manager" "regmig_otpapi" {
   auto_healing_policies {
     health_check = google_compute_health_check.otpapi_healthcheck.id
     initial_delay_sec = 300
+  }
+
+  update_policy {
+    type                         = "PROACTIVE"
+    instance_redistribution_type = "PROACTIVE"
+    minimal_action               = "REPLACE"
+    max_surge_fixed              = length(data.google_compute_zones.available[count.index].names)
+    max_unavailable_fixed        = 0
+    min_ready_sec                = 30
   }
 }
 
