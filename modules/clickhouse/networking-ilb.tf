@@ -49,19 +49,3 @@ resource "google_compute_region_health_check" "ilb_backend_healthcheck" {
     port = local.clickhouse_http_req_port
   }
 }
-
-// --- AUTOSCALERS --- //
-resource "google_compute_region_autoscaler" "autoscaler_clickhouse" {
-  name = "${var.module_wide_prefix_scope}-autoscaler"
-  region = var.deployment_region
-  target = google_compute_region_instance_group_manager.regmig_clickhouse.id
-
-  autoscaling_policy {
-    max_replicas = 6
-    min_replicas = 1
-    cooldown_period = 60
-    cpu_utilization {
-      target = 0.5
-    }
-  }
-}

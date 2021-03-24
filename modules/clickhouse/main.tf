@@ -118,3 +118,19 @@ resource "google_compute_region_instance_group_manager" "regmig_clickhouse" {
     min_ready_sec                = 30
   }
 }
+
+// --- AUTOSCALERS --- //
+resource "google_compute_region_autoscaler" "autoscaler_clickhouse" {
+  name = "${var.module_wide_prefix_scope}-autoscaler"
+  region = var.deployment_region
+  target = google_compute_region_instance_group_manager.regmig_clickhouse.id
+
+  autoscaling_policy {
+    max_replicas = local.compute_zones_n_total * 2
+    min_replicas = 1
+    cooldown_period = 60
+    cpu_utilization {
+      target = 0.75
+    }
+  }
+}
