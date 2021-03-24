@@ -36,7 +36,7 @@ config_dns_platform_api_subdomain           = "api"
 config_webapp_repo_name                     = "mbdebian/platform-app"
 config_webapp_release                       = "1.0.7"
 config_webapp_deployment_context_map        = {
-    DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_APOLLO_CLIENT = "'https://api.platform.mbdev.opentargets.xyz/api/v4/graphql'"
+    DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_APOLLO_CLIENT = "'https://api.platform.gamma.opentargets.xyz/api/v4/graphql'"
 }
 // --- Development Mode --- //
 config_set_dev_mode_on                      = true
