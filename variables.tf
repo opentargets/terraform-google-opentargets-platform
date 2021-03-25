@@ -5,6 +5,19 @@ variable "config_release_name" {
 }
 
 // --- DEPLOYMENT CONFIGURATION --- //
+// Terraform Backend Configuration --- //
+variable "config_tf_backend_bucket_name" {
+  description = "Google Cloud Bucket where Terraform State is stored, default is 'null'"
+  type = string
+  value = null
+}
+
+variable "config_tf_backend_prefix" {
+  description = "Prefix for Terraformt State stored in the configured backend bucket, default is 'null'"
+  type = string
+  value = null
+}
+
 variable "config_gcp_default_region" {
   description = "Default region when not specified in the module"
   type = string
