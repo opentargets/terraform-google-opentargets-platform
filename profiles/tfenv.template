@@ -1,0 +1,4 @@
+# This is a template Terraform Environment Configuration for creating new profiles
+TF_VAR_config_tf_backend_bucket_name='TF_CONFIG_TFSTATE_BUCKET_NAME'
+# Usually your GitHub handle without the '@'
+TF_VAR_config_tf_backend_prefix='TF_CONFIG_TFSTATE_PREFIX'
