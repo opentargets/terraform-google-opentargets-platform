@@ -1,0 +1,6 @@
+terraform {
+  backend "gcs" {
+    bucket = var.config_tf_backend_bucket_name
+    prefix = var.config_tf_backend_prefix
+  }
+}
