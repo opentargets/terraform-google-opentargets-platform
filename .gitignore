@@ -3,3 +3,7 @@ credentials.json
 .terraform*
 terraform.tfstate*
 tmp/
+# Ignore profiles
+tfenv.active
+tfbackend.tf
+deployment_context.tfvars
