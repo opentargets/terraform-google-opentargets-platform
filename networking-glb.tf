@@ -1,5 +1,28 @@
 // --- Platform Global Load Balancer --- //
 // This file defines a Global Load Balancer for the platform (L7 with SSL Termination)
+// --- Web App backend --- //
+resource "google_compute_backend_bucket" "webapp" {
+  depends_on = [
+    module.web_app
+  ]
+
+  name = "${var.config_release_name}-backend-webapp"
+  description = "Bucket backend for the web application"
+  bucket_name = module.web_app.bucket.website_bucket_name
+  enable_cdn = true
+}
+
+// --- GLB SSL Managed Certificates --- //
+resource "google_compute_managed_ssl_certificate" "glb_ssl_cert" {
+  count = length(local.ssl_managed_certificate_domain_names)
+
+  name = "${var.config_release_name}-ssl-cert-${md5(local.ssl_managed_certificate_domain_names[count.index])}"
+
+  managed {
+    domains = [ local.ssl_managed_certificate_domain_names[count.index] ]
+  }
+}
+
 // --- GLB Randomization for the resource --- //
 resource "random_string" "random" {
   length = 8
@@ -13,18 +36,6 @@ resource "random_string" "random" {
     dns_managed_zone_dns_name = var.config_dns_managed_zone_dns_name
     dns_platform_api_subdomain = var.config_dns_platform_api_subdomain
   }
-}
-
-// --- Web App backend --- //
-resource "google_compute_backend_bucket" "webapp" {
-  depends_on = [
-    module.web_app
-  ]
-
-  name = "${var.config_release_name}-backend-webapp"
-  description = "Bucket backend for the web application"
-  bucket_name = module.web_app.bucket.website_bucket_name
-  enable_cdn = true
 }
 
 // --- Platform Global Load Balancer --- //
@@ -79,8 +90,9 @@ module "glb_platform" {
 
   // SSL Configuration
   ssl = true
-  managed_ssl_certificate_domains = concat(local.dns_platform_webapp_domain_names, [ local.dns_platform_api_dns_name ])
-  use_ssl_certificates = false
+  // managed_ssl_certificate_domains = local.ssl_managed_certificate_domain_names
+  use_ssl_certificates = true
+  ssl_certificates = google_compute_managed_ssl_certificate.glb_ssl_cert.*.self_link
   https_redirect = false
   
   backends = {

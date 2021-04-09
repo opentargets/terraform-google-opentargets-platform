@@ -69,6 +69,12 @@ tfplan:
 	@source ${file_name_tfenv_active} ; \
 	terraform plan --var-file=${file_name_depcontext_active}
 
+# Plan --- ##
+tfvalidate:
+	@echo "[DEPLOYMENT] Show deployment plan for current Terraform Environment and Infrastructure Deployment Context"
+	@source ${file_name_tfenv_active} ; \
+	terraform validate --var-file=${file_name_depcontext_active}
+
 # Apply --- ##
 tfapply:
 	@echo "[DEPLOYMENT] Apply deployment plan for current Terraform Environment and Infrastructure Deployment Context"

@@ -34,10 +34,13 @@ locals {
   folder_tmp = abspath("${path.module}/tmp")
 
   // --- Global Load Balancer --- //
-  // GLB tagging for traffic destination
+  // GLB tagging for traffic destination --- //
   tag_glb_target_node = "glb-serve-target"
   glb_dns_platform_api_dns_names = [ trimsuffix(local.dns_platform_api_dns_name, ".") ]
   glb_dns_platform_webapp_domain_names = [ for hostname in local.dns_platform_webapp_domain_names: trimsuffix(hostname, ".") ]
+  
+  // SSL --- //
+  ssl_managed_certificate_domain_names = concat(local.dns_platform_webapp_domain_names, [ local.dns_platform_api_dns_name ])
 
   // --- Debugging --- // 
   canaryvm_zone = "${var.config_deployment_regions[0]}-b"
