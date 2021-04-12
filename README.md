@@ -9,6 +9,16 @@ This repository defines the Open Targets Platform infrastructure, using Hashicor
 
 ![Open Targets Platform, Deployment Unit](docs/img/open_targets_platform_infrastructure.png "Open Targets Platform, Deployment Unit")
 
+As shown in the figure above, a deployment unit consists of two data backends, based on Elastic Search and Clickhouse services. Set to automatically scale up on demand and self-heal, as part of the managing activities in their scoping regional instance group.
+
+These services are accessible by the backend API via their respective Internal Load Balancers, which not only distributes the requests among available instances, but also prevents a broken instance from receiving any traffic.
+
+Open Targets platform API services are deployed as a collection of instances in a regional group, set behind a Global Load Balancer, that serves requests from the internet to these services via HTTP and HTTPS, being SSL terminated at this infrastructure entry point.
+
+The platform web frontend is deployed in a Google Cloud Storage Bucket, not shown in the picture above, that is also behind this Global Load Balancer.
+
+We use Google Cloud DNS services for all domain names deployed via this infrastructure definition.
+
 # Open Targets Platform Deployment
 - **TODO** Step, clone the repository
 - **TODO** Talk about the Makefile helper
