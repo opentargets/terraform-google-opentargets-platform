@@ -19,7 +19,7 @@ The platform web frontend is deployed in a Google Cloud Storage Bucket, not show
 
 We use Google Cloud DNS services for all domain names deployed via this infrastructure definition.
 
-## Infrastructure FAIRness
+## FAIR Principles
 Open Targets Platform Infrastructure has been defined using [Terraform Modules](https://www.terraform.io/docs/language/modules/develop/index.html).
 
 The platform has been broken down into the following components:
@@ -114,18 +114,33 @@ This command will destroy all the deployed resources, according to the state in 
 
 USE ONLY in development environments.
 
-# Deployment Context Explained
 <a name="depcontextexplained"></a>
+
+# Deployment Context Explained
 TODO
 
-# Terraform Environment Explained
 <a name="tfenvexplained"></a>
+
+# Terraform Environment Explained
 TODO
 
 # Other Operations
-## Creating a Terraform Environment Profile
+
 <a name="tfcreate"></a>
-lkajshdflkjasdhf laksjdhf
+
+## Creating a Terraform Environment Profile
+These profiles are based on templates that can be found in the _profiles_ folder.
+
+Two templates are currently available:
+1. _tfenv.template.eudev_, used for creating profiles that will use Open Targets Development environment.
+2. _tfenv.template.platform_, used for creating profiles for deployment in our platform project.
+
+There is a third file, _tfenv.template_, which is a "master" template, that can derive custom templates outside the scope of the helpers included with this infrastructure definition.
+
+As an example, creating a _Terraform Environment_ profile called 'mydev', in our development environment, can be done via the following command:
+```
+$ make tfcreate srcprofile=eudev dstprofile=mydev
+```
 
 ## Cleaning up Terraform Environment
 TODO
