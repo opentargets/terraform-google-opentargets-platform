@@ -88,8 +88,11 @@ tfdestroy:
 	terraform destroy --var-file=${file_name_depcontext_active}
 
 # House Keeping --- ##
-clean: clean_tfprofile clean_depcontext
+clean: clean_tfprofile clean_depcontext clean_tfbackend
 	@echo "[HOUSEKEEPING] Cleaning up..."
+
+clean_tfbackend: tfbackendlocal
+	@echo "[HOUSEKEEPING] Cleaning up Terraform Backend Configuration, setting default"
 
 clean_tfprofile:
 	@echo "[HOUSEKEEPING] Cleaning up Terraform Environment active profile"
@@ -100,5 +103,5 @@ clean_depcontext:
 	@rm -f ${file_name_depcontext_active}
 
 # 'PHONY' targets --- ##
-.PHONY: all tfbackendremote tfbackendlocal tfcreate tfactivate depactivate tfinit tfplan tfapply tfdestroy clean clean_tfprofile clean_depcontext _tfcreate
+.PHONY: all tfbackendremote tfbackendlocal tfcreate tfactivate depactivate tfinit tfplan tfapply tfdestroy clean clean_tfprofile clean_tfbackend clean_depcontext _tfcreate
 # END --- ##
