@@ -37,7 +37,25 @@ This repository itself makes use of them as a Terraform Root Module, to build wh
 This also simplifies our development, testing, QA and staging workflows internally at Open Targets, by doing a lot of heavy lifting for our backend and frontend engineers.
 
 # Open Targets Platform Deployment Process
-- **TODO** Step, clone the repository
+Prior to working with this infrastructure definition, you need to make sure that you have:
+- _Terraform_ v0.14.5 or later
+- _Google Cloud SDK_ 333.0.0 or later, with valid credentials
+- _Makefile_ enabled environment, with common command line tools, e.g. sed
+
+Clone the repository, if you have GitHub Cli:
+```
+$ gh repo clone opentargets/terraform-google-opentargets-platform
+```
+
+## Terraform State
+Terraform uses a [state file](https://www.terraform.io/docs/language/state/index.html) that allows it to track the managed infrastructure.
+
+The information is stored in a file, and this file can reside in the local file system, or somewhere else, e.g. a Google Cloud Bucket.
+
+This is known as Terraform backend, and, by default, when you clone this repository, the active backend is _local_, which means the Terraform state will be stored in the local filesystem.
+
+
+
 - **TODO** Talk about the Makefile helper
 - **TODO** Deployment process
    - **TODO** Step, set the active terraform environment
