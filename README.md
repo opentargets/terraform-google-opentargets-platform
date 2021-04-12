@@ -1,6 +1,23 @@
 # terraform-google-opentargets-platform
 Terraform module for Open Targets Platform infrastructure definition
 
+# Introduction
+**TODO** - General Introduction to what is Open Targets Platform
+
+## Infrastructure definition
+This repository defines the Open Targets Platform infrastructure, using Hashicorp Configuration Language (HCL) and [Terraform](https://terraform.io).
+
+![Open Targets Platform, Deployment Unit](docs/img/open_targets_platform_infrastructure.png "Open Targets Platform, Deployment Unit")
+
+# Open Targets Platform Deployment
+- **TODO** Step, clone the repository
+- **TODO** Talk about the Makefile helper
+- **TODO** Deployment process
+   - **TODO** Step, set the active terraform environment
+   - **TODO** Step, set the active deployment context
+   - **TODO** Step, terraform plan analysis
+   - **TODO** Step, terraform apply
+
 
 # Copyright
 Copyright 2014-2018 Biogen, Celgene Corporation, EMBL - European Bioinformatics Institute, GlaxoSmithKline and Wellcome Sanger Institute
