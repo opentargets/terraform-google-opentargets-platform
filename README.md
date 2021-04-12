@@ -19,7 +19,24 @@ The platform web frontend is deployed in a Google Cloud Storage Bucket, not show
 
 We use Google Cloud DNS services for all domain names deployed via this infrastructure definition.
 
-# Open Targets Platform Deployment
+## Infrastructure FAIRness
+Open Targets Platform Infrastructure has been defined using [Terraform Modules](https://www.terraform.io/docs/language/modules/develop/index.html).
+
+The platform has been broken down into the following components:
+- Clickhouse
+- Elastic Search
+- API
+- Web frontend
+
+Each component is defined and encapsulated as a submodule that can be reused independently, in any Google Cloud environment run, or not, by Open Targets.
+
+These modules are accessible by the community via our Open Source license, as well as their underlying machine images (via their corresponding licenses).
+
+This repository itself makes use of them as a Terraform Root Module, to build what constitutes Open Targets Platform. In addition, this root module is also available to the community via our Open Source license, thus, anyone can use it for deploying the platform in any Google Cloud project environment.
+
+This also simplifies our development, testing, QA and staging workflows internally at Open Targets, by doing a lot of heavy lifting for our backend and frontend engineers.
+
+# Open Targets Platform Deployment Process
 - **TODO** Step, clone the repository
 - **TODO** Talk about the Makefile helper
 - **TODO** Deployment process
@@ -28,6 +45,8 @@ We use Google Cloud DNS services for all domain names deployed via this infrastr
    - **TODO** Step, terraform plan analysis
    - **TODO** Step, terraform apply
 
+#### Disclaimer
+Infrastructure visual diagrams use AWS icons and visual elements, but their meaning in Open Targets Google Cloud Infrastructure is the same, from the conceptual point of view.
 
 # Copyright
 Copyright 2014-2018 Biogen, Celgene Corporation, EMBL - European Bioinformatics Institute, GlaxoSmithKline and Wellcome Sanger Institute
