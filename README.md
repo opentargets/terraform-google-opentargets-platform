@@ -52,16 +52,92 @@ Terraform uses a [state file](https://www.terraform.io/docs/language/state/index
 
 The information is stored in a file, and this file can reside in the local file system, or somewhere else, e.g. a Google Cloud Bucket.
 
-This is known as Terraform backend, and, by default, when you clone this repository, the active backend is _local_, which means the Terraform state will be stored in the local filesystem.
+This is known as _Terraform backend_, and, by default, when you clone this repository, the active backend is _local_, which means the Terraform state will be stored in the local filesystem.
 
+## Makefile Helper
+This infrastructure definition includes a _Makefile_ helper that implements the available operations for working with the defined infrastructure.
 
+## How to make a deployment?
+### First Step, Terraform Environment
+The first step is to activate a _Terraform Environment_, which will contain, among other things, the details related to the _Terraform backend_ that will be used.
 
-- **TODO** Talk about the Makefile helper
-- **TODO** Deployment process
-   - **TODO** Step, set the active terraform environment
-   - **TODO** Step, set the active deployment context
-   - **TODO** Step, terraform plan analysis
-   - **TODO** Step, terraform apply
+```
+$ make tfactivate profile=your_terraform_environment_profile_name
+
+# As an example, to activate mbdev profile
+$ make tfactivate profile=mbdev
+```
+
+In case you need to create your own profile, please see instructions [here](#tfcreate)
+
+### Second Step, Terraform Backend
+Once you have an active _Terraform Environment_, we recommend using a remote backend (required for production and shared deployment projects), which can be activated via the following command
+```
+$ make tfbackendremote
+```
+
+### Third Step, Activate the corresponding Deployment Context
+Once the _Terraform backend_ to be used is set, we need to "select" which deployment context we want this module to use for planning our infrastructure deployment.
+
+All _Deployment Contexts_ are deposited in the _profiles_ folder, see [here](#depcontextexplained) for more details.
+
+To activate a context, e.g. 'dev202102', use the following command
+```
+$ make depactivate profile=dev202102
+```
+
+The active _Deployment Context_ will be made available at the root of this _Terraform_ module, file name _deployment_context.tfvars_, you can manipulate this file and make changes to the resources that _Terraform_ will deploy, without affecting the original profile. This is particularly useful in development environments, although we don't recommend this operational approach in production.
+
+### Fourth Step, Terraform command wrappers
+Now we have all the information we need, we can start using _Terraform_, via the command wrappers described below, but, before that, we need to initialize _Terraform_, so it will download the necesary plugins, modules, etc.
+```
+$ make tfinit
+```
+
+**Terraform Plan** command wrapper
+```
+$ make tfplan
+```
+This will prompt _Terraform_ to calculate a deployment plan according to the current state and the requested deployment definition
+
+**Terraform Apply** command wrapper
+```
+$ make tfapply
+```
+This command will show the _Terraform_ calculated plan, as in _make tfplan_, and will ask for confirmation on the proposed changes to the current infrastructure, if any.
+
+**Terraform Destroy** command wrapper
+```
+$ make tfdestroy
+```
+This command will destroy all the deployed resources, according to the state in the configured backend.
+
+USE ONLY in development environments.
+
+# Deployment Context Explained
+<a name="depcontextexplained"></a>
+TODO
+
+# Terraform Environment Explained
+<a name="tfenvexplained"></a>
+TODO
+
+# Other Operations
+## Creating a Terraform Environment Profile
+<a name="tfcreate"></a>
+lkajshdflkjasdhf laksjdhf
+
+## Cleaning up Terraform Environment
+TODO
+
+## Setting Terraform Backend back to 'local'
+TODO
+
+## Cleaning up Deployment Context
+TODO
+
+## Cleaning Everything
+TODO
 
 #### Disclaimer
 Infrastructure visual diagrams use AWS icons and visual elements, but their meaning in Open Targets Google Cloud Infrastructure is the same, from the conceptual point of view.
