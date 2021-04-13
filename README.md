@@ -1,6 +1,3 @@
-# terraform-google-opentargets-platform
-Terraform module for Open Targets Platform infrastructure definition
-
 # Introduction
 **TODO** - General Introduction to what is Open Targets Platform
 
