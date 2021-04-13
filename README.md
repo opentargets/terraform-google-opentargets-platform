@@ -260,7 +260,7 @@ Once the deployment process has been successfully completed, the following detai
 
 >**network_region_subnet_mapping**, a custom VPC is created for every deployment context of Open Targets Platform, and, as a result, information on the created custom subnets is output here.
 
->**elastic_search_deployments**, information on the Elastic Search deployments, mainly their Google Cloud internal load balancers IP addresses.
+>**elastic_search_deployments**, information on the Elastic Search deployments, mainly their Google Cloud internal load balancers IP addresses, see also submodule [documentation](modules/elasticsearch).
 
 >**clickhouse_deployments**, information on the Clickhouse deployments, mainly their Google Cloud internal load balancers IP addresses.
 
