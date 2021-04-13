@@ -20,7 +20,7 @@ We use Google Cloud DNS services for all domain names deployed via this infrastr
 Open Targets Platform Infrastructure has been defined using [Terraform Modules](https://www.terraform.io/docs/language/modules/develop/index.html).
 
 The platform has been broken down into the following components:
-- Clickhouse
+- [Clickhouse](modules/clickhouse)
 - [Elastic Search](modules/elasticsearch)
 - API
 - Web frontend
@@ -262,7 +262,7 @@ Once the deployment process has been successfully completed, the following detai
 
 >**elastic_search_deployments**, information on the Elastic Search deployments, mainly their Google Cloud internal load balancers IP addresses, see also submodule [documentation](modules/elasticsearch).
 
->**clickhouse_deployments**, information on the Clickhouse deployments, mainly their Google Cloud internal load balancers IP addresses.
+>**clickhouse_deployments**, information on the Clickhouse deployments, mainly their Google Cloud internal load balancers IP addresses, see also submodule [documentation](modules/clickhouse)
 
 >**api_deployments**, output information from the _API submodule_ is forwarded here.
 
