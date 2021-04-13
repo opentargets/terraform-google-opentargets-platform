@@ -52,6 +52,25 @@ The module implements the following input parameters.
 
 >**vm_elastic_search_boot_disk_size**, Elastic Search instances boot disk size, default '500GB'
 
+# Output Information
+Once the infrastructure has been successfully deployed, the following details are revealed by this module as output.
+
+>**deployment_region**, region where resources have been deployed.
+
+>**network_name**, VPC network where resources have been connected to.
+
+>**network_subnet_name**, VPC Subnet within the given region where resources have been connected to.
+
+>**ilb_ip_address**, IP address of the deployed Internal Load Balancer that is at front of the Elastic Search VMs.
+
+>**port_elastic_search_requests**, Elastic Search Request port.
+
+>**port_elastic_search_requests_name**, named port corresponding to Elastic Search Request port.
+
+>**port_elastic_search_comms**, Elastic Search inter-node communications port.
+
+>**port_elastic_search_comms_name**, named port corresponding to Elastic Search inter-node communications port.
+
 
 #### Disclaimer
 Infrastructure visual diagrams use AWS icons and visual elements, but their meaning in Open Targets Google Cloud Infrastructure is the same, from the conceptual point of view.
