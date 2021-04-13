@@ -24,7 +24,7 @@ variable "network_self_link" {
 }
 
 variable "network_subnet_name" {
-  description = "Name of the subnet, within the 'network_name', and the given region, where instances should be connected to"
+  description = "Name of the subnet, within the 'network_name', and the given region, where instances should be connected to, default 'main-subnet'"
   type = string
   default = "main-subnet"
 }

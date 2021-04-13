@@ -21,4 +21,16 @@ module "backend_elastic_search" {
 The module implements the following input parameters.
 
 ## General configuration
-TODO
+>**module_wide_prefix_scope**, scoping prefix for resources names deployed by this module, default 'otpdevapi'.
+
+>**project_id**, ID of the project where resources should be deployed.
+
+>**network_name**, name of the network where resources should be connected to, default 'default'.
+
+>**network_self_link**, self link to the network where resources should be connected when deployed.
+
+>**network_subnet_name**, name of the subnet, within the 'network_name', and the given region, where instances should be connected to, default 'main-subnet'.
+
+>**network_source_ranges_map**, CIDR that represents which IPs we want to grant access to the deployed resources.
+
+>**network_sources_health_checks**, source CIDR for health checks, default '[ 130.211.0.0/22, 35.191.0.0/16 ]'.
