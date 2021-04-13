@@ -37,16 +37,16 @@ The module implements the following input parameters.
 
 
 ## Clickhouse configuration
->**vm_firewall_tags**, 
+>**vm_firewall_tags**, additional tags to attach to deployed Clickhouse nodes, by default, no additional tags will be attached.
 
->**vm_clickhouse_vcpus**, 
+>**vm_clickhouse_vcpus**, CPU count for Clickhouse instances, default '4'
 
->**vm_clickhouse_mem**, 
+>**vm_clickhouse_mem**, amount of memory allocated for Clickhouse instances (MiB), default '26624'.
 
->**vm_clickhouse_image**, 
+>**vm_clickhouse_image**, VM image to use for Clickhouse nodes.
 
->**vm_clickhouse_image_project**, 
+>**vm_clickhouse_image_project**, ID of hosting project for Clickhouse VM image.
 
->**vm_clickhouse_boot_disk_size**, 
+>**vm_clickhouse_boot_disk_size**, Clickhouse VM boot disk size, default '250GB'.
 
->**deployment_target_size**, 
+>**deployment_target_size**, This number configures how many instances should be running, default '1'.

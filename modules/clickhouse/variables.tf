@@ -73,7 +73,7 @@ variable "vm_clickhouse_image_project" {
 }
 
 variable "vm_clickhouse_boot_disk_size" {
-  description = "Clickhouse VM boot disk size"
+  description = "Clickhouse VM boot disk size, default '250GB'"
   type = string
   default = "250GB"
 }
