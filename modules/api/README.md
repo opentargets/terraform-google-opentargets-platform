@@ -65,6 +65,24 @@ The module implements the following input parameters.
 ## DNS configuration
 >**dns_domain_api**, domain name used for generation of managed SSL certificate to be configured in the load balancer. (**THIS OPTION IS UNDER REVIEW, DO NOT USE**)
 
+# Output Information
+Once the infrastructure has been successfully deployed, the following details are revealed by this module as output.
+
+>**deployment_regions**, a list of regions where API nodes have been deployed.
+
+>**map_region_to_instance_group_manager**, for every region, API nodes are deployed within a managed regional instance group, and this map provides a per region reference to every deployed instance group.
+
+>**capacity_scalers**, a map between deployment regions and the defined capacity scalers in each region.
+
+>**api_port**, Open Targets Platform API listening port.
+
+>**api_port_name**, named port corresponding to Open Targets Platform API listening port
+
+>**ilb_ip_addresses**, a map from region to the corresponding deployed internal load balancer, in case 'INTERNAL' was chosen as the load balancer option.
+
+>**glb_external_ip**, external IP of the deployed global load balancer, in case 'GLOBAL' was chosen as the load balancer option.
+
+
 #### Disclaimer
 Infrastructure visual diagrams use AWS icons and visual elements, but their meaning in Open Targets Google Cloud Infrastructure is the same, from the conceptual point of view.
 
