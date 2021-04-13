@@ -82,7 +82,6 @@ Once the infrastructure has been successfully deployed, the following details ar
 
 >**glb_external_ip**, external IP of the deployed global load balancer, in case 'GLOBAL' was chosen as the load balancer option.
 
-
 #### Disclaimer
 Infrastructure visual diagrams use AWS icons and visual elements, but their meaning in Open Targets Google Cloud Infrastructure is the same, from the conceptual point of view.
 
