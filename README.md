@@ -21,7 +21,7 @@ Open Targets Platform Infrastructure has been defined using [Terraform Modules](
 
 The platform has been broken down into the following components:
 - Clickhouse
-- [Elastic Search](modules/elasticsearch/README.md)
+- [Elastic Search](modules/elasticsearch)
 - API
 - Web frontend
 
