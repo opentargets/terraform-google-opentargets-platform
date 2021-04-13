@@ -166,6 +166,26 @@ config_set_dev_mode_on                      = true
 //config_enable_inspection                    = true
 ```
 
+## Release Information
+This section groups together metaparameters related to the deployment that will be used, among other things, for scoping resources IDs / names.
+
+>_config_release_name_, its value will be used for prefix-scoping names / IDs of deployed resources
+
+## Deployment configuration
+The details in this section define parameters related to the destination Google Cloud Project and regions, where resources will be created.
+
+>_config_gcp_default_region_, default deployment region when no region is specified, this parameters is related to the cloud provider configuration, in this case Google Cloud Platform.
+
+>_config_gcp_default_zone_, default deployment zone when no zone is specified, this parameters is related to the cloud provider configuration, in this case Google Cloud Platform.
+
+>_config_project_id_, Google Cloud Project ID that will be the destination for deployed resources.
+
+>_config_deployment_regions_, a list of Google Cloud regions for deploying Open Targets Platform across.
+
+## Elastic Search configuration
+TODO
+
+
 <a name="tfenvexplained"></a>
 
 # Terraform Environment Explained
