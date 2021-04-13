@@ -122,7 +122,17 @@ TODO
 <a name="tfenvexplained"></a>
 
 # Terraform Environment Explained
-TODO
+Currently, a _Terraform Environment_ profile contains the details that will be used for configuring a remote _Terraform Backend_, which will be used for storing the information related to _Terraform State_.
+```
+# This is a template Terraform Environment Configuration for creating new profiles
+TF_VAR_config_tf_backend_bucket_name='TF_CONFIG_TFSTATE_BUCKET_NAME'
+
+# Usually your GitHub handle without the '@'
+TF_VAR_config_tf_backend_prefix='TF_CONFIG_TFSTATE_PREFIX'
+```
+_TF_VAR_config_tf_backend_bucket_name_ represents the Google Cloud bucket name.
+
+_TF_VAR_config_tf_backend_prefix_ is a prefix that will effectively turn into a folder in the given bucket, storing _Terraform State_ information.
 
 # Other Operations
 
