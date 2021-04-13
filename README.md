@@ -225,6 +225,17 @@ Like on the previous sections, this one contains a collection of _Terraform inpu
 
 >**config_vm_api_boot_disk_size**, VM boot disk size to attach to the Open Targets Platform API instances.
 
+## Web Application configuration
+Another software component of Open Targets Platform is its web frontend, and this section shapes its deployment.
+
+A web application bundle is used for deploying the web frontend SPA, obtained as an asset attached to the specified GitHub release.
+
+>**config_webapp_repo_name**, GitHub repository where to fetch the bundle from.
+
+>**config_webapp_release**, GitHub tag release.
+
+>**config_webapp_deployment_context_map**, this is a simple key-value collection that will be injected as configuration in the web application when deployed.
+
 
 <a name="tfenvexplained"></a>
 
