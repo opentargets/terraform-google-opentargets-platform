@@ -258,6 +258,9 @@ This part of the deployment context is related to some features of the infrastru
 
 >**config_enable_inspection**, when true, an extra VM per region will be deployed, for internal access to deployed infrastructure.
 
+# Output Information
+TODO
+
 <a name="tfenvexplained"></a>
 
 # Terraform Environment Explained
