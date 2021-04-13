@@ -251,6 +251,12 @@ This section shapes how those DNS entries are set.
 
 >**config_dns_platform_api_subdomain**, which subdomain to use fot Open Targets Platform API services, default is 'platform'.
 
+## Development Section
+This part of the deployment context is related to some features of the infrastructure definition mainly useful in a development environment.
+
+>**config_set_dev_mode_on**, when development mode is active, SSH traffic to all deployed VMs is enabled, and inspection VMs are deployed.
+
+>**config_enable_inspection**, when true, an extra VM per region will be deployed, for internal access to deployed infrastructure.
 
 <a name="tfenvexplained"></a>
 
