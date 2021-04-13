@@ -51,7 +51,7 @@ variable "webapp_docker_node_version" {
 }
 
 variable "website_not_found_page" {
-  description = "It defines the website 'not found' page"
+  description = "It defines the website 'not found' page, default 'index.html'"
   type = string
   default = "index.html"
 }
