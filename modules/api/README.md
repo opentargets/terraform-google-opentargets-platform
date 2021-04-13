@@ -60,8 +60,7 @@ The module implements the following input parameters.
 
 
 ## Load Balancer configuration
->**load_balancer_type**, 
-
+>**load_balancer_type**, this will tell the module whether an internal load balancer, a global load balancer, or no load balancer at all should be created. Valid values are: 'INTERNAL', 'GLOBAL', 'NONE'.
 
 ## DNS configuration
 >**dns_domain_api**, 
