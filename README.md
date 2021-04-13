@@ -22,8 +22,8 @@ Open Targets Platform Infrastructure has been defined using [Terraform Modules](
 The platform has been broken down into the following components:
 - [Clickhouse](modules/clickhouse)
 - [Elastic Search](modules/elasticsearch)
-- API
-- Web frontend
+- [API](modules/api)
+- [Web frontend](modules/webapp)
 
 Each component is defined and encapsulated as a submodule that can be reused independently, in any Google Cloud environment run, or not, by Open Targets.
 
@@ -264,9 +264,9 @@ Once the deployment process has been successfully completed, the following detai
 
 >**clickhouse_deployments**, information on the Clickhouse deployments, mainly their Google Cloud internal load balancers IP addresses, see also submodule [documentation](modules/clickhouse)
 
->**api_deployments**, output information from the _API submodule_ is forwarded here.
+>**api_deployments**, output information from the _API submodule_ is forwarded here, see also submodule [documentation](modules/api)
 
->**webapp_deployment**, output information from the _webapp submodule_ is forwarded here.
+>**webapp_deployment**, output information from the _webapp submodule_ is forwarded here, see also submodule [documentation](modules/webapp)
 
 >**debug_glb_platform**, details on the deployed platform GLB are provided through this output parameter.
 
