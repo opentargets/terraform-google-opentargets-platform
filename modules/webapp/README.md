@@ -37,4 +37,4 @@ The module implements the following input parameters.
 >**website_not_found_page**, it defines the website 'not found' page, default 'index.html'.
 
 ## Temporary assets
->**folder_tmp**, 
+>**folder_tmp**, path to a temporary folder where to deploy working directories.
