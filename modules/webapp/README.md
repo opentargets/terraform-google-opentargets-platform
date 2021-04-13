@@ -24,17 +24,17 @@ The module implements the following input parameters.
 >**location**, this input value sets the bucket's location. Multi-Region or Regional buckets location values are supported, see [here](https://cloud.google.com/storage/docs/locations#location-mr) for more information. By default, the bucket is regional, location 'EUROPE-WEST4'
 
 ## Web Application configuration
->**webapp_repo_name**, 
+>**webapp_repo_name**, Web Application repository name, where to find the bundle given a release version as well.
 
->**webapp_release**, 
+>**webapp_release**, release version of the web application to deploy (it will be used to locate the bundle within the given repository)
 
->**webapp_deployment_context_placeholder**, 
+>**webapp_deployment_context_placeholder**, This defines the placeholder to replace within the public index.html, with the deployment context, default 'DEVOPS_CONTEXT_DEPLOYMENT' (**DEPRECATED**)
 
->**webapp_deployment_context**, 
+>**webapp_deployment_context**, values for parameterising the deployment of the web application, see defaults as an example.
 
->**webapp_docker_node_version**, 
+>**webapp_docker_node_version**, Node version to use for building the bundle.
 
->**website_not_found_page**, 
+>**website_not_found_page**, it defines the website 'not found' page, default 'index.html'.
 
 ## Temporary assets
 >**folder_tmp**, 
