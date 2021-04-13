@@ -259,7 +259,24 @@ This part of the deployment context is related to some features of the infrastru
 >**config_enable_inspection**, when true, an extra VM per region will be deployed, for internal access to deployed infrastructure.
 
 # Output Information
-TODO
+Once the deployment process has been successfully completed, the following details about the resources are revealed.
+
+>**network_region_subnet_mapping**, a custom VPC is created for every deployment context of Open Targets Platform, and, as a result, information on the created custom subnets is output here.
+
+>**elastic_search_deployments**, information on the Elastic Search deployments, mainly their Google Cloud internal load balancers IP addresses.
+
+>**clickhouse_deployments**, information on the Clickhouse deployments, mainly their Google Cloud internal load balancers IP addresses.
+
+>**api_deployments**, output information from the _API submodule_ is forwarded here.
+
+>**webapp_deployment**, output information from the _webapp submodule_ is forwarded here.
+
+>**debug_glb_platform**, details on the deployed platform GLB are provided through this output parameter.
+
+>**dns_records**, provides the details about the created DNS records.
+
+>**inspection_vms**, this output parameter offers information about the inspection VMs deployed within the infrastructure.
+
 
 <a name="tfenvexplained"></a>
 
