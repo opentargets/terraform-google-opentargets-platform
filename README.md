@@ -236,6 +236,21 @@ A web application bundle is used for deploying the web frontend SPA, obtained as
 
 >**config_webapp_deployment_context_map**, this is a simple key-value collection that will be injected as configuration in the web application when deployed.
 
+## DNS configuration
+Some of the resources that are part of Open Targets Platform will be attending external requests, e.g. the platform API, and they need to get registered under their corresponding DNS entries.
+
+This section shapes how those DNS entries are set.
+
+>**config_dns_project_id**, ID of the Google Cloud Project that hosts the Cloud DNS services where DNS entries will be registered.
+
+>**config_dns_managed_zone_name**, name of the Cloud DNS managed zone where entries can be registered. 
+
+>**config_dns_subdomain_prefix**, if supplied, this parameters allows for the resources be "scoped" within a subdomain in the DNS, this way, multiple deployments can share the main root domain name.
+
+>**config_dns_managed_zone_dns_name**, root domain name associated to the managed DNS zone.
+
+>**config_dns_platform_api_subdomain**, which subdomain to use fot Open Targets Platform API services, default is 'platform'.
+
 
 <a name="tfenvexplained"></a>
 
