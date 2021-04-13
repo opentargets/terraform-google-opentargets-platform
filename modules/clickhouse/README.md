@@ -19,3 +19,34 @@ module "backend_elastic_search" {
 
 # Module configuration
 The module implements the following input parameters.
+
+## General configuration
+>**module_wide_prefix_scope**, the prefix provided here will scope names for those resources created by this module, default 'otpdevch'.
+
+>**network_name**, name of the network resources will be connected to, default 'default'.
+
+>**network_self_link**, self link to the network where resources should be connected when deployed, default 'default'.
+
+>**network_subnet_name**, name of the subnet, within the 'network_name', and the given region, where instances should be connected to, default 'main-subnet'.
+
+>**network_source_ranges**, CIDR that represents which IPs we want to grant access to the deployed resources, default '10.0.0.0/9'.
+
+>**network_sources_health_checks**, source CIDR for health checks, default '[ 130.211.0.0/22, 35.191.0.0/16 ]'.
+
+>**deployment_region**, region where resources should be deployed.
+
+
+## Clickhouse configuration
+>**vm_firewall_tags**, 
+
+>**vm_clickhouse_vcpus**, 
+
+>**vm_clickhouse_mem**, 
+
+>**vm_clickhouse_image**, 
+
+>**vm_clickhouse_image_project**, 
+
+>**vm_clickhouse_boot_disk_size**, 
+
+>**deployment_target_size**, 
