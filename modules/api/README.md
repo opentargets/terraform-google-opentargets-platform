@@ -56,7 +56,7 @@ The module implements the following input parameters.
 
 
 ## Data Backend configuration
->**backend_connection_map**, 
+>**backend_connection_map**, information on where to connect to data backend services.
 
 
 ## Load Balancer configuration
