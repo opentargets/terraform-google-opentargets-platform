@@ -185,7 +185,7 @@ The details in this section define parameters related to the destination Google 
 ## Elastic Search configuration
 On this section, the deployment context defines which Elasctic Search backend will be deployed.
 
->**config_vm_elastic_search_image_project**, VM images may be deposited in a different project, which ID is specified here.
+>**config_vm_elastic_search_image_project**, VM images may be hosted in a project different than the recipient of the resources being deployed, which ID is specified here.
 
 >**config_vm_elastic_search_vcpus**, CPU count to be allocated for every Open Targets Elastic Search instance.
 
@@ -195,7 +195,35 @@ On this section, the deployment context defines which Elasctic Search backend wi
 
 >**config_vm_elastic_search_version**, Docker image version for running Elastic Search within the VM isntances.
 
->**config_vm_elastic_search_boot_disk_size**, VM boot disk size to attach to the Elastic Search instances.
+>**config_vm_elastic_search_boot_disk_size**, VM boot disk size to attach to the Open Targets Elastic Search instances.
+
+## Clickhouse configuration
+This deployment context section defines the Clickhouse backend that will be deployed.
+
+>**config_vm_clickhouse_vcpus**, CPU count to be allocated for every Open Targets Clickhouse instance.
+
+>**config_vm_clickhouse_mem**, amount of memory to be allocated for every Open Targets Clickhouse instance (MiB).
+
+>**config_vm_clickhouse_image**, VM image ID for Open Targets Clickhouse instances.
+
+>**config_vm_clickhouse_image_project**, VM images may be hosted in a project different than the recipient of the resources being deployed, which ID is specified here.
+
+>**config_vm_clickhouse_boot_disk_size**, VM boot disk size to attach to the Open Targets Clickhouse instances.
+
+## API configuration
+Like on the previous sections, this one contains a collection of _Terraform input parameters_ that configure which Open Targets Platform API will be deployed.
+
+>**config_vm_platform_api_image_version**, Open Targets Platform API image version to deploy.
+
+>**config_vm_api_vcpus**, CPU count to be allocated for every Open Targets Platform API instance.
+
+>**config_vm_api_mem**, amount of memory to be allocated for every Open Targets Platform API instance (MiB).
+
+>**config_vm_api_image**, VM image ID for Open Targets Platform API instances.
+
+>**config_vm_api_image_project**, VM images may be hosted in a project different than the recipient of the resources being deployed, which ID is specified here.
+
+>**config_vm_api_boot_disk_size**, VM boot disk size to attach to the Open Targets Platform API instances.
 
 
 <a name="tfenvexplained"></a>
