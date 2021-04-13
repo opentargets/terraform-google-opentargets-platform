@@ -143,16 +143,34 @@ $ make tfcreate srcprofile=eudev dstprofile=mydev
 ```
 
 ## Cleaning up Terraform Environment
-TODO
+Active _Terraform Environment_ can be cleaned up by the following command:
+```
+$ make clean tfprofile
+```
 
 ## Setting Terraform Backend back to 'local'
-TODO
+Setting _Terraform_ backend back to 'local' is, effectively, resetting to default configuration.
+
+There are two targets within the Makefile helper for this purpose:
+```
+$ make tfbackendlocal
+```
+or
+```
+$ make clean_tfbackend
+```
 
 ## Cleaning up Deployment Context
-TODO
+This action deactivates any currently active deployment context, thus, _Terraform_ has nothing to do.
+```
+$ make clean_depcontext
+```
 
 ## Cleaning Everything
-TODO
+This action resets everything to default by removing any active _Terraform Environment_, _Deployment Context_ and setting the backend to 'local'.
+```
+$ make clean
+```
 
 #### Disclaimer
 Infrastructure visual diagrams use AWS icons and visual elements, but their meaning in Open Targets Google Cloud Infrastructure is the same, from the conceptual point of view.
