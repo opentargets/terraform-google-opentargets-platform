@@ -15,3 +15,26 @@ module "webapp" {
 
 # Module configuration
 The module implements the following input parameters.
+
+## General configuration
+>**module_wide_prefix_scope**, scoping prefix for naming resources in this deployment, default 'otpdevwebapp'.
+
+>**project_id**, ID of the project that will host the deployed resources.
+
+>**location**, this input value sets the bucket's location. Multi-Region or Regional buckets location values are supported, see [here](https://cloud.google.com/storage/docs/locations#location-mr) for more information. By default, the bucket is regional, location 'EUROPE-WEST4'
+
+## Web Application configuration
+>**webapp_repo_name**, 
+
+>**webapp_release**, 
+
+>**webapp_deployment_context_placeholder**, 
+
+>**webapp_deployment_context**, 
+
+>**webapp_docker_node_version**, 
+
+>**website_not_found_page**, 
+
+## Temporary assets
+>**folder_tmp**, 
