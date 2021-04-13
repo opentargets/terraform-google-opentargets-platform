@@ -169,21 +169,33 @@ config_set_dev_mode_on                      = true
 ## Release Information
 This section groups together metaparameters related to the deployment that will be used, among other things, for scoping resources IDs / names.
 
->_config_release_name_, its value will be used for prefix-scoping names / IDs of deployed resources
+>**config_release_name**, its value will be used for prefix-scoping names / IDs of deployed resources
 
 ## Deployment configuration
 The details in this section define parameters related to the destination Google Cloud Project and regions, where resources will be created.
 
->_config_gcp_default_region_, default deployment region when no region is specified, this parameters is related to the cloud provider configuration, in this case Google Cloud Platform.
+>**config_gcp_default_region**, default deployment region when no region is specified, this parameters is related to the cloud provider configuration, in this case Google Cloud Platform.
 
->_config_gcp_default_zone_, default deployment zone when no zone is specified, this parameters is related to the cloud provider configuration, in this case Google Cloud Platform.
+>**config_gcp_default_zone**, default deployment zone when no zone is specified, this parameters is related to the cloud provider configuration, in this case Google Cloud Platform.
 
->_config_project_id_, Google Cloud Project ID that will be the destination for deployed resources.
+>**config_project_id**, Google Cloud Project ID that will be the destination for deployed resources.
 
->_config_deployment_regions_, a list of Google Cloud regions for deploying Open Targets Platform across.
+>**config_deployment_regions**, a list of Google Cloud regions for deploying Open Targets Platform across.
 
 ## Elastic Search configuration
-TODO
+On this section, the deployment context defines which Elasctic Search backend will be deployed.
+
+>**config_vm_elastic_search_image_project**, VM images may be deposited in a different project, which ID is specified here.
+
+>**config_vm_elastic_search_vcpus**, CPU count to be allocated for every Open Targets Elastic Search instance.
+
+>**config_vm_elastic_search_mem**, amount of memory to be allocated for every Open Targets Elastic Search instance (MiB).
+
+>**config_vm_elastic_search_image**, VM image ID for Open Targets Elastic Search instances.
+
+>**config_vm_elastic_search_version**, Docker image version for running Elastic Search within the VM isntances.
+
+>**config_vm_elastic_search_boot_disk_size**, VM boot disk size to attach to the Elastic Search instances.
 
 
 <a name="tfenvexplained"></a>
