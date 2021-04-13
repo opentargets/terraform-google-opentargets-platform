@@ -50,3 +50,23 @@ The module implements the following input parameters.
 >**vm_clickhouse_boot_disk_size**, Clickhouse VM boot disk size, default '250GB'.
 
 >**deployment_target_size**, This number configures how many instances should be running, default '1'.
+
+# Output Information
+Once the infrastructure has been successfully deployed, the following details are revealed by this module as output.
+
+>**deployment_region**, region where resources have been deployed.
+
+>**network_name**, VPC network where resources have been connected to.
+
+>**network_subnet_name**, VPC Subnet within the given region where resources have been connected to.
+
+>**ilb_ip_address**, IP address of the deployed Internal Load Balancer that is at front of the Clickhouse VMs.
+
+>**port_clickhouse_http**, Clickhouse HTTP requests port.
+
+>**port_clickhouse_http_name**, named port corresponding to Clickhouse HTTP requests port.
+
+>**port_clickhouse_cli**, Clickhouse client port.
+
+>**port_clickhouse_cli_name**, named port corresponding to Clickhouse client port.
+
