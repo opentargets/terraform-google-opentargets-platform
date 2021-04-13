@@ -38,3 +38,8 @@ The module implements the following input parameters.
 
 ## Temporary assets
 >**folder_tmp**, path to a temporary folder where to deploy working directories.
+
+# Output Information
+Once the infrastructure has been successfully deployed, the following details are revealed by this module as output.
+
+>**bucket**, details on the created Google Cloud Storage Bucket.
