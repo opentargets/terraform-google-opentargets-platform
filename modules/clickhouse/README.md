@@ -11,7 +11,7 @@ VM instances running the Clickhouse services are configured in a regional instan
 The module can be sourced from its GitHub URL as shown below.
 ```terraform
 // --- Clickhouse Backend --- //
-module "backend_elastic_search" {
+module "backend_clickhouse" {
   source = "github.com/opentargets/terraform-google-opentargets-platform//modules/clickhouse"
   // ...
 }

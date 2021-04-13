@@ -11,7 +11,7 @@ VM instances running the Open Targets Platform API services are configured in a 
 The module can be sourced from its GitHub URL as shown below.
 ```terraform
 // --- Open Targets Platform API --- //
-module "backend_elastic_search" {
+module "backend_api" {
   source = "github.com/opentargets/terraform-google-opentargets-platform//modules/api"
   // ...
 }
