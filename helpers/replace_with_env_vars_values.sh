@@ -11,3 +11,5 @@ for key in $( cat ${envfile} | awk '{$1=$1};1' | egrep -o "TF_VAR_[_A-Za-z]+" ) 
     source ${envfile} ; echo -e "\t[TERRAFORM] Injecting '${key}=${!key}'" ;
     source ${envfile} ; sed -E -i ".bak" "s/${key}(\W|$)/\"${!key}\"/g" ${dstfile} ;
 done
+echo "[HOUSEKEEPING] Clean unneeded backup file '${dstfile}"
+rm -f ${dstfile}.bak
