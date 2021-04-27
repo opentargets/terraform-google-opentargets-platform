@@ -177,6 +177,12 @@ variable "config_webapp_location" {
   default = "EU"
 }
 
+variable "config_webapp_robots_profile" {
+  description = "This input parameter defines the 'robots.txt' profile to be used when deploying the web application, default 'default', which means that no changes to existing 'robots.txt' file will be made"
+  type = string
+  default = "default"
+}
+
 // --- Development --- //
 variable "config_set_dev_mode_on" {
   description = "If 'true', it will set the deployment to 'development mode', default is 'false'"
