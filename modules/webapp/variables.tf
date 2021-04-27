@@ -44,6 +44,12 @@ variable "webapp_deployment_context" {
   }
 }
 
+variable "webapp_robots_profile" {
+  description = "This defines which 'robots.txt' profile to deploy with the web application, default is 'default', which means no changes will be made to the main 'robots.txt' file set in the web application bundle"
+  type = string
+  default = "default"
+}
+
 variable "webapp_docker_node_version" {
   description = "Node version to use for building the bundle"
   type = number
