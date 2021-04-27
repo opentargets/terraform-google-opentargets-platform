@@ -40,4 +40,7 @@ locals {
   webapp_bundle_provisioner_path_build = "${local.webapp_provisioner_path_working_dir}/build"
   webapp_bundle_provisioner_file_name_devops_context_template = "config.template"
   webapp_bundle_provisioner_file_name_devops_context_instance = "config.js"
+  webapp_bundle_provisioner_robots_active_file_name = "robots.txt"
+  webapp_bundle_provisioner_robots_profile_default = "default"
+  webapp_bundle_provisioner_robots_profile_src = var.webapp_robots_profile != local.webapp_bundle_provisioner_robots_profile_default ? "${local.webapp_bundle_provisioner_robots_active_file_name}.${var.webapp_robots_profile}" : local.webapp_bundle_provisioner_robots_active_file_name
 }
