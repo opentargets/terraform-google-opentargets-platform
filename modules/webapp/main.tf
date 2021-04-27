@@ -11,6 +11,7 @@ resource "random_string" "random" {
   special = false
   keepers = {
     webapp_release = var.webapp_release
+    webapp_repository = var.webapp_repo_name
     deployment_scope = var.module_wide_prefix_scope
     deployment_context = md5(jsonencode(var.webapp_deployment_context))
   }
