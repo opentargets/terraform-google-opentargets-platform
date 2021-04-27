@@ -48,6 +48,8 @@ resource "null_resource" "webapp_provisioner" {
         file_name_devops_context_template = local.webapp_bundle_provisioner_file_name_devops_context_template
         file_name_devops_context_instance = local.webapp_bundle_provisioner_file_name_devops_context_instance
         bucket_webapp_url = "gs://${module.bucket_webapp.website_bucket_name}"
+        robots_active_file_name = local.webapp_bundle_provisioner_robots_active_file_name
+        robots_profile_src_file_name = local.webapp_bundle_provisioner_robots_profile_src
         robots_profile_name = var.webapp_robots_profile
       },
       local.webapp_provisioner_deployment_context
