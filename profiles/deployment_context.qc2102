@@ -1,6 +1,6 @@
 // --- Sample deployment ---//
 // --- Release information --- //
-config_release_name                         = "mbotp"
+config_release_name                         = "qc"
 // --- Deployment configuration --- //
 config_gcp_default_region                   = "europe-west1"
 config_gcp_default_zone                     = "europe-west1-b"
@@ -28,16 +28,17 @@ config_vm_api_image_project                 = "cos-cloud"
 config_vm_api_boot_disk_size                = "10GB"
 // --- DNS --- //
 config_dns_project_id                       = "open-targets-eu-dev"
-config_dns_subdomain_prefix                 = "gamma"
+config_dns_subdomain_prefix                 = "qc"
 config_dns_managed_zone_name                = "opentargets-xyz"
 config_dns_managed_zone_dns_name            = "opentargets.xyz."
 config_dns_platform_api_subdomain           = "api"
 // --- Web App configuration --- //
-config_webapp_repo_name                     = "mbdebian/platform-app"
-config_webapp_release                       = "1.0.8"
+config_webapp_repo_name                     = "opentargets/platform-app"
+config_webapp_release                       = "0.1.3"
 config_webapp_deployment_context_map        = {
-    DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API = "'https://api.platform.gamma.opentargets.xyz/api/v4/graphql'"
+    DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API = "'https://api.platform.qc.opentargets.xyz/api/v4/graphql'"
 }
+config_webapp_robots_profile                = "default"
 // --- Development Mode --- //
 config_set_dev_mode_on                      = true
 //config_enable_inspection                    = true
