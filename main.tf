@@ -128,4 +128,5 @@ module "web_app" {
    webapp_repo_name = var.config_webapp_repo_name
    webapp_release = var.config_webapp_release
    webapp_deployment_context = var.config_webapp_deployment_context_map
+   webapp_robots_profile = var.config_webapp_robots_profile
 }
