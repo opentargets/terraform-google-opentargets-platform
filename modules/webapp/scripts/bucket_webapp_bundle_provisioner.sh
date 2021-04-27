@@ -21,7 +21,7 @@ for envvar in $( cat ${file_name_devops_context_instance} | egrep -o "DEVOPS[_A-
     echo -e "\t[CONTEXT] Injecting '${key}=${value}'"
     sed -E -i ".bak" "s/${key}(\W|$)/${value};/g" ${file_name_devops_context_instance}
 done
-echo "[BUILD] Setting 'robots.txt' profile '${robots_profile_name}'"
+echo "[BUILD] Setting 'robots.txt' profile to '${robots_profile_name}'"
 cp ${robots_profile_src_file_name} ${robots_active_file_name}
 echo "[CLEAN] Remove context template"
 rm -f ${file_name_devops_context_template}
