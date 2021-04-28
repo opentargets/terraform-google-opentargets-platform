@@ -12,8 +12,8 @@ resource "google_compute_backend_bucket" "webapp" {
   bucket_name = module.web_app.bucket.website_bucket_name
   enable_cdn = true
   cdn_policy {
-    client_ttl = 300
-    default_ttl = 600
+    client_ttl = 180
+    default_ttl = 300
     max_ttl = 1800
     serve_while_stale = 1800
   }
