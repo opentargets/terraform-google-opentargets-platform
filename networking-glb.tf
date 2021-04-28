@@ -15,6 +15,7 @@ resource "google_compute_backend_bucket" "webapp" {
     client_ttl = 300
     default_ttl = 600
     max_ttl = 1800
+    serve_while_stale = 1800
   }
 }
 
