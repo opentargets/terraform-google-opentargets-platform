@@ -6,6 +6,7 @@ resource "google_compute_backend_bucket" "webapp" {
     module.web_app
   ]
 
+  provider = google-beta
   name = "${var.config_release_name}-backend-webapp"
   description = "Bucket backend for the web application"
   bucket_name = module.web_app.bucket.website_bucket_name
