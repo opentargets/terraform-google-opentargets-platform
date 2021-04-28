@@ -39,6 +39,8 @@ config_webapp_deployment_context_map        = {
     DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API = "'https://api.platform.qc.opentargets.xyz/api/v4/graphql'"
 }
 config_webapp_robots_profile                = "default"
+config_webapp_bucket_name_data_assets       = "open-targets-data-releases"
+config_webapp_data_context_release          = "21.04"
 // --- Development Mode --- //
 config_set_dev_mode_on                      = true
 //config_enable_inspection                    = true
