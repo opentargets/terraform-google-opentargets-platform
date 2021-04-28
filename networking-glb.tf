@@ -10,6 +10,11 @@ resource "google_compute_backend_bucket" "webapp" {
   description = "Bucket backend for the web application"
   bucket_name = module.web_app.bucket.website_bucket_name
   enable_cdn = true
+  cdn_policy {
+    client_ttl = 300
+    default_ttl = 600
+    max_ttl = 1800
+  }
 }
 
 // --- GLB SSL Managed Certificates --- //
