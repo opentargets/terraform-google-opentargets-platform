@@ -2,6 +2,7 @@
 // Entry for Open Target API GLB
 resource "google_dns_record_set" "dns_a_api_glb" {
   // Common
+  project = var.config_dns_project_id
   managed_zone = var.config_dns_managed_zone_name
   type = "A"
   ttl = 5
@@ -15,6 +16,7 @@ resource "google_dns_record_set" "dns_a_api_glb" {
 resource "google_dns_record_set" "dns_a_webapp_glb" {
     count = length(local.dns_platform_webapp_domain_names)
     // Common
+    project = var.config_dns_project_id
     managed_zone = var.config_dns_managed_zone_name
     type = "A"
     ttl = 5
