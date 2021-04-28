@@ -13,6 +13,8 @@ resource "random_string" "random" {
     webapp_release = var.webapp_release
     webapp_repository = var.webapp_repo_name
     robots_profile_name = var.webapp_robots_profile
+    data_context_url = local.webapp_bundle_provisioner_url_bucket_data_context
+    data_context_dst_folder = local.webapp_bundle_provisioner_data_context_dst_folder
     deployment_scope = var.module_wide_prefix_scope
     deployment_context = md5(jsonencode(var.webapp_deployment_context))
   }
