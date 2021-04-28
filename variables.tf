@@ -183,6 +183,16 @@ variable "config_webapp_robots_profile" {
   default = "default"
 }
 
+variable "config_webapp_bucket_name_data_assets" {
+  description = "Bucket where to find the data context for the web application"
+  type = string
+}
+
+variable "config_webapp_data_context_release" {
+  description = "Data context release for the web application"
+  type = string
+}
+
 // --- Development --- //
 variable "config_set_dev_mode_on" {
   description = "If 'true', it will set the deployment to 'development mode', default is 'false'"

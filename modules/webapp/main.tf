@@ -53,6 +53,8 @@ resource "null_resource" "webapp_provisioner" {
         robots_active_file_name = local.webapp_bundle_provisioner_robots_active_file_name
         robots_profile_src_file_name = local.webapp_bundle_provisioner_robots_profile_src
         robots_profile_name = var.webapp_robots_profile
+        data_context_url = local.webapp_bundle_provisioner_url_bucket_data_context
+        data_context_dst_folder = local.webapp_bundle_provisioner_data_context_dst_folder
       },
       local.webapp_provisioner_deployment_context
     )

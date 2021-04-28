@@ -23,6 +23,10 @@ for envvar in $( cat ${file_name_devops_context_instance} | egrep -o "DEVOPS[_A-
 done
 echo "[BUILD] Setting 'robots.txt' profile to '${robots_profile_name}'"
 cp ${robots_profile_src_file_name} ${robots_active_file_name}
+echo "[BUILD] Preparing data context destination at '${data_context_dst_folder}'"
+mkdir -p ${data_context_dst_folder}
+echo "[BUILD] Collecting data context from '${data_context_url}'"
+gsutil cp -r ${data_context_url}/* ${data_context_dst_folder}/.
 echo "[CLEAN] Remove context template"
 rm -f ${file_name_devops_context_template}
 rm -f "${file_name_devops_context_instance}.bak"

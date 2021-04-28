@@ -129,4 +129,6 @@ module "web_app" {
    webapp_release = var.config_webapp_release
    webapp_deployment_context = var.config_webapp_deployment_context_map
    webapp_robots_profile = var.config_webapp_robots_profile
+   webapp_bucket_data_context_name = var.config_webapp_bucket_name_data_assets
+   webapp_bucket_data_context_release = var.config_webapp_data_context_release
 }
