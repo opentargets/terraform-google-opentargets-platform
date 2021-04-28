@@ -20,7 +20,7 @@ config_vm_clickhouse_image                  = "platform-etl-ch-21-04"
 config_vm_clickhouse_image_project          = "open-targets-eu-dev"
 config_vm_clickhouse_boot_disk_size         = "250GB"
 // --- API configuration --- //
-config_vm_platform_api_image_version        = "21.04.2"
+config_vm_platform_api_image_version        = "21.04.4"
 config_vm_api_vcpus                         = "2"
 config_vm_api_mem                           = "7680"
 config_vm_api_image                         = "cos-stable"
@@ -37,6 +37,8 @@ config_webapp_repo_name                     = "opentargets/platform-app"
 config_webapp_release                       = "0.1.4"
 config_webapp_deployment_context_map        = {
     DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API = "'https://api.platform.opentargets.org/api/v4/graphql'"
+    DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API_BETA = "'https://api.platform.opentargets.org/api/v4/graphql'"
+    DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_GOOGLE_TAG_MANAGER_ID = "GTM-WPXWRDV"
 }
 config_webapp_robots_profile                = "production"
 config_webapp_bucket_name_data_assets       = "open-targets-data-releases"
