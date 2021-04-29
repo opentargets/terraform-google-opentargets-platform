@@ -35,6 +35,9 @@ module "bucket_webapp" {
   not_found_page = var.website_not_found_page
   // Access logs configuration
   access_logs_expiration_time_in_days = 30
+  // CORS
+  enable_cors = true
+  cors_origins = [ "*" ]
 }
 
 // --- Web Application Content Provisioner ---
