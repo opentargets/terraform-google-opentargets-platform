@@ -193,6 +193,42 @@ variable "config_webapp_data_context_release" {
   type = string
 }
 
+// Web Application Web Servers --- //
+variable "config_webapp_webserver_docker_image_version" {
+  description = "NginX Docker image version to use in deployment"
+  type = string
+}
+
+variable "config_webapp_webserver_vm_vcpus" {
+  description = "CPU count, default '1'"
+  type = number
+  default = "1"
+}
+
+variable "config_webapp_webserver_vm_mem" {
+  description = "Amount of memory allocated Web Server nodes (MiB), default '3840'"
+  type = number
+  default = "3840"
+}
+
+variable "config_webapp_webserver_vm_image" {
+  description = "VM image to use for Web Server nodes, default 'cos-stable'"
+  type = string
+  default = "cos-stable"
+}
+
+variable "config_webapp_webserver_vm_image_project" {
+  description = "Project hosting the VM image, default 'cos-cloud'"
+  type = string
+  default = "cos-cloud"
+}
+
+variable "config_webapp_webserver_vm_boot_disk_size" {
+  description = "Boot disk size for Web Server nodes, default '10GB'"
+  type = string
+  default = "10GB"
+}
+
 // --- Development --- //
 variable "config_set_dev_mode_on" {
   description = "If 'true', it will set the deployment to 'development mode', default is 'false'"
