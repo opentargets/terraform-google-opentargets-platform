@@ -16,7 +16,12 @@ data "google_compute_zones" "available" {
   
   region = var.webserver_deployment_regions[count.index]
 }
+
 // TODO - Service Account --- //
+resource "google_service_account" "gcp_service_acc_apis" {
+  account_id = "${var.module_wide_prefix_scope}-svcacc-${random_string.random_web_server_suffix.result}"
+  display_name = "${var.module_wide_prefix_scope}-GCP-service-account"
+}
 // TODO - Instance Template --- //
 // TODO - Helath Check --- //
 // TODO - RegMIG --- //
