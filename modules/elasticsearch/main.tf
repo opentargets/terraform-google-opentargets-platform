@@ -27,7 +27,7 @@ data "google_compute_zones" "available" {
 }
 
 resource "google_service_account" "gcp_service_acc_apis" {
-  account_id = "${var.module_wide_prefix_scope}-svcacc-${random_string.random.result}"
+  account_id = "${var.module_wide_prefix_scope}-svc-${random_string.random.result}"
   display_name = "${var.module_wide_prefix_scope}-GCP-service-account"
 }
 
