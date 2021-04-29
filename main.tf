@@ -15,6 +15,12 @@ provider "google" {
   project = var.config_project_id
 }
 
+// --- Default Network Tier --- //
+resource "google_compute_project_default_network_tier" "default_network_tier" {
+  network_tier = "PREMIUM"
+  project = var.config_project_id
+}
+
 // --- Elastic Search Backend --- //
 module "backend_elastic_search" {
   source = "./modules/elasticsearch"

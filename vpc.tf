@@ -6,7 +6,7 @@ module "vpc_network" {
 
   project_id = var.config_project_id
   network_name = local.vpc_network_name
-  routing_mode = "GLOBAL"
+  routing_mode = "REGIONAL"
   auto_create_subnetworks = false
 
   subnets = [
