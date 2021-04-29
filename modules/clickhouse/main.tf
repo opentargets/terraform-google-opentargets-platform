@@ -25,6 +25,11 @@ data "google_compute_zones" "available" {
   region = var.deployment_region
 }
 
+resource "google_service_account" "gcp_service_acc_apis" {
+  account_id = "${var.module_wide_prefix_scope}-svcacc-${random_string.random.result}"
+  display_name = "${var.module_wide_prefix_scope}-GCP-service-account"
+}
+
 resource "google_compute_instance_template" "clickhouse_template" {
   name = "${var.module_wide_prefix_scope}-clickhouse-template-${random_string.random.result}"
   description = "Open Targets Platform Clickhouse node template, release ${var.vm_clickhouse_image}"
@@ -61,6 +66,11 @@ resource "google_compute_instance_template" "clickhouse_template" {
   // There is no startup script for Clickhouse, it's just available in the image
   metadata = {
     google-logging-enabled = true
+  }
+
+  service_account {
+    email = google_service_account.gcp_service_acc_apis.email
+    scopes = [ "cloud-platform" ]
   }
 }
 
