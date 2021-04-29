@@ -137,4 +137,26 @@ module "web_app" {
    webapp_robots_profile = var.config_webapp_robots_profile
    webapp_bucket_data_context_name = var.config_webapp_bucket_name_data_assets
    webapp_bucket_data_context_release = var.config_webapp_data_context_release
+   // Web Servers Configuration --- //
+  network_name = module.vpc_network.network_name
+  network_self_link = module.vpc_network.network_self_link
+  network_subnet_name = local.vpc_network_main_subnet_name
+  network_source_ranges_map = zipmap(
+    var.config_deployment_regions,
+    [ 
+      for region in var.config_deployment_regions: {
+        source_range = local.vpc_network_region_subnet_map[region].subnet_ip
+      } 
+    ]
+  )
+   //network_sources_health_checks = DEFAULT
+   webserver_deployment_regions = var.config_deployment_regions
+   webserver_firewall_tags = concat([ local.tag_glb_target_node ], local.dev_mode_fw_tags)
+   webserver_docker_image_version = var.config_webapp_webserver_docker_image_version
+   webserver_vm_vcpus = var.config_webapp_webserver_vm_vcpus
+   webserver_vm_mem = var.config_webapp_webserver_vm_mem
+   webserver_vm_image = var.config_webapp_webserver_vm_image
+   webserver_vm_image_project = var.config_webapp_webserver_vm_image_project
+   webserver_vm_boot_disk_size = var.config_webapp_webserver_vm_boot_disk_size
+   deployment_target_size = 1
 }
