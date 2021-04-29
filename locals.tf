@@ -51,6 +51,6 @@ locals {
   dev_mode_fw_tags = local.dev_mode_on ? [ local.fw_tag_ssh ] : [ ]
 
   // --- Infrastructure Inspection Configuration --- //
-  inspection_enabled = ( var.config_enable_inspection || local.dev_mode_on )
+  inspection_enabled = var.config_enable_inspection
   inspection_conditional_deployment = local.inspection_enabled ? 1 : 0
 }
