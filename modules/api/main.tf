@@ -28,6 +28,11 @@ data "google_compute_zones" "available" {
   region = var.deployment_regions[count.index]
 }
 
+resource "google_service_account" "gcp_service_acc_apis" {
+  account_id = "${var.module_wide_prefix_scope}-svcacc-${random_string.random.result}"
+  display_name = "${var.module_wide_prefix_scope}-api-GCP-service-account"
+}
+
 resource "google_compute_instance_template" "otpapi_template" {
   count = length(var.deployment_regions)
 
@@ -76,6 +81,11 @@ resource "google_compute_instance_template" "otpapi_template" {
     )
     google-logging-enabled = true
   }
+
+  service_account {
+    email = google_service_account.gcp_service_acc_apis.email
+    scopes = [ "cloud-platform" ]
+  }
 }
 
 // --- Health Check definition --- //
@@ -117,7 +127,7 @@ resource "google_compute_region_instance_group_manager" "regmig_otpapi" {
 
   auto_healing_policies {
     health_check = google_compute_health_check.otpapi_healthcheck.id
-    initial_delay_sec = 300
+    initial_delay_sec = 30
   }
 
   update_policy {
