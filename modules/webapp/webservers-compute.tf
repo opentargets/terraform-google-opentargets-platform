@@ -130,4 +130,25 @@ resource "google_compute_region_instance_group_manager" "regmig_webserver" {
     max_unavailable_fixed        = 0
     min_ready_sec                = 30
   }
-}// TODO - Autoscalers --- //
+}
+
+// TODO - Autoscalers --- //
+resource "google_compute_region_autoscaler" "autoscaler_webserver" {
+  count = length(var.webserver_deployment_regions)
+
+  name = "${var.module_wide_prefix_scope}-${count.index}-autoscaler"
+  region = var.webserver_deployment_regions[count.index]
+  target = google_compute_region_instance_group_manager.regmig_webserver[count.index].id
+
+  autoscaling_policy {
+    max_replicas = length(data.google_compute_zones.available[count.index].names) * 2
+    min_replicas = 1
+    cooldown_period = 60
+    load_balancing_utilization {
+      target = 0.5
+    }
+    cpu_utilization {
+      target = 0.75
+    }
+  }
+}
