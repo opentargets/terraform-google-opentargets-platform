@@ -25,7 +25,7 @@ resource "google_service_account" "gcp_service_acc_apis" {
   display_name = "${var.module_wide_prefix_scope}-GCP-service-account"
 }
 
-// TODO - Instance Template --- //
+// Instance Template --- //
 resource "google_compute_instance_template" "webserver_template" {
   count = length(var.webserver_deployment_regions)
 
