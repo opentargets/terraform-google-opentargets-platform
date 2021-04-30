@@ -1,24 +1,27 @@
 #!/bin/bash
-# TODO - Clean the script a little bit with environment variables
+# Environment
+site_folder='/home/site'
+nginx_conf_folder='/home/nginx/conf'
 
+# Prepare
 echo "[DEVOPS] Prepare Web Root"
-mkdir -p /srv/site
+mkdir -p $${site_folder}
 echo "[DEVOPS] Populate Web Root content from '${deployment_bundle_url}' "
-cd /srv
+cd $${site_folder}/..
 wget --no-check-certificate ${deployment_bundle_url}
-cd /srv/site
+cd $${site_folder}
 tar xzvf ../${deployment_bundle_filename}
 echo "[DEVOPS] Adjust file permissions"
 chown nginx:nginx -R /srv/site
 echo "[DEVOPS] Prepare Nginx configuration"
-mkdir -p /srv/nginx/conf
-cat > /srv/nginx/conf/default.conf <<EOF
+mkdir -p $${nginx_conf_folder}
+cat > $${nginx_conf_folder}/default.conf <<EOF
 server {
     listen 80;
 
     server_name _;
 
-    root /srv/site;
+    root /home/site;
     index index.html;
 
     location / {
@@ -32,6 +35,6 @@ EOF
 echo "[START] Nginx web server launching"
 docker run -d \
     -p 80:80 \
-    -v /srv/site:/srv/site \
-    -v /srv/nginx/conf:/etc/nginx/conf.d \
+    -v $${site_folder}:/srv/site \
+    -v $${nginx_conf_folder}:/etc/nginx/conf.d \
     nginx:${docker_image_version}
