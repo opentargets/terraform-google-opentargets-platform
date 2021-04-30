@@ -6,7 +6,9 @@ resource "random_string" "random_web_server_suffix" {
   special = false
   keepers = {
     webapp_bucket_name = local.bucket_name
-    // TODO - nginx version
+    deployment_bundle_filename = local.webapp_deployment_bundle_filename
+    deployment_bundle_url = local.webapp_deployment_bundle_url
+    nginx_docker_image_version = var.webserver_docker_image_version
   }
 }
 
