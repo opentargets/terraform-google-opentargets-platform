@@ -9,6 +9,7 @@ resource "random_string" "random_web_server_suffix" {
     deployment_bundle_filename = local.webapp_deployment_bundle_filename
     deployment_bundle_url = local.webapp_deployment_bundle_url
     nginx_docker_image_version = var.webserver_docker_image_version
+    startup_script = md5(file("${path.module}/scripts/webserver_vm_startup_script.sh"))
   }
 }
 
