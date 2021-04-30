@@ -92,5 +92,42 @@ resource "google_compute_health_check" "webserver_healthcheck" {
     port = local.webapp_webserver_port
   }
 }
+
 // TODO - RegMIG --- //
-// TODO - Autoscalers --- //
+resource "google_compute_region_instance_group_manager" "regmig_webserver" {
+  count = length(var.webserver_deployment_regions)
+
+  name = "${var.module_wide_prefix_scope}-${count.index}-regmig-webserver"
+  region = var.webserver_deployment_regions[count.index]
+  base_instance_name = "${var.module_wide_prefix_scope}-${count.index}-webserver"
+  depends_on = [ 
+      google_compute_instance_template.webserver_template,
+      google_compute_firewall.vpc_netfw_webserver_node
+    ]
+
+  // Instance Template
+  version {
+    instance_template = google_compute_instance_template.webserver_template[count.index].id
+  }
+
+  target_size = var.deployment_target_size
+
+  named_port {
+    name = local.webapp_webserver_port_name
+    port = local.webapp_webserver_port
+  }
+
+  auto_healing_policies {
+    health_check = google_compute_health_check.webserver_healthcheck.id
+    initial_delay_sec = 30
+  }
+
+  update_policy {
+    type                         = "PROACTIVE"
+    instance_redistribution_type = "PROACTIVE"
+    minimal_action               = "REPLACE"
+    max_surge_fixed              = length(data.google_compute_zones.available[count.index].names)
+    max_unavailable_fixed        = 0
+    min_ready_sec                = 30
+  }
+}// TODO - Autoscalers --- //
