@@ -12,7 +12,7 @@ resource "random_string" "random_web_server_suffix" {
   }
 }
 
-// TODO - Access to Available compute zones in the given region --- //
+// Access to Available compute zones in the given region --- //
 data "google_compute_zones" "available" {
   count = length(var.webserver_deployment_regions)
   
