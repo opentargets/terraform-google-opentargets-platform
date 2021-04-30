@@ -43,7 +43,7 @@ config_webapp_robots_profile                = "default"
 config_webapp_bucket_name_data_assets       = "open-targets-data-releases"
 config_webapp_data_context_release          = "21.04"
 // Web App Web Servers configuration --- //
-config_webapp_webserver_image_version       = "1.20"
+config_webapp_webserver_docker_image_version= "1.20"
 // --- Development Mode --- //
 config_set_dev_mode_on                      = true
 //config_enable_inspection                    = true
