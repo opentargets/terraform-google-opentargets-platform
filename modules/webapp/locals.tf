@@ -48,7 +48,7 @@ locals {
 
   // --- Web Servers --- //
   // Communication Ports
-  webapp_webserver_port = 8080
+  webapp_webserver_port = 80
   webapp_webserver_port_name = "webappserverport"
   // Firewall
   fw_tag_webserver_node = "webappservernode"
