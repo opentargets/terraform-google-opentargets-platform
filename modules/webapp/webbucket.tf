@@ -10,6 +10,8 @@ resource "random_string" "random" {
     robots_profile_name = var.webapp_robots_profile
     data_context_url = local.webapp_bundle_provisioner_url_bucket_data_context
     data_context_dst_folder = local.webapp_bundle_provisioner_data_context_dst_folder
+    deployment_bundle_filename = local.webapp_deployment_bundle_filename
+    deployment_bundle_url = local.webapp_deployment_bundle_url
     deployment_scope = var.module_wide_prefix_scope
     deployment_context = md5(jsonencode(var.webapp_deployment_context))
   }
@@ -55,6 +57,7 @@ resource "null_resource" "webapp_provisioner" {
         robots_profile_name = var.webapp_robots_profile
         data_context_url = local.webapp_bundle_provisioner_url_bucket_data_context
         data_context_dst_folder = local.webapp_bundle_provisioner_data_context_dst_folder
+        deployment_bundle_filename = local.webapp_deployment_bundle_filename
       },
       local.webapp_provisioner_deployment_context
     )
