@@ -37,9 +37,9 @@ output "dns_records" {
 }
 
 // --- Development Mode output information --- //
-output "inspection_vms" {
+/*output "inspection_vms" {
   value = zipmap(
     google_compute_instance.inspection_vm.*.region,
     google_compute_instance.inspection_vm.*
   )
-}
+}*/
