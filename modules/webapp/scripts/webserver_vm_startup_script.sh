@@ -1,17 +1,17 @@
 #!/bin/bash
 # Environment
-www_data_disk_dev = "/dev/sdb"
-www_data_dev_mount = "/var/wwwdata"
-site_folder="$${www_data_dev_mount}/site"
-nginx_conf_folder="$${www_data_dev_mount}/nginx/conf"
+export www_data_disk_dev = "/dev/sdb"
+export www_data_dev_mount = "/var/www"
+export site_folder="$${www_data_dev_mount}/site"
+export nginx_conf_folder="$${www_data_dev_mount}/nginx/conf"
 
 # Prepare
-echo "[BOOTSTRAP] Prepare Web Volume, disk '$${www_data_disk_dev}'"
-mkfs.ext4 $${www_data_disk_dev}
+#echo "[BOOTSTRAP] Prepare Web Volume, disk '$${www_data_disk_dev}'"
+#mkfs.ext4 $${www_data_disk_dev}
 mkdir -p $${www_data_dev_mount}
-mount $${www_data_disk_dev} $${www_data_dev_mount}
-chown nobody:nobody $${www_data_dev_mount}
-chmod o+s,g+s $${www_data_dev_mount}
+#mount $${www_data_disk_dev} $${www_data_dev_mount}
+#chown nobody:nobody $${www_data_dev_mount}
+#chmod o+s,g+s $${www_data_dev_mount}
 echo "[DEVOPS] Prepare Web related folders"
 mkdir -p $${site_folder}
 echo "[DEVOPS] Populate Web Root content from '${deployment_bundle_url}' "
