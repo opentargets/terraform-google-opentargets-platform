@@ -1,14 +1,13 @@
 #!/bin/bash
 # Environment
-export www_data_disk_dev="/dev/sdb"
-export www_data_dev_mount="/var/www"
+export www_data_root="/var/www"
 export site_folder="$${www_data_dev_mount}/site"
 export nginx_conf_folder="$${www_data_dev_mount}/nginx/conf"
 
 # Prepare
 #echo "[BOOTSTRAP] Prepare Web Volume, disk '$${www_data_disk_dev}'"
 #mkfs.ext4 $${www_data_disk_dev}
-mkdir -p $${www_data_dev_mount}
+#mkdir -p $${www_data_dev_mount}
 #mount $${www_data_disk_dev} $${www_data_dev_mount}
 #chown nobody:nobody $${www_data_dev_mount}
 #chmod o+s,g+s $${www_data_dev_mount}
@@ -39,10 +38,8 @@ server {
 }
 EOF
 echo "[DEVOPS] Adjust file permissions"
-#find $${site_folder} -type d -exec chmod 755 \; \{}
-#find $${site_folder} -type f -exec chmod 644 \; \{}
-find $${www_data_dev_mount} -type d -exec chmod 755 \; \{}
-find $${www_data_dev_mount} -type f -exec chmod 644 \; \{}
+find $${www_data_root} -type d -exec chmod 755 \{} \;
+find $${www_data_root} -type f -exec chmod 644 \{} \;
 echo "[START] Nginx web server launching"
 docker run -d \
     -p 8080:8080 \
