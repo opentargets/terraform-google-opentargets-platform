@@ -59,7 +59,7 @@ resource "google_compute_instance_template" "webserver_template" {
     boot = false
     type = "PERSISTENT"
     disk_type = "local-ssd"
-    device_name = local.webapp_webserver_disk_web_name
+    device_name = local.webapp_webserver_disk_web_dev_name
     mode = READ_WRITE
     disk_size_gb = "10GB"
   }
@@ -77,6 +77,7 @@ resource "google_compute_instance_template" "webserver_template" {
     startup-script = templatefile(
       "${path.module}/scripts/webserver_vm_startup_script.sh",
       {
+        dev_www_data_disk = local.webapp_webserver_disk_web_dev_name
         deployment_bundle_url = local.webapp_deployment_bundle_url
         deployment_bundle_filename = local.webapp_deployment_bundle_filename
         docker_image_version = var.webserver_docker_image_version
