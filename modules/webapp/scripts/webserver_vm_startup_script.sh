@@ -1,7 +1,7 @@
 #!/bin/bash
 # Environment
-export www_data_disk_dev = "/dev/sdb"
-export www_data_dev_mount = "/var/www"
+export www_data_disk_dev="/dev/sdb"
+export www_data_dev_mount="/var/www"
 export site_folder="$${www_data_dev_mount}/site"
 export nginx_conf_folder="$${www_data_dev_mount}/nginx/conf"
 
