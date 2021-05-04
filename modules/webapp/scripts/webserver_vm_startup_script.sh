@@ -1,13 +1,14 @@
 #!/bin/bash
 # Environment
-www_data_disk_dev = "/dev/${dev_www_data_disk}"
-www_data_dev_mount = "/home/www-data"
+www_data_disk_dev = "/dev/sdb"
+www_data_dev_mount = "/mnt/disks/wwwdata"
 site_folder="$${www_data_dev_mount}/site"
 nginx_conf_folder="$${www_data_dev_mount}/nginx/conf"
 
 # Prepare
 echo "[BOOTSTRAP] Prepare Web Volume, disk '$${www_data_disk_dev}'"
 mkfs.ext4 $${www_data_disk_dev}
+mkdir -p $${www_data_dev_mount}
 mount $${www_data_disk_dev} $${www_data_dev_mount}
 chown nobody:nobody $${www_data_dev_mount}
 chmod o+s,g+s $${www_data_dev_mount}
