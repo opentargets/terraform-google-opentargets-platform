@@ -30,7 +30,7 @@ server {
     index index.html;
 
     location / {
-        try_files $uri /index.html =404;
+        try_files $$uri /index.html =404;
     }
 
     access_log /dev/stdout;
