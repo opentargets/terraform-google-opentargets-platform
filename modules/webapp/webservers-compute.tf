@@ -59,7 +59,7 @@ resource "google_compute_instance_template" "webserver_template" {
     boot = false
     type = "PERSISTENT"
     disk_type = "local-ssd"
-    device_name = "webdisk"
+    device_name = local.webapp_webserver_disk_web_name
     mode = READ_WRITE
     disk_size_gb = "10GB"
   }

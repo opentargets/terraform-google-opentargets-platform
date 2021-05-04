@@ -52,11 +52,12 @@ locals {
   webapp_webserver_port_name = "webappserverport"
   // Firewall
   fw_tag_webserver_node = "webappservernode"
-  // API VM instance template values
+  // Web Server VM instance template values
   webapp_webserver_template_tags = concat(
     var.webserver_firewall_tags,
     [ local.fw_tag_webserver_node ]
   )
+  webapp_webserver_disk_web_name = "webdisk"
   // Machine geometry
   webapp_webserver_template_machine_type = "custom-${var.webserver_vm_vcpus}-${var.webserver_vm_mem}"
   webapp_webserver_template_source_image = "${var.webserver_vm_image_project}/${var.webserver_vm_image}"
