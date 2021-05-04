@@ -1,8 +1,8 @@
 #!/bin/bash
 # Environment
 export www_data_root="/var/www"
-export site_folder="$${www_data_dev_mount}/site"
-export nginx_conf_folder="$${www_data_dev_mount}/nginx/conf"
+export site_folder="$${www_data_root}/site"
+export nginx_conf_folder="$${www_data_root}/nginx/conf"
 
 # Prepare
 #echo "[BOOTSTRAP] Prepare Web Volume, disk '$${www_data_disk_dev}'"
