@@ -54,16 +54,6 @@ resource "google_compute_instance_template" "webserver_template" {
     mode = "READ_WRITE"
   }
 
-  // Web Volume --- //
-  /*disk {
-    boot = false
-    type = "PERSISTENT"
-    disk_type = "pd-ssd"
-    device_name = local.webapp_webserver_disk_web_dev_name
-    mode = "READ_WRITE"
-    disk_size_gb = "10"
-  }*/
-
   network_interface {
     network = var.network_name
     subnetwork = var.network_subnet_name
