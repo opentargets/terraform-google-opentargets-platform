@@ -61,7 +61,7 @@ resource "google_compute_instance_template" "webserver_template" {
     disk_type = "local-ssd"
     device_name = local.webapp_webserver_disk_web_dev_name
     mode = "READ_WRITE"
-    disk_size_gb = "10GB"
+    disk_size_gb = "10"
   }
 
   network_interface {
