@@ -1,7 +1,7 @@
 #!/bin/bash
 # Environment
 www_data_disk_dev = "/dev/sdb"
-www_data_dev_mount = "/mnt/disks/wwwdata"
+www_data_dev_mount = "/var/wwwdata"
 site_folder="$${www_data_dev_mount}/site"
 nginx_conf_folder="$${www_data_dev_mount}/nginx/conf"
 
