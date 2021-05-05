@@ -1,23 +1,5 @@
 // --- Platform Global Load Balancer --- //
 // This file defines a Global Load Balancer for the platform (L7 with SSL Termination)
-// --- Web App backend --- //
-resource "google_compute_backend_bucket" "webapp" {
-  depends_on = [
-    module.web_app
-  ]
-
-  //provider = google-beta
-  name = "${var.config_release_name}-backend-webapp"
-  description = "Bucket backend for the web application"
-  bucket_name = module.web_app.bucket.website_bucket_name
-  enable_cdn = true
-  /*cdn_policy {
-    client_ttl = 180
-    default_ttl = 300
-    max_ttl = 1800
-    //serve_while_stale = 1800
-  }*/
-}
 
 // --- GLB SSL Managed Certificates --- //
 resource "google_compute_managed_ssl_certificate" "glb_ssl_cert" {
@@ -50,7 +32,7 @@ resource "random_string" "random" {
 resource "google_compute_url_map" "url_map_platform_glb" {
   name = "${var.config_release_name}-glb-platform-${random_string.random.result}"
   // Web frontend as default service
-  default_service = google_compute_backend_bucket.webapp.self_link
+  default_service = module.glb_platform.backend_services["default"].self_link
 
   // Hosts - Web Application ---
   host_rule {
@@ -66,7 +48,6 @@ resource "google_compute_url_map" "url_map_platform_glb" {
   // Paths - Web Application ---
   path_matcher {
     name = "webapp-paths"
-    //default_service = google_compute_backend_bucket.webapp.self_link
     default_service = module.glb_platform.backend_services["default"].self_link
   }
   // Paths - Platform API ---
@@ -83,7 +64,7 @@ module "glb_platform" {
   // Dependencies
   depends_on = [ 
     module.vpc_network,
-    google_compute_backend_bucket.webapp, 
+    module.web_app, 
     module.backend_api
   ]
 
