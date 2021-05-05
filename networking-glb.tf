@@ -66,7 +66,8 @@ resource "google_compute_url_map" "url_map_platform_glb" {
   // Paths - Web Application ---
   path_matcher {
     name = "webapp-paths"
-    default_service = google_compute_backend_bucket.webapp.self_link
+    //default_service = google_compute_backend_bucket.webapp.self_link
+    default_service = module.glb_platform.backend_services["default"].self_link
   }
   // Paths - Platform API ---
   path_matcher {
@@ -107,10 +108,10 @@ module "glb_platform" {
     default = {
       description                     = "The Web Application is the default backend"
       protocol                        = "HTTP"
-      port                            = 80
-      port_name                       = "http"
+      port                            = module.web_app.webserver_port
+      port_name                       = module.web_app.webserver_port_name
       timeout_sec                     = 10
-      enable_cdn                      = true
+      enable_cdn                      = false
       custom_request_headers          = null
       security_policy                 = null
 
@@ -124,7 +125,7 @@ module "glb_platform" {
         healthy_threshold   = null
         unhealthy_threshold = null
         request_path        = "/"
-        port                = 80
+        port                = module.web_app.webserver_port
         host                = null
         logging             = null
       }
@@ -135,7 +136,19 @@ module "glb_platform" {
       }
 
       groups = [
-        // No instance groups here, as the default backend will be the web application
+        for region, regmig in module.web_app.map_region_to_instance_group_manager : {
+            group                        = regmig.instance_group
+            balancing_mode               = "RATE"
+            capacity_scaler              = null
+            description                  = "Web App backend for region '${region}'"
+            max_connections              = null
+            max_connections_per_instance = null
+            max_connections_per_endpoint = null
+            max_rate                     = null
+            max_rate_per_instance        = 512
+            max_rate_per_endpoint        = null
+            max_utilization              = 0.75
+        }
       ]
 
       iap_config = {
