@@ -147,7 +147,7 @@ module "glb_platform" {
             max_rate                     = null
             max_rate_per_instance        = 512
             max_rate_per_endpoint        = null
-            max_utilization              = 0.75
+            max_utilization              = 0.85
         }
       ]
 
