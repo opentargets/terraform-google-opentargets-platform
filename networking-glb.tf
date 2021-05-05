@@ -13,7 +13,7 @@ resource "google_compute_managed_ssl_certificate" "glb_ssl_cert" {
 }
 
 // --- GLB Randomization for the resource --- //
-resource "random_string" "random" {
+resource "random_string" "random_netglb" {
   length = 8
   lower = true
   upper = false
@@ -31,7 +31,7 @@ resource "random_string" "random" {
 // --- Platform Global Load Balancer --- //
 // URL Map
 resource "google_compute_url_map" "url_map_platform_glb" {
-  name = "${var.config_release_name}-glb-platform-${random_string.random.result}"
+  name = "${var.config_release_name}-glb-platform-${random_string.random_netglb.result}"
   // Web frontend as default service
   default_service = module.glb_platform.backend_services["default"].self_link
 
@@ -70,7 +70,7 @@ module "glb_platform" {
   ]
 
   project           = var.config_project_id
-  name              = "${var.config_release_name}-glb-${random_string.random.result}"
+  name              = "${var.config_release_name}-glb-${random_string.random_netglb.result}"
   target_tags       = [ local.tag_glb_target_node ]
   firewall_networks = [ module.vpc_network.network_name ]
 
