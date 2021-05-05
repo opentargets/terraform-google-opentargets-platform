@@ -24,6 +24,7 @@ resource "random_string" "random" {
     dns_managed_zone_name = var.config_dns_managed_zone_name
     dns_managed_zone_dns_name = var.config_dns_managed_zone_dns_name
     dns_platform_api_subdomain = var.config_dns_platform_api_subdomain
+    // TODO - We need to trigger a change when removing regions from the deployment
   }
 }
 
