@@ -24,6 +24,8 @@ server {
     index index.html;
 
     location / {
+        add_header 'Access-Control-Allow-Origin' '*';
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
         try_files $uri /index.html =404;
     }
 
