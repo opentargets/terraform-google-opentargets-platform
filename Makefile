@@ -23,13 +23,13 @@ all:
 	@echo "Use this helper to set both Terraform Environment and Infrastructure Deployment Context before actually deploying anything on the Cloud"
 
 # Set which Terraform backend must be used, default is 'local' --- ##
-tfbackendremote:
+tfbackendremote: clean_tfbackend_cache
 	@echo "[TERRAFORM] Setting Terraform backend to be GCP bucket"
 	@cp ${file_name_tfbackend_gcp} ${file_name_tfbackend_active}
 	${path_script_replace_with_env_vars_values} ${file_name_tfenv_active} ${file_name_tfbackend_active}
 	@echo "[WARNING] You'll need to run 'tfinit' again. Please, make sure you have an active Terraform Environment before that"
 
-tfbackendlocal:
+tfbackendlocal: clean_tfbackend_cache
 	@echo "[TERRAFORM] Setting Terraform backend to be 'local'"
 	@rm -f ${file_name_tfbackend_active}
 	@echo "[WARNING] You'll need to run 'tfinit' again. Please, make sure you have an active Terraform Environment before that"
@@ -91,7 +91,11 @@ tfdestroy:
 clean: clean_tfprofile clean_depcontext clean_tfbackend
 	@echo "[HOUSEKEEPING] Cleaning up..."
 
-clean_tfbackend: tfbackendlocal
+clean_tfbackend_cache: 
+	@echo "[HOUSEKEEPING] Cleaning up Terraform Backend Configuration, setting default"
+	rm -f .terraform/terraform.tfstate
+
+clean_tfbackend: tfbackendlocal clean_tfbackend_cache
 	@echo "[HOUSEKEEPING] Cleaning up Terraform Backend Configuration, setting default"
 
 clean_tfprofile:
@@ -103,5 +107,5 @@ clean_depcontext:
 	@rm -f ${file_name_depcontext_active}
 
 # 'PHONY' targets --- ##
-.PHONY: all tfbackendremote tfbackendlocal tfcreate tfactivate depactivate tfinit tfplan tfapply tfdestroy clean clean_tfprofile clean_tfbackend clean_depcontext _tfcreate
+.PHONY: all tfbackendremote tfbackendlocal tfcreate tfactivate depactivate tfinit tfplan tfapply tfdestroy clean clean_tfprofile clean_tfbackend clean_depcontext _tfcreate clean_tfbackend_cache
 # END --- ##
