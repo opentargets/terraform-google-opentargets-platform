@@ -83,7 +83,7 @@ module "glb_platform" {
   // managed_ssl_certificate_domains = local.ssl_managed_certificate_domain_names
   use_ssl_certificates = true
   ssl_certificates = google_compute_managed_ssl_certificate.glb_ssl_cert.*.self_link
-  https_redirect = false
+  https_redirect = true
   
   backends = {
     // Web application is the default backend
