@@ -1,4 +1,4 @@
-// --- API Firewall definition --- //
+// --- Web Server Firewall definition --- //
 // Allow traffic to API --- //
 resource "google_compute_firewall" "vpc_netfw_webserver_node" {
   count = length(var.webserver_deployment_regions)
