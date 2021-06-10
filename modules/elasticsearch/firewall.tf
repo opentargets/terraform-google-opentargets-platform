@@ -41,6 +41,6 @@ resource "google_compute_firewall" "vpc_netfw_elasticsearch_healthchecks" {
       ports = [ local.elastic_search_port_requests ]
   }
 
-  target_tags = [ local.fw_tag_elasticsearch_comms ]
+  target_tags = [ local.fw_tag_elasticsearch_requests ]
   source_ranges = concat(var.network_source_ranges, var.network_sources_health_checks)
 }
