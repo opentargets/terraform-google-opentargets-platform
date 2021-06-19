@@ -135,8 +135,14 @@ module "web_app" {
    webapp_release = var.config_webapp_release
    webapp_deployment_context = var.config_webapp_deployment_context_map
    webapp_robots_profile = var.config_webapp_robots_profile
+   // Data Context --- //
    webapp_bucket_data_context_name = var.config_webapp_bucket_name_data_assets
    webapp_bucket_data_context_release = var.config_webapp_data_context_release
+   // Sitemaps Configuration --- //
+   webapp_sitemaps_repo_name = var.config_webapp_sitemaps_repo_name
+   webapp_sitemaps_release = var.config_webapp_sitemaps_release
+   webapp_sitemaps_bigquery_table = var.config_webapp_sitemaps_bigquery_table
+   webapp_sitemaps_bigquery_project = var.config_webapp_sitemaps_bigquery_project
    // Web Servers Configuration --- //
   network_name = module.vpc_network.network_name
   network_self_link = module.vpc_network.network_self_link
