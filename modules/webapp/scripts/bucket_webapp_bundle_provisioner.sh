@@ -32,7 +32,9 @@ gsutil cp -r ${data_context_url}/* ${data_context_dst_folder}/.
 echo "[SITEMAPS] Preparing destination folder at '${sitemaps_path_dst_sitemap_folder}', it may already exist if part of the bundle"
 mkdir -p ${sitemaps_path_dst_sitemap_folder}
 echo "[SITEMAPS] Generating Sitemaps from BigQuery Data Table '${sitemaps_bigquery_table}', project '${sitemaps_bigquery_project}'"
+cd ${sitemaps_path_dst_sitemap_folder}
 java -jar ${working_dir}/ot-sitemap.jar ${sitemaps_bigquery_table} ${sitemaps_bigquery_project}
+cd ${path_build}
 echo "[CLEAN] Remove context template"
 rm -f ${file_name_devops_context_template}
 rm -f "${file_name_devops_context_instance}.bak"
