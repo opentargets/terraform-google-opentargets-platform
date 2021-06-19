@@ -193,6 +193,26 @@ variable "config_webapp_data_context_release" {
   type = string
 }
 
+variable "config_webapp_sitemaps_repo_name" {
+  description = "Name of the GitHub repository where to find the software that generates the sitemaps for the web application"
+  type = string
+}
+
+variable "config_webapp_sitemaps_release" {
+  description = "Sitemaps script release to use"
+  type = string
+}
+
+variable "config_webapp_sitemaps_bigquery_table" {
+  description = "BigQuery table to pull the sitemaps data from"
+  type = string
+}
+
+variable "config_webapp_sitemaps_bigquery_project" {
+  description = "Project hosting the BigQuery services"
+  type = string
+}
+
 // Web Application Web Servers --- //
 variable "config_webapp_webserver_docker_image_version" {
   description = "NginX Docker image version to use in deployment"
