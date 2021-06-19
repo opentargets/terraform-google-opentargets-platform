@@ -66,6 +66,27 @@ variable "webapp_bucket_data_context_subfolder_name" {
   default = "webapp"
 }
 
+variable "webapp_sitemaps_repo_name" {
+  description = "Name of the GitHub repository where to find the software that generates the sitemaps for the web application"
+  type = string
+}
+
+variable "webapp_sitemaps_release" {
+  description = "Sitemaps script release to use"
+  type = string
+}
+
+variable "webapp_sitemaps_bigquery_table" {
+  description = "BigQuery table to pull the sitemaps data from"
+  type = string
+}
+
+variable "webapp_sitemaps_bigquery_project" {
+  description = "Project hosting the BigQuery services"
+  type = string
+}
+
+
 variable "webapp_docker_node_version" {
   description = "Node version to use for building the bundle"
   type = number
