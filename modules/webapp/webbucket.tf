@@ -10,6 +10,10 @@ resource "random_string" "random" {
     robots_profile_name = var.webapp_robots_profile
     data_context_url = local.webapp_bundle_provisioner_url_bucket_data_context
     data_context_dst_folder = local.webapp_bundle_provisioner_data_context_dst_folder
+    sitemaps_url_script_download = local.webapp_bundle_provisioner_sitemaps_url_script_download
+    sitemaps_path_dst_sitemap_folder = local.webapp_bundle_provisioner_sitemaps_path_dst_sitemap_folder
+    sitemaps_bigquery_project = local.webapp_bundle_provisioner_sitemaps_bigquery_project
+    sitemaps_bigquery_table = local.webapp_bundle_provisioner_sitemaps_bigquery_table
     deployment_bundle_filename = local.webapp_deployment_bundle_filename
     deployment_scope = var.module_wide_prefix_scope
     deployment_context = md5(jsonencode(var.webapp_deployment_context))
@@ -57,6 +61,10 @@ resource "null_resource" "webapp_provisioner" {
         data_context_url = local.webapp_bundle_provisioner_url_bucket_data_context
         data_context_dst_folder = local.webapp_bundle_provisioner_data_context_dst_folder
         deployment_bundle_filename = local.webapp_deployment_bundle_filename
+        sitemaps_url_script_download = local.webapp_bundle_provisioner_sitemaps_url_script_download
+        sitemaps_path_dst_sitemap_folder = local.webapp_bundle_provisioner_sitemaps_path_dst_sitemap_folder
+        sitemaps_bigquery_project = local.webapp_bundle_provisioner_sitemaps_bigquery_project
+        sitemaps_bigquery_table = local.webapp_bundle_provisioner_sitemaps_bigquery_table
       },
       local.webapp_provisioner_deployment_context
     )
