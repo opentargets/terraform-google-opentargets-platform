@@ -17,6 +17,7 @@ resource "random_string" "random" {
     deployment_bundle_filename = local.webapp_deployment_bundle_filename
     deployment_scope = var.module_wide_prefix_scope
     deployment_context = md5(jsonencode(var.webapp_deployment_context))
+    bundle_provisioning_script = md5(file(local.webapp_bundle_provisioner_path_script))
   }
 }
 
