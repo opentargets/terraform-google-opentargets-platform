@@ -48,6 +48,8 @@ config_webapp_data_context_release          = "21.04"
 // Sitemaps generation --- //
 config_webapp_sitemaps_repo_name            = "opentargets/ot-sitemap-cli"
 config_webapp_sitemaps_release              = "0.1.0"
+config_webapp_sitemaps_bigquery_table       = "platform_21_04"
+config_webapp_sitemaps_bigquery_project     = "open-targets-prod"
 // Web App Web Servers configuration --- //
 config_webapp_webserver_docker_image_version= "1.20"
 // --- Development Mode --- //
