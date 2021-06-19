@@ -10,6 +10,8 @@ echo "[BUILD] Create build target at '${path_build}'"
 mkdir -p ${path_build}
 echo "[BUILD] Download bundle from '${url_bundle_download}'"
 wget --no-check-certificate "${url_bundle_download}"
+echo "[SITEMAPS] Downloading script from '${sitemaps_url_script_download}'"
+wget --no-check-certificate "${sitemaps_url_script_download}"
 cd ${path_build}
 echo "[BUILD] Unpack bundle"
 tar xzvf "${working_dir}/bundle.tgz"
@@ -27,6 +29,10 @@ echo "[BUILD] Preparing data context destination at '${data_context_dst_folder}'
 mkdir -p ${data_context_dst_folder}
 echo "[BUILD] Collecting data context from '${data_context_url}'"
 gsutil cp -r ${data_context_url}/* ${data_context_dst_folder}/.
+echo "[SITEMAPS] Preparing destination folder at '${sitemaps_path_dst_sitemap_folder}', it may already exist if part of the bundle"
+mkdir -p ${sitemaps_path_dst_sitemap_folder}
+echo "[SITEMAPS] Generating Sitemaps from BigQuery Data Table '${sitemaps_bigquery_table}', project '${sitemaps_bigquery_project}'"
+java -jar ${working_dir}/ot-sitemap.jar ${sitemaps_bigquery_table} ${sitemaps_bigquery_project}
 echo "[CLEAN] Remove context template"
 rm -f ${file_name_devops_context_template}
 rm -f "${file_name_devops_context_instance}.bak"
