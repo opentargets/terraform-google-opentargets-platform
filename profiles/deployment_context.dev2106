@@ -46,8 +46,8 @@ config_webapp_deployment_context_map        = {
 // Robots.txt profile --- //
 config_webapp_robots_profile                = "default"
 // Data Context --- //
-config_webapp_bucket_name_data_assets       = "open-targets-data-releases"
-config_webapp_data_context_release          = "21.04"
+config_webapp_bucket_name_data_assets       = "open-targets-pre-data-releases"
+config_webapp_data_context_release          = "21.06.4"
 // Sitemaps generation --- //
 config_webapp_sitemaps_repo_name            = "opentargets/ot-sitemap-cli"
 config_webapp_sitemaps_release              = "0.1.0"
