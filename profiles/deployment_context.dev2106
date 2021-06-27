@@ -10,17 +10,17 @@ config_deployment_regions                   = [ "europe-west1" ]
 config_vm_elastic_search_image_project      = "open-targets-eu-dev"
 config_vm_elastic_search_vcpus              = "4"
 config_vm_elastic_search_mem                = "26624"
-config_vm_elastic_search_image              = "platform21-06-4-210623-212805-es"
+config_vm_elastic_search_image              = "platform-etl-es-21-06-5"
 config_vm_elastic_search_version            = "7.9.0"
 config_vm_elastic_search_boot_disk_size     = "500GB"
 // --- Clickhouse configuration --- //
 config_vm_clickhouse_vcpus                  = "4"
 config_vm_clickhouse_mem                    = "26624"
-config_vm_clickhouse_image                  = "platform21-06-4-210623-212805-ch"
+config_vm_clickhouse_image                  = "platform-etl-ch-21-06-5"
 config_vm_clickhouse_image_project          = "open-targets-eu-dev"
 config_vm_clickhouse_boot_disk_size         = "250GB"
 // --- API configuration --- //
-config_vm_platform_api_image_version        = "21.06.3"
+config_vm_platform_api_image_version        = "21.06.5"
 config_vm_api_vcpus                         = "2"
 config_vm_api_mem                           = "7680"
 config_vm_api_image                         = "cos-stable"
@@ -46,12 +46,12 @@ config_webapp_deployment_context_map        = {
 // Robots.txt profile --- //
 config_webapp_robots_profile                = "default"
 // Data Context --- //
-config_webapp_bucket_name_data_assets       = "open-targets-pre-data-releases"
-config_webapp_data_context_release          = "21.06.4"
+config_webapp_bucket_name_data_assets       = "open-targets-data-releases"
+config_webapp_data_context_release          = "21.06"
 // Sitemaps generation --- //
 config_webapp_sitemaps_repo_name            = "opentargets/ot-sitemap-cli"
 config_webapp_sitemaps_release              = "0.1.0"
-config_webapp_sitemaps_bigquery_table       = "platform_21_04"
+config_webapp_sitemaps_bigquery_table       = "platform_21_06"
 config_webapp_sitemaps_bigquery_project     = "open-targets-prod"
 // Web App Web Servers configuration --- //
 config_webapp_webserver_docker_image_version= "1.20"
