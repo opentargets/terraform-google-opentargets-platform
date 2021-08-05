@@ -61,7 +61,7 @@ config_glb_webapp_enable_cdn = false
 // Allow Access only from EBI CIDR
 config_security_restrict_source_ips = ["193.62.192.0/21"]
 // Enable / Disable network security policies application
-config_security_api_enable = true
+config_security_api_enable    = true
 config_security_webapp_enable = true
 // --- Development Mode --- //
 config_set_dev_mode_on = true

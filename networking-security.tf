@@ -23,8 +23,8 @@ resource "google_compute_security_policy" "netsec_policy_api" {
     for_each = local.netsec_restriction_source_ip_enabled ? [1] : []
     content {
       description = "Allow traffic from the given list of CIDRs"
-      action   = "allow"
-      priority = "1000"
+      action      = "allow"
+      priority    = "1000"
       match {
         versioned_expr = "SRC_IPS_V1"
         config {
@@ -37,8 +37,8 @@ resource "google_compute_security_policy" "netsec_policy_api" {
     for_each = local.netsec_restriction_source_ip_enabled ? [1] : []
     content {
       description = "Overwrite default rule to block all traffic"
-      action   = "deny(403)"
-      priority = "2147483647"
+      action      = "deny(403)"
+      priority    = "2147483647"
       match {
         versioned_expr = "SRC_IPS_V1"
         config {
