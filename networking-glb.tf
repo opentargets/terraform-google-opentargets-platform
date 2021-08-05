@@ -93,7 +93,7 @@ module "glb_platform" {
       port                            = module.web_app.webserver_port
       port_name                       = module.web_app.webserver_port_name
       timeout_sec                     = 10
-      enable_cdn                      = true
+      enable_cdn                      = local.glb_webapp_cdn_enabled
       custom_request_headers          = null
       security_policy                 = null
 

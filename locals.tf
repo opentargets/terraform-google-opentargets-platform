@@ -42,7 +42,10 @@ locals {
   // SSL --- //
   ssl_managed_certificate_domain_names = concat(local.dns_platform_webapp_domain_names, [ local.dns_platform_api_dns_name ])
 
-  // Network Security --- //
+  // CDN for web app backend --- //
+  glb_webapp_cdn_enabled = var.config_glb_webapp_enable_cdn
+  
+  //---  Network Security --- //
   netsec_restriction_source_ip_enabled = length(var.config_security_restrict_source_ips) == 0 ? false : true
   netsec_restriction_source_ip_cidrs = var.config_security_restrict_source_ips
 
