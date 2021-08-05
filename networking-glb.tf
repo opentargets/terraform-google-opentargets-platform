@@ -95,7 +95,7 @@ module "glb_platform" {
       timeout_sec            = 10
       enable_cdn             = local.glb_webapp_cdn_enabled
       custom_request_headers = null
-      security_policy        = null
+      security_policy        = local.glb_netsec_effective_policy_webapp
 
       connection_draining_timeout_sec = null
       session_affinity                = null
@@ -148,7 +148,7 @@ module "glb_platform" {
       timeout_sec            = 10
       enable_cdn             = false
       custom_request_headers = null
-      security_policy        = null
+      security_policy        = local.glb_netsec_effective_policy_api
 
       connection_draining_timeout_sec = null
       session_affinity                = null
