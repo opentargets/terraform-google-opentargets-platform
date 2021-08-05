@@ -249,6 +249,13 @@ variable "config_webapp_webserver_vm_boot_disk_size" {
   default = "10GB"
 }
 
+// --- Network Security --- //
+variable "config_security_restrict_source_ips" {
+  description = "List of CIDRs that are the only ones allowed to access the internet facing services, default '[]'"
+  type = list
+  default = []
+}
+
 // --- Development --- //
 variable "config_set_dev_mode_on" {
   description = "If 'true', it will set the deployment to 'development mode', default is 'false'"
