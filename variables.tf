@@ -249,6 +249,12 @@ variable "config_webapp_webserver_vm_boot_disk_size" {
   default = "10GB"
 }
 
+// --- Global Load Balancer --- //
+variable "config_glb_webapp_enable_cdn" {
+  description = "This parameters indicates the GLB whether we want to use a CDN or not, default 'true'"
+  default = true
+}
+
 // --- Network Security --- //
 variable "config_security_restrict_source_ips" {
   description = "List of CIDRs that are the only ones allowed to access the internet facing services, default '[]'"
