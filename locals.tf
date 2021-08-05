@@ -42,6 +42,10 @@ locals {
   // SSL --- //
   ssl_managed_certificate_domain_names = concat(local.dns_platform_webapp_domain_names, [ local.dns_platform_api_dns_name ])
 
+  // Network Security --- //
+  netsec_restriction_source_ip_enabled = len(var.config_security_restrict_source_ips) == 0 ? false : true
+  netsec_restriction_source_ip_cidrs = var.config_security_restrict_source_ips
+
   // --- Debugging --- // 
   canaryvm_zone = "${var.config_deployment_regions[0]}-b"
 
