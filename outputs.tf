@@ -1,6 +1,6 @@
 // Outputs from this deployment
 output "network_region_subnet_mapping" {
-   value = local.vpc_network_region_subnet_map
+  value = local.vpc_network_region_subnet_map
 }
 
 output "elastic_search_deployments" {
@@ -31,7 +31,7 @@ output "debug_glb_platform" {
 
 output "dns_records" {
   value = concat(
-    [ google_dns_record_set.dns_a_api_glb ],
+    [google_dns_record_set.dns_a_api_glb],
     google_dns_record_set.dns_a_webapp_glb
   )
 }
