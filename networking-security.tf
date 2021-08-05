@@ -8,7 +8,7 @@ resource "random_string" "random_netsec_rule_source_ip_allow" {
   upper = false
   special = false
   keepers = {
-    cidrs = local.netsec_restriction_source_ip_cidrs
+    cidrs = md5(join("", local.netsec_restriction_source_ip_cidrs))
   }
 }
 
