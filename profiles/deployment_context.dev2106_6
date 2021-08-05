@@ -1,6 +1,6 @@
 // --- Sample deployment ---//
 // --- Release information --- //
-config_release_name = "dev21065"
+config_release_name = "dev21066"
 // --- Deployment configuration --- //
 config_gcp_default_region = "europe-west4"
 config_gcp_default_zone   = "europe-west4-b"
