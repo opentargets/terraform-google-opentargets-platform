@@ -55,6 +55,8 @@ config_webapp_sitemaps_bigquery_table       = "platform_21_06"
 config_webapp_sitemaps_bigquery_project     = "open-targets-prod"
 // Web App Web Servers configuration --- //
 config_webapp_webserver_docker_image_version= "1.20"
+// --- GLB Configuration --- //
+config_glb_webapp_enable_cdn = false
 // --- Security Configuration --- //
 // Allow Access only from EBI CIDR
 config_security_restrict_source_ips = [ "193.62.192.0/21" ]
