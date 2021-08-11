@@ -110,7 +110,7 @@ resource "google_compute_region_instance_group_manager" "regmig_elastic_search" 
     instance_template = google_compute_instance_template.elastic_search_template.id
   }
 
-  target_size = var.deployment_target_size
+  //target_size = var.deployment_target_size
 
   named_port {
     name = local.elastic_search_port_requests_name
