@@ -64,9 +64,9 @@ module "glb_platform" {
 
   // Dependencies
   depends_on = [
-    module.vpc_network,
+    module.vpc_network/*,
     module.web_app,
-    module.backend_api
+    module.backend_api*/
   ]
 
   project           = var.config_project_id
