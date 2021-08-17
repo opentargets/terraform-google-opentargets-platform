@@ -102,7 +102,7 @@ resource "google_compute_region_instance_group_manager" "regmig_clickhouse" {
     instance_template = google_compute_instance_template.clickhouse_template.id
   }
 
-  target_size = var.deployment_target_size
+  //target_size = var.deployment_target_size
 
   named_port {
     name = local.clickhouse_http_req_port_name

@@ -118,7 +118,7 @@ resource "google_compute_region_instance_group_manager" "regmig_otpapi" {
     instance_template = google_compute_instance_template.otpapi_template[count.index].id
   }
 
-  target_size = var.deployment_target_size
+  //target_size = var.deployment_target_size
 
   named_port {
     name = local.otp_api_port_name
