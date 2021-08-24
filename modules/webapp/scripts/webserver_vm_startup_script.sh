@@ -20,6 +20,12 @@ server {
 
     server_name _;
 
+    gzip on;
+    gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+    gzip_proxied any;
+    gzip_min_length 8192;
+
+
     root /srv/site;
     index index.html;
 
