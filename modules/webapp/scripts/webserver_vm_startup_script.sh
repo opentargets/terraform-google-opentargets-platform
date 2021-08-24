@@ -25,7 +25,6 @@ server {
     gzip_proxied any;
     gzip_min_length 8192;
 
-
     root /srv/site;
     index index.html;
 
