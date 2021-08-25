@@ -25,6 +25,9 @@ server {
     gzip_proxied any;
     gzip_min_length 8192;
 
+    keepalive_timeout 650;
+    keepalive_requests 10000;
+
     root /srv/site;
     index index.html;
 
