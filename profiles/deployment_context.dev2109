@@ -51,8 +51,8 @@ config_webapp_data_context_release    = "21.09.1"
 // Sitemaps generation --- //
 config_webapp_sitemaps_repo_name        = "opentargets/ot-sitemap-cli"
 config_webapp_sitemaps_release          = "1.1.0"
-config_webapp_sitemaps_bigquery_table   = "platform_21_06"
-config_webapp_sitemaps_bigquery_project = "open-targets-prod"
+config_webapp_sitemaps_bigquery_table   = "platform_21_09_1"
+config_webapp_sitemaps_bigquery_project = "open-targets-eu-dev"
 // Web App Web Servers configuration --- //
 config_webapp_webserver_docker_image_version = "1.20"
 // --- GLB Configuration --- //
