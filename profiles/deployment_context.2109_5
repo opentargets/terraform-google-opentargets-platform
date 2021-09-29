@@ -47,14 +47,22 @@ config_webapp_deployment_context_map        = {
 config_webapp_robots_profile                = "production"
 // Data Context --- //
 config_webapp_bucket_name_data_assets       = "open-targets-data-releases"
-config_webapp_data_context_release          = "21.09.5"
+config_webapp_data_context_release          = "21.09"
 // Sitemaps generation --- //
 config_webapp_sitemaps_repo_name            = "opentargets/ot-sitemap-cli"
 config_webapp_sitemaps_release              = "1.1.0"
-config_webapp_sitemaps_bigquery_table       = "platform_21_09_4"
+config_webapp_sitemaps_bigquery_table       = "platform"
 config_webapp_sitemaps_bigquery_project     = "open-targets-prod"
 // Web App Web Servers configuration --- //
 config_webapp_webserver_docker_image_version= "1.20"
+// --- GLB Configuration --- //
+// config_glb_webapp_enable_cdn = false
+// --- Security Configuration --- //
+// Allow Access only from Specified CIDR
+// config_security_restrict_source_ips = []
+// Enable / Disable network security policies application
+// config_security_api_enable    = true
+// config_security_webapp_enable = true
 // --- Development Mode --- //
 config_set_dev_mode_on                      = true
 //config_enable_inspection                    = true
