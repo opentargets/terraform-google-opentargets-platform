@@ -1,0 +1,60 @@
+// --- Sample deployment ---//
+// --- Release information --- //
+config_release_name                         = "production"
+// --- Deployment configuration --- //
+config_gcp_default_region                   = "europe-west4"
+config_gcp_default_zone                     = "europe-west4-b"
+config_project_id                           = "open-targets-platform"
+config_deployment_regions                   = [ "europe-west1", "us-east1", "asia-southeast1" ]
+// --- Elastic Search configuration --- //
+config_vm_elastic_search_image_project      = "open-targets-eu-dev"
+config_vm_elastic_search_vcpus              = "6"
+config_vm_elastic_search_mem                = "39936"
+config_vm_elastic_search_image              = "platform21-09-5-210928-212028-es"
+config_vm_elastic_search_version            = "7.9.0"
+config_vm_elastic_search_boot_disk_size     = "500GB"
+// --- Clickhouse configuration --- //
+config_vm_clickhouse_vcpus                  = "4"
+config_vm_clickhouse_mem                    = "26624"
+config_vm_clickhouse_image                  = "platform21-09-5-210928-212028-ch"
+config_vm_clickhouse_image_project          = "open-targets-eu-dev"
+config_vm_clickhouse_boot_disk_size         = "250GB"
+// --- API configuration --- //
+config_vm_platform_api_image_version        = "21.09.5"
+config_vm_api_vcpus                         = "2"
+config_vm_api_mem                           = "7680"
+config_vm_api_image                         = "cos-stable"
+config_vm_api_image_project                 = "cos-cloud"
+config_vm_api_boot_disk_size                = "10GB"
+// --- DNS --- //
+config_dns_project_id                       = "open-targets-prod"
+config_dns_subdomain_prefix                 = null
+config_dns_managed_zone_name                = "opentargets-org"
+config_dns_managed_zone_dns_name            = "opentargets.org."
+config_dns_platform_api_subdomain           = "api"
+// --- Web App configuration --- //
+config_webapp_repo_name                     = "opentargets/platform-app"
+config_webapp_release                       = "21.09.5"
+config_webapp_deployment_context_map        = {
+    DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API = "'https://api.platform.opentargets.org/api/v4/graphql'"
+    DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API_BETA = "'https://api.platform.opentargets.org/api/v4/graphql'"
+    DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_EFO_URL = "'/data/ontology/efo_json/diseases_efo.jsonl'"
+    DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_GOOGLE_TAG_MANAGER_ID = "'GTM-WPXWRDV'"
+    // DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_PRIMARY_COLOR = "''"
+    // DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_FLAG_SHOW_OTAR_PROJECTS = "''"
+}
+// Robots.txt profile --- //
+config_webapp_robots_profile                = "production"
+// Data Context --- //
+config_webapp_bucket_name_data_assets       = "open-targets-data-releases"
+config_webapp_data_context_release          = "21.09.5"
+// Sitemaps generation --- //
+config_webapp_sitemaps_repo_name            = "opentargets/ot-sitemap-cli"
+config_webapp_sitemaps_release              = "1.1.0"
+config_webapp_sitemaps_bigquery_table       = "platform_21_09_4"
+config_webapp_sitemaps_bigquery_project     = "open-targets-prod"
+// Web App Web Servers configuration --- //
+config_webapp_webserver_docker_image_version= "1.20"
+// --- Development Mode --- //
+config_set_dev_mode_on                      = true
+//config_enable_inspection                    = true
