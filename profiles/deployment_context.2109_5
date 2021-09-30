@@ -34,7 +34,7 @@ config_dns_managed_zone_dns_name            = "opentargets.org."
 config_dns_platform_api_subdomain           = "api"
 // --- Web App configuration --- //
 config_webapp_repo_name                     = "opentargets/platform-app"
-config_webapp_release                       = "21.09.5"
+config_webapp_release                       = "21.09.6"
 config_webapp_deployment_context_map        = {
     DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API = "'https://api.platform.opentargets.org/api/v4/graphql'"
     DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API_BETA = "'https://api.platform.opentargets.org/api/v4/graphql'"
