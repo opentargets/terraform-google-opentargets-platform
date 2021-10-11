@@ -52,4 +52,4 @@ docker run -d \
     -p 8080:8080 \
     -v $${site_folder}:/srv/site \
     -v $${nginx_conf_folder}:/etc/nginx/conf.d \
-    nginx:${docker_image_version}
+    macbre/nginx-http3:${docker_image_version}
