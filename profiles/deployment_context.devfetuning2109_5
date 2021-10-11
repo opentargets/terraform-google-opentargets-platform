@@ -1,6 +1,6 @@
 // --- Sample deployment ---//
 // --- Release information --- //
-config_release_name = "devfetuning2109"
+config_release_name = "devfe2109"
 // --- Deployment configuration --- //
 config_gcp_default_region = "europe-west4"
 config_gcp_default_zone   = "europe-west4-b"
@@ -28,7 +28,7 @@ config_vm_api_image_project          = "cos-cloud"
 config_vm_api_boot_disk_size         = "10GB"
 // --- DNS --- //
 config_dns_project_id             = "open-targets-eu-dev"
-config_dns_subdomain_prefix       = "devfetuning2109"
+config_dns_subdomain_prefix       = "devfe2109"
 config_dns_managed_zone_name      = "opentargets-xyz"
 config_dns_managed_zone_dns_name  = "opentargets.xyz."
 config_dns_platform_api_subdomain = "api"
@@ -36,8 +36,8 @@ config_dns_platform_api_subdomain = "api"
 config_webapp_repo_name = "opentargets/platform-app"
 config_webapp_release   = "21.09.7"
 config_webapp_deployment_context_map = {
-  DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API      = "'https://api.platform.devfetuning2109.opentargets.xyz/api/v4/graphql'"
-  DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API_BETA = "'https://api.platform.devfetuning2109.opentargets.xyz/api/v4/graphql'"
+  DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API      = "'https://api.platform.devfe2109.opentargets.xyz/api/v4/graphql'"
+  DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API_BETA = "'https://api.platform.devfe2109.opentargets.xyz/api/v4/graphql'"
   DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_EFO_URL      = "'/data/ontology/efo_json/diseases_efo.jsonl'"
   //DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_GOOGLE_TAG_MANAGER_ID = "'GTM-WPXWRDV'"
   // DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_PRIMARY_COLOR = "''"
