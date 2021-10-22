@@ -29,10 +29,20 @@ data "google_compute_zones" "available" {
   region = var.deployment_regions[count.index]
 }
 
+// --- Service Account Configuration ---
 resource "google_service_account" "gcp_service_acc_apis" {
   account_id = "${var.module_wide_prefix_scope}-svcacc-${random_string.random.result}"
   display_name = "${var.module_wide_prefix_scope}-GCP-service-account"
 }
+
+// Roles ---
+resource "google_service_account_iam_binding" "logging-writer" {
+  service_account_id = google_service_account.gcp_service_acc_apis.name
+  role = "roles/logging.logWriter"
+
+  members = [ "serviceAccount:${google_service_account.gcp_service_acc_apis.email}" ]
+}
+// ---
 
 resource "google_compute_instance_template" "otpapi_template" {
   count = length(var.deployment_regions)
@@ -86,7 +96,9 @@ resource "google_compute_instance_template" "otpapi_template" {
   service_account {
     // This is useless anyway, maybe it's not covered by the google provider
     email = google_service_account.gcp_service_acc_apis.email
-    scopes = [ "cloud-platform", "logging-write" ]
+    // This is legacy
+    //scopes = [ "cloud-platform", "logging-write", "monitoring-write" ]
+    scopes = []
   }
 }
 
