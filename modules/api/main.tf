@@ -86,7 +86,7 @@ resource "google_compute_instance_template" "otpapi_template" {
   service_account {
     // This is useless anyway, maybe it's not covered by the google provider
     email = google_service_account.gcp_service_acc_apis.email
-    scopes = [ "cloud-platform" ]
+    scopes = [ "cloud-platform", "logging-write" ]
   }
 }
 
