@@ -31,13 +31,14 @@ data "google_compute_zones" "available" {
 
 // --- Service Account Configuration ---
 resource "google_service_account" "gcp_service_acc_apis" {
+  project = var.project_id
   account_id = "${var.module_wide_prefix_scope}-svcacc-${random_string.random.result}"
   display_name = "${var.module_wide_prefix_scope}-GCP-service-account"
 }
 
 // Roles ---
-resource "google_service_account_iam_binding" "logging-writer" {
-  service_account_id = google_service_account.gcp_service_acc_apis.name
+resource "google_project_iam_binding" "logging-writer" {
+  project = var.project_id
   role = "roles/logging.logWriter"
 
   members = [ "serviceAccount:${google_service_account.gcp_service_acc_apis.email}" ]
