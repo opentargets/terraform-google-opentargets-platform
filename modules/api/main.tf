@@ -42,13 +42,6 @@ resource "google_service_account_iam_binding" "logging-writer" {
 
   members = [ "serviceAccount:${google_service_account.gcp_service_acc_apis.email}" ]
 }
-
-resource "google_service_account_iam_binding" "monitoring-writer" {
-  service_account_id = google_service_account.gcp_service_acc_apis.name
-  role = "roles/monitoring.write"
-
-  members = [ "serviceAccount:${google_service_account.gcp_service_acc_apis.email}" ]
-}
 // --- /Service Account Configuration/ ---
 
 resource "google_compute_instance_template" "otpapi_template" {
