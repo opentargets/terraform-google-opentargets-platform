@@ -17,7 +17,8 @@ resource "random_string" "random" {
     otpapi_template_tags = join("", sort(local.otpapi_template_tags)),
     otpapi_template_machine_type = local.otpapi_template_machine_type,
     otpapi_template_source_image = local.otpapi_template_source_image,
-    vm_platform_api_image_version = var.vm_platform_api_image_version
+    vm_platform_api_image_version = var.vm_platform_api_image_version,
+    vm_startup_script = md5(file("${path.module}/scripts/instance_startup.sh"))
   }
 }
 
@@ -83,6 +84,7 @@ resource "google_compute_instance_template" "otpapi_template" {
   }
 
   service_account {
+    // This is useless anyway, maybe it's not covered by the google provider
     email = google_service_account.gcp_service_acc_apis.email
     scopes = [ "cloud-platform" ]
   }
