@@ -34,11 +34,10 @@ resource "google_service_account" "gcp_service_acc_apis" {
 }
 
 // Roles ---
-resource "google_project_iam_binding" "logging-writer" {
+resource "google_project_iam_member" "logging-writer" {
   project = var.project_id
   role = "roles/logging.logWriter"
-
-  members = [ "serviceAccount:${google_service_account.gcp_service_acc_apis.email}" ]
+  member = "serviceAccount:${google_service_account.gcp_service_acc_apis.email}"
 }
 // --- /Service Account Configuration/ ---
 
