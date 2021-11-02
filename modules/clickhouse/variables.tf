@@ -6,6 +6,11 @@ variable "module_wide_prefix_scope" {
   default = "otpdevch"
 }
 
+variable "project_id" {
+  description = "Project ID where to deploy resources"
+  type = string
+}
+
 variable "network_name" {
   description = "Name of the network resources will be connected to, default 'default'"
   type = string
