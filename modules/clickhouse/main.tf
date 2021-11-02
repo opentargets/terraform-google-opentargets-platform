@@ -16,7 +16,8 @@ resource "random_string" "random" {
   keepers = {
     clickhouse_template_tags = join("", sort(local.clickhouse_template_tags)),
     clickhouse_template_machine_type = local.clickhouse_template_machine_type,
-    clickhouse_template_source_image = local.clickhouse_template_source_image
+    clickhouse_template_source_image = local.clickhouse_template_source_image,
+    vm_startup_script = md5(file("${path.module}/scripts/instance_startup.sh"))
   }
 }
 
