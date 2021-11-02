@@ -25,10 +25,20 @@ data "google_compute_zones" "available" {
   region = var.deployment_region
 }
 
+// --- Service Account Configuration ---
 resource "google_service_account" "gcp_service_acc_apis" {
   account_id = "${var.module_wide_prefix_scope}-svc-${random_string.random.result}"
   display_name = "${var.module_wide_prefix_scope}-GCP-service-account"
 }
+
+// Roles ---
+resource "google_project_iam_binding" "logging-writer" {
+  project = var.project_id
+  role = "roles/logging.logWriter"
+
+  members = [ "serviceAccount:${google_service_account.gcp_service_acc_apis.email}" ]
+}
+// --- /Service Account Configuration/ ---
 
 resource "google_compute_instance_template" "clickhouse_template" {
   name = "${var.module_wide_prefix_scope}-clickhouse-template-${random_string.random.result}"
@@ -70,7 +80,7 @@ resource "google_compute_instance_template" "clickhouse_template" {
 
   service_account {
     email = google_service_account.gcp_service_acc_apis.email
-    scopes = [ "cloud-platform" ]
+    scopes = [ "cloud-platform", "logging-write" ]
   }
 }
 
