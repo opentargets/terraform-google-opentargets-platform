@@ -46,6 +46,7 @@ find $${www_data_root} -type d -exec chmod 755 \{} \;
 find $${www_data_root} -type f -exec chmod 644 \{} \;
 echo "[START] Nginx web server launching"
 docker run -d \
+    --log-driver=gcplogs \
     -p 8080:8080 \
     -v $${site_folder}:/srv/site \
     -v $${nginx_conf_folder}:/etc/nginx/conf.d \
