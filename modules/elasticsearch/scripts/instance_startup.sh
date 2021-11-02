@@ -12,6 +12,7 @@ docker rm elasticsearch
 # Launch Elastic Search
 docker run -d \
   --name elasticsearch \
+  --log-driver=gcplogs \
   -p 9200:9200 \
   -p 9300:9300 \
   -e discovery.type=single-node \
