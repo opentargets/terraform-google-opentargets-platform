@@ -113,6 +113,67 @@ USE ONLY in development environments.
 
 <a name="depcontextexplained"></a>
 
+# Use POS profile for deployment on opentargets internal infrastructure
+In order to deploy the web site using the internal infrastructure, it is useful to have a list of commands to run to achieve the goal.
+
+The first action is to activate the right profile:
+```
+ # Section 1
+ make tfactivate profile="pos"
+ make tfbackendremote
+ make tfinit
+ terraform state list
+```
+Create/Copy/Edit a deployment context file. Eg.
+```
+cp profiles/deployment_context.dev2109 profiles/deployment_context.dev2111_1
+vi profiles/deployment_context.dev2111_1
+```
+
+There is a list of attributes to check/change before activate/run a deployment context
+```
+  config_release_name = "..."   // unique context
+  config_vm_elastic_search_image          = "... es"
+  config_vm_elastic_search_version        = "7.xx.y"
+  config_vm_clickhouse_image = "...-ch"
+  config_vm_platform_api_image_version = " ..."
+  config_dns_subdomain_prefix       = "dev2111"  // Example
+  config_webapp_release   = "21.xx.yy"   // FE tag for the release
+  DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API      = "'https://api.platform.dev2111.opentargets...'"
+  DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API_BETA = "'https://api.platform.dev2111.opentargets...'"
+  config_webapp_bucket_name_data_assets = "open-targets-pre-data-releases"
+  config_webapp_data_context_release    = "21.xx"
+  config_webapp_webserver_docker_image_version = "1.xx.yy"
+
+```
+
+Activate the deployment context
+```
+ # Section 2
+ make depactivate profile='dev2111_1'
+```
+
+Check and execute the terraform actions:
+(always check the profile and the context involved. Section 1 and 2)
+```
+ make tfplan
+ make tfapply
+```
+
+To destroy the infrastructure created run:
+(always check the profile and the context involved. Section 1 and 2)
+```
+ make tfdestroy
+```
+
+Add/Update the github repoository with the new info. Eg.
+```
+ git add profiles/deployment_context.dev2111_1
+ git commit -a -m "21.11.1 deployment eu-dev xyz"
+ git push origin main
+```
+
+
 # Deployment Context Explained
 A deployment context is a collection of input parameters that defines how Open Targets Platform will be brought up to life.
 
@@ -240,7 +301,7 @@ This section shapes how those DNS entries are set.
 
 >**config_dns_project_id**, ID of the Google Cloud Project that hosts the Cloud DNS services where DNS entries will be registered.
 
->**config_dns_managed_zone_name**, name of the Cloud DNS managed zone where entries can be registered. 
+>**config_dns_managed_zone_name**, name of the Cloud DNS managed zone where entries can be registered.
 
 >**config_dns_subdomain_prefix**, if supplied, this parameters allows for the resources be "scoped" within a subdomain in the DNS, this way, multiple deployments can share the main root domain name.
 
