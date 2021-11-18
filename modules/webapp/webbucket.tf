@@ -59,6 +59,8 @@ resource "null_resource" "webapp_provisioner" {
         robots_active_file_name = local.webapp_bundle_provisioner_robots_active_file_name
         robots_profile_src_file_name = local.webapp_bundle_provisioner_robots_profile_src
         robots_profile_name = var.webapp_robots_profile
+        customisation_profile_path_dst = local.webapp_bundle_provisioner_custom_profile_path_dst_path
+        customisation_profile_path_src = local.webapp_bundle_provisioner_custom_profile_path_src_path
         data_context_url = local.webapp_bundle_provisioner_url_bucket_data_context
         data_context_dst_folder = local.webapp_bundle_provisioner_data_context_dst_folder
         deployment_bundle_filename = local.webapp_deployment_bundle_filename

@@ -25,6 +25,8 @@ for envvar in $( cat ${file_name_devops_context_instance} | egrep -o "DEVOPS[_A-
 done
 echo "[BUILD] Setting 'robots.txt' profile to '${robots_profile_name}'"
 cp ${robots_profile_src_file_name} ${robots_active_file_name}
+echo "[BUILD] Setting customisation profile, selected '${customisation_profile_path_src}'"
+cp ${customisation_profile_path_src} ${customisation_profile_path_dst}
 echo "[BUILD] Preparing data context destination at '${data_context_dst_folder}'"
 mkdir -p ${data_context_dst_folder}
 echo "[BUILD] Collecting data context from '${data_context_url}'"
