@@ -43,6 +43,9 @@ locals {
   webapp_bundle_provisioner_robots_active_file_name = "robots.txt"
   webapp_bundle_provisioner_robots_profile_default = "default"
   webapp_bundle_provisioner_robots_profile_src = var.webapp_robots_profile != local.webapp_bundle_provisioner_robots_profile_default ? "${local.webapp_bundle_provisioner_robots_active_file_name}.${var.webapp_robots_profile}" : local.webapp_bundle_provisioner_robots_active_file_name
+  webapp_bundle_provisioner_custom_profile_folder = "${local.webapp_bundle_provisioner_path_build}/profiles"
+  webapp_bundle_provisioner_custom_profile_path_dst_path = "${local.webapp_bundle_provisioner_custom_profile_folder}/default.js"
+  webapp_bundle_provisioner_custom_profile_path_src_path = "${local.webapp_bundle_provisioner_custom_profile_folder}/${var.webapp_custom_profile}"
   webapp_bundle_provisioner_url_bucket_data_context = "gs://${var.webapp_bucket_data_context_name}/${var.webapp_bucket_data_context_release}/${var.webapp_bucket_data_context_subfolder_name}"
   webapp_bundle_provisioner_data_context_dst_folder = "data"
   webapp_bundle_provisioner_sitemaps_url_script_download = "https://github.com/${var.webapp_sitemaps_repo_name}/releases/download/${var.webapp_sitemaps_release}/ot-sitemap.jar"

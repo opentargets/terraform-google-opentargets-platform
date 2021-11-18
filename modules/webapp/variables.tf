@@ -50,6 +50,12 @@ variable "webapp_robots_profile" {
   default = "default"
 }
 
+variable "webapp_custom_profile" {
+  description = "Web application customisation profile to use, default 'default.js'"
+  type = string
+  default = "default.js"
+}
+
 variable "webapp_bucket_data_context_name" {
   description = "Bucket name where to find the web application data context"
   type = string
