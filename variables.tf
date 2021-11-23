@@ -183,6 +183,12 @@ variable "config_webapp_robots_profile" {
   default     = "default"
 }
 
+variable "config_webapp_custom_profile" {
+  description = "Web application customisation profile to use, if not provided, the default set by the web app module will be used"
+  type = string
+  default = null
+}
+
 variable "config_webapp_bucket_name_data_assets" {
   description = "Bucket where to find the data context for the web application"
   type        = string
