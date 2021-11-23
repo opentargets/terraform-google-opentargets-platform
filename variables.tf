@@ -186,7 +186,7 @@ variable "config_webapp_robots_profile" {
 variable "config_webapp_custom_profile" {
   description = "Web application customisation profile to use, if not provided, the default set by the web app module will be used"
   type = string
-  default = null
+  default = "default.js"
 }
 
 variable "config_webapp_bucket_name_data_assets" {
