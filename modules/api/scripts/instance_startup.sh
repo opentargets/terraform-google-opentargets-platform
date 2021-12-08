@@ -6,4 +6,4 @@ docker run -d \
   --log-driver=gcplogs \
   -e SLICK_CLICKHOUSE_URL='${SLICK_CLICKHOUSE_URL}' \
   -e ELASTICSEARCH_HOST='${ELASTICSEARCH_HOST}' \
-  quay.io/opentargets/platform-api-beta:${PLATFORM_API_VERSION}
+  quay.io/opentargets/platform-api:${PLATFORM_API_VERSION}
