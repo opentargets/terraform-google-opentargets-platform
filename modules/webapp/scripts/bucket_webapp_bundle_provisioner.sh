@@ -22,7 +22,7 @@ for envvar in $(cat ${file_name_devops_context_instance} | egrep -o "DEVOPS[_A-Z
     export value=${!envvar:-undefined}
     if [[ "$OSTYPE" == "linux-gnu"* ]]; then
         echo -e "\t[CONTEXT] Injecting '${key}=${value}'"
-        sed -r -i ".bak" "s/${key}(\W|$)/${value};/g" ${file_name_devops_context_instance}
+        sed -r -i "s/${key}(\W|$)/${value};/g" ${file_name_devops_context_instance}
     elif [[ "$OSTYPE" == "darwin"* ]]; then
         echo -e "\t[CONTEXT] Injecting '${key}=${value}'"
         sed -E -i ".bak" "s/${key}(\W|$)/${value};/g" ${file_name_devops_context_instance}
