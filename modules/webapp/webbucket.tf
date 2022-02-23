@@ -8,6 +8,7 @@ resource "random_string" "random" {
     webapp_release = var.webapp_release
     webapp_repository = var.webapp_repo_name
     robots_profile_name = var.webapp_robots_profile
+    webapp_custom_profile = local.webapp_bundle_provisioner_custom_profile_path_src_path
     data_context_url = local.webapp_bundle_provisioner_url_bucket_data_context
     data_context_dst_folder = local.webapp_bundle_provisioner_data_context_dst_folder
     sitemaps_url_script_download = local.webapp_bundle_provisioner_sitemaps_url_script_download
