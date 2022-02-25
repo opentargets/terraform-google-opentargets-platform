@@ -1,0 +1,67 @@
+// --- Sample deployment ---//
+// --- Release information --- //
+config_release_name = "dev2202"
+// --- Deployment configuration --- //
+config_gcp_default_region = "europe-west4"
+config_gcp_default_zone   = "europe-west4-b"
+config_project_id         = "open-targets-eu-dev"
+config_deployment_regions = ["europe-west1"]
+// --- Elastic Search configuration --- //
+config_vm_elastic_search_image_project  = "open-targets-eu-dev"
+config_vm_elastic_search_vcpus          = "6"
+config_vm_elastic_search_mem            = "39936"
+config_vm_elastic_search_image          = "platform22-02-4-220225-020046-es"
+config_vm_elastic_search_version        = "7.10.2"
+config_vm_elastic_search_boot_disk_size = "500GB"
+// --- Clickhouse configuration --- //
+config_vm_clickhouse_vcpus          = "4"
+config_vm_clickhouse_mem            = "26624"
+config_vm_clickhouse_image          = "platform22-02-4-220225-020046-ch"
+config_vm_clickhouse_image_project  = "open-targets-eu-dev"
+config_vm_clickhouse_boot_disk_size = "250GB"
+// --- API configuration --- //
+config_vm_platform_api_image_version = "22.02.2"
+config_vm_api_vcpus                  = "2"
+config_vm_api_mem                    = "7680"
+config_vm_api_image                  = "cos-stable"
+config_vm_api_image_project          = "cos-cloud"
+config_vm_api_boot_disk_size         = "10GB"
+// --- DNS --- //
+config_dns_project_id             = "open-targets-eu-dev"
+config_dns_subdomain_prefix       = "dev2202"
+config_dns_managed_zone_name      = "opentargets-xyz"
+config_dns_managed_zone_dns_name  = "opentargets.xyz."
+config_dns_platform_api_subdomain = "api"
+// --- Web App configuration --- //
+config_webapp_repo_name = "opentargets/platform-app"
+config_webapp_release   = "22.02.2"
+config_webapp_deployment_context_map = {
+  DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API      = "'https://api.platform.dev2202.opentargets.xyz/api/v4/graphql'"
+  DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API_BETA = "'https://api.platform.dev2202.opentargets.xyz/api/v4/graphql'"
+  DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_EFO_URL      = "'/data/ontology/efo_json/diseases_efo.jsonl'"
+}
+// Robots.txt profile --- //
+config_webapp_robots_profile = "default"
+// Web Application Customisation Profile --- //
+// config_webapp_custom_profile = "default.js"
+// Data Context --- //
+config_webapp_bucket_name_data_assets = "open-targets-pre-data-releases"
+config_webapp_data_context_release    = "22.02.4"
+// Sitemaps generation --- //
+config_webapp_sitemaps_repo_name        = "opentargets/ot-sitemap-cli"
+config_webapp_sitemaps_release          = "1.1.0"
+config_webapp_sitemaps_bigquery_table   = "platform_dev"
+config_webapp_sitemaps_bigquery_project = "open-targets-eu-dev"
+// Web App Web Servers configuration --- //
+config_webapp_webserver_docker_image_version = "1.21.3"
+// --- GLB Configuration --- //
+config_glb_webapp_enable_cdn = false
+// --- Security Configuration --- //
+// Allow Access only from Specified CIDR
+// config_security_restrict_source_ips = []
+// Enable / Disable network security policies application
+// config_security_api_enable    = true
+// config_security_webapp_enable = true
+// --- Development Mode --- //
+config_set_dev_mode_on = true
+//config_enable_inspection                    = true
