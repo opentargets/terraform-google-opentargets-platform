@@ -191,6 +191,12 @@ variable "webserver_vm_boot_disk_size" {
   default = "10GB"
 }
 
+variable "vm_flag_preemptible" {
+  description = "Use this flag to tell the module to use a preemptible instance, default: 'false'"
+  type = bool
+  default = false
+}
+
 variable "deployment_target_size" {
   description = "Initial Web Server instance count per region"
   type = number
