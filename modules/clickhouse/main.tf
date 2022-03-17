@@ -59,7 +59,7 @@ resource "google_compute_instance_template" "clickhouse_template" {
 
   scheduling {
     automatic_restart = !var.vm_flag_preemptible
-    on_host_maintenance = "TERMINATE"
+    on_host_maintenance = var.vm_flag_preemptible ? "TERMINATE" : "MIGRATION"
     preemptible = var.vm_flag_preemptible
     //provisioning_model = "SPOT"
   }
