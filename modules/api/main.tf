@@ -64,7 +64,7 @@ resource "google_compute_instance_template" "otpapi_template" {
   can_ip_forward = false
 
   scheduling {
-    automatic_restart = true
+    automatic_restart = !var.vm_flag_preemptible
     on_host_maintenance = "MIGRATE"
     preemptible = var.vm_flag_preemptible
   }
