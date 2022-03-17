@@ -121,6 +121,12 @@ variable "config_vm_api_boot_disk_size" {
   type        = string
 }
 
+variable "config_vm_api_flag_preemptible" {
+  description = "Use this flag for deploying API nodes on preemptible VMs, default 'false'"
+  type        = bool
+  default     = false
+}
+
 // --- DNS Configuration --- //
 variable "config_dns_project_id" {
   description = "Project ID to use when making changes to Cloud DNS service"
@@ -185,8 +191,8 @@ variable "config_webapp_robots_profile" {
 
 variable "config_webapp_custom_profile" {
   description = "Web application customisation profile to use, if not provided, the default set by the web app module will be used"
-  type = string
-  default = "default.js"
+  type        = string
+  default     = "default.js"
 }
 
 variable "config_webapp_bucket_name_data_assets" {

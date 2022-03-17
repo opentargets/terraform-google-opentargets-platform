@@ -23,10 +23,10 @@ resource "google_compute_project_default_network_tier" "default_network_tier" {
 
 // --- Elastic Search Backend --- //
 module "backend_elastic_search" {
-  source = "./modules/elasticsearch"
+  source     = "./modules/elasticsearch"
   project_id = var.config_project_id
-  
-  count  = length(var.config_deployment_regions)
+
+  count = length(var.config_deployment_regions)
 
   depends_on               = [module.vpc_network]
   module_wide_prefix_scope = "${var.config_release_name}-es-${count.index}"
@@ -52,10 +52,10 @@ module "backend_elastic_search" {
 
 // --- Clickhouse Backend --- //
 module "backend_clickhouse" {
-  source = "./modules/clickhouse"
+  source     = "./modules/clickhouse"
   project_id = var.config_project_id
 
-  count  = length(var.config_deployment_regions)
+  count = length(var.config_deployment_regions)
 
   depends_on               = [module.vpc_network]
   module_wide_prefix_scope = "${var.config_release_name}-ch-${count.index}"
