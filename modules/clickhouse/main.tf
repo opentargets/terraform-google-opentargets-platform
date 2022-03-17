@@ -18,6 +18,7 @@ resource "random_string" "random" {
     clickhouse_template_machine_type = local.clickhouse_template_machine_type,
     clickhouse_template_source_image = local.clickhouse_template_source_image,
     vm_startup_script = md5(file("${path.module}/scripts/instance_startup.sh"))
+    vm_flag_preemptible = var.vm_flag_preemptible
   }
 }
 

@@ -19,6 +19,7 @@ resource "random_string" "random" {
     otpapi_template_source_image = local.otpapi_template_source_image,
     vm_platform_api_image_version = var.vm_platform_api_image_version,
     vm_startup_script = md5(file("${path.module}/scripts/instance_startup.sh"))
+    vm_flag_preemptible = var.vm_flag_preemptible
   }
 }
 
