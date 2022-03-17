@@ -69,6 +69,12 @@ variable "config_vm_elastic_search_boot_disk_size" {
   type        = string
 }
 
+variable "config_vm_elasticsearch_flag_preemptible" {
+  description = "Use this flag for deploying Elastic Search nodes on preemptible VMs, default 'false'"
+  type        = bool
+  default     = false
+}
+
 // --- Clickhouse configuration --- //
 variable "config_vm_clickhouse_vcpus" {
   description = "CPU count for Clickhouse instances"
@@ -88,6 +94,12 @@ variable "config_vm_clickhouse_image" {
 variable "config_vm_clickhouse_image_project" {
   description = "Project where to find the instance image to use"
   type        = string
+}
+
+variable "config_vm_clickhouse_flag_preemptible" {
+  description = "Use this flag for deploying Clickhouse nodes on preemptible VMs, default 'false'"
+  type        = bool
+  default     = false
 }
 
 variable "config_vm_clickhouse_boot_disk_size" {
@@ -119,6 +131,12 @@ variable "config_vm_api_image_project" {
 variable "config_vm_api_boot_disk_size" {
   description = "Boot disk size for API VM nodes"
   type        = string
+}
+
+variable "config_vm_api_flag_preemptible" {
+  description = "Use this flag for deploying API nodes on preemptible VMs, default 'false'"
+  type        = bool
+  default     = false
 }
 
 // --- DNS Configuration --- //
@@ -185,8 +203,8 @@ variable "config_webapp_robots_profile" {
 
 variable "config_webapp_custom_profile" {
   description = "Web application customisation profile to use, if not provided, the default set by the web app module will be used"
-  type = string
-  default = "default.js"
+  type        = string
+  default     = "default.js"
 }
 
 variable "config_webapp_bucket_name_data_assets" {
@@ -254,6 +272,13 @@ variable "config_webapp_webserver_vm_boot_disk_size" {
   type        = string
   default     = "10GB"
 }
+
+variable "config_vm_webserver_flag_preemptible" {
+  description = "Use this flag for deploying Web nodes on preemptible VMs, default 'false'"
+  type        = bool
+  default     = false
+}
+
 
 // --- Global Load Balancer --- //
 variable "config_glb_webapp_enable_cdn" {

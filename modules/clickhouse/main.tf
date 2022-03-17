@@ -18,6 +18,7 @@ resource "random_string" "random" {
     clickhouse_template_machine_type = local.clickhouse_template_machine_type,
     clickhouse_template_source_image = local.clickhouse_template_source_image,
     vm_startup_script = md5(file("${path.module}/scripts/instance_startup.sh"))
+    vm_flag_preemptible = var.vm_flag_preemptible
   }
 }
 
@@ -58,8 +59,10 @@ resource "google_compute_instance_template" "clickhouse_template" {
   can_ip_forward = false
 
   scheduling {
-    automatic_restart = true
-    on_host_maintenance = "MIGRATE"
+    automatic_restart = !var.vm_flag_preemptible
+    on_host_maintenance = var.vm_flag_preemptible ? "TERMINATE" : "MIGRATION"
+    preemptible = var.vm_flag_preemptible
+    //provisioning_model = "SPOT"
   }
 
   disk {

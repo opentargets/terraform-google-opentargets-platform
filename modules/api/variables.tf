@@ -96,6 +96,12 @@ variable "vm_api_boot_disk_size" {
   default = "10GB"
 }
 
+variable "vm_flag_preemptible" {
+  description = "Use this flag to tell the module to use a preemptible instance, default: 'false'"
+  type = bool
+  default = false
+}
+
 variable "deployment_target_size" {
   description = "Initial API node count per region"
   type = number

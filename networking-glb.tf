@@ -64,7 +64,7 @@ module "glb_platform" {
 
   // Dependencies
   depends_on = [
-    module.vpc_network/*,
+    module.vpc_network /*,
     module.web_app,
     module.backend_api*/
   ]

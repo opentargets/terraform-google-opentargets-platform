@@ -10,6 +10,7 @@ resource "random_string" "random_web_server_suffix" {
     deployment_bundle_url = local.webapp_deployment_bundle_url
     nginx_docker_image_version = var.webserver_docker_image_version
     startup_script = md5(file("${path.module}/scripts/webserver_vm_startup_script.sh"))
+    vm_flag_preemptible = var.vm_flag_preemptible
   }
 }
 
@@ -56,8 +57,10 @@ resource "google_compute_instance_template" "webserver_template" {
   can_ip_forward = false
 
   scheduling {
-    automatic_restart = true
-    on_host_maintenance = "MIGRATE"
+    automatic_restart = !var.vm_flag_preemptible
+    on_host_maintenance = var.vm_flag_preemptible ? "TERMINATE" : "MIGRATION"
+    preemptible = var.vm_flag_preemptible
+    //provisioning_model = "SPOT"
   }
 
   disk {

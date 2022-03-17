@@ -91,3 +91,10 @@ variable "vm_elastic_search_boot_disk_size" {
   type = string
   default = "500GB"
 }
+
+variable "vm_flag_preemptible" {
+  description = "Use this flag to tell the module to use a preemptible instance, default: 'false'"
+  type = bool
+  default = false
+}
+
