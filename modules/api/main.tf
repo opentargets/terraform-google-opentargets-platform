@@ -65,8 +65,9 @@ resource "google_compute_instance_template" "otpapi_template" {
 
   scheduling {
     automatic_restart = !var.vm_flag_preemptible
-    on_host_maintenance = "MIGRATE"
+    on_host_maintenance = "TERMINATE"
     preemptible = var.vm_flag_preemptible
+    provisioning_model = "SPOT"
   }
 
   disk {
