@@ -106,6 +106,7 @@ module "backend_api" {
   vm_api_image                  = var.config_vm_api_image
   vm_api_image_project          = var.config_vm_api_image_project
   vm_api_boot_disk_size         = var.config_vm_api_boot_disk_size
+  vm_flag_preemptible           = var.config_vm_api_flag_preemptible
   backend_connection_map = zipmap(
     var.config_deployment_regions,
     [
