@@ -83,6 +83,12 @@ variable "vm_clickhouse_boot_disk_size" {
   default = "250GB"
 }
 
+variable "vm_flag_preemptible" {
+  description = "Use this flag to tell the module to use a preemptible instance, default: 'false'"
+  type = bool
+  default = false
+}
+
 variable "deployment_target_size" {
   description = "This number configures how many instances should be running, default '1'"
   type = number
