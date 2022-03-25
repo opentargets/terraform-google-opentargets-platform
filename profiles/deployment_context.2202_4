@@ -49,7 +49,7 @@ config_webapp_robots_profile                = "production"
 // config_webapp_custom_profile = "default.js"
 // Data Context --- //
 config_webapp_bucket_name_data_assets       = "open-targets-data-releases"
-config_webapp_data_context_release          = "22.02.4"
+config_webapp_data_context_release          = "22.02"
 // Sitemaps generation --- //
 config_webapp_sitemaps_repo_name            = "opentargets/ot-sitemap-cli"
 config_webapp_sitemaps_release              = "1.1.0"
