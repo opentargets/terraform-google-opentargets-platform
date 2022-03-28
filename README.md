@@ -1,7 +1,4 @@
-# Introduction
-**TODO** - General Introduction to what is Open Targets Platform
-
-## Infrastructure definition
+# Infrastructure definition
 This repository defines the Open Targets Platform infrastructure, using Hashicorp Configuration Language (HCL) and [Terraform](https://terraform.io).
 
 ![Open Targets Platform, Deployment Unit](docs/img/open_targets_platform_infrastructure.png "Open Targets Platform, Deployment Unit")
@@ -16,7 +13,7 @@ The platform web frontend is deployed in a Google Cloud Storage Bucket, not show
 
 We use Google Cloud DNS services for all domain names deployed via this infrastructure definition.
 
-## FAIR Principles
+# FAIR Principles
 Open Targets Platform Infrastructure has been defined using [Terraform Modules](https://www.terraform.io/docs/language/modules/develop/index.html).
 
 The platform has been broken down into the following components:
@@ -216,12 +213,40 @@ config_dns_platform_api_subdomain           = "api"
 // --- Web App configuration --- //
 config_webapp_repo_name                     = "mbdebian/platform-app"
 config_webapp_release                       = "1.0.7"
-config_webapp_deployment_context_map        = {
-    DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_APOLLO_CLIENT = "'https://api.platform.gamma.opentargets.xyz/api/v4/graphql'"
+config_webapp_deployment_context_map = {
+  DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API      = "'https://api.platform.dp22024.opentargets.xyz/api/v4/graphql'"
+  DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API_BETA = "'https://api.platform.dp22024.opentargets.xyz/api/v4/graphql'"
+  DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_EFO_URL      = "'/data/ontology/efo_json/diseases_efo.jsonl'"
 }
+// Robots.txt profile --- //
+config_webapp_robots_profile = "default"
+// Web Application Customisation Profile --- //
+config_webapp_custom_profile = "default.js"
+// Data Context --- //
+config_webapp_bucket_name_data_assets = "open-targets-data-releases"
+config_webapp_data_context_release    = "22.02"
+// Sitemaps generation --- //
+config_webapp_sitemaps_repo_name        = "opentargets/ot-sitemap-cli"
+config_webapp_sitemaps_release          = "1.1.0"
+config_webapp_sitemaps_bigquery_table   = "platform"
+config_webapp_sitemaps_bigquery_project = "open-targets-eu-dev"
+// Web App Web Servers configuration --- //
+config_webapp_webserver_docker_image_version = "1.21.3"
+// --- GLB Configuration --- //
+config_glb_webapp_enable_cdn = false
+// --- Security Configuration --- //
+config_security_restrict_source_ips_cidrs_file = "cidr_listing_file.txt"
+// Enable / Disable network security policies application
+config_security_api_enable    = true
+config_security_webapp_enable = true
 // --- Development Mode --- //
 config_set_dev_mode_on                      = true
-//config_enable_inspection                    = true
+config_enable_inspection                    = true
+// --- Preemptibility --- //
+config_vm_elasticsearch_flag_preemptible    = false
+config_vm_clickhouse_flag_preemptible       = false
+config_vm_api_flag_preemptible              = false
+config_vm_webserver_flag_preemptible        = false
 ```
 
 ## Release Information
@@ -294,6 +319,27 @@ A web application bundle is used for deploying the web frontend SPA, obtained as
 
 >**config_webapp_deployment_context_map**, this is a simple key-value collection that will be injected as configuration in the web application when deployed.
 
+>**config_webapp_robots_profile**, _robots.txt_ profile that should be set in the given deployment.
+
+>**config_webapp_custom_profile**, web application customisation profile to be set in the given deployment.
+
+>**config_webapp_bucket_name_data_assets**, bucket name where to find the data assets that will be used for the web application data context.
+
+>**config_webapp_data_context_release**, subfolder within the data bucket where to find that web application data context.
+
+>**config_webapp_sitemaps_repo_name**, GitHub repo where to find the sitemaps generator, e.g. _opentargets/ot-sitemap-cli_
+
+>**config_webapp_sitemaps_release**, GitHub release number to use for sitemaps generation.
+
+>**config_webapp_sitemaps_bigquery_table**, BigQuery table where the data for generating sitemaps can be found.
+
+>**config_webapp_sitemaps_bigquery_project**, project where BigQuery table for sitemaps is set.
+
+>**config_webapp_webserver_docker_image_version**, Docker image version for running the web server that attends web application requests.
+
+## Global Load Balancer configuration
+**config_glb_webapp_enable_cdn**, whether or not a CDN should be used for serving the web application.
+
 ## DNS configuration
 Some of the resources that are part of Open Targets Platform will be attending external requests, e.g. the platform API, and they need to get registered under their corresponding DNS entries.
 
@@ -309,12 +355,30 @@ This section shapes how those DNS entries are set.
 
 >**config_dns_platform_api_subdomain**, which subdomain to use fot Open Targets Platform API services, default is 'platform'.
 
+## Deployment Security
+>**config_security_restrict_source_ips_cidrs_file**, list of CIDRs to use in Cloud Armor to restrict access to the given deployment, e.g. _cidr_listing_file.txt_
+
+>**config_security_api_enable**, whether to restrict access to the deployed API based on the provided CIDR listing or not.
+
+>**config_security_webapp_enable**, whether to restrict access to the deployed web application based on the provided CIDR listing or not.
+
 ## Development Section
 This part of the deployment context is related to some features of the infrastructure definition mainly useful in a development environment.
 
 >**config_set_dev_mode_on**, when development mode is active, SSH traffic to all deployed VMs is enabled, and inspection VMs are deployed.
 
 >**config_enable_inspection**, when true, an extra VM per region will be deployed, for internal access to deployed infrastructure.
+
+## Preemptibility
+The deployment context offers the option of using preemptible machines that, having a lifespan of 24 hours max., and a non-zero probability of being decomissioned before that, their cost is only a fraction of that of a regular VM.
+
+>**config_vm_elasticsearch_flag_preemptible**, flag to enable or disable the use of preemptible VMs in Elastic Search deployment.
+
+>**config_vm_clickhouse_flag_preemptible**, flag to enable or disable the use of preemptible VMs in Clickhouse deployment.
+
+>**config_vm_api_flag_preemptible**, flag to enable or disable the use of preemptible VMs in API deployment.
+
+>**config_vm_webserver_flag_preemptible**, flag to enable or disable the use of preemptible VMs in Web Servers deployment.∏
 
 # Output Information
 Once the deployment process has been successfully completed, the following details about the resources are revealed.
