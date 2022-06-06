@@ -48,6 +48,10 @@ resource "google_compute_security_policy" "netsec_policy_api" {
     }
   }
   // TODO --- IDS/IPS Subsystem --- //
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 // --- Web Application Network Policies  --- //
@@ -96,4 +100,8 @@ resource "google_compute_security_policy" "netsec_policy_webapp" {
     }
   }
   // TODO --- IDS/IPS Subsystem --- //
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
