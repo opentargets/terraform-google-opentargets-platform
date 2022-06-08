@@ -20,21 +20,21 @@ resource "google_compute_security_policy" "netsec_policy_api" {
 
   // Traffic restriction from source CIDR
   dynamic "rule" {
-    for_each = local.netsec_restriction_source_ip_enabled ? [1] : []
+    for_each = local.netsec_enable_policies_api ? local.netsec_restriction_source_ip_cidrs_policy_listings : []
     content {
-      description = "Allow traffic from the given list of CIDRs"
+      description = "Allow API traffic from the given list of CIDRs, group #${rule.key}"
       action      = "allow"
-      priority    = "1000"
+      priority    = "${rule.key + 1000}"
       match {
         versioned_expr = "SRC_IPS_V1"
         config {
-          src_ip_ranges = local.netsec_restriction_source_ip_cidrs
+          src_ip_ranges = rule.value
         }
       }
     }
   }
   dynamic "rule" {
-    for_each = local.netsec_restriction_source_ip_enabled ? [1] : []
+    for_each = local.netsec_enable_policies_api ? [1] : []
     content {
       description = "Overwrite default rule to block all traffic"
       action      = "deny(403)"
@@ -74,20 +74,21 @@ resource "google_compute_security_policy" "netsec_policy_webapp" {
 
   // Traffic restriction from source CIDR
   dynamic "rule" {
-    for_each = local.netsec_restriction_source_ip_enabled ? [1] : []
+    for_each = local.netsec_enable_policies_webapp ? local.netsec_restriction_source_ip_cidrs_policy_listings : []
     content {
-      action   = "allow"
-      priority = "1000"
+      description   = "Allow WEB traffic from the given list of CIDRs, group #${rule.key}"
+      action      = "allow"
+      priority = "${rule.key + 1000}"
       match {
         versioned_expr = "SRC_IPS_V1"
         config {
-          src_ip_ranges = local.netsec_restriction_source_ip_cidrs
+          src_ip_ranges = rule.value
         }
       }
     }
   }
   dynamic "rule" {
-    for_each = local.netsec_restriction_source_ip_enabled ? [1] : []
+    for_each = local.netsec_enable_policies_webapp ? [1] : []
     content {
       action   = "deny(403)"
       priority = "2147483647"
