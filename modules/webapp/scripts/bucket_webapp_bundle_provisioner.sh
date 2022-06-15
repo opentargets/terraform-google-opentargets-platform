@@ -14,7 +14,7 @@ echo "[SITEMAPS] Downloading script from '${sitemaps_url_script_download}'"
 wget --no-check-certificate "${sitemaps_url_script_download}"
 cd ${path_build}
 echo "[BUILD] Unpack bundle"
-tar xzvf "${working_dir}/bundle.tgz"
+tar xzvf "${working_dir}/bundle-platform.tgz"
 echo "[BUILD] Attach deployment context at '${file_name_devops_context_instance}'"
 cp ${file_name_devops_context_template} ${file_name_devops_context_instance}
 for envvar in $(cat ${file_name_devops_context_instance} | egrep -o "DEVOPS[_A-Z]+$"); do
