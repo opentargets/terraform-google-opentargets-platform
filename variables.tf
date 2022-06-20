@@ -299,8 +299,8 @@ variable "config_security_webapp_enable" {
 
 variable "config_security_restrict_source_ips_cidrs_file" {
   description = "Text file within the 'profiles' folder that contains the list of CIDRs allowed to access the platform"
-  type = string
-  default = "netsec_cidr.default"
+  type        = string
+  default     = "netsec_cidr.default"
 }
 // --- Development --- //
 variable "config_set_dev_mode_on" {
