@@ -297,12 +297,6 @@ variable "config_security_webapp_enable" {
   default     = false
 }
 
-variable "config_security_restrict_source_ips" {
-  description = "List of CIDRs that are the only ones allowed to access the internet facing services, default '[]'"
-  type        = list(any)
-  default     = []
-}
-
 variable "config_security_restrict_source_ips_cidrs_file" {
   description = "Text file within the 'profiles' folder that contains the list of CIDRs allowed to access the platform"
   type = string
