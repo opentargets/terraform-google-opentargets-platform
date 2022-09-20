@@ -10,19 +10,19 @@ config_deployment_regions = ["europe-west1"]
 config_vm_elastic_search_image_project   = "open-targets-eu-dev"
 config_vm_elastic_search_vcpus           = "6"
 config_vm_elastic_search_mem             = "39936"
-config_vm_elastic_search_image           = "platform2209-220915-174744-es"
+config_vm_elastic_search_image           = "platform2209-220920-135305-es"
 config_vm_elastic_search_version         = "7.10.2"
 config_vm_elastic_search_boot_disk_size  = "500GB"
 config_vm_elasticsearch_flag_preemptible = true
 // --- Clickhouse configuration --- //
 config_vm_clickhouse_vcpus            = "4"
 config_vm_clickhouse_mem              = "26624"
-config_vm_clickhouse_image            = "platform2209-220915-174744-ch"
+config_vm_clickhouse_image            = "platform2209-220920-135305-ch"
 config_vm_clickhouse_image_project    = "open-targets-eu-dev"
 config_vm_clickhouse_boot_disk_size   = "250GB"
 config_vm_clickhouse_flag_preemptible = true
 // --- API configuration --- //
-config_vm_platform_api_image_version = "22.06.1"
+config_vm_platform_api_image_version = "dev22.06.4"
 config_vm_api_vcpus                  = "2"
 config_vm_api_mem                    = "7680"
 config_vm_api_image                  = "cos-stable"
