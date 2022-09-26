@@ -22,7 +22,7 @@ config_vm_clickhouse_image_project    = "open-targets-eu-dev"
 config_vm_clickhouse_boot_disk_size   = "250GB"
 config_vm_clickhouse_flag_preemptible = true
 // --- API configuration --- //
-config_vm_platform_api_image_version = "22.09.1"
+config_vm_platform_api_image_version = "22.09.2"
 config_vm_api_vcpus                  = "2"
 config_vm_api_mem                    = "7680"
 config_vm_api_image                  = "cos-stable"
