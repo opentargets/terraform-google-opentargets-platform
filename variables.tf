@@ -305,8 +305,8 @@ variable "config_security_restrict_source_ips" {
 
 variable "config_security_restrict_source_ips_cidrs_file" {
   description = "Text file within the 'profiles' folder that contains the list of CIDRs allowed to access the platform"
-  type = string
-  default = "netsec_cidr.default"
+  type        = string
+  default     = "netsec_cidr.default"
 }
 // --- Development --- //
 variable "config_set_dev_mode_on" {
@@ -317,4 +317,31 @@ variable "config_set_dev_mode_on" {
 variable "config_enable_inspection" {
   description = "If 'true', it will deploy additional VMs for infrastructure inspection, 'false'"
   default     = false
+}
+
+
+// --- API metadata --- //
+variable "config_vm_version_major" {
+  description = "Major API Version"
+  type        = number
+}
+variable "config_vm_version_minor" {
+  description = "Minor API Version"
+  type        = number
+}
+variable "config_vm_version_patch" {
+  description = "Patch API Version"
+  type        = number
+}
+variable "config_vm_data_year" {
+  description = "API data - year"
+  type        = number
+}
+variable "config_vm_data_month" {
+  description = "API data - month"
+  type        = number
+}
+variable "config_vm_data_iteration" {
+  description = "API data - iteration"
+  type        = number
 }
