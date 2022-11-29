@@ -10,7 +10,7 @@ config_deployment_regions                   = [ "europe-west1", "us-east1" ]
 config_vm_elastic_search_image_project      = "open-targets-eu-dev"
 config_vm_elastic_search_vcpus              = "6"
 config_vm_elastic_search_mem                = "39936"
-config_vm_elastic_search_image              = "platform2211-221124-182013-es"
+config_vm_elastic_search_image              = "platform2211-221123-164323-es"
 config_vm_elastic_search_version            = "7.10.2"
 config_vm_elastic_search_boot_disk_size     = "500GB"
 // --- Clickhouse configuration --- //
