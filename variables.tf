@@ -324,24 +324,30 @@ variable "config_enable_inspection" {
 variable "config_vm_version_major" {
   description = "Major API Version"
   type        = number
+  default     = 0
 }
 variable "config_vm_version_minor" {
   description = "Minor API Version"
   type        = number
+  default     = 0
 }
 variable "config_vm_version_patch" {
   description = "Patch API Version"
   type        = number
+  default     = 0
 }
 variable "config_vm_data_year" {
   description = "API data - year"
   type        = number
+  default     = 0
 }
 variable "config_vm_data_month" {
   description = "API data - month"
   type        = number
+  default     = 0
 }
 variable "config_vm_data_iteration" {
   description = "API data - iteration"
   type        = number
+  default     = 0
 }
