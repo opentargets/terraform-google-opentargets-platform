@@ -19,8 +19,14 @@ resource "random_string" "random" {
     otpapi_template_source_image  = local.otpapi_template_source_image,
     vm_platform_api_image_version = var.vm_platform_api_image_version,
     vm_platform_api_image_version = var.vm_platform_api_image_version,
-    vm_startup_script             = md5(file("${path.module}/scripts/instance_startup.sh"))
-    vm_flag_preemptible           = var.vm_flag_preemptible
+    vm_startup_script             = md5(file("${path.module}/scripts/instance_startup.sh")),
+    vm_flag_preemptible           = var.vm_flag_preemptible,
+    vm_api_version_major          = var.api_v_major,
+    vm_api_version_minor          = var.api_v_minor,
+    vm_api_version_patch          = var.api_v_patch,
+    vm_api_data_year              = var.api_d_year,
+    vm_api_data_month             = var.api_d_month,
+    vm_api_data_iter              = var.api_d_iteration
   }
 }
 
