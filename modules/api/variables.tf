@@ -111,27 +111,27 @@ variable "deployment_target_size" {
 // --- API metadata --- //
 variable "api_v_major" {
   description = "Major API Version"
-  type        = number
+  type        = string
 }
 variable "api_v_minor" {
   description = "Minor API Version"
-  type        = number
+  type        = string
 }
 variable "api_v_patch" {
   description = "Patch API Version"
-  type        = number
+  type        = string
 }
 variable "api_d_year" {
   description = "API data - year"
-  type        = number
+  type        = string
 }
 variable "api_d_month" {
   description = "API data - month"
-  type        = number
+  type        = string
 }
 variable "api_d_iteration" {
   description = "API data - iteration"
-  type        = number
+  type        = string
 }
 
 // --- Backend Connection Information --- //
