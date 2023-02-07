@@ -24,7 +24,7 @@ resource "google_compute_security_policy" "netsec_policy_api" {
     content {
       description = "Allow API traffic from the given list of CIDRs, group #${rule.key}"
       action      = "allow"
-      priority    = "${rule.key + 1000}"
+      priority    = rule.key + 1000
       match {
         versioned_expr = "SRC_IPS_V1"
         config {
@@ -76,9 +76,9 @@ resource "google_compute_security_policy" "netsec_policy_webapp" {
   dynamic "rule" {
     for_each = local.netsec_enable_policies_webapp ? local.netsec_restriction_source_ip_cidrs_policy_listings : []
     content {
-      description   = "Allow WEB traffic from the given list of CIDRs, group #${rule.key}"
+      description = "Allow WEB traffic from the given list of CIDRs, group #${rule.key}"
       action      = "allow"
-      priority = "${rule.key + 1000}"
+      priority    = rule.key + 1000
       match {
         versioned_expr = "SRC_IPS_V1"
         config {
