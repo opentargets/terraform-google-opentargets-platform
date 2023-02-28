@@ -26,6 +26,7 @@ output "webapp_deployment" {
 }
 
 output "debug_glb_platform" {
+  sensitive = true
   value = module.glb_platform
 }
 

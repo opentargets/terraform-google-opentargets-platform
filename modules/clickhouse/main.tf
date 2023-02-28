@@ -108,6 +108,7 @@ resource "google_compute_health_check" "clickhouse_healthcheck" {
 
 // --- Regional Instance Group Manager --- //
 resource "google_compute_region_instance_group_manager" "regmig_clickhouse" {
+  provider = google-beta
   name = "${var.module_wide_prefix_scope}-regmig-clickhouse"
   region = var.deployment_region
   base_instance_name = "${var.module_wide_prefix_scope}-clickhouse"

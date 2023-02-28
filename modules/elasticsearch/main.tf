@@ -115,6 +115,7 @@ resource "google_compute_health_check" "elastic_search_healthcheck" {
 
 // --- Regional Instance Group Manager --- //
 resource "google_compute_region_instance_group_manager" "regmig_elastic_search" {
+  provider = google-beta
   name = "${var.module_wide_prefix_scope}-regmig-elastic-search"
   region = var.deployment_region
   base_instance_name = "${var.module_wide_prefix_scope}-esearch"
