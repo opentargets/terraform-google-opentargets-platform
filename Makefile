@@ -1,20 +1,10 @@
 # This Makefile helper will set the Terraform Environment and Infrastructure Deployment Context from the given profiles
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
 
-# --- Use Cases: --- #
-## Create a tfenv from its template, format 'tfenv.template.profile', given the 'profile' name and 'destination profile' name
-## Activate a tfenv from its template, format 'tfenv.profile', given the 'profile' name
-## Activate a deployment context, format 'deployment_context.profile', given the 'profile' name
-
 # Environment
-file_name_tfenv_active = tfenv.active
-file_name_tfenv_prefix = tfenv
-file_name_tfenv_template_prefix = $(file_name_tfenv_prefix).template
-file_name_depcontext_active = deployment_context.tfvars
+file_name_depcontext = deployment_context.auto.tfvars
 file_name_depcontext_prefix = deployment_context
 folder_path_profiles = profiles
-file_name_tfbackend_gcp = tfbackend-gcp.template
-file_name_tfbackend_active = tfbackend.tf
 # Helpers
 path_script_replace_with_env_vars_values = helpers/replace_with_env_vars_values.sh
 
@@ -22,90 +12,39 @@ path_script_replace_with_env_vars_values = helpers/replace_with_env_vars_values.
 all:
 	@echo "Use this helper to set both Terraform Environment and Infrastructure Deployment Context before actually deploying anything on the Cloud"
 
-# Set which Terraform backend must be used, default is 'local' --- ##
-tfbackendremote: clean_tfbackend_cache
-	@echo "[TERRAFORM] Setting Terraform backend to be GCP bucket"
-	@cp ${file_name_tfbackend_gcp} ${file_name_tfbackend_active}
-	${path_script_replace_with_env_vars_values} ${file_name_tfenv_active} ${file_name_tfbackend_active}
-	@echo "[WARNING] You'll need to run 'tfinit' again. Please, make sure you have an active Terraform Environment before that"
+set_profile: ## Set the profile to be used for all the operations in the session
+	@echo "[SETUP] Setting profile deployment context profile '${profile}'"
+	@ln -s ${folder_path_profiles}/${file_name_depcontext_prefix}.${profile} ${file_name_depcontext}
+	@echo "[SETUP] Switching Terraform Workspace to '${profile}'"
+	@terraform workspace select ${profile}
 
-tfbackendlocal: clean_tfbackend_cache
-	@echo "[TERRAFORM] Setting Terraform backend to be 'local'"
-	@rm -f ${file_name_tfbackend_active}
-	@echo "[WARNING] You'll need to run 'tfinit' again. Please, make sure you have an active Terraform Environment before that"
+clone_profile: ## Clone an existing profile to a new one, starting with an empty workspace (state)
+	@echo "[CLONE] Cloning profile deployment context profile '${profile}' to '${new_profile}'"
+	@cp ${folder_path_profiles}/${file_name_depcontext_prefix}.${profile} ${folder_path_profiles}/${file_name_depcontext_prefix}.${new_profile}
+	@echo "[CLONE] Creating Terraform Workspace '${new_profile}'"
+	@terraform workspace new ${new_profile}
 
-# Create a new Terraform Environment given the baseline template profile --- ##
-_tfcreate:
-	@echo "[DEBUG] Setting TFState prefix to '${tfstateprefix}'";
-	@sed -i ".bak" "s/TF_CONFIG_TFSTATE_PREFIX/${tfstateprefix}/g" ${folder_path_profiles}/${file_name_tfenv_prefix}.${dstprofile}
-
-export tfstateprefix
-export dstprofile
-tfcreate:
-	@echo "[TFENV] Creating Terraform Environment profile '${dstprofile}' from profile '${srcprofile}'"
-	@cp ${folder_path_profiles}/${file_name_tfenv_template_prefix}.${srcprofile} ${folder_path_profiles}/${file_name_tfenv_prefix}.${dstprofile}
-	@read -p "[INPUT] Prefix for tfstate in the bucket: " tfstateprefix; $(MAKE) _tfcreate
-
-# Activate the given Terraform Environment profile --- ##
-tfactivate:
-	@echo "[TFENV] Activating Terraform Environment profile '${profile}'"
-	@cp ${folder_path_profiles}/${file_name_tfenv_prefix}.${profile} ${file_name_tfenv_active}
-
-# Activate the given Infrastructure Deployment Context profile --- ##
-depactivate:
-	@echo "[DEPLOYMENT] Activating Infrastructure Deployment Context profile '${profile}'"
-	@cp ${folder_path_profiles}/${file_name_depcontext_prefix}.${profile} ${file_name_depcontext_active}
-
-# --- Infrastructure deployment Targets --- ##
-# Init --- ##
-tfinit:
-	@echo "[DEPLOYMENT] Terraform Init for current Terraform Environment and Infrastructure Deployment Context"
-	@source ${file_name_tfenv_active} ; \
-	terraform init
-
-# Plan --- ##
-tfplan:
-	@echo "[DEPLOYMENT] Show deployment plan for current Terraform Environment and Infrastructure Deployment Context"
-	@source ${file_name_tfenv_active} ; \
-	terraform plan --var-file=${file_name_depcontext_active}
-
-# Plan --- ##
-tfvalidate:
-	@echo "[DEPLOYMENT] Show deployment plan for current Terraform Environment and Infrastructure Deployment Context"
-	@source ${file_name_tfenv_active} ; \
-	terraform validate --var-file=${file_name_depcontext_active}
-
-# Apply --- ##
-tfapply:
-	@echo "[DEPLOYMENT] Apply deployment plan for current Terraform Environment and Infrastructure Deployment Context"
-	@source ${file_name_tfenv_active} ; \
-	terraform apply --var-file=${file_name_depcontext_active}
-
-# Destroy --- ##
-tfdestroy:
-	@echo "[DEPLOYMENT] Destroy deployment plan for current Terraform Environment and Infrastructure Deployment Context"
-	@source ${file_name_tfenv_active} ; \
-	terraform destroy --var-file=${file_name_depcontext_active}
+delete_profile: ## Delete an existing profile
+	@echo "[WARNING] Deleting deployment context profile '${profile}'"
+	@rm -f ${folder_path_profiles}/${file_name_depcontext_prefix}.${profile}
+	@echo "[WARNING] Deleting Terraform Workspace '${profile}'"
+	@terraform workspace select default
+	@terraform workspace delete ${profile}
 
 # House Keeping --- ##
-clean: clean_tfprofile clean_depcontext clean_tfbackend
-	@echo "[HOUSEKEEPING] Cleaning up..."
+unset_profile: ## Unset the currently active profile
+	@echo "[HOUSEKEEPING] Unset Terraform Environment active profile"
+	@rm -f ${file_name_depcontext}
+	@echo "[HOUSEKEEPING] Switching Terraform Workspace to 'default'"
+	@terraform workspace select default
 
-clean_tfbackend_cache: 
+clean_backend: ## Clean Terraform Backend Cache
 	@echo "[HOUSEKEEPING] Cleaning up Terraform Backend Configuration, setting default"
 	rm -f .terraform/terraform.tfstate
 
-clean_tfbackend: tfbackendlocal clean_tfbackend_cache
-	@echo "[HOUSEKEEPING] Cleaning up Terraform Backend Configuration, setting default"
-
-clean_tfprofile:
-	@echo "[HOUSEKEEPING] Cleaning up Terraform Environment active profile"
-	@rm -f ${file_name_tfenv_active}
-
-clean_depcontext:
-	@echo "[HOUSEKEEPING] Cleaning up Infrastructure Deployment Context active profile"
-	@rm -f ${file_name_depcontext_active}
+clean: unset_profile clean_backend ## Clean up all the artifacts created by this helper (profile, backend, etc.)
+	@echo "[HOUSEKEEPING] Cleaning up..."
 
 # 'PHONY' targets --- ##
-.PHONY: all tfbackendremote tfbackendlocal tfcreate tfactivate depactivate tfinit tfplan tfapply tfdestroy clean clean_tfprofile clean_tfbackend clean_depcontext _tfcreate clean_tfbackend_cache
+.PHONY: all set_profile unset_profile clean_backend clean clone_profile delete_profile
 # END --- ##
