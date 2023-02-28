@@ -1,3 +1,6 @@
 // --- Global Load Balancer Layer --- //
-// Default configuration matches Development Environment --- //
+
+// This file is used to configure the global load balancer layer.
+
+// By default, we use the development configuration
 config_glb_webapp_enable_cdn = false

@@ -1,5 +1,8 @@
 // --- DNS Layer --- //
-// Default DNS configuration matches Development Environment --- //
+
+// This file lays out the DNS configuration for the deployment.
+
+// By default, we use the development DNS configuration
 config_dns_project_id             = "open-targets-eu-dev"
 config_dns_subdomain_prefix       = "dev"
 config_dns_managed_zone_name      = "opentargets-xyz"
