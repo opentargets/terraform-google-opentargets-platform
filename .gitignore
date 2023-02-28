@@ -9,3 +9,6 @@ tfbackend.tf
 deployment_context.tfvars
 **/.DS_Store
 tfbackend.tf.bak
+.idea
+# Ignore the active deployment context profile
+deployment_context.auto.tfvars
