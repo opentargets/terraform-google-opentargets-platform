@@ -60,7 +60,7 @@ resource "google_compute_instance_template" "webserver_template" {
     automatic_restart = !var.vm_flag_preemptible
     on_host_maintenance = var.vm_flag_preemptible ? "TERMINATE" : "MIGRATE"
     preemptible = var.vm_flag_preemptible
-    //provisioning_model = "SPOT"
+    provisioning_model = var.vm_flag_preemptible ? "SPOT" : "STANDARD"
   }
 
   disk {
@@ -116,6 +116,7 @@ resource "google_compute_health_check" "webserver_healthcheck" {
 resource "google_compute_region_instance_group_manager" "regmig_webserver" {
   count = length(var.webserver_deployment_regions)
 
+  provider = google-beta
   name = "${var.module_wide_prefix_scope}-${count.index}-regmig-webserver"
   region = var.webserver_deployment_regions[count.index]
   base_instance_name = "${var.module_wide_prefix_scope}-${count.index}-webserver"

@@ -3,7 +3,7 @@
 // --- GLOBAL LOAD BALANCER --- //
 module "gce_lb_http" {
   source            = "GoogleCloudPlatform/lb-http/google"
-  version           = "~> 4.4"
+  version           = ">= 7.0.0"
 
   count = (var.load_balancer_type == local.lb_type_global ? 1 : 0)
   
@@ -26,7 +26,9 @@ module "gce_lb_http" {
       port_name                       = local.otp_api_port_name
       timeout_sec                     = 10
       enable_cdn                      = false
+      compression_mode                = null
       custom_request_headers          = null
+      custom_response_headers         = null
       security_policy                 = null
 
       connection_draining_timeout_sec = null

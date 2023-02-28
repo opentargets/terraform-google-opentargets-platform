@@ -24,7 +24,8 @@ resource "random_string" "random" {
 
 // --- Website Bucket Definition --- //
 module "bucket_webapp" {
-  source  = "github.com/mbdebian/terraform-google-static-assets//modules/cloud-storage-static-website"
+  //source  = "github.com/mbdebian/terraform-google-static-assets//modules/cloud-storage-static-website"
+  source = "github.com/gruntwork-io/terraform-google-static-assets.git//modules/cloud-storage-static-website?ref=v0.6.0"
   project = var.project_id
   // Website and Logs buckets configuration
   website_domain_name = local.bucket_name

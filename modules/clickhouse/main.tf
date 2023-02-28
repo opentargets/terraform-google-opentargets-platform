@@ -62,7 +62,7 @@ resource "google_compute_instance_template" "clickhouse_template" {
     automatic_restart = !var.vm_flag_preemptible
     on_host_maintenance = var.vm_flag_preemptible ? "TERMINATE" : "MIGRATE"
     preemptible = var.vm_flag_preemptible
-    //provisioning_model = "SPOT"
+    provisioning_model = var.vm_flag_preemptible ? "SPOT" : "STANDARD"
   }
 
   disk {
@@ -108,6 +108,7 @@ resource "google_compute_health_check" "clickhouse_healthcheck" {
 
 // --- Regional Instance Group Manager --- //
 resource "google_compute_region_instance_group_manager" "regmig_clickhouse" {
+  provider = google-beta
   name = "${var.module_wide_prefix_scope}-regmig-clickhouse"
   region = var.deployment_region
   base_instance_name = "${var.module_wide_prefix_scope}-clickhouse"

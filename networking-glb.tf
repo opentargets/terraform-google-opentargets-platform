@@ -60,7 +60,7 @@ resource "google_compute_url_map" "url_map_platform_glb" {
 
 module "glb_platform" {
   source  = "GoogleCloudPlatform/lb-http/google"
-  version = "~> 4.4"
+  version = ">= 7.0.0"
 
   // Dependencies
   depends_on = [
@@ -88,14 +88,16 @@ module "glb_platform" {
   backends = {
     // Web application is the default backend
     default = {
-      description            = "The Web Application is the default backend"
-      protocol               = "HTTP"
-      port                   = module.web_app.webserver_port
-      port_name              = module.web_app.webserver_port_name
-      timeout_sec            = 10
-      enable_cdn             = local.glb_webapp_cdn_enabled
-      custom_request_headers = null
-      security_policy        = local.glb_netsec_effective_policy_webapp
+      description             = "The Web Application is the default backend"
+      protocol                = "HTTP"
+      port                    = module.web_app.webserver_port
+      port_name               = module.web_app.webserver_port_name
+      timeout_sec             = 10
+      enable_cdn              = local.glb_webapp_cdn_enabled
+      compression_mode        = null
+      custom_request_headers  = null
+      custom_response_headers = null
+      security_policy         = local.glb_netsec_effective_policy_webapp
 
       connection_draining_timeout_sec = null
       session_affinity                = null
@@ -147,7 +149,9 @@ module "glb_platform" {
       port_name              = module.backend_api.api_port_name
       timeout_sec            = 10
       enable_cdn             = false
+      compression_mode       = null
       custom_request_headers = null
+      custom_response_headers = null
       security_policy        = local.glb_netsec_effective_policy_api
 
       connection_draining_timeout_sec = null

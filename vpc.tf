@@ -2,7 +2,7 @@
 // Custom VPC --- //
 module "vpc_network" {
   source  = "terraform-google-modules/network/google"
-  version = "~> 3.0"
+  version = ">= 6.0.1"
 
   project_id              = var.config_project_id
   network_name            = local.vpc_network_name
