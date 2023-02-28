@@ -40,7 +40,7 @@ delete_profile: ## Delete an existing profile
 
 # House Keeping --- ##
 unset_profile: ## Unset the currently active profile
-	@echo "[HOUSEKEEPING] Unset Terraform Environment active profile"
+	@echo "[HOUSEKEEPING] Unset Terraform Environment active profile '$(shell ls -alh ${file_name_depcontext} | awk '{print $$NF}')'"
 	@rm -f ${file_name_depcontext}
 	@echo "[HOUSEKEEPING] Switching Terraform Workspace to 'default'"
 	@terraform workspace select default
