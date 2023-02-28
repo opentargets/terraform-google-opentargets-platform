@@ -21,7 +21,7 @@ status: ## Show the current status of the deployment context
 
 set_profile: ## Set the profile to be used for all the operations in the session
 	@echo "[SETUP] Setting profile deployment context profile '${profile}'"
-	@ln -s ${folder_path_profiles}/${file_name_depcontext_prefix}.${profile} ${file_name_depcontext}
+	@ln -sf ${folder_path_profiles}/${file_name_depcontext_prefix}.${profile} ${file_name_depcontext}
 	@echo "[SETUP] Switching Terraform Workspace to '${profile}'"
 	@terraform workspace select ${profile}
 
@@ -46,7 +46,7 @@ unset_profile: ## Unset the currently active profile
 	@terraform workspace select default
 
 clean_backend: ## Clean Terraform Backend Cache
-	@echo "[HOUSEKEEPING] Cleaning up Terraform Backend Configuration, setting default"
+	@echo "[HOUSEKEEPING] Cleaning up Terraform Backend Configuration"
 	rm -f .terraform/terraform.tfstate
 
 clean: unset_profile clean_backend ## Clean up all the artifacts created by this helper (profile, backend, etc.)
