@@ -41,6 +41,16 @@ Clone the repository, if you have GitHub Cli:
 $ gh repo clone opentargets/terraform-google-opentargets-platform
 ```
 
+## Activating GCP credentials
+
+To interact with GCP services it is necessary to be authenticated. Follow the directions in the [google module documentation](https://registry.terraform.io/providers/hashicorp/google/latest/docs/guides/provider_reference#primary-authentication).
+
+We typically use our local work stations to manage state. If you are already signed in to the `gcloud` utility (check with `gcloud auth list`) executing the following command should be sufficient:
+
+```
+gcloud auth application-default login
+```
+
 ## Terraform State
 Terraform uses a [state file](https://www.terraform.io/docs/language/state/index.html) that allows it to track the managed infrastructure.
 
@@ -109,6 +119,19 @@ This command will destroy all the deployed resources, according to the state in 
 USE ONLY in development environments.
 
 <a name="depcontextexplained"></a>
+
+## Persisting your changes
+
+When working with the backend remote, we want to be able to share state between developers. When updating a value, we update the `deployment_context.tfvars` file which is not in (and should not be addded to) version control.
+
+After updating the file and deploying the changes, we need to update the relevant deployment definition with the command:
+
+```
+cp deployment_context.tfvars profiles/deployment_context.<profile>
+git add profiles/deployment_context.<profile>
+git commit -m <description of what was updated>
+```
+To check that the deployed and saved files are the same run `diff deployment_context.tfvars profiles/deployment_context.<profile>`. There should be no output if the files are the same. 
 
 # Use POS profile for deployment on opentargets internal infrastructure
 In order to deploy the web site using the internal infrastructure, it is useful to have a list of commands to run to achieve the goal.

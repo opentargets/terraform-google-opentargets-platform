@@ -312,3 +312,36 @@ variable "config_enable_inspection" {
   description = "If 'true', it will deploy additional VMs for infrastructure inspection, 'false'"
   default     = false
 }
+
+
+// --- API metadata --- //
+variable "config_vm_version_major" {
+  description = "Major API Version"
+  type        = string
+  default     = "0"
+}
+variable "config_vm_version_minor" {
+  description = "Minor API Version"
+  type        = string
+  default     = "0"
+}
+variable "config_vm_version_patch" {
+  description = "Patch API Version"
+  type        = string
+  default     = "0"
+}
+variable "config_vm_data_year" {
+  description = "API data - year"
+  type        = string
+  default     = "0"
+}
+variable "config_vm_data_month" {
+  description = "API data - month"
+  type        = string
+  default     = "0"
+}
+variable "config_vm_data_iteration" {
+  description = "API data - iteration"
+  type        = string
+  default     = "0"
+}
