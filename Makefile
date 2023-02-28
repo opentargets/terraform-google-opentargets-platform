@@ -19,19 +19,25 @@ status: ## Show the current status of the deployment context
 	@echo "[STATUS] Deployment Context Profile: $(shell ls -alh ${file_name_depcontext} | awk '{print $$NF}')"
 	@echo "[STATUS] Terraform Workspace: $(shell terraform workspace show)"
 
-set_profile: ## Set the profile to be used for all the operations in the session
+set_profile: ## Set the profile to be used for all the operations in the session (use parameter 'profile')
 	@echo "[SETUP] Setting profile deployment context profile '${profile}'"
 	@ln -sf ${folder_path_profiles}/${file_name_depcontext_prefix}.${profile} ${file_name_depcontext}
 	@echo "[SETUP] Switching Terraform Workspace to '${profile}'"
 	@terraform workspace select ${profile}
 
-clone_profile: ## Clone an existing profile to a new one, starting with an empty workspace (state)
+update_linked_profile: ## Update a linked deployment context profile to point to a new one, e.g. 'production-platform' -> '23.02', (use parameters 'profile' and 'link_to_profile')
+	@echo "[UPDATE] Updating linked deployment context profile '${profile}' to point to '${link_to_profile}'"
+	@cd ${folder_path_profiles}; ln -sf ${file_name_depcontext_prefix}.${link_to_profile} ${file_name_depcontext_prefix}.${profile}
+
+clone_profile: ## Clone an existing profile to a new one, starting with an empty workspace (state), and activate the new deployment context profile, as well as its corresponding workspace, use parameters 'profile' and 'new_profile'
 	@echo "[CLONE] Cloning profile deployment context profile '${profile}' to '${new_profile}'"
 	@cp ${folder_path_profiles}/${file_name_depcontext_prefix}.${profile} ${folder_path_profiles}/${file_name_depcontext_prefix}.${new_profile}
 	@echo "[CLONE] Creating Terraform Workspace '${new_profile}'"
 	@terraform workspace new ${new_profile}
+	@make set_profile profile='${new_profile}'
+	@make status
 
-delete_profile: ## Delete an existing profile
+delete_profile: ## Delete an existing profile, use parameter 'profile'
 	@echo "[WARNING] Deleting deployment context profile '${profile}'"
 	@rm -f ${folder_path_profiles}/${file_name_depcontext_prefix}.${profile}
 	@echo "[WARNING] Deleting Terraform Workspace '${profile}'"
@@ -53,5 +59,5 @@ clean: unset_profile clean_backend ## Clean up all the artifacts created by this
 	@echo "[HOUSEKEEPING] Cleaning up..."
 
 # 'PHONY' targets --- ##
-.PHONY: set_profile unset_profile clean_backend clean clone_profile delete_profile help status
+.PHONY: set_profile unset_profile clean_backend clean clone_profile delete_profile help status update_linked_profile
 # END --- ##
