@@ -24,6 +24,7 @@ set_profile: ## Set the profile to be used for all the operations in the session
 	@ln -sf ${folder_path_profiles}/${file_name_depcontext_prefix}.${profile} ${file_name_depcontext}
 	@echo "[SETUP] Switching Terraform Workspace to '${profile}'"
 	@terraform workspace select ${profile}
+	@make status
 
 update_linked_profile: ## Update a linked deployment context profile to point to a new one, e.g. 'production-platform' -> '23.02', (use parameters 'profile' and 'link_to_profile')
 	@echo "[UPDATE] Updating linked deployment context profile '${profile}' to point to '${link_to_profile}'"

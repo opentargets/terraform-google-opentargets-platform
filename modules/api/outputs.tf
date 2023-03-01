@@ -29,8 +29,8 @@ output "api_port_name" {
 
 output "ilb_ip_addresses" {
   value = zipmap(
-    [ for ilb in google_compute_forwarding_rule.ilb_forwarding_rule: ilb.region ],
-    [ for ilb in google_compute_forwarding_rule.ilb_forwarding_rule: ilb.ip_address ]
+    [for ilb in google_compute_forwarding_rule.ilb_forwarding_rule : ilb.region],
+    [for ilb in google_compute_forwarding_rule.ilb_forwarding_rule : ilb.ip_address]
   )
 }
 

@@ -11,7 +11,7 @@ resource "google_compute_firewall" "vpc_netfw_allow_icmp" {
   allow {
     protocol = "icmp"
   }
-  
+
   source_ranges = [
     "0.0.0.0/0"
   ]
