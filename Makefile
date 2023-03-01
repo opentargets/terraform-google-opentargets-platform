@@ -42,6 +42,8 @@ delete_profile: ## Delete an existing profile, use parameter 'profile'
 	@echo "[WARNING] Deleting deployment context profile '${profile}'"
 	@rm -f ${folder_path_profiles}/${file_name_depcontext_prefix}.${profile}
 	@echo "[WARNING] Deleting Terraform Workspace '${profile}'"
+	@terraform workspace select ${profile}
+	@terraform destroy --auto-approve
 	@terraform workspace select default
 	@terraform workspace delete ${profile}
 
