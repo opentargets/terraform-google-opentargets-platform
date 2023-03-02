@@ -11,6 +11,10 @@ resource "google_compute_firewall" "vpc_netfw_allow_icmp" {
   allow {
     protocol = "icmp"
   }
+
+  source_ranges = [
+    "0.0.0.0/0"
+  ]
 }
 
 // Allow HTTP traffic to tagged nodes --- //
@@ -26,6 +30,9 @@ resource "google_compute_firewall" "vpc_netfw_allow_http" {
   }
 
   target_tags = [local.fw_tag_http]
+  source_ranges = [
+    "0.0.0.0/0"
+  ]
 }
 
 // Allow HTTPS traffic to tagged nodes --- //
@@ -41,6 +48,9 @@ resource "google_compute_firewall" "vpc_netfw_allow_https" {
   }
 
   target_tags = [local.fw_tag_https]
+  source_ranges = [
+    "0.0.0.0/0"
+  ]
 }
 
 // Allow SSH traffic to tagged nodes --- //
@@ -56,4 +66,7 @@ resource "google_compute_firewall" "vpc_netfw_allow_ssh" {
   }
 
   target_tags = [local.fw_tag_ssh]
+  source_ranges = [
+    "0.0.0.0/0"
+  ]
 }

@@ -143,16 +143,16 @@ module "glb_platform" {
     }
     // Platform API
     platformapi = {
-      description            = "Backend configuration for Open Targets Platform API"
-      protocol               = "HTTP"
-      port                   = module.backend_api.api_port
-      port_name              = module.backend_api.api_port_name
-      timeout_sec            = 10
-      enable_cdn             = false
-      compression_mode       = null
-      custom_request_headers = null
+      description             = "Backend configuration for Open Targets Platform API"
+      protocol                = "HTTP"
+      port                    = module.backend_api.api_port
+      port_name               = module.backend_api.api_port_name
+      timeout_sec             = 10
+      enable_cdn              = false
+      compression_mode        = null
+      custom_request_headers  = null
       custom_response_headers = null
-      security_policy        = local.glb_netsec_effective_policy_api
+      security_policy         = local.glb_netsec_effective_policy_api
 
       connection_draining_timeout_sec = null
       session_affinity                = null

@@ -1,3 +1,0 @@
-# This is a template Terraform Environment Configuration for creating new profiles
-TF_VAR_config_tf_backend_bucket_name='opentargets-eu-dev-terraform'
-TF_VAR_config_tf_backend_prefix='jarrod'
