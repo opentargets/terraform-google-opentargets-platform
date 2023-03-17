@@ -67,6 +67,7 @@ def _configure_args():
 
 # Parse the HCL source context file
 def get_source_context(source_context_file):
+    logger.info(f"Parsing the source context file, '{source_context_file}'")
     try:
         with open(source_context_file, 'r') as f:
             context_data = hcl2.load(f)
@@ -77,6 +78,7 @@ def get_source_context(source_context_file):
 
 # Parse and render the instantiation template
 def render_template(path_template_file):
+    logger.info(f"Parsing and rendering the template file, '{path_template_file}'")
     # Load the jinja2 template
     try:
         jinja2_env = Environment(loader=FileSystemLoader(os.path.dirname(path_template_file)))
@@ -99,6 +101,7 @@ def render_template(path_template_file):
 
 # Produce the new deployment context
 def instantiate_deployment_context(source_context, rendered_template):
+    logger.info(f"Instantiating the deployment context")
     try:
         # Load the rendered template
         rendered_template_data = hcl2.loads(rendered_template)
@@ -110,6 +113,7 @@ def instantiate_deployment_context(source_context, rendered_template):
 
 # Write the new deployment context to a file
 def write_deployment_context(deployment_context, output_file):
+    logger.info(f"Writing the deployment context to the file, '{output_file}'")
     try:
         with open(output_file, 'w') as f:
             #f.write(json.dumps(deployment_context, indent=4, ))
