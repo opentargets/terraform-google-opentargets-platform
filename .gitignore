@@ -12,3 +12,7 @@ tfbackend.tf.bak
 .idea
 # Ignore the active deployment context profile
 deployment_context.auto.tfvars
+# Ignore Python
+**/__pycache__
+**/venv
+
