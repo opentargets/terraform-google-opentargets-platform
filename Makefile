@@ -8,6 +8,14 @@ ROOT_DIR_MAKEFILE_POS:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST)))
 file_name_depcontext = deployment_context.auto.tfvars
 file_name_depcontext_prefix = deployment_context
 folder_path_profiles = profiles
+cicd_folder_path = cicd
+cicd_ops_folder_path = $(cicd_folder_path)/ops
+cicd_ops_venv_folder_path = $(cicd_ops_folder_path)/.venv
+cicd_templates_folder_path = $(cicd_folder_path)/templates
+cicd_templates_branch_folder_path = $(cicd_templates_folder_path)/branch
+cicd_templates_promote_folder_path = $(cicd_templates_folder_path)/promote
+cicd_script_branch_deployment_context = "$(cicd_ops_venv_folder_path)/bin/python $(cicd_ops_folder_path)/branch_deployment_context.py"
+
 # Helpers
 path_script_replace_with_env_vars_values = helpers/replace_with_env_vars_values.sh
 
@@ -47,6 +55,29 @@ delete_profile: ## Delete an existing profile, use parameter 'profile'
 	@terraform workspace select default
 	@terraform workspace delete ${profile}
 
+# Continuous Deployment
+ops_env: ## Create the Python Virtual Environment for the CICD Operations
+	@echo "[CICD] Creating Python Virtual Environment for CICD Operations"
+	@python -m venv $(cicd_ops_venv_folder_path)
+	@echo "[CICD] Installing Python Dependencies for CICD Operations"
+	@$(cicd_ops_venv_folder_path)/bin/pip install -r $(cicd_ops_folder_path)/requirements.txt
+
+tf_init: ## Initialize Terraform
+	@echo "[CICD] Initializing Terraform"
+	@terraform init
+
+spinoff_deployment: ops_env tf_init ## Create a new deployment setup, context and terraform workspace, based on a given deployment source profile and destination profile name, use "source='profile'" and "new='profile'"
+	@echo "[CICD] Creating a new deployment context profile based on the source profile '$(source)', new profile name '$(new)'"
+	@# TODO Create the new deployment context profile
+	@echo "[CICD] Creating a new Terraform Workspace for the new deployment context profile"
+	@terraform workspace new $(new)
+	@echo "[CICD] Switching Terraform Workspace to the new deployment context profile"
+	@terraform workspace select $(new)
+	@echo "[CICD] DONE - Creating a new deployment setup '$(new)'"
+
+branch_off_deployment: ## Create a new branch of the respository based on the current branch's deployment context profile, use "new='profile'"
+	@echo "TODO"
+
 # House Keeping --- ##
 unset_profile: ## Unset the currently active profile
 	@echo "[HOUSEKEEPING] Unset Terraform Environment active profile '$(shell ls -alh ${file_name_depcontext} | awk '{print $$NF}')'"
@@ -62,5 +93,5 @@ clean: unset_profile clean_backend ## Clean up all the artifacts created by this
 	@echo "[HOUSEKEEPING] Cleaning up..."
 
 # 'PHONY' targets --- ##
-.PHONY: set_profile unset_profile clean_backend clean clone_profile delete_profile help status update_linked_profile
+.PHONY: set_profile unset_profile clean_backend clean clone_profile delete_profile help status update_linked_profile ops_env tf_init branch_deployment
 # END --- ##
