@@ -14,5 +14,5 @@ tfbackend.tf.bak
 deployment_context.auto.tfvars
 # Ignore Python
 **/__pycache__
-**/venv
+**/.venv
 
