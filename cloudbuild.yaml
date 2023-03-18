@@ -1,0 +1,24 @@
+# Continuous Integration and Deployment for Open Targets Platform
+
+steps:
+# Identify the branch we are going ot be working on
+- id: 'branch name'
+  name: 'alpine'
+  entrypoint: 'sh'
+  args:
+    - "c"
+    - |
+      echo "[GITHUB] Working on branch '${BRANCH_NAME}'"
+      git checkout ${BRANCH_NAME}
+# Initialize Terraform
+- id: 'terraform init'
+  name: 'hashicorp/terraform:1.4.2'
+  entrypoint: 'sh'
+  args:
+    - "c"
+    - |
+      echo "[TERRAFORM] Initializing Terraform"
+      terraform init
+# Get or Create the Terraform workspace for the current branch
+# Get or Create the Deployment Context for the current branch, and set it as the active profile
+# Apply the Terraform plan according to the current branch contents
