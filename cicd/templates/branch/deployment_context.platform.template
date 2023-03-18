@@ -1,0 +1,37 @@
+// --- Branching Template file for Open Targets Platform ---//
+
+// --- Release Specific Information (THIS IS THE MAIN PLACE WHERE THINGS CHANGE BETWEEN PRODUCTION RELEASES) --- //
+// This configuration parameter will make sure that you branch in a single region
+config_deployment_regions                   = [ "europe-west1" ]
+// -[END]- Release Specific Information --- //
+
+
+// --- This section is common to all production releases, unless custom changes need to be made --- //
+// Deployment configuration
+config_release_name                         = "{{ deploymentNamespace }}"
+// Project ID is left here as a safety net to prevent accidental deployments to the wrong project
+config_project_id                           = "open-targets-eu-dev"
+// DNS
+// This section is left here as a safety net to prevent accidental changes in the production DNS configuration
+config_dns_project_id                       = "open-targets-eu-dev"
+config_dns_subdomain_prefix                 = "{{ deploymentNamespace }}"
+config_dns_managed_zone_name                = "opentargets-xyz"
+config_dns_managed_zone_dns_name            = "opentargets.xyz."
+config_dns_platform_api_subdomain           = "api"
+// Web App configuration
+config_webapp_deployment_context_map        = {
+    DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API = "'https://api.platform.{{ deploymentNamespace }}.opentargets.xyz/api/v4/graphql'"
+    DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API_BETA = "'https://api.platform.{{ deploymentNamespace }}.opentargets.xyz/api/v4/graphql'"
+    DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_EFO_URL = "'/data/ontology/efo_json/diseases_efo.jsonl'"
+    DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_GOOGLE_TAG_MANAGER_ID = "'GTM-WPXWRDV'"
+}
+// Sitemaps generation
+config_webapp_sitemaps_bigquery_table       = "{{ deploymentNamespace }}"
+// BigQuery configuration as a safety net to prevent accidental changes in the production BigQuery configuration
+config_webapp_sitemaps_bigquery_project     = "open-targets-eu-dev"
+// Machines' Persona configuration
+// For Production, we use 'on-demand' provisioning model
+config_vm_api_flag_preemptible = true
+config_vm_clickhouse_flag_preemptible = true
+config_vm_elasticsearch_flag_preemptible = true
+config_vm_webserver_flag_preemptible = true
