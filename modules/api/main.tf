@@ -76,6 +76,7 @@ resource "google_compute_instance_template" "otpapi_template" {
     on_host_maintenance = var.vm_flag_preemptible ? "TERMINATE" : "MIGRATE"
     preemptible         = var.vm_flag_preemptible
     provisioning_model  = var.vm_flag_preemptible ? "SPOT" : "STANDARD"
+    instance_termination_action = var.vm_flag_preemptible ? "STOP" : null
   }
 
   disk {

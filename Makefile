@@ -27,7 +27,11 @@ status: ## Show the current status of the deployment context
 	@echo "[STATUS] Deployment Context Profile: $(shell ls -alh ${file_name_depcontext} | awk '{print $$NF}')"
 	@echo "[STATUS] Terraform Workspace: $(shell terraform workspace show)"
 
-set_profile: ## Set the profile to be used for all the operations in the session (use parameter 'profile')
+tfinit: tmp ## Initialize Terraform
+	@echo "[TERRAFORM] Initializing Terraform"
+	@terraform init
+
+set_profile: tfinit ## Set the profile to be used for all the operations in the session (use parameter 'profile')
 	@echo "[SETUP] Setting profile deployment context profile '${profile}'"
 	@ln -sf ${folder_path_profiles}/${file_name_depcontext_prefix}.${profile} ${file_name_depcontext}
 	@echo "[SETUP] Switching Terraform Workspace to '${profile}'"
@@ -62,7 +66,7 @@ ops_env: ## Create the Python Virtual Environment for the CICD Operations
 	@echo "[CICD] Installing Python Dependencies for CICD Operations"
 	@$(cicd_ops_venv_folder_path)/bin/pip install -r $(cicd_ops_folder_path)/requirements.txt
 
-tf_init: ## Initialize Terraform
+tf_init: tmp ## Initialize Terraform
 	@echo "[CICD] Initializing Terraform"
 	@terraform init
 
@@ -77,6 +81,10 @@ spinoff_deployment: ops_env tf_init ## Create a new deployment setup, context an
 
 branch_off_deployment: ## Create a new branch of the respository based on the current branch's deployment context profile, use "new='profile'"
 	@echo "TODO"
+
+tmp: ## Temporary folder for provisioning tasks
+	@echo "[SETUP] Creating temporary folder for provisioning tasks"
+	@mkdir -p tmp
 
 # House Keeping --- ##
 unset_profile: ## Unset the currently active profile

@@ -6,10 +6,10 @@ config_release_name = "devpf"
 config_deployment_regions = ["europe-west1"]
 
 // --- Elastic Search configuration --- //
-config_vm_elastic_search_image = "mbdevplatform-230214-031922-es"
+config_vm_elastic_search_image = "devpfaotf-230324-131139-es"
 
 // --- Clickhouse configuration --- //
-config_vm_clickhouse_image = "mbdevplatform-230214-031922-ch"
+config_vm_clickhouse_image = "devpfaotf-230324-131139-ch"
 
 // --- API configuration --- //
 config_vm_platform_api_image_version = "dev23.02.7"
@@ -21,7 +21,7 @@ config_vm_data_month                 = "02"
 config_vm_data_iteration             = "0"
 
 // --- Web App configuration --- //
-config_webapp_release = "v0.3.4"
+config_webapp_release = "v0.3.5"
 // Data Context
 config_webapp_bucket_name_data_assets = "open-targets-pre-data-releases"
 config_webapp_data_context_release    = "23.02"
