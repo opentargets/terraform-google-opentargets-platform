@@ -19,7 +19,7 @@ status: ## Show the current status of the deployment context
 	@echo "[STATUS] Deployment Context Profile: $(shell ls -alh ${file_name_depcontext} | awk '{print $$NF}')"
 	@echo "[STATUS] Terraform Workspace: $(shell terraform workspace show)"
 
-tfinit: ## Initialize Terraform
+tfinit: tmp ## Initialize Terraform
 	@echo "[TERRAFORM] Initializing Terraform"
 	@terraform init
 
@@ -50,6 +50,10 @@ delete_profile: ## Delete an existing profile, use parameter 'profile'
 	@terraform destroy --auto-approve
 	@terraform workspace select default
 	@terraform workspace delete ${profile}
+
+tmp: ## Temporary folder for provisioning tasks
+	@echo "[SETUP] Creating temporary folder for provisioning tasks"
+	@mkdir -p tmp
 
 # House Keeping --- ##
 unset_profile: ## Unset the currently active profile
