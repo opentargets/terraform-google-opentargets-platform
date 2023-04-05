@@ -12,12 +12,12 @@ config_vm_elastic_search_image = "devpfaotf-230324-131139-es"
 config_vm_clickhouse_image = "devpfaotf-230324-131139-ch"
 
 // --- API configuration --- //
-config_vm_platform_api_image_version = "dev23.02.7"
+config_vm_platform_api_image_version = "dev23.04.1"
 config_vm_version_major              = "dev23"
-config_vm_version_minor              = "02"
-config_vm_version_patch              = "6"
+config_vm_version_minor              = "04"
+config_vm_version_patch              = "1"
 config_vm_data_year                  = "23"
-config_vm_data_month                 = "02"
+config_vm_data_month                 = "04"
 config_vm_data_iteration             = "0"
 
 // --- Web App configuration --- //
