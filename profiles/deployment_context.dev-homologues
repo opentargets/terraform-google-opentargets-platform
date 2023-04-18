@@ -5,8 +5,10 @@
 config_deployment_regions                   = [ "europe-north1" ]
 // Elastic Search configuration
 config_vm_elastic_search_image              = "devpfhom-230413-155500-es"
+vm_elastic_search_boot_disk_size            = "128GB"
 // Clickhouse configuration
 config_vm_clickhouse_image                  = "devpfhom-230413-155500-ch"
+vm_clickhouse_boot_disk_size                = "128GB"
 // API configuration
 config_vm_platform_api_image_version        = "dev23.02.7"
 config_vm_version_major                     = "23"
