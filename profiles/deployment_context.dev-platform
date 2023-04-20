@@ -6,10 +6,10 @@ config_release_name = "devpf"
 config_deployment_regions = ["europe-west1"]
 
 // --- Elastic Search configuration --- //
-config_vm_elastic_search_image = "devpfaotf-230324-131139-es"
+config_vm_elastic_search_image = "devpfhom-230419-192926-es"
 
 // --- Clickhouse configuration --- //
-config_vm_clickhouse_image = "devpfaotf-230324-131139-ch"
+config_vm_clickhouse_image = "devpfhom-230419-192926-ch"
 
 // --- API configuration --- //
 config_vm_platform_api_image_version = "dev23.04.1"
