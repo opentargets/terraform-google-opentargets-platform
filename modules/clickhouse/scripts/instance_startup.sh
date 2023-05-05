@@ -28,14 +28,14 @@ logi "Mount Clickhouse data disk device '${device_disk_ch_data}' at '${path_moun
 mount ${device_disk_ch_data} ${path_mount_ch_data_volume}
 
 # Launch Clickhouse
+logi "Launching Clickhose via docker image '${DOCKER_IMAGE_CLICKHOUSE}'"
 docker run --rm -d \
     --name otp-ch \
     --log-driver=gcplogs \
     -p 9000:9000 \
     -p 8123:8123 \
-    -v ${device_disk_ch_data}/config.d:/etc/clickhouse-server/config.d \
-    -v ${device_disk_ch_data}/users.d:/etc/clickhouse-server/users.d \
-    -v ${device_disk_ch_data}/data:/var/lib/clickhouse \
-    -v ${pos_ch_path_schemas}:/docker-entrypoint-initdb.d \
+    -v ${path_mount_ch_data_volume}/config.d:/etc/clickhouse-server/config.d \
+    -v ${path_mount_ch_data_volume}/users.d:/etc/clickhouse-server/users.d \
+    -v ${path_mount_ch_data_volume}/data:/var/lib/clickhouse \
     --ulimit nofile=262144:262144 \
     ${DOCKER_IMAGE_CLICKHOUSE}
