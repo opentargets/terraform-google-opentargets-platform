@@ -7,7 +7,7 @@ export docker_volume_name_es="esdata"
 export docker_image_string_es="docker.elastic.co/elasticsearch/elasticsearch-oss:${ELASTIC_SEARCH_VERSION}"
 export es_docker_container_name="otp-es"
 export es_cluster_name=`hostname`
-export es_vol_path_data=${path_es_data_volume}
+export es_vol_path_data=$${path_es_data_volume}
 
 # Logging functions
 function log() {
