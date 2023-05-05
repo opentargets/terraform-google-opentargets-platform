@@ -69,7 +69,7 @@ variable "config_vm_elastic_search_version" {
 variable "config_vm_elastic_search_boot_disk_size" {
   description = "Boot disk size to use for the deployed Elastic Search Instances"
   type        = string
-  default     = "500GB"
+  default     = "16GB"
 }
 
 variable "config_vm_elasticsearch_flag_preemptible" {
@@ -110,7 +110,7 @@ variable "config_vm_clickhouse_flag_preemptible" {
 variable "config_vm_clickhouse_boot_disk_size" {
   description = "Boot disk size to be used in Clickhouse instances"
   type        = string
-  default     = "250GB"
+  default     = "16GB"
 }
 
 // --- API Configuration --- //
