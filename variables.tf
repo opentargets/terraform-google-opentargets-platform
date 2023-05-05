@@ -113,12 +113,14 @@ variable "config_vm_platform_api_image_version" {
   type        = string
 }
 variable "config_vm_api_vcpus" {
-  description = "CPU count for API nodes"
+  description = "CPU count for API nodes, default '2'"
   type        = number
+  default     = 2
 }
 variable "config_vm_api_mem" {
   description = "Memory allocation for API VMs (MiB)"
   type        = number
+  default     = "7680"
 }
 variable "config_vm_api_image" {
   description = "VM image to use for running API nodes"
@@ -131,6 +133,7 @@ variable "config_vm_api_image_project" {
 variable "config_vm_api_boot_disk_size" {
   description = "Boot disk size for API VM nodes"
   type        = string
+  default     = "10GB"
 }
 
 variable "config_vm_api_flag_preemptible" {
