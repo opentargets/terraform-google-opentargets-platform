@@ -45,13 +45,15 @@ variable "config_vm_elastic_search_image_project" {
 }
 
 variable "config_vm_elastic_search_vcpus" {
-  description = "CPU count configuration for the deployed Elastic Search Instances"
+  description = "CPU count configuration for the deployed Elastic Search Instances, default '6'"
   type        = number
+  default     = "6"
 }
 
 variable "config_vm_elastic_search_mem" {
   description = "RAM configuration for the deployed Elastic Search Instances"
   type        = number
+  default     = "39936"
 }
 
 variable "config_vm_elastic_search_image" {
@@ -67,6 +69,7 @@ variable "config_vm_elastic_search_version" {
 variable "config_vm_elastic_search_boot_disk_size" {
   description = "Boot disk size to use for the deployed Elastic Search Instances"
   type        = string
+  default     = "500GB"
 }
 
 variable "config_vm_elasticsearch_flag_preemptible" {
@@ -79,7 +82,7 @@ variable "config_vm_elasticsearch_flag_preemptible" {
 variable "config_vm_clickhouse_vcpus" {
   description = "CPU count for Clickhouse instances, default '4'"
   type        = number
-  default     = 4
+  default     = "4"
 }
 
 variable "config_vm_clickhouse_mem" {
@@ -118,7 +121,7 @@ variable "config_vm_platform_api_image_version" {
 variable "config_vm_api_vcpus" {
   description = "CPU count for API nodes, default '2'"
   type        = number
-  default     = 2
+  default     = "2"
 }
 variable "config_vm_api_mem" {
   description = "Memory allocation for API VMs (MiB)"
