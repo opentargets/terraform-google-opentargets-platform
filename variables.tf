@@ -131,10 +131,12 @@ variable "config_vm_api_mem" {
 variable "config_vm_api_image" {
   description = "VM image to use for running API nodes"
   type        = string
+  default     = "cos-stable"
 }
 variable "config_vm_api_image_project" {
   description = "Project hosting the API VM image"
   type        = string
+  default     = "cos-cloud"
 }
 variable "config_vm_api_boot_disk_size" {
   description = "Boot disk size for API VM nodes"
