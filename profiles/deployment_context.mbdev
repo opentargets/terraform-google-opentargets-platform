@@ -1,0 +1,39 @@
+// --- Open Targets Platform PERMANENT development deployment ---//
+// --- Release information --- //
+config_release_name = "mbdevpf"
+
+// --- Deployment configuration --- //
+config_deployment_regions = ["europe-west1"]
+
+// --- Elastic Search configuration --- //
+config_vm_elastic_search_image = "devpfhom-230419-192926-es"
+config_vm_elastic_search_data_volume_image = "NOT_SET"
+
+// --- Clickhouse configuration --- //
+config_vm_clickhouse_image = "devpfhom-230419-192926-ch"
+config_vm_clickhouse_data_volume_image = "NOT_SET"
+
+// --- API configuration --- //
+config_vm_platform_api_image_version = "dev23.04.1"
+config_vm_version_major              = "dev23"
+config_vm_version_minor              = "04"
+config_vm_version_patch              = "1"
+config_vm_data_year                  = "23"
+config_vm_data_month                 = "04"
+config_vm_data_iteration             = "0"
+
+// --- Web App configuration --- //
+config_webapp_release = "v0.3.5"
+// Data Context
+config_webapp_bucket_name_data_assets = "open-targets-pre-data-releases"
+config_webapp_data_context_release    = "23.02"
+
+// Deployment configuration
+// DNS
+config_dns_subdomain_prefix       = "mbdev"
+config_dns_platform_api_subdomain = "api"// Web App configuration
+config_webapp_deployment_context_map = {
+  DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API      = "'https://api.platform.mbdev.opentargets.xyz/api/v4/graphql'"
+  DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API_BETA = "'https://api.platform.mbdev.opentargets.xyz/api/v4/graphql'"
+  DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_EFO_URL      = "'/data/ontology/efo_json/diseases_efo.jsonl'"
+}
