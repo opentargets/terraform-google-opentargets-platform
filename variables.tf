@@ -77,13 +77,15 @@ variable "config_vm_elasticsearch_flag_preemptible" {
 
 // --- Clickhouse configuration --- //
 variable "config_vm_clickhouse_vcpus" {
-  description = "CPU count for Clickhouse instances"
+  description = "CPU count for Clickhouse instances, default '4'"
   type        = number
+  default     = 4
 }
 
 variable "config_vm_clickhouse_mem" {
-  description = "Amount of memory allocated for Clickhouse instances"
+  description = "Amount of memory allocated for Clickhouse instances, default '26624'"
   type        = number
+  default     = "26624"
 }
 
 variable "config_vm_clickhouse_image" {
@@ -105,6 +107,7 @@ variable "config_vm_clickhouse_flag_preemptible" {
 variable "config_vm_clickhouse_boot_disk_size" {
   description = "Boot disk size to be used in Clickhouse instances"
   type        = string
+  default     = "250GB"
 }
 
 // --- API Configuration --- //
