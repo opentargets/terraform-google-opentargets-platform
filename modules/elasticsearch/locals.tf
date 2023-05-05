@@ -20,4 +20,10 @@ locals {
   elastic_search_template_source_image = "${var.vm_elastic_search_image_project}/${var.vm_elastic_search_image}"
   // Compute Zones internal parameters
   compute_zones_n_total = length(data.google_compute_zones.available.names)
+  // Elastic Search Data Volume
+  elastic_search_data_disk_image = "${var.vm_elastic_search_data_volume_image_project}/${var.vm_elastic_search_data_volume_image}"
+  // Clickhouse data disk device name
+  elastic_search_data_disk_device = "ch-data"
+  // Google Device Disk prefix
+  gcp_device_disk_prefix = "/dev/disk/by-id/google-"
 }
