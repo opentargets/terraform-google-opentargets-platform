@@ -70,17 +70,19 @@ variable "vm_clickhouse_mem" {
 variable "vm_clickhouse_image" {
   description = "VM image to use for Clickhouse nodes"
   type        = string
+  default     = "cos-stable"
 }
 
 variable "vm_clickhouse_image_project" {
   description = "Project hosting Clickhouse VM image"
   type        = string
+  default     = "cos-cloud"
 }
 
 variable "vm_clickhouse_boot_disk_size" {
-  description = "Clickhouse VM boot disk size, default '250GB'"
+  description = "Clickhouse VM boot disk size, default '16GB'"
   type        = string
-  default     = "250GB"
+  default     = "16GB"
 }
 
 variable "config_vm_clickhouse_data_volume_image" {
@@ -92,6 +94,24 @@ variable "config_vm_clickhouse_data_volume_image_project" {
   description = "Clickhouse Data image project, default 'open-targets-eu-dev'"
   type        = string
   default     = "open-targets-eu-dev"
+}
+
+variable "config_vm_clickhouse_docker_image" {
+  description = "Docker image to use for running Clickhouse, default 'clickhouse/clickhouse-server'"
+  type = string
+  default = "clickhouse/clickhouse-server"
+}
+
+variable "clickhouse_docker_image_version" {
+  description = "Clickhouse docker image version to deploy, default '23.3.1.2823'"
+  type        = string
+  default     = "23.3.1.2823"
+}
+
+variable "config_vm_clickhouse_data_disk_size" {
+  description = "Size of the data volume that will host Clickhouse data in GiB, default '64'"
+  type = string
+  default = "64"
 }
 
 variable "vm_flag_preemptible" {
