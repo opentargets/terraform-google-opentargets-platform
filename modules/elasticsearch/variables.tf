@@ -94,6 +94,18 @@ variable "vm_elastic_search_boot_disk_size" {
   default     = "16GB"
 }
 
+variable "vm_elastic_search_data_volume_image" {
+  description = "Elastic Search Data image name"
+  type        = string
+}
+
+variable "vm_elastic_search_data_volume_image_project" {
+  description = "Elastic Search Data image project, default 'open-targets-eu-dev'"
+  type        = string
+  default     = "open-targets-eu-dev"
+}
+
+
 variable "vm_flag_preemptible" {
   description = "Use this flag to tell the module to use a preemptible instance, default: 'false'"
   type        = bool
