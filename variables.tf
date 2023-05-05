@@ -42,6 +42,7 @@ variable "config_deployment_regions" {
 variable "config_vm_elastic_search_image_project" {
   description = "This allows to specify a different than deployment project for the deployed Elastic Search Instance image to be used."
   type        = string
+  default     = "cos-stable"
 }
 
 variable "config_vm_elastic_search_vcpus" {
@@ -59,6 +60,7 @@ variable "config_vm_elastic_search_mem" {
 variable "config_vm_elastic_search_image" {
   description = "Disk image to use for the deployed Elastic Search Instances"
   type        = string
+  default     = "cos-cloud"
 }
 
 variable "config_vm_elastic_search_version" {
@@ -94,11 +96,13 @@ variable "config_vm_clickhouse_mem" {
 variable "config_vm_clickhouse_image" {
   description = "Image to use for launching Clickhouse instances"
   type        = string
+  default     = "cos-stable"
 }
 
 variable "config_vm_clickhouse_image_project" {
   description = "Project where to find the instance image to use"
   type        = string
+  default     = "cos-cloud"
 }
 
 variable "config_vm_clickhouse_flag_preemptible" {
