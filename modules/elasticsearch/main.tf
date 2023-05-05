@@ -75,6 +75,7 @@ resource "google_compute_instance_template" "elastic_search_template" {
     disk_type    = "pd-ssd"
     boot         = true
     mode         = "READ_WRITE"
+    // Disk size inherited from the image
   }
 
   // Attach Elastic Search data disk
