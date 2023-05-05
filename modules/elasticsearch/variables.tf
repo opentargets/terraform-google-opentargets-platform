@@ -79,7 +79,7 @@ variable "vm_elastic_search_mem" {
 variable "vm_elastic_search_image" {
   description = "VM Image to use for Elastic Search instances"
   type        = string
-  default = "cos-stable"
+  default     = "cos-stable"
 }
 
 variable "vm_elastic_search_image_project" {
