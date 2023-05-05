@@ -102,6 +102,8 @@ resource "google_compute_instance_template" "elastic_search_template" {
     startup-script = templatefile(
       "${path.module}/scripts/instance_startup.sh",
       {
+        GCP_DEVICE_DISK_PREFIX   = local.gcp_device_disk_prefix,
+        DATA_DISK_DEVICE_NAME_ES = local.elastic_search_data_disk_device,
         ELASTIC_SEARCH_VERSION = var.vm_elastic_search_version
       }
     )
