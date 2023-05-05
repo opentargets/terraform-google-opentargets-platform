@@ -118,8 +118,8 @@ variable "config_vm_clickhouse_image_project" {
 
 variable "config_vm_clickhouse_docker_image" {
   description = "Docker image to use for running Clickhouse"
-  type = string
-  default = "clickhouse/clickhouse-server"
+  type        = string
+  default     = "clickhouse/clickhouse-server"
 }
 
 variable "clickhouse_docker_image_version" {
