@@ -74,6 +74,7 @@ resource "google_compute_instance_template" "clickhouse_template" {
     disk_type    = "pd-ssd"
     boot         = true
     mode         = "READ_WRITE"
+    // Disk size inherited from the image
   }
 
   // Attach Clickhouse data disk
