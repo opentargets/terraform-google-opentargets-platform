@@ -105,6 +105,7 @@ resource "google_compute_instance_template" "clickhouse_template" {
       {
         GCP_DEVICE_DISK_PREFIX                      = local.gcp_device_disk_prefix,
         DATA_DISK_DEVICE_NAME_CH                    = local.clickhouse_data_disk_device,
+        DOCKER_IMAGE_CLICKHOUSE = local.clickhouse_docker_image
       }
     )
     google-logging-enabled = true
