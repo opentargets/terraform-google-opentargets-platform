@@ -50,7 +50,6 @@ docker run --rm -d \
   -e "discovery.seed_hosts=[]" \
   -e "bootstrap.memory_lock=true" \
   -e "search.max_open_scroll_context=5000" \
-  -e "thread_pool.write.queue_size=1000" \
   -v $${docker_volume_name_es}:/usr/share/elasticsearch/data \
   --ulimit memlock=-1:-1 \
   --ulimit nofile=65536:65536 \
