@@ -75,12 +75,15 @@ module "backend_clickhouse" {
   network_source_ranges = [
     local.vpc_network_region_subnet_map[var.config_deployment_regions[count.index]].subnet_ip
   ]
-  vm_clickhouse_vcpus          = var.config_vm_clickhouse_vcpus
-  vm_clickhouse_mem            = var.config_vm_clickhouse_mem
-  vm_clickhouse_image          = var.config_vm_clickhouse_image
-  vm_clickhouse_image_project  = var.config_vm_clickhouse_image_project
-  vm_clickhouse_boot_disk_size = var.config_vm_clickhouse_boot_disk_size
-  vm_flag_preemptible          = var.config_vm_clickhouse_flag_preemptible
+  vm_clickhouse_vcpus                = var.config_vm_clickhouse_vcpus
+  vm_clickhouse_mem                  = var.config_vm_clickhouse_mem
+  vm_clickhouse_image                = var.config_vm_clickhouse_image
+  vm_clickhouse_image_project        = var.config_vm_clickhouse_image_project
+  vm_clickhouse_boot_disk_size       = var.config_vm_clickhouse_boot_disk_size
+  vm_clickhouse_data_volume_image    = var.config_vm_clickhouse_data_volume_image
+  vm_clickhouse_docker_image         = var.config_vm_clickhouse_docker_image
+  vm_clickhouse_docker_image_version = var.config_vm_clickhouse_docker_image_version
+  vm_flag_preemptible                = var.config_vm_clickhouse_flag_preemptible
   // Additional firewall tags if development mode is 'ON'
   vm_firewall_tags       = local.dev_mode_fw_tags
   deployment_region      = var.config_deployment_regions[count.index]
