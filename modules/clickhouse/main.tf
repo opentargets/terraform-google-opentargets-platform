@@ -17,8 +17,8 @@ resource "random_string" "random" {
     clickhouse_template_tags         = join("", sort(local.clickhouse_template_tags)),
     clickhouse_template_machine_type = local.clickhouse_template_machine_type,
     clickhouse_template_source_image = local.clickhouse_template_source_image,
-    clickhouse_data_image = var.config_vm_clickhouse_data_volume_image,
-    clickhouse_data_image_project = var.config_vm_clickhouse_data_volume_image_project
+    clickhouse_data_image = var.vm_clickhouse_data_volume_image,
+    clickhouse_data_image_project = var.vm_clickhouse_data_volume_image_project
     vm_startup_script                = md5(file("${path.module}/scripts/instance_startup.sh"))
     vm_flag_preemptible              = var.vm_flag_preemptible
   }
@@ -83,7 +83,7 @@ resource "google_compute_instance_template" "clickhouse_template" {
     mode = "READ_WRITE"
     disk_type = "local-ssd"
     // Disk size inherited from the image
-    //disk_size_gb = var.config_vm_clickhouse_data_disk_size
+    //disk_size_gb = var.vm_clickhouse_data_disk_size
     boot = false
     auto_delete = true
     type = "PERSISTENT"
