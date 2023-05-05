@@ -17,8 +17,8 @@ resource "random_string" "random" {
     clickhouse_template_tags         = join("", sort(local.clickhouse_template_tags)),
     clickhouse_template_machine_type = local.clickhouse_template_machine_type,
     clickhouse_template_source_image = local.clickhouse_template_source_image,
-    clickhouse_data_image = var.vm_clickhouse_data_volume_image,
-    clickhouse_data_image_project = var.vm_clickhouse_data_volume_image_project
+    clickhouse_data_image            = var.vm_clickhouse_data_volume_image,
+    clickhouse_data_image_project    = var.vm_clickhouse_data_volume_image_project
     vm_startup_script                = md5(file("${path.module}/scripts/instance_startup.sh"))
     vm_flag_preemptible              = var.vm_flag_preemptible
   }
@@ -61,10 +61,10 @@ resource "google_compute_instance_template" "clickhouse_template" {
   can_ip_forward = false
 
   scheduling {
-    automatic_restart   = !var.vm_flag_preemptible
-    on_host_maintenance = var.vm_flag_preemptible ? "TERMINATE" : "MIGRATE"
-    preemptible         = var.vm_flag_preemptible
-    provisioning_model  = var.vm_flag_preemptible ? "SPOT" : "STANDARD"
+    automatic_restart           = !var.vm_flag_preemptible
+    on_host_maintenance         = var.vm_flag_preemptible ? "TERMINATE" : "MIGRATE"
+    preemptible                 = var.vm_flag_preemptible
+    provisioning_model          = var.vm_flag_preemptible ? "SPOT" : "STANDARD"
     instance_termination_action = var.vm_flag_preemptible ? "STOP" : null
   }
 
@@ -75,18 +75,18 @@ resource "google_compute_instance_template" "clickhouse_template" {
     boot         = true
     mode         = "READ_WRITE"
   }
-  
+
   // Attach Clickhouse data disk
   disk {
-    device_name = local.clickhouse_data_disk_device
+    device_name  = local.clickhouse_data_disk_device
     source_image = local.clickhouse_data_disk_image
-    mode = "READ_WRITE"
-    disk_type = "local-ssd"
+    mode         = "READ_WRITE"
+    disk_type    = "local-ssd"
     // Disk size inherited from the image
     //disk_size_gb = var.vm_clickhouse_data_disk_size
-    boot = false
+    boot        = false
     auto_delete = true
-    type = "PERSISTENT"
+    type        = "PERSISTENT"
   }
 
   network_interface {
@@ -103,9 +103,9 @@ resource "google_compute_instance_template" "clickhouse_template" {
     startup-script = templatefile(
       "${path.module}/scripts/instance_startup.sh",
       {
-        GCP_DEVICE_DISK_PREFIX                      = local.gcp_device_disk_prefix,
-        DATA_DISK_DEVICE_NAME_CH                    = local.clickhouse_data_disk_device,
-        DOCKER_IMAGE_CLICKHOUSE = local.clickhouse_docker_image
+        GCP_DEVICE_DISK_PREFIX   = local.gcp_device_disk_prefix,
+        DATA_DISK_DEVICE_NAME_CH = local.clickhouse_data_disk_device,
+        DOCKER_IMAGE_CLICKHOUSE  = local.clickhouse_docker_image
       }
     )
     google-logging-enabled = true

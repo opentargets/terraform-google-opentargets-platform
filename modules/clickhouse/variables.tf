@@ -98,8 +98,8 @@ variable "vm_clickhouse_data_volume_image_project" {
 
 variable "vm_clickhouse_docker_image" {
   description = "Docker image to use for running Clickhouse, default 'clickhouse/clickhouse-server'"
-  type = string
-  default = "clickhouse/clickhouse-server"
+  type        = string
+  default     = "clickhouse/clickhouse-server"
 }
 
 variable "vm_clickhouse_docker_image_version" {
@@ -110,8 +110,8 @@ variable "vm_clickhouse_docker_image_version" {
 
 variable "vm_clickhouse_data_disk_size" {
   description = "Size of the data volume that will host Clickhouse data in GiB, default '64'"
-  type = string
-  default = "64"
+  type        = string
+  default     = "64"
 }
 
 variable "vm_flag_preemptible" {
