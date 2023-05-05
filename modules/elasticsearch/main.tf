@@ -17,8 +17,8 @@ resource "random_string" "random" {
     elastic_search_template_machine_type = local.elastic_search_template_machine_type,
     elastic_search_template_source_image = local.elastic_search_template_source_image,
     elastic_search_template_tags         = join("", sort(local.elastic_search_template_tags)),
-    elastic_search_data_image = var.vm_elastic_search_data_volume_image,
-    elastic_search_data_image_project = var.vm_elastic_search_data_volume_image_project,
+    elastic_search_data_image            = var.vm_elastic_search_data_volume_image,
+    elastic_search_data_image_project    = var.vm_elastic_search_data_volume_image_project,
     vm_elastic_search_version            = var.vm_elastic_search_version,
     vm_startup_script                    = md5(file("${path.module}/scripts/instance_startup.sh"))
     vm_flag_preemptible                  = var.vm_flag_preemptible
@@ -62,10 +62,10 @@ resource "google_compute_instance_template" "elastic_search_template" {
   can_ip_forward = false
 
   scheduling {
-    automatic_restart   = !var.vm_flag_preemptible
-    on_host_maintenance = var.vm_flag_preemptible ? "TERMINATE" : "MIGRATE"
-    preemptible         = var.vm_flag_preemptible
-    provisioning_model  = var.vm_flag_preemptible ? "SPOT" : "STANDARD"
+    automatic_restart           = !var.vm_flag_preemptible
+    on_host_maintenance         = var.vm_flag_preemptible ? "TERMINATE" : "MIGRATE"
+    preemptible                 = var.vm_flag_preemptible
+    provisioning_model          = var.vm_flag_preemptible ? "SPOT" : "STANDARD"
     instance_termination_action = var.vm_flag_preemptible ? "STOP" : null
   }
 
@@ -75,6 +75,18 @@ resource "google_compute_instance_template" "elastic_search_template" {
     disk_type    = "pd-ssd"
     boot         = true
     mode         = "READ_WRITE"
+  }
+
+  // Attach Elastic Search data disk
+  disk {
+    device_name  = local.elastic_search_data_disk_device
+    source_image = local.elastic_search_data_disk_image
+    mode         = "READ_WRITE"
+    disk_type    = "local-ssd"
+    // Disk size inherited from the image
+    boot        = false
+    auto_delete = true
+    type        = "PERSISTENT"
   }
 
   network_interface {
