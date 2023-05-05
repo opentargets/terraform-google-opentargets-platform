@@ -83,6 +83,17 @@ variable "vm_clickhouse_boot_disk_size" {
   default     = "250GB"
 }
 
+variable "config_vm_clickhouse_data_volume_image" {
+  description = "Clickhouse Data image name"
+  type        = string
+}
+
+variable "config_vm_clickhouse_data_volume_image_project" {
+  description = "Clickhouse Data image project, default 'open-targets-eu-dev'"
+  type        = string
+  default     = "open-targets-eu-dev"
+}
+
 variable "vm_flag_preemptible" {
   description = "Use this flag to tell the module to use a preemptible instance, default: 'false'"
   type        = bool
