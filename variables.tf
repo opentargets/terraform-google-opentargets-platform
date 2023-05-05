@@ -116,6 +116,18 @@ variable "config_vm_clickhouse_image_project" {
   default     = "cos-cloud"
 }
 
+variable "config_vm_clickhouse_docker_image" {
+  description = "Docker image to use for running Clickhouse"
+  type = string
+  default = "clickhouse/clickhouse-server"
+}
+
+variable "clickhouse_docker_image_version" {
+  description = "Clickhouse docker image version to deploy, default '23.3.1.2823'"
+  type        = string
+  default     = "23.3.1.2823"
+}
+
 variable "config_vm_clickhouse_flag_preemptible" {
   description = "Use this flag for deploying Clickhouse nodes on preemptible VMs, default 'false'"
   type        = bool
