@@ -102,7 +102,7 @@ variable "config_vm_clickhouse_docker_image" {
   default = "clickhouse/clickhouse-server"
 }
 
-variable "clickhouse_docker_image_version" {
+variable "config_vm_clickhouse_docker_image_version" {
   description = "Clickhouse docker image version to deploy, default '23.3.1.2823'"
   type        = string
   default     = "23.3.1.2823"
