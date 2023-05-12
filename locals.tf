@@ -1,7 +1,7 @@
 locals {
   // --- VPC --- //
   vpc_network_name             = "${var.config_release_name}-vpc"
-  vpc_network_main_subnet_name = "main-subnet"
+  vpc_network_main_subnet_name = "${var.config_release_name}-mainsubnet"
   vpc_network_region_subnet_map = zipmap(
     var.config_deployment_regions,
     [
