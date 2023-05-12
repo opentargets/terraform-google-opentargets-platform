@@ -23,7 +23,7 @@ locals {
   // Elastic Search Data Volume
   elastic_search_data_disk_image = "${var.vm_elastic_search_data_volume_image_project}/${var.vm_elastic_search_data_volume_image}"
   // Clickhouse data disk device name
-  elastic_search_data_disk_device = "ch-data"
+  elastic_search_data_disk_device = "es-data"
   // Google Device Disk prefix
   gcp_device_disk_prefix = "/dev/disk/by-id/google-"
 }
