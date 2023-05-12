@@ -2,7 +2,7 @@
 # This is a placeholder startup script, as it is currently not needed by Clickhouse
 
 # Local environment
-export path_mount_ch_data_volume="/mnt/chdata"
+export path_mount_ch_data_volume="/mnt/disks/chdata"
 export device_disk_ch_data=${GCP_DEVICE_DISK_PREFIX}${DATA_DISK_DEVICE_NAME_CH}
 
 # Logging functions
