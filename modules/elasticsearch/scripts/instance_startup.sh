@@ -1,6 +1,6 @@
 #!/bin/bash
 # Local environment
-export path_mount_es_data_volume="/mnt/esdata"
+export path_mount_es_data_volume="/mnt/disks/esdata"
 export device_disk_es_data=${GCP_DEVICE_DISK_PREFIX}${DATA_DISK_DEVICE_NAME_ES}
 export path_es_data_volume=$${path_mount_es_data_volume}/data
 export docker_volume_name_es="esdata"
