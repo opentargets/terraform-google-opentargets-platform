@@ -49,12 +49,12 @@ module "backend_elastic_search" {
   vm_elastic_search_version = var.config_vm_elastic_search_version
   vm_elastic_search_vcpus   = var.config_vm_elastic_search_vcpus
   // Memory size in MiB
-  vm_elastic_search_mem            = var.config_vm_elastic_search_mem
-  vm_elastic_search_image          = var.config_vm_elastic_search_image
-  vm_elastic_search_image_project  = var.config_vm_elastic_search_image_project
-  vm_elastic_search_boot_disk_size = var.config_vm_elastic_search_boot_disk_size
+  vm_elastic_search_mem               = var.config_vm_elastic_search_mem
+  vm_elastic_search_image             = var.config_vm_elastic_search_image
+  vm_elastic_search_image_project     = var.config_vm_elastic_search_image_project
+  vm_elastic_search_boot_disk_size    = var.config_vm_elastic_search_boot_disk_size
   vm_elastic_search_data_volume_image = var.config_vm_elastic_search_data_volume_image
-  vm_flag_preemptible              = var.config_vm_elasticsearch_flag_preemptible
+  vm_flag_preemptible                 = var.config_vm_elasticsearch_flag_preemptible
   // Additional firewall tags if development mode is 'ON'
   vm_firewall_tags       = local.dev_mode_fw_tags
   deployment_region      = var.config_deployment_regions[count.index]
@@ -150,9 +150,9 @@ module "backend_api" {
 
 // --- Web Application --- //
 module "web_app" {
-  source     = "./modules/webapp"
-  project_id = var.config_project_id
-  depends_on = [ module.vpc_network ]
+  source                    = "./modules/webapp"
+  project_id                = var.config_project_id
+  depends_on                = [module.vpc_network]
   module_wide_prefix_scope  = "${var.config_release_name}-web"
   folder_tmp                = local.folder_tmp
   location                  = var.config_webapp_location
