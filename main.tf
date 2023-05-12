@@ -152,8 +152,7 @@ module "backend_api" {
 module "web_app" {
   source     = "./modules/webapp"
   project_id = var.config_project_id
-  // The Web Application can be distributed, without ties to anything else
-  // depends_on = [ ]
+  depends_on = [ module.vpc_network ]
   module_wide_prefix_scope  = "${var.config_release_name}-web"
   folder_tmp                = local.folder_tmp
   location                  = var.config_webapp_location
