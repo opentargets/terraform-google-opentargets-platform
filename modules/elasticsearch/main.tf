@@ -83,7 +83,7 @@ resource "google_compute_instance_template" "elastic_search_template" {
     device_name  = local.elastic_search_data_disk_device
     source_image = local.elastic_search_data_disk_image
     mode         = "READ_WRITE"
-    disk_type    = "local-ssd"
+    disk_type    = "pd-ssd"
     // Disk size inherited from the image
     boot        = false
     auto_delete = true

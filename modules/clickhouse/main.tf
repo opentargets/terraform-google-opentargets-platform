@@ -82,7 +82,7 @@ resource "google_compute_instance_template" "clickhouse_template" {
     device_name  = local.clickhouse_data_disk_device
     source_image = local.clickhouse_data_disk_image
     mode         = "READ_WRITE"
-    disk_type    = "local-ssd"
+    disk_type    = "pd-ssd"
     // Disk size inherited from the image
     //disk_size_gb = var.vm_clickhouse_data_disk_size
     boot        = false
