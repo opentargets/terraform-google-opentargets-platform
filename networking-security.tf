@@ -94,17 +94,13 @@ resource "google_compute_security_policy" "netsec_policy_webapp" {
       action      = "redirect"
       priority    = "2147483645"
       match {
-        versioned_expr = "SRC_IPS_V1"
-        config {
-          src_ip_ranges = ["*"]
-        }
         expr {
           expression = "request.path.matches(\"/\")"
         }
       }
       redirect_options {
         type = "EXTERNAL_302"
-        target = "/unauthorized.html"
+        target = "https://${local.dns_name_for_platform}/unauthorized.html"
       }
     }
   }
@@ -115,10 +111,6 @@ resource "google_compute_security_policy" "netsec_policy_webapp" {
       action      = "allow"
       priority    = "2147483646"
       match {
-        versioned_expr = "SRC_IPS_V1"
-        config {
-          src_ip_ranges = ["*"]
-        }
         expr {
           expression = "request.path.matches(\"/unauthorized.html\")"
         }

@@ -29,6 +29,10 @@ locals {
     "www.${local.dns_platform_base_name}",
     local.dns_platform_base_name
   ]
+  // The DNS name for the platform, without the trailing dot in the configuration
+  dns_name_for_platform = trimsuffix(local.dns_platform_base_name, ".")
+  // The DNS name for the platform API, without the trailing dot in the configuration
+  dns_name_for_platform_api = trimsuffix(local.dns_platform_api_dns_name, ".")
 
   // --- Folders --- //
   folder_tmp = abspath("${path.module}/tmp")
