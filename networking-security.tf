@@ -92,28 +92,15 @@ resource "google_compute_security_policy" "netsec_policy_webapp" {
     content {
       description = "Redirect requests for '/' to '/unauthorized.html'"
       action      = "redirect"
-      priority    = "2147483645"
+      priority    = "2147483646"
       match {
         expr {
-          expression = "request.path.matches(\"/\")"
+          expression = "request.path == '/'"
         }
       }
       redirect_options {
         type = "EXTERNAL_302"
-        target = "https://${local.dns_name_for_platform}/unauthorized.html"
-      }
-    }
-  }
-  dynamic "rule" {
-    for_each = local.netsec_enable_policies_webapp ? [1] : []
-    content {
-      description = "Allow requests for '/unauthorized.html'"
-      action      = "allow"
-      priority    = "2147483646"
-      match {
-        expr {
-          expression = "request.path.matches(\"/unauthorized.html\")"
-        }
+        target = "https://platform.opentargets.org/unauthorized.html"
       }
     }
   }
