@@ -35,3 +35,10 @@ config_webapp_deployment_context_map = {
   DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API_BETA = "'https://api.platform.mbdev.opentargets.xyz/api/v4/graphql'"
   DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_EFO_URL      = "'/data/ontology/efo_json/diseases_efo.jsonl'"
 }
+
+// Testing security policies with redirection
+// --- Security Configuration --- //
+config_security_restrict_source_ips_cidrs_file = "netsec_cidr.mbdev"
+// Enable / Disable network security policies application
+config_security_api_enable    = true
+config_security_webapp_enable = true
