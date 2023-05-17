@@ -90,6 +90,44 @@ resource "google_compute_security_policy" "netsec_policy_webapp" {
   dynamic "rule" {
     for_each = local.netsec_enable_policies_webapp ? [1] : []
     content {
+      description = "Redirect requests for '/' to '/unauthorized.html'"
+      action      = "redirect"
+      priority    = "2147483645"
+      match {
+        versioned_expr = "SRC_IPS_V1"
+        config {
+          src_ip_ranges = ["*"]
+        }
+        expr {
+          expression = "request.path.matches(\"/\")"
+        }
+      }
+      redirect_options {
+        type = "EXTERNAL_302"
+        target = "/unauthorized.html"
+      }
+    }
+  }
+  dynamic "rule" {
+    for_each = local.netsec_enable_policies_webapp ? [1] : []
+    content {
+      description = "Allow requests for '/unauthorized.html'"
+      action      = "allow"
+      priority    = "2147483646"
+      match {
+        versioned_expr = "SRC_IPS_V1"
+        config {
+          src_ip_ranges = ["*"]
+        }
+        expr {
+          expression = "request.path.matches(\"/unauthorized.html\")"
+        }
+      }
+    }
+  }
+  dynamic "rule" {
+    for_each = local.netsec_enable_policies_webapp ? [1] : []
+    content {
       action   = "deny(403)"
       priority = "2147483647"
       match {
