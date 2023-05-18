@@ -90,6 +90,23 @@ resource "google_compute_security_policy" "netsec_policy_webapp" {
   dynamic "rule" {
     for_each = local.netsec_enable_policies_webapp ? [1] : []
     content {
+      description = "Redirect requests for '/' to '/unauthorized.html'"
+      action      = "redirect"
+      priority    = "2147483646"
+      match {
+        expr {
+          expression = "request.path == '/'"
+        }
+      }
+      redirect_options {
+        type = "EXTERNAL_302"
+        target = "https://platform.opentargets.org/unauthorized.html"
+      }
+    }
+  }
+  dynamic "rule" {
+    for_each = local.netsec_enable_policies_webapp ? [1] : []
+    content {
       action   = "deny(403)"
       priority = "2147483647"
       match {
