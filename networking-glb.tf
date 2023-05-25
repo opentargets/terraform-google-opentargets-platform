@@ -98,6 +98,7 @@ module "glb_platform" {
       custom_request_headers  = null
       custom_response_headers = null
       security_policy         = local.glb_netsec_effective_policy_webapp
+      edge_security_policy    = null
 
       connection_draining_timeout_sec = null
       session_affinity                = null
@@ -153,6 +154,7 @@ module "glb_platform" {
       custom_request_headers  = null
       custom_response_headers = null
       security_policy         = local.glb_netsec_effective_policy_api
+      edge_security_policy    = null
 
       connection_draining_timeout_sec = null
       session_affinity                = null
