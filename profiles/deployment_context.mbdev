@@ -21,7 +21,7 @@ config_vm_data_month                 = "04"
 config_vm_data_iteration             = "0"
 
 // --- Web App configuration --- //
-config_webapp_release = "v0.3.9"
+config_webapp_release = "v0.4.0"
 // Data Context
 config_webapp_bucket_name_data_assets = "open-targets-pre-data-releases"
 config_webapp_data_context_release    = "23.04"
