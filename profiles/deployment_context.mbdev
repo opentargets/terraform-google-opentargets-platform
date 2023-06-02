@@ -12,12 +12,12 @@ config_vm_elastic_search_data_volume_image = "pospf-20230601-0829-es"
 config_vm_clickhouse_data_volume_image = "pospf-20230601-0829-ch"
 
 // --- API configuration --- //
-config_vm_platform_api_image_version = "dev23.04.2"
+config_vm_platform_api_image_version = "dev23.06.1"
 config_vm_version_major              = "23"
-config_vm_version_minor              = "04"
-config_vm_version_patch              = "2"
+config_vm_version_minor              = "06"
+config_vm_version_patch              = "1"
 config_vm_data_year                  = "23"
-config_vm_data_month                 = "04"
+config_vm_data_month                 = "06"
 config_vm_data_iteration             = "0"
 
 // --- Web App configuration --- //
