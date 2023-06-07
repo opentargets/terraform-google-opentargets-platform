@@ -54,7 +54,7 @@ docker run --rm -d \
   -e "discovery.seed_hosts=[]" \
   -e "bootstrap.memory_lock=true" \
   -e "search.max_open_scroll_context=5000" \
-  -e ES_JAVA_OPTS="-Xms1g -Xmx$${JVM_SIZE}g" \
+  -e ES_JAVA_OPTS="-Xms$${JVM_SIZE}g -Xmx$${JVM_SIZE}g" \
   -v $${docker_volume_name_es}:/usr/share/elasticsearch/data \
   --ulimit memlock=-1:-1 \
   --ulimit nofile=65536:65536 \
