@@ -60,7 +60,7 @@ resource "google_compute_url_map" "url_map_platform_glb" {
 
 module "glb_platform" {
   source  = "GoogleCloudPlatform/lb-http/google"
-  version = ">= 7.0.0"
+  version = ">= 9.0.0"
 
   // Dependencies
   depends_on = [
