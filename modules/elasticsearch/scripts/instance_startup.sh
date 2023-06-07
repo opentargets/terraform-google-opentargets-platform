@@ -36,7 +36,11 @@ docker volume create --name $${docker_volume_name_es} --opt type=none --opt devi
 logi "Running Elastic Search via Docker, using image $${docker_image_string_es}"
 logi "Setting vm.max_map_count to 262144"
 sysctl -w vm.max_map_count=262144
-logi "[INFO] Elastic Search docker container name: $${es_docker_container_name}, cluster name: $${es_cluster_name}, data volume: $${docker_volume_name_es}"
+# Get machine available memory (KiB)
+export MACHINE_SIZE=`cat /proc/meminfo | grep MemTotal | grep -o '[0-9]\+'`
+# Use all the machine memory for the JVM minus 1GiB
+export JVM_SIZE=`expr $(expr $MACHINE_SIZE / 1048576) - 1`
+logi "[INFO] Elastic Search docker container name: $${es_docker_container_name}, cluster name: $${es_cluster_name}, data volume: $${docker_volume_name_es}, JVM Memory: $${JVM_SIZE}GiB"
 docker run --rm -d \
   --name $${es_docker_container_name} \
   --log-driver=gcplogs \
@@ -50,6 +54,7 @@ docker run --rm -d \
   -e "discovery.seed_hosts=[]" \
   -e "bootstrap.memory_lock=true" \
   -e "search.max_open_scroll_context=5000" \
+  -e ES_JAVA_OPTS="-Xms1g -Xmx$${JVM_SIZE}g" \
   -v $${docker_volume_name_es}:/usr/share/elasticsearch/data \
   --ulimit memlock=-1:-1 \
   --ulimit nofile=65536:65536 \
