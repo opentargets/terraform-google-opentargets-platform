@@ -40,6 +40,7 @@ sysctl -w vm.max_map_count=262144
 export MACHINE_SIZE=`cat /proc/meminfo | grep MemTotal | grep -o '[0-9]\+'`
 # Use all the machine memory for the JVM minus 1GiB
 export JVM_SIZE=`expr $(expr $MACHINE_SIZE / 1048576) - 1`
+export JVM_SIZE_HALF=`expr $MACHINE_SIZE / 2097152`
 logi "[INFO] Elastic Search docker container name: $${es_docker_container_name}, cluster name: $${es_cluster_name}, data volume: $${docker_volume_name_es}, JVM Memory: $${JVM_SIZE}GiB"
 docker run --rm -d \
   --name $${es_docker_container_name} \
@@ -54,7 +55,7 @@ docker run --rm -d \
   -e "discovery.seed_hosts=[]" \
   -e "bootstrap.memory_lock=true" \
   -e "search.max_open_scroll_context=5000" \
-  -e ES_JAVA_OPTS="-Xms$${JVM_SIZE}g -Xmx$${JVM_SIZE}g" \
+  -e ES_JAVA_OPTS="-Xms$${JVM_SIZE_HALF}g -Xmx$${JVM_SIZE}g" \
   -v $${docker_volume_name_es}:/usr/share/elasticsearch/data \
   --ulimit memlock=-1:-1 \
   --ulimit nofile=65536:65536 \
