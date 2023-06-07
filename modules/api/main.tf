@@ -163,7 +163,7 @@ resource "google_compute_region_instance_group_manager" "regmig_otpapi" {
 
   auto_healing_policies {
     health_check      = google_compute_health_check.otpapi_healthcheck.id
-    initial_delay_sec = 30
+    initial_delay_sec = 45
   }
 
   update_policy {
@@ -172,7 +172,11 @@ resource "google_compute_region_instance_group_manager" "regmig_otpapi" {
     minimal_action               = "REPLACE"
     max_surge_fixed              = length(data.google_compute_zones.available[count.index].names)
     max_unavailable_fixed        = 0
-    min_ready_sec                = 30
+    min_ready_sec                = 45
+  }
+
+  instance_lifecycle_policy {
+    force_update_on_repair = "YES"
   }
 }
 
