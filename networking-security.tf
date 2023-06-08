@@ -100,7 +100,7 @@ resource "google_compute_security_policy" "netsec_policy_webapp" {
       }
       redirect_options {
         type = "EXTERNAL_302"
-        target = "https://platform.opentargets.org/unauthorized.html"
+        target = "https://platform.opentargets.org/unauthorised.html"
       }
     }
   }
