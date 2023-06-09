@@ -6,10 +6,10 @@ config_release_name = "mbdevpf"
 config_deployment_regions = ["europe-west1"]
 
 // --- Elastic Search configuration --- //
-config_vm_elastic_search_data_volume_image = "pospf-20230607-2050-es"
+config_vm_elastic_search_data_volume_image = "mbdevpos-20230608-1650-es"
 
 // --- Clickhouse configuration --- //
-config_vm_clickhouse_data_volume_image = "pospf-20230607-2050-ch"
+config_vm_clickhouse_data_volume_image = "mbdevpos-20230608-1650-ch"
 
 // --- API configuration --- //
 config_vm_platform_api_image_version = "dev23.06.1"
