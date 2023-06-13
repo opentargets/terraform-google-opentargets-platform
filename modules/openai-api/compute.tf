@@ -145,10 +145,31 @@ resource "google_compute_region_instance_group_manager" "remig_openai_api" {
     instance_redistribution_type = "PROACTIVE"
     max_surge_fixed              = length(data.google_compute_zones.available[count.index].names)
     max_unavailable_fixed        = length(data.google_compute_zones.available[count.index].names)
-    min_ready_sec = 7
+    min_ready_sec                = 7
   }
 
   instance_lifecycle_policy {
     force_update_on_repair = "YES"
+  }
+}
+
+// --- Autoscalers --- //
+resource "google_compute_region_autoscaler" "openai_api_node" {
+  count = length(var.deployment_regions)
+
+  name   = "${var.module_wide_prefix_scope}-${count.index}-openai-api-autoscaler"
+  region = var.deployment_regions[count.index]
+  target = google_compute_region_instance_group_manager.remig_openai_api[count.index].self_link
+
+  autoscaling_policy {
+    max_replicas         = legnth(data.google_compute_zones.available[count.index].names) * 2
+    min_replicas         = 1
+    cool_down_period_sec = 30
+    cpu_utilization {
+      target = 0.8
+    }
+    load_balancing_utilization {
+      target = 0.8
+    }
   }
 }
