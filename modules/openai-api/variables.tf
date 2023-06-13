@@ -109,3 +109,9 @@ variable "deployment_regions" {
   description = "List of regions where the OpenAI API nodes should be deployed"
   type        = list(string)
 }
+
+// --- Credenetials --- //
+variable "openai_token" {
+    description = "OpenAI API token"
+    type        = string
+}
