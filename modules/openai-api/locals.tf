@@ -5,7 +5,7 @@ locals {
     // Firewall
     fw_tag_openai_api = "openaiapinode"
     // Compute
-    vm_tags = concat(
+    fw_vm_tags = concat(
         var.vm_tags,
         [local.fw_tag_openai_api]
     )
