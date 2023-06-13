@@ -406,3 +406,16 @@ variable "config_openai_api_flag_preemptible" {
   type        = bool
   default     = false
 }
+
+variable "config_openai_credentials_filename" {
+  description = "Name of the file containing the OpenAI credentials"
+  type        = string
+  default     = "openai_credentials.txt"
+}
+
+// --- Credentials --- //
+variable "config_credentials_local_path" {
+  description = "Local path to credentials repository, 'credentials' by default"
+  type        = string
+  default = "credentials"
+}
