@@ -394,3 +394,15 @@ variable "config_vm_data_iteration" {
   type        = string
   default     = "0"
 }
+
+// --- OpenAI API --- //
+variable "config_openai_api_docker_image_version" {
+  description = "OpenAI API Docker image version to use in deployment"
+  type        = string
+}
+
+variable "config_openai_api_flag_preemptible" {
+  description = "Use this flag for deploying OpenAI API on preemptible VMs, default 'false'"
+  type        = bool
+  default     = false
+}
