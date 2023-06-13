@@ -417,5 +417,5 @@ variable "config_openai_credentials_filename" {
 variable "config_credentials_local_path" {
   description = "Local path to credentials repository, 'credentials' by default"
   type        = string
-  default = "credentials"
+  default     = "credentials"
 }
