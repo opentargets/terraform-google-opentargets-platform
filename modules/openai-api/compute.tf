@@ -82,18 +82,73 @@ resource "google_compute_instance_template" "openai_api_node_template" {
 
   metadata = {
     startup-script = file(
-        "${path.module}/scripts/vm_startup.sh",
-        {
-            openai_api_docker_image = local.openai_api_docker_image,
-            openai_api_external_port = var.openai_api_port,
-            openai_token = "NOT_SET",
-        }
+      "${path.module}/scripts/vm_startup.sh",
+      {
+        openai_api_docker_image  = local.openai_api_docker_image,
+        openai_api_external_port = var.openai_api_port,
+        openai_token             = "NOT_SET",
+      }
     )
     google-logging-enabled = "true"
   }
 
   service_account {
-    email = google_service_account.gcp_service_acc_openai_api.email
+    email  = google_service_account.gcp_service_acc_openai_api.email
     scopes = ["cloud-platform", "logging-write", "monitoring-write"]
+  }
+}
+
+// --- Health Check definition --- //
+resource "google_compute_health_check" "openai_api_node_health_check" {
+  name                = "${var.module_wide_prefix_scope}-openai-api-health-check"
+  check_interval_sec  = 5
+  timeout_sec         = 5
+  healthy_threshold   = 2
+  unhealthy_threshold = 3
+
+  tcp_health_check {
+    port = var.openai_api_port
+  }
+}
+
+// --- Regional Instance Group Manager --- //
+resource "google_compute_region_instance_group_manager" "remig_openai_api" {
+  count = length(var.deployment_regions)
+
+  provider           = google-beta
+  name               = "${var.module_wide_prefix_scope}-openai-api-remig"
+  region             = var.deployment_regions[count.index]
+  base_instance_name = "${var.module_wide_prefix_scope}-${count.index}-openai-api"
+  depends_on = [
+    google_compute_instance_template.openai_api_node_template,
+    google_compute_health_check.openai_api_node_health_check
+  ]
+
+  // Instance Template
+  version {
+    instance_template = google_compute_instance_template.openai_api_node_template[count.index].self_link
+  }
+
+  named_port {
+    name = local.openai_api_port_name
+    port = local.openai_api_port
+  }
+
+  auto_healing_policies {
+    health_check      = google_compute_health_check.openai_api_node_health_check.self_link
+    initial_delay_sec = 7
+  }
+
+  update_policy {
+    type                         = "PROACTIVE"
+    minimal_action               = "REPLACE"
+    instance_redistribution_type = "PROACTIVE"
+    max_surge_fixed              = length(data.google_compute_zones.available[count.index].names)
+    max_unavailable_fixed        = length(data.google_compute_zones.available[count.index].names)
+    min_ready_sec = 7
+  }
+
+  instance_lifecycle_policy {
+    force_update_on_repair = "YES"
   }
 }
