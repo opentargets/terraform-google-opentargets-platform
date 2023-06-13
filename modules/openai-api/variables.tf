@@ -56,3 +56,10 @@ variable "vm_flag_preemptible" {
     type        = bool
     default     = false
 }
+
+// --- Machine tags --- //
+variable "vm_tags" {
+    description = "List of additional tags to attach to OpenAI API nodes"
+    type        = list(string)
+    default     = []
+}
