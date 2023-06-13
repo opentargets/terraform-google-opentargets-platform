@@ -69,4 +69,11 @@ locals {
   // --- Infrastructure Inspection Configuration --- //
   inspection_enabled                = var.config_enable_inspection
   inspection_conditional_deployment = local.inspection_enabled ? 1 : 0
+
+  // --- Credentials --- //
+  credentials_openai_token = trimspace(
+    file(
+      "${path.module}/${var.config_credentials_local_path}/${var.config_openai_credentials_filename}"
+    )
+  )
 }
