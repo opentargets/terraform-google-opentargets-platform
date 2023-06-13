@@ -13,55 +13,55 @@ variable "project_id" {
 
 // --- OpenAI API Configuration --- //
 variable "openai_api_docker_image" {
-    description = "OpenAI API Docker image to deploy"
-    type        = string
-    default = "quay.io/opentargets/"
+  description = "OpenAI API Docker image to deploy"
+  type        = string
+  default     = "quay.io/opentargets/"
 }
 
 variable "openai_api_docker_image_version" {
-    description = "OpenAI API Docker image version to deploy"
-    type        = string
-    default = "latest"
+  description = "OpenAI API Docker image version to deploy"
+  type        = string
+  default     = "latest"
 }
 
 // --- Machine geometry --- //
 variable "vm_type" {
-    description = "Machine type to use for the OpenAI API deployment, default 'n1-standard-1'"
-    type        = string
-    default     = "n1-standard-1"
+  description = "Machine type to use for the OpenAI API deployment, default 'n1-standard-1'"
+  type        = string
+  default     = "n1-standard-1"
 }
 
 variable "vm_disk_size" {
-    description = "Machine disk size to use for the OpenAI API deployment, default '10'"
-    type        = number
-    default     = 10
+  description = "Machine disk size to use for the OpenAI API deployment, default '10'"
+  type        = number
+  default     = 10
 }
 
 // --- Machine image --- //
 variable "vm_image" {
-    description = "Machine image to use for the OpenAI API deployment, default 'cos-stable'"
-    type        = string
-    default     = "cos-stable"
+  description = "Machine image to use for the OpenAI API deployment, default 'cos-stable'"
+  type        = string
+  default     = "cos-stable"
 }
 
 variable "vm_image_project" {
-    description = "Machine image project to use for the OpenAI API deployment, default 'cos-cloud'"
-    type        = string
-    default     = "cos-cloud"
+  description = "Machine image project to use for the OpenAI API deployment, default 'cos-cloud'"
+  type        = string
+  default     = "cos-cloud"
 }
 
 // --- Machine Persona --- //
 variable "vm_flag_preemptible" {
-    description = "Use this flag to tell the module to use a preemptible instance, default: 'false'"
-    type        = bool
-    default     = false
+  description = "Use this flag to tell the module to use a preemptible instance, default: 'false'"
+  type        = bool
+  default     = false
 }
 
 // --- Machine tags --- //
 variable "vm_tags" {
-    description = "List of additional tags to attach to OpenAI API nodes"
-    type        = list(string)
-    default     = []
+  description = "List of additional tags to attach to OpenAI API nodes"
+  type        = list(string)
+  default     = []
 }
 
 // --- Infrastructure --- //
