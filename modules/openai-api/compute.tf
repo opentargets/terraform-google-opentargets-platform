@@ -1,16 +1,16 @@
 // --- OpenAI API Compute resources --- //
 resource "random_string" "openai_api_node" {
-    length = 8
-    special = false
-    upper = false
-    lower = true
-    keepers = {
-        template_tags = join("", sort(local.fw_vm_tags)),
-        machine_type = local.vm_machine_type,
-        source_image = local.vm_template_source_image,
-        docker_fqdn_image = local.openai_api_docker_image,
-        startup_script = md5(file("${path.module}/scripts/vm_startup.sh"))
-    }
+  length  = 8
+  special = false
+  upper   = false
+  lower   = true
+  keepers = {
+    template_tags     = join("", sort(local.fw_vm_tags)),
+    machine_type      = local.vm_machine_type,
+    source_image      = local.vm_template_source_image,
+    docker_fqdn_image = local.openai_api_docker_image,
+    startup_script    = md5(file("${path.module}/scripts/vm_startup.sh"))
+  }
 }
 
 // Access to Available compute zones in the given region --- //
@@ -42,3 +42,58 @@ resource "google_project_iam_member" "monitoring-writer" {
 // --- /Service Account Configuration/ ---
 
 // OpenAI API Compute Instance (VM) ---
+resource "google_compute_instance_template" "openai_api_node_template" {
+  count = length(var.deployment_regions)
+
+  name                 = "${var.module_wide_prefix_scope}-${count.index}-openai-api-template-${random_string.openai_api_node.result}"
+  description          = "OpenAI API node template, docker image ${local.openai_api_docker_image}"
+  instance_description = "OpenAI API node, docker image ${local.openai_api_docker_image}"
+  region               = var.deployment_regions[count.index]
+
+  tags = local.fw_vm_tags
+
+  machine_type   = local.vm_machine_type
+  can_ip_forward = false
+
+  scheduling {
+    automatic_restart           = !var.vm_flag_preemptible
+    on_host_maintenance         = var.vm_flag_preemptible ? "TERMINATE" : "MIGRATE"
+    preemptible                 = var.vm_flag_preemptible
+    provisioning_model          = var.vm_flag_preemptible ? "SPOT" : "STANDARD"
+    instance_termination_action = var.vm_flag_preemptible ? "STOP" : null
+  }
+
+  disk {
+    source_image = local.vm_template_source_image
+    auto_delete  = true
+    boot         = true
+    disk_type    = "pd-ssd"
+    mode         = "READ_WRITE"
+  }
+
+  network_interface {
+    network    = var.network_name
+    subnetwork = var.network_subnet_name
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  metadata = {
+    startup-script = file(
+        "${path.module}/scripts/vm_startup.sh",
+        {
+            openai_api_docker_image = local.openai_api_docker_image,
+            openai_api_external_port = var.openai_api_port,
+            openai_token = "NOT_SET",
+        }
+    )
+    google-logging-enabled = "true"
+  }
+
+  service_account {
+    email = google_service_account.gcp_service_acc_openai_api.email
+    scopes = ["cloud-platform", "logging-write", "monitoring-write"]
+  }
+}
