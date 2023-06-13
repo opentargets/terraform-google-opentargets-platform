@@ -103,3 +103,9 @@ variable "network_sources_health_checks" {
     "35.191.0.0/16"
   ]
 }
+
+// --- Deployment information --- //
+variable "deployment_regions" {
+  description = "List of regions where the OpenAI API nodes should be deployed"
+  type        = list(string)
+}
