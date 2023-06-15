@@ -215,6 +215,12 @@ variable "config_dns_platform_api_subdomain" {
   default     = "api"
 }
 
+variable "config_dns_platform_openai_api_subdomain" {
+  description = "Subdomain for Open Targets Platform OpenAI API DNS entry, default 'ai'"
+  type        = string
+  default     = "ai"
+}
+
 variable "config_dns_platform_subdomain" {
   description = "Subdomain for Open Targets Platform Web App, default 'platform'"
   type        = string
