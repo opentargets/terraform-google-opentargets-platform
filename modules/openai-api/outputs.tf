@@ -10,12 +10,12 @@ output "map_region_to_instance_group_manager" {
   )
 }
 
-output "openai_api_port" {
+output "api_port" {
   // Output the listening port for the Open Targets Platform OpenAI API
   value = local.openai_api_port
 }
 
-output "openai_api_port_name" {
+output "api_port_name" {
   // Output the custom named port for the instance group
   value = local.openai_api_port_name
 }
