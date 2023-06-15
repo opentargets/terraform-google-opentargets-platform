@@ -337,13 +337,13 @@ variable "config_vm_webserver_flag_preemptible" {
 // --- Global Load Balancer --- //
 variable "config_glb_webapp_enable_cdn" {
   description = "This parameters indicates the GLB whether we want to use a CDN or not, default 'true'"
-  type = bool
+  type        = bool
   default     = false
 }
 
 variable "config_glb_openai_api_enable_cdn" {
   description = "This parameters indicates the GLB whether we want to use a CDN or not for OpenAI API, default 'false'"
-  type = bool
+  type        = bool
   default     = false
 }
 
