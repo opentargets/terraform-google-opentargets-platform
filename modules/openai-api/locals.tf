@@ -11,7 +11,7 @@ locals {
   )
   // Compute Instances (VMs)
   vm_template_source_image = "${var.vm_image_project}/${var.vm_image}"
-  vm_machine_type          = var.vm_machine_type
+  vm_machine_type          = var.vm_type
   // Docker
   // Effective Docker Image
   openai_api_docker_image = "${var.openai_api_docker_image}:${var.openai_api_docker_image_version}"
