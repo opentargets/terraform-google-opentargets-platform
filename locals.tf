@@ -22,9 +22,9 @@ locals {
 
   // --- DNS --- //
   // The effective DNS name is the one taking into account a possible subdomain that should scope the deployment
-  dns_effective_dns_name    = (var.config_dns_subdomain_prefix == null ? var.config_dns_managed_zone_dns_name : "${var.config_dns_subdomain_prefix}.${var.config_dns_managed_zone_dns_name}")
-  dns_platform_base_name    = "${var.config_dns_platform_subdomain}.${local.dns_effective_dns_name}"
-  dns_platform_api_dns_name = "${var.config_dns_platform_api_subdomain}.${local.dns_platform_base_name}"
+  dns_effective_dns_name           = (var.config_dns_subdomain_prefix == null ? var.config_dns_managed_zone_dns_name : "${var.config_dns_subdomain_prefix}.${var.config_dns_managed_zone_dns_name}")
+  dns_platform_base_name           = "${var.config_dns_platform_subdomain}.${local.dns_effective_dns_name}"
+  dns_platform_api_dns_name        = "${var.config_dns_platform_api_subdomain}.${local.dns_platform_base_name}"
   dns_platform_openai_api_dns_name = "${var.config_dns_platform_openai_api_subdomain}.${local.dns_platform_base_name}"
   dns_platform_webapp_domain_names = [
     "www.${local.dns_platform_base_name}",
@@ -42,6 +42,7 @@ locals {
   // GLB tagging for traffic destination --- //
   tag_glb_target_node                  = "glb-serve-target"
   glb_dns_platform_api_dns_names       = [trimsuffix(local.dns_platform_api_dns_name, ".")]
+  glb_dns_openai_api_dns_names         = [trimsuffix(local.dns_platform_openai_api_dns_name, ".")]
   glb_dns_platform_webapp_domain_names = [for hostname in local.dns_platform_webapp_domain_names : trimsuffix(hostname, ".")]
 
   // SSL --- //
