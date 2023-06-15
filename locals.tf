@@ -45,7 +45,7 @@ locals {
   glb_dns_platform_webapp_domain_names = [for hostname in local.dns_platform_webapp_domain_names : trimsuffix(hostname, ".")]
 
   // SSL --- //
-  ssl_managed_certificate_domain_names = concat(local.dns_platform_webapp_domain_names, [local.dns_platform_api_dns_name])
+  ssl_managed_certificate_domain_names = concat(local.dns_platform_webapp_domain_names, [local.dns_platform_api_dns_name, local.dns_platform_openai_api_dns_name])
 
   // CDN for web app backend --- //
   glb_webapp_cdn_enabled             = var.config_glb_webapp_enable_cdn
