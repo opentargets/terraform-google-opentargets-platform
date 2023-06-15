@@ -49,6 +49,7 @@ locals {
 
   // CDN for web app backend --- //
   glb_webapp_cdn_enabled             = var.config_glb_webapp_enable_cdn
+  glb_openai_api_cdn_enabled         = var.config_glb_openai_api_enable_cdn
   glb_netsec_effective_policy_api    = local.netsec_enable_policies_api ? google_compute_security_policy.netsec_policy_api[0].self_link : null
   glb_netsec_effective_policy_webapp = local.netsec_enable_policies_webapp ? google_compute_security_policy.netsec_policy_webapp[0].self_link : null
 
