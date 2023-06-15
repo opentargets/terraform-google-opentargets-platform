@@ -40,6 +40,19 @@ resource "google_project_iam_member" "monitoring-writer" {
   role    = "roles/monitoring.metricWriter"
   member  = "serviceAccount:${google_service_account.gcp_service_acc_openai_api.email}"
 }
+
+resource "google_project_iam_member" "secrets-accessor" {
+  project = var.project_id
+  role = "roles/secretmanager.secretAccessor"
+  member = "serviceAccount:${google_service_account.gcp_service_acc_openai_api.email}"
+
+  condition {
+    title = "Access to OpenAI related secrets"
+    description = "This condition limits access scope on Cloud Secrets Manager to just the OpenAI related secrets"
+    expression = "resource.name.startsWith(\"${var.openai_token}\")"
+  }
+
+}
 // --- /Service Account Configuration/ ---
 
 // OpenAI API Compute Instance (VM) ---
