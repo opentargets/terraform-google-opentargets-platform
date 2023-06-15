@@ -57,10 +57,10 @@ resource "google_compute_instance_template" "webserver_template" {
   can_ip_forward = false
 
   scheduling {
-    automatic_restart   = !var.vm_flag_preemptible
-    on_host_maintenance = var.vm_flag_preemptible ? "TERMINATE" : "MIGRATE"
-    preemptible         = var.vm_flag_preemptible
-    provisioning_model  = var.vm_flag_preemptible ? "SPOT" : "STANDARD"
+    automatic_restart           = !var.vm_flag_preemptible
+    on_host_maintenance         = var.vm_flag_preemptible ? "TERMINATE" : "MIGRATE"
+    preemptible                 = var.vm_flag_preemptible
+    provisioning_model          = var.vm_flag_preemptible ? "SPOT" : "STANDARD"
     instance_termination_action = var.vm_flag_preemptible ? "STOP" : null
   }
 

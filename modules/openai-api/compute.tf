@@ -43,13 +43,13 @@ resource "google_project_iam_member" "monitoring-writer" {
 
 resource "google_project_iam_member" "secrets-accessor" {
   project = var.project_id
-  role = "roles/secretmanager.secretAccessor"
-  member = "serviceAccount:${google_service_account.gcp_service_acc_openai_api.email}"
+  role    = "roles/secretmanager.secretAccessor"
+  member  = "serviceAccount:${google_service_account.gcp_service_acc_openai_api.email}"
 
   condition {
-    title = "Access to OpenAI related secrets"
+    title       = "Access to OpenAI related secrets"
     description = "This condition limits access scope on Cloud Secrets Manager to just the OpenAI related secrets"
-    expression = "resource.name.startsWith(\"${var.openai_token}\")"
+    expression  = "resource.name.startsWith(\"${var.openai_token}\")"
   }
 
 }
@@ -98,11 +98,11 @@ resource "google_compute_instance_template" "openai_api_node_template" {
     startup-script = templatefile(
       "${path.module}/scripts/vm_startup.sh",
       {
-        openai_api_docker_image  = local.openai_api_docker_image,
-        openai_api_external_port = local.openai_api_port,
-        openai_api_internal_port = local.openai_api_port,
+        openai_api_docker_image   = local.openai_api_docker_image,
+        openai_api_external_port  = local.openai_api_port,
+        openai_api_internal_port  = local.openai_api_port,
         openai_api_container_name = local.openai_api_container_name,
-        openai_token             = var.openai_token,
+        openai_token              = var.openai_token,
       }
     )
     google-logging-enabled = "true"
@@ -178,8 +178,8 @@ resource "google_compute_region_autoscaler" "openai_api_node" {
   target = google_compute_region_instance_group_manager.remig_openai_api[count.index].self_link
 
   autoscaling_policy {
-    max_replicas         = length(data.google_compute_zones.available[count.index].names) * 2
-    min_replicas         = 1
+    max_replicas    = length(data.google_compute_zones.available[count.index].names) * 2
+    min_replicas    = 1
     cooldown_period = 30
     cpu_utilization {
       target = 0.8
