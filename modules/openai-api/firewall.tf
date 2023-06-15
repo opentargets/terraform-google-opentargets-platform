@@ -12,7 +12,7 @@ resource "google_compute_firewall" "vpc_netfw_openai_api_node" {
     ports    = [local.openai_api_port]
   }
 
-  target_tags = [local.fw_vm_tags]
+  target_tags = [local.fw_tag_openai_api]
   source_ranges = [
     var.network_source_ranges_map[var.deployment_regions[count.index]].source_range
   ]
@@ -31,7 +31,7 @@ resource "google_compute_firewall" "vpc_netfw_openai_api_healthchecks" {
     ports    = [local.openai_api_port]
   }
 
-  target_tags = [local.fw_vm_tags]
+  target_tags = [local.fw_tag_openai_api]
   source_ranges = concat(
     [var.network_source_ranges_map[var.deployment_regions[count.index]].source_range],
     var.network_sources_health_checks
