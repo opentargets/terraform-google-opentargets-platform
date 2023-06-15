@@ -112,6 +112,6 @@ variable "deployment_regions" {
 
 // --- Credenetials --- //
 variable "openai_token" {
-    description = "OpenAI API token"
+    description = "Google Cloud Secret that contains the OpenAI API token"
     type        = string
 }
