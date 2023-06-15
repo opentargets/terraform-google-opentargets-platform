@@ -103,6 +103,7 @@ resource "google_compute_instance_template" "openai_api_node_template" {
         openai_api_internal_port  = local.openai_api_port,
         openai_api_container_name = local.openai_api_container_name,
         openai_token              = var.openai_token,
+        project_id                = var.project_id,
       }
     )
     google-logging-enabled = "true"
@@ -152,7 +153,7 @@ resource "google_compute_region_instance_group_manager" "remig_openai_api" {
 
   auto_healing_policies {
     health_check      = google_compute_health_check.openai_api_node_health_check.self_link
-    initial_delay_sec = 7
+    initial_delay_sec = 30
   }
 
   update_policy {
