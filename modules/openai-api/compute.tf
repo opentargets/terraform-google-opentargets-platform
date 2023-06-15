@@ -86,7 +86,9 @@ resource "google_compute_instance_template" "openai_api_node_template" {
       "${path.module}/scripts/vm_startup.sh",
       {
         openai_api_docker_image  = local.openai_api_docker_image,
-        openai_api_external_port = var.openai_api_port,
+        openai_api_external_port = local.openai_api_port,
+        openai_api_internal_port = local.openai_api_port,
+        openai_api_container_name = local.openai_api_container_name,
         openai_token             = var.openai_token,
       }
     )
