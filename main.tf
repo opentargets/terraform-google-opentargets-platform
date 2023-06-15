@@ -120,7 +120,7 @@ module "openai_api" {
   // Machine persona
   vm_flag_preemptible = var.config_vm_api_flag_preemptible
   // OpenAI
-  openai_token = local.credentials_openai_token
+  openai_token = google_secret_manager_secret.openai_api_token.id
 }
 
 // --- API --- //
