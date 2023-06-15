@@ -82,7 +82,7 @@ resource "google_compute_instance_template" "openai_api_node_template" {
   }
 
   metadata = {
-    startup-script = file(
+    startup-script = templatefile(
       "${path.module}/scripts/vm_startup.sh",
       {
         openai_api_docker_image  = local.openai_api_docker_image,
@@ -110,7 +110,7 @@ resource "google_compute_health_check" "openai_api_node_health_check" {
   unhealthy_threshold = 3
 
   tcp_health_check {
-    port = var.openai_api_port
+    port = local.openai_api_port
   }
 }
 
@@ -165,9 +165,9 @@ resource "google_compute_region_autoscaler" "openai_api_node" {
   target = google_compute_region_instance_group_manager.remig_openai_api[count.index].self_link
 
   autoscaling_policy {
-    max_replicas         = legnth(data.google_compute_zones.available[count.index].names) * 2
+    max_replicas         = length(data.google_compute_zones.available[count.index].names) * 2
     min_replicas         = 1
-    cool_down_period_sec = 30
+    cooldown_period = 30
     cpu_utilization {
       target = 0.8
     }
