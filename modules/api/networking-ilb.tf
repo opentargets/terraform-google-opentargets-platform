@@ -24,14 +24,14 @@ resource "google_compute_region_backend_service" "ilb_backend_service" {
   // Calculate whether this will be deployed and how many
   count = (var.load_balancer_type == local.lb_type_internal ? 1 : 0) * length(var.deployment_regions)
 
-  name                  = "${var.module_wide_prefix_scope}-${count.index}-ilb-backend-service"
-  region                = var.deployment_regions[count.index]
+  name   = "${var.module_wide_prefix_scope}-${count.index}-ilb-backend-service"
+  region = var.deployment_regions[count.index]
   depends_on = [
     google_compute_region_instance_group_manager.regmig_otpapi
   ]
 
   load_balancing_scheme = "INTERNAL"
-  enable_cdn = false
+  enable_cdn            = false
   backend {
     group = google_compute_region_instance_group_manager.regmig_otpapi[count.index].instance_group
     //balancing_mode = "UTILIZATION"
