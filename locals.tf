@@ -2,6 +2,7 @@ locals {
   // --- Subfolders --- //
   // Subfolder prefix for private assets
   path_private_assets_prefix = "private"
+  path_profiles_prefix       = "profiles"
   // --- VPC --- //
   vpc_network_name             = "${var.config_release_name}-vpc"
   vpc_network_main_subnet_name = "${var.config_release_name}-mainsubnet"
@@ -58,7 +59,12 @@ locals {
   glb_netsec_effective_policy_webapp = local.netsec_enable_policies_webapp ? google_compute_security_policy.netsec_policy_webapp[0].self_link : null
 
   //---  Network Security --- //
-  netsec_restriction_source_ip_cidrs                 = toset(regexall("[[:digit:]]{1,3}\\.[[:digit:]]{1,3}\\.[[:digit:]]{1,3}\\.[[:digit:]]{1,3}/[[:digit:]]{1,2}", trimspace(file("${path.module}/${local.path_private_assets_prefix}/profiles/${var.config_security_restrict_source_ips_cidrs_file}"))))
+  netsec_path_active_profile = "${path.module}/${local.path_private_assets_prefix}/${local.path_profiles_prefix}/${var.config_security_restrict_source_ips_cidrs_file}"
+  netsec_restriction_source_ip_cidrs = fileexists("${local.netsec_path_active_profile}") ? toset(
+    regexall("[[:digit:]]{1,3}\\.[[:digit:]]{1,3}\\.[[:digit:]]{1,3}\\.[[:digit:]]{1,3}/[[:digit:]]{1,2}",
+      trimspace(file("${local.netsec_path_active_profile}"))
+    )
+  ) : toset([])
   netsec_restriction_source_ip_cidrs_policy_listings = chunklist(local.netsec_restriction_source_ip_cidrs, 10)
   netsec_enable_policies_api                         = var.config_security_api_enable && (length(local.netsec_restriction_source_ip_cidrs) > 0)
   netsec_enable_policies_webapp                      = var.config_security_webapp_enable && (length(local.netsec_restriction_source_ip_cidrs) > 0)
