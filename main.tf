@@ -91,6 +91,38 @@ module "backend_clickhouse" {
   deployment_target_size = 1
 }
 
+// --- OpenAI API --- //
+
+module "openai_api" {
+  source                   = "./modules/openai-api"
+  project_id               = var.config_project_id
+  depends_on               = [module.vpc_network]
+  deployment_regions       = var.config_deployment_regions
+  module_wide_prefix_scope = "${var.config_release_name}-ai"
+  network_name             = module.vpc_network.network_name
+  network_self_link        = module.vpc_network.network_self_link
+  network_subnet_name      = local.vpc_network_main_subnet_name
+  network_source_ranges_map = zipmap(
+    var.config_deployment_regions,
+    [
+      for region in var.config_deployment_regions : {
+        source_range = local.vpc_network_region_subnet_map[region].subnet_ip
+      }
+    ]
+  )
+  // VM tags
+  vm_tags = concat(
+    [local.tag_glb_target_node],
+    local.dev_mode_fw_tags
+  )
+  // Docker
+  openai_api_docker_image_version = var.config_openai_api_docker_image_version
+  // Machine persona
+  vm_flag_preemptible = var.config_vm_api_flag_preemptible
+  // OpenAI
+  openai_token = google_secret_manager_secret.openai_api_token.name
+}
+
 // --- API --- //
 module "backend_api" {
   source     = "./modules/api"

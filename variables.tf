@@ -215,6 +215,12 @@ variable "config_dns_platform_api_subdomain" {
   default     = "api"
 }
 
+variable "config_dns_platform_openai_api_subdomain" {
+  description = "Subdomain for Open Targets Platform OpenAI API DNS entry, default 'ai'"
+  type        = string
+  default     = "ai"
+}
+
 variable "config_dns_platform_subdomain" {
   description = "Subdomain for Open Targets Platform Web App, default 'platform'"
   type        = string
@@ -328,10 +334,16 @@ variable "config_vm_webserver_flag_preemptible" {
   default     = false
 }
 
-
 // --- Global Load Balancer --- //
 variable "config_glb_webapp_enable_cdn" {
   description = "This parameters indicates the GLB whether we want to use a CDN or not, default 'true'"
+  type        = bool
+  default     = false
+}
+
+variable "config_glb_openai_api_enable_cdn" {
+  description = "This parameters indicates the GLB whether we want to use a CDN or not for OpenAI API, default 'false'"
+  type        = bool
   default     = false
 }
 
@@ -393,4 +405,29 @@ variable "config_vm_data_iteration" {
   description = "API data - iteration"
   type        = string
   default     = "0"
+}
+
+// --- OpenAI API --- //
+variable "config_openai_api_docker_image_version" {
+  description = "OpenAI API Docker image version to use in deployment"
+  type        = string
+}
+
+variable "config_openai_api_flag_preemptible" {
+  description = "Use this flag for deploying OpenAI API on preemptible VMs, default 'false'"
+  type        = bool
+  default     = false
+}
+
+variable "config_openai_credentials_filename" {
+  description = "Name of the file containing the OpenAI credentials"
+  type        = string
+  default     = "openai_credentials.txt"
+}
+
+// --- Credentials --- //
+variable "config_credentials_local_path" {
+  description = "Local path to credentials repository, 'credentials' by default"
+  type        = string
+  default     = "credentials"
 }
