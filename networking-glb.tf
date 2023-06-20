@@ -70,7 +70,7 @@ resource "google_compute_url_map" "url_map_platform_glb" {
 
 module "glb_platform" {
   source  = "GoogleCloudPlatform/lb-http/google"
-  version = ">= 9.0.0"
+  version = "= 9.0.0"
 
   // Dependencies
   depends_on = [
@@ -142,7 +142,7 @@ module "glb_platform" {
           max_rate                     = null
           max_rate_per_instance        = 512
           max_rate_per_endpoint        = null
-          max_utilization              = 0.85
+          max_utilization              = null
         }
       ]
 
@@ -199,7 +199,7 @@ module "glb_platform" {
           max_rate                     = null
           max_rate_per_instance        = 50
           max_rate_per_endpoint        = null
-          max_utilization              = 0.95
+          max_utilization              = null
         }
       ]
 
@@ -256,7 +256,7 @@ module "glb_platform" {
           max_rate                     = null
           max_rate_per_instance        = 50
           max_rate_per_endpoint        = null
-          max_utilization              = 0.95
+          max_utilization              = null
         }
       ]
 
