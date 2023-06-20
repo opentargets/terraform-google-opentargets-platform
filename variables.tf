@@ -350,12 +350,14 @@ variable "config_glb_openai_api_enable_cdn" {
 // --- Network Security --- //
 variable "config_security_api_enable" {
   description = "Enable security policies for the platform API, default 'false'"
-  default     = false
+  type = bool
+  default     = true
 }
 
 variable "config_security_webapp_enable" {
   description = "Enable security policies for the web application, default 'false'"
-  default     = false
+  type = bool
+  default     = true
 }
 
 variable "config_security_restrict_source_ips_cidrs_file" {
