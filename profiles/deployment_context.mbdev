@@ -15,36 +15,25 @@ config_vm_clickhouse_data_volume_image = "mbdevpos-20230616-0850-ch"
 config_vm_platform_api_image_version = "dev23.06.5"
 config_vm_version_major              = "23"
 config_vm_version_minor              = "06"
-config_vm_version_patch              = "1"
+config_vm_version_patch              = "5"
 config_vm_data_year                  = "23"
 config_vm_data_month                 = "06"
 config_vm_data_iteration             = "0"
 
-// --- Web App configuration --- //
-config_webapp_release = "v0.4.4"
-// Data Context
-config_webapp_bucket_name_data_assets = "open-targets-pre-data-releases"
-config_webapp_data_context_release    = "23.06"
-
 // --- OpenAI API configuration --- //
 config_openai_api_docker_image_version = "latest"
 
-// Deployment configuration
-// DNS
-// config_dns_subdomain_prefix       = "dev"
-// config_dns_platform_api_subdomain = "api" // Web App configuration
-// config_webapp_deployment_context_map = {
-//   DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API      = "'https://api.platform.dev.opentargets.xyz/api/v4/graphql'"
-//   DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API_BETA = "'https://api.platform.dev.opentargets.xyz/api/v4/graphql'"
-//   DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_EFO_URL      = "'/data/ontology/efo_json/diseases_efo.jsonl'"
-// }
+// --- Web App configuration --- //
+config_webapp_release = "v0.4.4"
+// Data Context
+config_webapp_data_context_release    = "23.06"
 
-// Testing security policies with redirection
+
 // --- Security Configuration --- //
-// config_security_restrict_source_ips_cidrs_file = "netsec_cidr.mbdev"
-// Enable / Disable network security policies application
-// config_security_api_enable    = true
-// config_security_webapp_enable = true
+// Enable / Disable network security policies application (Platform 'dev' default is false)
+config_security_api_enable    = false
+config_security_webapp_enable = false
+
 // --- VMs provisioning model --- //
 // Use on-demand machines
 config_vm_api_flag_preemptible           = false
