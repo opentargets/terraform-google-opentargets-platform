@@ -3,7 +3,7 @@
 config_release_name = "ppp"
 
 // --- Deployment configuration --- //
-config_deployment_project_id = "open-targets-partner-platform"
+config_project_id = "open-targets-partner-platform"
 config_deployment_regions = ["europe-west1"]
 
 // --- Elastic Search configuration --- //
