@@ -360,11 +360,17 @@ variable "config_security_webapp_enable" {
   default     = true
 }
 
-variable "config_security_restrict_source_ips_cidrs_file" {
-  description = "Text file within the 'profiles' folder that contains the list of CIDRs allowed to access the platform"
+variable "config_security_cidrs_allowed" {
+  description = "File that contains the listing of CIDRs allowed to access the platform, default 'netsec_cidr_allowed.default'"
   type        = string
-  default     = "netsec_cidr.default"
+  default     = "netsec_cidr_allowed.default"
 }
+
+variable "config_security_cidrs_blocked" {
+  description = "File that contains the listing of CIDRs prevented from accessing the platform, default 'netsec_cidr_blocked.default'"
+  type        = string
+  default     = "netsec_cidr_blocked.default"
+} 
 // --- Development --- //
 variable "config_set_dev_mode_on" {
   description = "If 'true', it will set the deployment to 'development mode', default is 'false'"

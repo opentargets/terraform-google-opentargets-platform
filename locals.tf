@@ -59,15 +59,22 @@ locals {
   glb_netsec_effective_policy_webapp = local.netsec_enable_policies_webapp ? google_compute_security_policy.netsec_policy_webapp[0].self_link : null
 
   //---  Network Security --- //
-  netsec_path_active_profile = "${path.module}/${local.path_private_assets_prefix}/${local.path_profiles_prefix}/${var.config_security_restrict_source_ips_cidrs_file}"
-  netsec_restriction_source_ip_cidrs = fileexists("${local.netsec_path_active_profile}") ? toset(
+  netsec_path_allowed_source_ips_cidrs_file = "${path.module}/${local.path_private_assets_prefix}/${local.path_profiles_prefix}/${var.config_security_cidrs_allowed}"
+  netsec_path_blocked_source_ips_cidrs_file = "${path.module}/${local.path_private_assets_prefix}/${local.path_profiles_prefix}/${var.config_security_cidrs_blocked}"
+  netsec_allowed_cidrs = fileexists("${local.netsec_path_allowed_source_ips_cidrs_file}") ? toset(
     regexall("[[:digit:]]{1,3}\\.[[:digit:]]{1,3}\\.[[:digit:]]{1,3}\\.[[:digit:]]{1,3}/[[:digit:]]{1,2}",
-      trimspace(file("${local.netsec_path_active_profile}"))
+      trimspace(file("${local.netsec_path_allowed_source_ips_cidrs_file}"))
     )
   ) : toset([])
-  netsec_restriction_source_ip_cidrs_policy_listings = chunklist(local.netsec_restriction_source_ip_cidrs, 10)
-  netsec_enable_policies_api                         = var.config_security_api_enable && (length(local.netsec_restriction_source_ip_cidrs) > 0)
-  netsec_enable_policies_webapp                      = var.config_security_webapp_enable && (length(local.netsec_restriction_source_ip_cidrs) > 0)
+  netsec_blocked_cidrs = fileexists("${local.netsec_path_blocked_source_ips_cidrs_file}") ? toset(
+    regexall("[[:digit:]]{1,3}\\.[[:digit:]]{1,3}\\.[[:digit:]]{1,3}\\.[[:digit:]]{1,3}/[[:digit:]]{1,2}",
+      trimspace(file("${local.netsec_path_blocked_source_ips_cidrs_file}"))
+    )
+  ) : toset([])
+  netsec_allowed_cidrs_policy_listings                = chunklist(local.netsec_allowed_cidrs, 10)
+  netsec_blocked_cidrs_policy_listings                = chunklist(local.netsec_blocked_cidrs, 10)
+  netsec_enable_policies_api                         = var.config_security_api_enable && ((length(local.netsec_allowed_cidrs_policy_listings) > 0) || (length(local.netsec_blocked_cidrs_policy_listings) > 0))
+  netsec_enable_policies_webapp                      = var.config_security_webapp_enable && ((length(local.netsec_allowed_cidrs_policy_listings) > 0) || (length(local.netsec_blocked_cidrs_policy_listings) > 0))
 
 
   // --- Debugging --- // 

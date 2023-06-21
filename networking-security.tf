@@ -7,7 +7,8 @@ resource "random_string" "random_netsec_policy_api" {
   upper   = false
   special = false
   keepers = {
-    cidrs = md5(join("", local.netsec_restriction_source_ip_cidrs))
+    cidrs = md5("${join("", local.netsec_allowed_cidrs)} + ${join("", local.netsec_blocked_cidrs)}")
+    enabled = local.netsec_enable_policies_api
   }
 }
 
@@ -19,11 +20,12 @@ resource "google_compute_security_policy" "netsec_policy_api" {
   description = "Allow access to attached backends only from the given source CIDRs"
 
   // Traffic restriction from source CIDR
+  // Blocked CIDRs
   dynamic "rule" {
-    for_each = local.netsec_enable_policies_api ? local.netsec_restriction_source_ip_cidrs_policy_listings : []
+    for_each = local.netsec_enable_policies_api ? local.netsec_blocked_cidrs_policy_listings : []
     content {
-      description = "Allow API traffic from the given list of CIDRs, group #${rule.key}"
-      action      = "allow"
+      description = "Blocked-listed API traffic from the given list of CIDRs, group #${rule.key}"
+      action      = "deny(403)"
       priority    = rule.key + 1000
       match {
         versioned_expr = "SRC_IPS_V1"
@@ -33,6 +35,22 @@ resource "google_compute_security_policy" "netsec_policy_api" {
       }
     }
   }
+  // Allowed CIDRs
+  dynamic "rule" {
+    for_each = local.netsec_enable_policies_api ? local.netsec_allowed_cidrs_policy_listings : []
+    content {
+      description = "Allow API traffic from the given list of CIDRs, group #${rule.key}"
+      action      = "allow"
+      priority    = rule.key + 1001 + length(local.netsec_blocked_cidrs_policy_listings)
+      match {
+        versioned_expr = "SRC_IPS_V1"
+        config {
+          src_ip_ranges = rule.value
+        }
+      }
+    }
+  }
+  // Default rule to block all traffic
   dynamic "rule" {
     for_each = local.netsec_enable_policies_api ? [1] : []
     content {
@@ -61,7 +79,8 @@ resource "random_string" "random_netsec_policy_webapp" {
   upper   = false
   special = false
   keepers = {
-    cidrs = md5(join("", local.netsec_restriction_source_ip_cidrs))
+    cidrs = md5("${join("", local.netsec_allowed_cidrs)} + ${join("", local.netsec_blocked_cidrs)}")
+    enabled = local.netsec_enable_policies_webapp
   }
 }
 
@@ -73,12 +92,32 @@ resource "google_compute_security_policy" "netsec_policy_webapp" {
   description = "Allow access to attached backends only from the given source CIDRs"
 
   // Traffic restriction from source CIDR
+  // Blocked CIDRs
   dynamic "rule" {
-    for_each = local.netsec_enable_policies_webapp ? local.netsec_restriction_source_ip_cidrs_policy_listings : []
+    for_each = local.netsec_enable_policies_webapp ? local.netsec_blocked_cidrs_policy_listings : []
+    content {
+      description = "Blocked-listed WEB traffic from the given list of CIDRs, group #${rule.key}"
+      action      = "redirect"
+      priority    = rule.key + 1000
+      match {
+        versioned_expr = "SRC_IPS_V1"
+        config {
+          src_ip_ranges = rule.value
+        }
+      }
+      redirect_options {
+        type   = "EXTERNAL_302"
+        target = "https://platform.opentargets.org/unauthorized.html"
+      }
+    }
+  }
+  // Allowed CIDRs
+  dynamic "rule" {
+    for_each = local.netsec_enable_policies_webapp ? local.netsec_allowed_cidrs_policy_listings : []
     content {
       description = "Allow WEB traffic from the given list of CIDRs, group #${rule.key}"
       action      = "allow"
-      priority    = rule.key + 1000
+      priority    = rule.key + 1001 + length(local.netsec_blocked_cidrs_policy_listings)
       match {
         versioned_expr = "SRC_IPS_V1"
         config {
@@ -87,6 +126,7 @@ resource "google_compute_security_policy" "netsec_policy_webapp" {
       }
     }
   }
+  // Redirect rule for root path
   dynamic "rule" {
     for_each = local.netsec_enable_policies_webapp ? [1] : []
     content {
@@ -104,6 +144,7 @@ resource "google_compute_security_policy" "netsec_policy_webapp" {
       }
     }
   }
+  // Default rule to block all traffic
   dynamic "rule" {
     for_each = local.netsec_enable_policies_webapp ? [1] : []
     content {
