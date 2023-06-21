@@ -12,10 +12,10 @@ config_vm_elastic_search_data_volume_image = "mbdevpos-20230616-0850-es"
 config_vm_clickhouse_data_volume_image = "mbdevpos-20230616-0850-ch"
 
 // --- API configuration --- //
-config_vm_platform_api_image_version = "dev23.06.5"
+config_vm_platform_api_image_version = "dev23.06.6"
 config_vm_version_major              = "23"
 config_vm_version_minor              = "06"
-config_vm_version_patch              = "5"
+config_vm_version_patch              = "6"
 config_vm_data_year                  = "23"
 config_vm_data_month                 = "06"
 config_vm_data_iteration             = "0"
