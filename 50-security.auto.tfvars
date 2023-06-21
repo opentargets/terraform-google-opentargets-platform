@@ -8,4 +8,5 @@
 
 // config_security_api_enable    = false
 // config_security_webapp_enable = false
-// config_security_restrict_source_ips_cidrs_file = "netsec_cidr.default"
+//config_security_cidrs_allowed = "netsec_cidr_allowed.default"
+//config_security_cidrs_blocked = "netsec_cidr_blocked.default"

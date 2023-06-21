@@ -360,12 +360,6 @@ variable "config_security_webapp_enable" {
   default     = true
 }
 
-variable "config_security_restrict_source_ips_cidrs_file" {
-  description = "Text file within the 'profiles' folder that contains the list of CIDRs allowed to access the platform"
-  type        = string
-  default     = "netsec_cidr.default"
-}
-
 variable "config_security_cidrs_allowed" {
   description = "File that contains the listing of CIDRs allowed to access the platform, default 'netsec_cidr_allowed.default'"
   type        = string

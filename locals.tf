@@ -71,8 +71,6 @@ locals {
       trimspace(file("${local.netsec_path_blocked_source_ips_cidrs_file}"))
     )
   ) : toset([])
-  // Deprecated: use netsec_allowed_cidrs instead
-  //netsec_restriction_source_ip_cidrs_policy_listings = chunklist(local.netsec_restriction_source_ip_cidrs, 10)
   netsec_allowed_cidrs_policy_listings                = chunklist(local.netsec_allowed_cidrs, 10)
   netsec_blocked_cidrs_policy_listings                = chunklist(local.netsec_blocked_cidrs, 10)
   netsec_enable_policies_api                         = var.config_security_api_enable && ((length(local.netsec_allowed_cidrs_policy_listings) > 0) || (length(local.netsec_blocked_cidrs_policy_listings) > 0))
