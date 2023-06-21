@@ -97,13 +97,17 @@ resource "google_compute_security_policy" "netsec_policy_webapp" {
     for_each = local.netsec_enable_policies_webapp ? local.netsec_blocked_cidrs_policy_listings : []
     content {
       description = "Blocked-listed WEB traffic from the given list of CIDRs, group #${rule.key}"
-      action      = "deny(403)"
+      action      = "redirect"
       priority    = rule.key + 1000
       match {
         versioned_expr = "SRC_IPS_V1"
         config {
           src_ip_ranges = rule.value
         }
+      }
+      redirect_options {
+        type   = "EXTERNAL_302"
+        target = "https://platform.opentargets.org/unauthorized.html"
       }
     }
   }
