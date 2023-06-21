@@ -44,7 +44,9 @@ config_webapp_deployment_context_map = {
 config_webapp_custom_profile = "partners.js"
 
 // --- Security Configuration --- //
-// config_security_restrict_source_ips_cidrs_file = "netsec_cidr.2306"
+// Use defaults for now
+//config_security_cidrs_allowed = "netsec_cidr_allowed.default"
+//config_security_cidrs_blocked = "netsec_cidr_blocked.default"
 // Enable / Disable network security policies application (Partner Platform 'dev' default is true)
 config_security_api_enable    = true
 config_security_webapp_enable = true
