@@ -162,7 +162,7 @@ resource "google_compute_region_instance_group_manager" "regmig_elastic_search" 
 
   auto_healing_policies {
     health_check      = google_compute_health_check.elastic_search_healthcheck.id
-    initial_delay_sec = 300
+    initial_delay_sec = 120
   }
 
   update_policy {
@@ -172,6 +172,10 @@ resource "google_compute_region_instance_group_manager" "regmig_elastic_search" 
     max_surge_fixed              = local.compute_zones_n_total
     max_unavailable_fixed        = 0
     min_ready_sec                = 30
+  }
+
+  instance_lifecycle_policy {
+    force_update_on_repair = "YES"
   }
 }
 

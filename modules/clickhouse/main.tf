@@ -161,7 +161,7 @@ resource "google_compute_region_instance_group_manager" "regmig_clickhouse" {
 
   auto_healing_policies {
     health_check      = google_compute_health_check.clickhouse_healthcheck.id
-    initial_delay_sec = 300
+    initial_delay_sec = 120
   }
 
   update_policy {
@@ -172,7 +172,11 @@ resource "google_compute_region_instance_group_manager" "regmig_clickhouse" {
     max_unavailable_fixed        = 0
     min_ready_sec                = 30
   }
+  instance_lifecycle_policy {
+    force_update_on_repair = "YES"
+  }
 }
+
 
 // --- AUTOSCALERS --- //
 resource "google_compute_region_autoscaler" "autoscaler_clickhouse" {

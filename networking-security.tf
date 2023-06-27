@@ -7,7 +7,7 @@ resource "random_string" "random_netsec_policy_api" {
   upper   = false
   special = false
   keepers = {
-    cidrs = md5("${join("", local.netsec_allowed_cidrs)} + ${join("", local.netsec_blocked_cidrs)}")
+    cidrs   = md5("${join("", local.netsec_allowed_cidrs)} + ${join("", local.netsec_blocked_cidrs)}")
     enabled = local.netsec_enable_policies_api
   }
 }
@@ -79,7 +79,7 @@ resource "random_string" "random_netsec_policy_webapp" {
   upper   = false
   special = false
   keepers = {
-    cidrs = md5("${join("", local.netsec_allowed_cidrs)} + ${join("", local.netsec_blocked_cidrs)}")
+    cidrs   = md5("${join("", local.netsec_allowed_cidrs)} + ${join("", local.netsec_blocked_cidrs)}")
     enabled = local.netsec_enable_policies_webapp
   }
 }

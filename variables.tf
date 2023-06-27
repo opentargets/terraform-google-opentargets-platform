@@ -350,13 +350,13 @@ variable "config_glb_openai_api_enable_cdn" {
 // --- Network Security --- //
 variable "config_security_api_enable" {
   description = "Enable security policies for the platform API, default 'false'"
-  type = bool
+  type        = bool
   default     = true
 }
 
 variable "config_security_webapp_enable" {
   description = "Enable security policies for the web application, default 'false'"
-  type = bool
+  type        = bool
   default     = true
 }
 
@@ -370,7 +370,7 @@ variable "config_security_cidrs_blocked" {
   description = "File that contains the listing of CIDRs prevented from accessing the platform, default 'netsec_cidr_blocked.default'"
   type        = string
   default     = "netsec_cidr_blocked.default"
-} 
+}
 // --- Development --- //
 variable "config_set_dev_mode_on" {
   description = "If 'true', it will set the deployment to 'development mode', default is 'false'"
