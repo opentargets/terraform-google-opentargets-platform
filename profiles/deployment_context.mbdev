@@ -21,10 +21,10 @@ config_vm_data_month                 = "06"
 config_vm_data_iteration             = "0"
 
 // --- OpenAI API configuration --- //
-config_openai_api_docker_image_version = "latest"
+config_openai_api_docker_image_version = "0.0.5"
 
 // --- Web App configuration --- //
-config_webapp_release = "v0.4.9"
+config_webapp_release = "v0.4.10"
 // Data Context
 config_webapp_data_context_release    = "23.06"
 
