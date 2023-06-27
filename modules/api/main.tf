@@ -196,7 +196,7 @@ resource "google_compute_region_autoscaler" "autoscaler_otpapi" {
       target = 0.6
     }
     cpu_utilization {
-      target = 0.75
+      target = 0.50
     }
   }
 }

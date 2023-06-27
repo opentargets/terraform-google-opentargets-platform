@@ -186,7 +186,7 @@ resource "google_compute_region_autoscaler" "autoscaler_elastic_search" {
     min_replicas    = 1
     cooldown_period = 60
     cpu_utilization {
-      target = 0.75
+      target = 0.45
     }
   }
 }
