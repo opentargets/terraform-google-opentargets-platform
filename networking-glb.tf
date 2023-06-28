@@ -121,6 +121,7 @@ module "glb_platform" {
         max_ttl = 10800
         serve_while_stale = 300
         signed_url_cache_max_age_sec = 300
+        negative_caching = true
         cache_key_policy = {
           include_host = true
           include_protocol = true
