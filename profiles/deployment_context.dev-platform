@@ -36,8 +36,8 @@ config_security_webapp_enable = false
 
 // --- VMs provisioning model --- //
 // Use on-demand machines
-config_vm_api_flag_preemptible           = false
-config_vm_clickhouse_flag_preemptible    = false
-config_vm_elasticsearch_flag_preemptible = false
-config_vm_webserver_flag_preemptible     = false
-config_openai_api_flag_preemptible       = false
+//config_vm_api_flag_preemptible           = false
+//config_vm_clickhouse_flag_preemptible    = false
+//config_vm_elasticsearch_flag_preemptible = false
+//config_vm_webserver_flag_preemptible     = false
+//config_openai_api_flag_preemptible       = false
