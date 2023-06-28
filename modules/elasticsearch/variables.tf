@@ -79,18 +79,32 @@ variable "vm_elastic_search_mem" {
 variable "vm_elastic_search_image" {
   description = "VM Image to use for Elastic Search instances"
   type        = string
+  default     = "cos-stable"
 }
 
 variable "vm_elastic_search_image_project" {
   description = "Project hosting the Elastic Search VM Instance image"
   type        = string
+  default     = "cos-cloud"
 }
 
 variable "vm_elastic_search_boot_disk_size" {
   description = "Elastic Search instances boot disk size, default '500GB'"
   type        = string
-  default     = "500GB"
+  default     = "16GB"
 }
+
+variable "vm_elastic_search_data_volume_image" {
+  description = "Elastic Search Data image name"
+  type        = string
+}
+
+variable "vm_elastic_search_data_volume_image_project" {
+  description = "Elastic Search Data image project, default 'open-targets-eu-dev'"
+  type        = string
+  default     = "open-targets-eu-dev"
+}
+
 
 variable "vm_flag_preemptible" {
   description = "Use this flag to tell the module to use a preemptible instance, default: 'false'"

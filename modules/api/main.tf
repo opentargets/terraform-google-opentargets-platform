@@ -72,10 +72,10 @@ resource "google_compute_instance_template" "otpapi_template" {
   can_ip_forward = false
 
   scheduling {
-    automatic_restart   = !var.vm_flag_preemptible
-    on_host_maintenance = var.vm_flag_preemptible ? "TERMINATE" : "MIGRATE"
-    preemptible         = var.vm_flag_preemptible
-    provisioning_model  = var.vm_flag_preemptible ? "SPOT" : "STANDARD"
+    automatic_restart           = !var.vm_flag_preemptible
+    on_host_maintenance         = var.vm_flag_preemptible ? "TERMINATE" : "MIGRATE"
+    preemptible                 = var.vm_flag_preemptible
+    provisioning_model          = var.vm_flag_preemptible ? "SPOT" : "STANDARD"
     instance_termination_action = var.vm_flag_preemptible ? "STOP" : null
   }
 
@@ -163,7 +163,7 @@ resource "google_compute_region_instance_group_manager" "regmig_otpapi" {
 
   auto_healing_policies {
     health_check      = google_compute_health_check.otpapi_healthcheck.id
-    initial_delay_sec = 30
+    initial_delay_sec = 45
   }
 
   update_policy {
@@ -171,8 +171,12 @@ resource "google_compute_region_instance_group_manager" "regmig_otpapi" {
     instance_redistribution_type = "PROACTIVE"
     minimal_action               = "REPLACE"
     max_surge_fixed              = length(data.google_compute_zones.available[count.index].names)
-    max_unavailable_fixed        = 0
-    min_ready_sec                = 30
+    max_unavailable_fixed        = length(data.google_compute_zones.available[count.index].names)
+    min_ready_sec                = 45
+  }
+
+  instance_lifecycle_policy {
+    force_update_on_repair = "YES"
   }
 }
 
@@ -186,13 +190,13 @@ resource "google_compute_region_autoscaler" "autoscaler_otpapi" {
 
   autoscaling_policy {
     max_replicas    = length(data.google_compute_zones.available[count.index].names) * 2
-    min_replicas    = 1
+    min_replicas    = 2
     cooldown_period = 60
-    load_balancing_utilization {
-      target = 0.6
-    }
+    //    load_balancing_utilization {
+    //      target = 0.6
+    //    }
     cpu_utilization {
-      target = 0.75
+      target = 0.60
     }
   }
 }

@@ -49,11 +49,12 @@ module "backend_elastic_search" {
   vm_elastic_search_version = var.config_vm_elastic_search_version
   vm_elastic_search_vcpus   = var.config_vm_elastic_search_vcpus
   // Memory size in MiB
-  vm_elastic_search_mem            = var.config_vm_elastic_search_mem
-  vm_elastic_search_image          = var.config_vm_elastic_search_image
-  vm_elastic_search_image_project  = var.config_vm_elastic_search_image_project
-  vm_elastic_search_boot_disk_size = var.config_vm_elastic_search_boot_disk_size
-  vm_flag_preemptible              = var.config_vm_elasticsearch_flag_preemptible
+  vm_elastic_search_mem               = var.config_vm_elastic_search_mem
+  vm_elastic_search_image             = var.config_vm_elastic_search_image
+  vm_elastic_search_image_project     = var.config_vm_elastic_search_image_project
+  vm_elastic_search_boot_disk_size    = var.config_vm_elastic_search_boot_disk_size
+  vm_elastic_search_data_volume_image = var.config_vm_elastic_search_data_volume_image
+  vm_flag_preemptible                 = var.config_vm_elasticsearch_flag_preemptible
   // Additional firewall tags if development mode is 'ON'
   vm_firewall_tags       = local.dev_mode_fw_tags
   deployment_region      = var.config_deployment_regions[count.index]
@@ -75,16 +76,51 @@ module "backend_clickhouse" {
   network_source_ranges = [
     local.vpc_network_region_subnet_map[var.config_deployment_regions[count.index]].subnet_ip
   ]
-  vm_clickhouse_vcpus          = var.config_vm_clickhouse_vcpus
-  vm_clickhouse_mem            = var.config_vm_clickhouse_mem
-  vm_clickhouse_image          = var.config_vm_clickhouse_image
-  vm_clickhouse_image_project  = var.config_vm_clickhouse_image_project
-  vm_clickhouse_boot_disk_size = var.config_vm_clickhouse_boot_disk_size
-  vm_flag_preemptible          = var.config_vm_clickhouse_flag_preemptible
+  vm_clickhouse_vcpus                = var.config_vm_clickhouse_vcpus
+  vm_clickhouse_mem                  = var.config_vm_clickhouse_mem
+  vm_clickhouse_image                = var.config_vm_clickhouse_image
+  vm_clickhouse_image_project        = var.config_vm_clickhouse_image_project
+  vm_clickhouse_boot_disk_size       = var.config_vm_clickhouse_boot_disk_size
+  vm_clickhouse_data_volume_image    = var.config_vm_clickhouse_data_volume_image
+  vm_clickhouse_docker_image         = var.config_vm_clickhouse_docker_image
+  vm_clickhouse_docker_image_version = var.config_vm_clickhouse_docker_image_version
+  vm_flag_preemptible                = var.config_vm_clickhouse_flag_preemptible
   // Additional firewall tags if development mode is 'ON'
   vm_firewall_tags       = local.dev_mode_fw_tags
   deployment_region      = var.config_deployment_regions[count.index]
   deployment_target_size = 1
+}
+
+// --- OpenAI API --- //
+
+module "openai_api" {
+  source                   = "./modules/openai-api"
+  project_id               = var.config_project_id
+  depends_on               = [module.vpc_network]
+  deployment_regions       = var.config_deployment_regions
+  module_wide_prefix_scope = "${var.config_release_name}-ai"
+  network_name             = module.vpc_network.network_name
+  network_self_link        = module.vpc_network.network_self_link
+  network_subnet_name      = local.vpc_network_main_subnet_name
+  network_source_ranges_map = zipmap(
+    var.config_deployment_regions,
+    [
+      for region in var.config_deployment_regions : {
+        source_range = local.vpc_network_region_subnet_map[region].subnet_ip
+      }
+    ]
+  )
+  // VM tags
+  vm_tags = concat(
+    [local.tag_glb_target_node],
+    local.dev_mode_fw_tags
+  )
+  // Docker
+  openai_api_docker_image_version = var.config_openai_api_docker_image_version
+  // Machine persona
+  vm_flag_preemptible = var.config_vm_api_flag_preemptible
+  // OpenAI
+  openai_token = google_secret_manager_secret.openai_api_token.name
 }
 
 // --- API --- //
@@ -146,10 +182,9 @@ module "backend_api" {
 
 // --- Web Application --- //
 module "web_app" {
-  source     = "./modules/webapp"
-  project_id = var.config_project_id
-  // The Web Application can be distributed, without ties to anything else
-  // depends_on = [ ]
+  source                    = "./modules/webapp"
+  project_id                = var.config_project_id
+  depends_on                = [module.vpc_network]
   module_wide_prefix_scope  = "${var.config_release_name}-web"
   folder_tmp                = local.folder_tmp
   location                  = var.config_webapp_location

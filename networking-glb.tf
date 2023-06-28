@@ -45,6 +45,11 @@ resource "google_compute_url_map" "url_map_platform_glb" {
     hosts        = local.glb_dns_platform_api_dns_names
     path_matcher = "api-paths"
   }
+  // Hosts - OpenAI API ---
+  host_rule {
+    hosts        = local.glb_dns_openai_api_dns_names
+    path_matcher = "openai-api-paths"
+  }
   // Path Matchers --- //
   // Paths - Web Application ---
   path_matcher {
@@ -56,11 +61,16 @@ resource "google_compute_url_map" "url_map_platform_glb" {
     name            = "api-paths"
     default_service = module.glb_platform.backend_services["platformapi"].self_link
   }
+  // Paths - OpenAI API ---
+  path_matcher {
+    name            = "openai-api-paths"
+    default_service = module.glb_platform.backend_services["openaiapi"].self_link
+  }
 }
 
 module "glb_platform" {
   source  = "GoogleCloudPlatform/lb-http/google"
-  version = ">= 7.0.0"
+  version = "= 9.0.0"
 
   // Dependencies
   depends_on = [
@@ -98,6 +108,7 @@ module "glb_platform" {
       custom_request_headers  = null
       custom_response_headers = null
       security_policy         = local.glb_netsec_effective_policy_webapp
+      edge_security_policy    = null
 
       connection_draining_timeout_sec = null
       session_affinity                = null
@@ -131,7 +142,7 @@ module "glb_platform" {
           max_rate                     = null
           max_rate_per_instance        = 512
           max_rate_per_endpoint        = null
-          max_utilization              = 0.85
+          max_utilization              = null
         }
       ]
 
@@ -153,6 +164,7 @@ module "glb_platform" {
       custom_request_headers  = null
       custom_response_headers = null
       security_policy         = local.glb_netsec_effective_policy_api
+      edge_security_policy    = null
 
       connection_draining_timeout_sec = null
       session_affinity                = null
@@ -187,7 +199,64 @@ module "glb_platform" {
           max_rate                     = null
           max_rate_per_instance        = 50
           max_rate_per_endpoint        = null
-          max_utilization              = 0.95
+          max_utilization              = null
+        }
+      ]
+
+      iap_config = {
+        enable               = false
+        oauth2_client_id     = null
+        oauth2_client_secret = null
+      }
+    }
+    // OpenAI API
+    openaiapi = {
+      description             = "Backend configuration for OpenAI API"
+      protocol                = "HTTP"
+      port                    = module.openai_api.api_port
+      port_name               = module.openai_api.api_port_name
+      timeout_sec             = 10
+      enable_cdn              = local.glb_openai_api_cdn_enabled
+      compression_mode        = null
+      custom_request_headers  = null
+      custom_response_headers = null
+      security_policy         = null
+      edge_security_policy    = null
+
+      connection_draining_timeout_sec = null
+      session_affinity                = null
+      affinity_cookie_ttl_sec         = null
+
+      health_check = {
+        check_interval_sec  = null
+        timeout_sec         = null
+        healthy_threshold   = null
+        unhealthy_threshold = null
+        request_path        = "/health"
+        port                = module.openai_api.api_port
+        host                = null
+        logging             = null
+      }
+
+      log_config = {
+        enable      = true
+        sample_rate = 1.0
+      }
+
+      // Connect all the OpenAI API instance groups
+      groups = [
+        for region, regmig in module.openai_api.map_region_to_instance_group_manager : {
+          group                        = regmig.instance_group
+          balancing_mode               = "RATE"
+          capacity_scaler              = null
+          description                  = "OpenAI API backend for region '${region}'"
+          max_connections              = null
+          max_connections_per_instance = null
+          max_connections_per_endpoint = null
+          max_rate                     = null
+          max_rate_per_instance        = 50
+          max_rate_per_endpoint        = null
+          max_utilization              = null
         }
       ]
 

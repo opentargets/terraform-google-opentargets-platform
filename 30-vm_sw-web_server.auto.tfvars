@@ -6,4 +6,4 @@
 // Repository where the provisioner will look for the web application bundle
 config_webapp_repo_name = "opentargets/ot-ui-apps"
 // This is the nginx image version that will be used to serve the web application
-config_webapp_webserver_docker_image_version = "1.21.3"
+config_webapp_webserver_docker_image_version = "1.23.4"

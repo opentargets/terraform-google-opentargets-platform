@@ -30,6 +30,7 @@ module "gce_lb_http" {
       custom_request_headers  = null
       custom_response_headers = null
       security_policy         = null
+      edge_security_policy    = null
 
       connection_draining_timeout_sec = null
       session_affinity                = null

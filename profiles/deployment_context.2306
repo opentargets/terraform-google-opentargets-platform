@@ -1,33 +1,36 @@
 // --- PRODUCTION Open Targets Platform ---//
-
+// --------------------------------------------------------------------------------------- //
 // --- Release Specific Information (THIS IS THE MAIN PLACE WHERE THINGS CHANGE BETWEEN PRODUCTION RELEASES) --- //
-// Regions
-config_deployment_regions = ["europe-west1"]
-// Elastic Search configuration
-config_vm_elastic_search_image = "mbdevplatform-230214-031922-es"
-// Clickhouse configuration
-config_vm_clickhouse_image = "mbdevplatform-230214-031922-ch"
-// API configuration
-config_vm_platform_api_image_version = "dev23.02.7"
+// --- Elastic Search configuration --- //
+config_vm_elastic_search_data_volume_image = "platform-20230622-1643-es"
+// --- Clickhouse configuration --- //
+config_vm_clickhouse_data_volume_image = "platform-20230622-1643-ch"
+// --- API configuration --- //
+config_vm_platform_api_image_version = "dev23.06.7"
 config_vm_version_major              = "23"
-config_vm_version_minor              = "02"
-config_vm_version_patch              = "7"
+config_vm_version_minor              = "06"
+config_vm_version_patch              = "6"
 config_vm_data_year                  = "23"
-config_vm_data_month                 = "02"
+config_vm_data_month                 = "06"
 config_vm_data_iteration             = "0"
-// Web App configuration
-config_webapp_release = "v0.3.6"
+// --- OpenAI API configuration --- //
+config_openai_api_docker_image_version = "0.0.5"
+// --- Web App configuration --- //
+config_webapp_release = "v0.4.10"
 // Web App Data Context
 config_webapp_bucket_name_data_assets = "open-targets-data-releases"
-config_webapp_data_context_release    = "23.02"
+config_webapp_data_context_release    = "23.06"
 // -[END]- Release Specific Information --- //
+// --------------------------------------------------------------------------------------- //
 
 
-
+// --------------------------------------------------------------------------------------- //
 // --- This section is common to all production releases, unless custom changes need to be made --- //
 // Deployment configuration
 config_release_name = "production"
 config_project_id   = "open-targets-platform"
+// Regions
+config_deployment_regions = ["europe-west1"]
 // DNS
 config_dns_project_id             = "open-targets-prod"
 config_dns_subdomain_prefix       = null
@@ -46,9 +49,15 @@ config_webapp_robots_profile = "production"
 // Sitemaps generation
 config_webapp_sitemaps_bigquery_table   = "platform"
 config_webapp_sitemaps_bigquery_project = "open-targets-prod"
-// Machines' Persona configuration
+// --- Security Configuration --- //
+// Enable / Disable network security policies application (Platform 'production' default is false)
+config_security_api_enable    = false
+config_security_webapp_enable = false
+// --- VMs provisioning model --- //
 // For Production, we use 'on-demand' provisioning model
 config_vm_api_flag_preemptible           = false
 config_vm_clickhouse_flag_preemptible    = false
 config_vm_elasticsearch_flag_preemptible = false
 config_vm_webserver_flag_preemptible     = false
+config_openai_api_flag_preemptible       = false
+// --------------------------------------------------------------------------------------- //

@@ -1,27 +1,43 @@
 // --- Open Targets Platform PERMANENT development deployment ---//
 // --- Release information --- //
-config_release_name = "devpf"
+config_release_name = "mbdevpf"
 
 // --- Deployment configuration --- //
 config_deployment_regions = ["europe-west1"]
 
 // --- Elastic Search configuration --- //
-config_vm_elastic_search_image = "devpfhom-230419-192926-es"
+config_vm_elastic_search_data_volume_image = "platform-20230622-1643-es"
 
 // --- Clickhouse configuration --- //
-config_vm_clickhouse_image = "devpfhom-230419-192926-ch"
+config_vm_clickhouse_data_volume_image = "platform-20230622-1643-ch"
 
 // --- API configuration --- //
-config_vm_platform_api_image_version = "dev23.04.1"
-config_vm_version_major              = "dev23"
-config_vm_version_minor              = "04"
-config_vm_version_patch              = "1"
+config_vm_platform_api_image_version = "dev23.06.7"
+config_vm_version_major              = "23"
+config_vm_version_minor              = "06"
+config_vm_version_patch              = "6"
 config_vm_data_year                  = "23"
-config_vm_data_month                 = "04"
+config_vm_data_month                 = "06"
 config_vm_data_iteration             = "0"
 
+// --- OpenAI API configuration --- //
+config_openai_api_docker_image_version = "0.0.5"
+
 // --- Web App configuration --- //
-config_webapp_release = "v0.3.5"
+config_webapp_release = "v0.4.10"
 // Data Context
-config_webapp_bucket_name_data_assets = "open-targets-pre-data-releases"
-config_webapp_data_context_release    = "23.02"
+config_webapp_data_context_release    = "23.06"
+
+
+// --- Security Configuration --- //
+// Enable / Disable network security policies application (Platform 'dev' default is false)
+config_security_api_enable    = false
+config_security_webapp_enable = false
+
+// --- VMs provisioning model --- //
+// Use on-demand machines
+//config_vm_api_flag_preemptible           = false
+//config_vm_clickhouse_flag_preemptible    = false
+//config_vm_elasticsearch_flag_preemptible = false
+//config_vm_webserver_flag_preemptible     = false
+//config_openai_api_flag_preemptible       = false

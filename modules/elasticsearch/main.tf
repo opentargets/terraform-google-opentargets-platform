@@ -17,6 +17,8 @@ resource "random_string" "random" {
     elastic_search_template_machine_type = local.elastic_search_template_machine_type,
     elastic_search_template_source_image = local.elastic_search_template_source_image,
     elastic_search_template_tags         = join("", sort(local.elastic_search_template_tags)),
+    elastic_search_data_image            = var.vm_elastic_search_data_volume_image,
+    elastic_search_data_image_project    = var.vm_elastic_search_data_volume_image_project,
     vm_elastic_search_version            = var.vm_elastic_search_version,
     vm_startup_script                    = md5(file("${path.module}/scripts/instance_startup.sh"))
     vm_flag_preemptible                  = var.vm_flag_preemptible
@@ -60,10 +62,10 @@ resource "google_compute_instance_template" "elastic_search_template" {
   can_ip_forward = false
 
   scheduling {
-    automatic_restart   = !var.vm_flag_preemptible
-    on_host_maintenance = var.vm_flag_preemptible ? "TERMINATE" : "MIGRATE"
-    preemptible         = var.vm_flag_preemptible
-    provisioning_model  = var.vm_flag_preemptible ? "SPOT" : "STANDARD"
+    automatic_restart           = !var.vm_flag_preemptible
+    on_host_maintenance         = var.vm_flag_preemptible ? "TERMINATE" : "MIGRATE"
+    preemptible                 = var.vm_flag_preemptible
+    provisioning_model          = var.vm_flag_preemptible ? "SPOT" : "STANDARD"
     instance_termination_action = var.vm_flag_preemptible ? "STOP" : null
   }
 
@@ -73,6 +75,19 @@ resource "google_compute_instance_template" "elastic_search_template" {
     disk_type    = "pd-ssd"
     boot         = true
     mode         = "READ_WRITE"
+    // Disk size inherited from the image
+  }
+
+  // Attach Elastic Search data disk
+  disk {
+    device_name  = local.elastic_search_data_disk_device
+    source_image = local.elastic_search_data_disk_image
+    mode         = "READ_WRITE"
+    disk_type    = "pd-ssd"
+    // Disk size inherited from the image
+    boot        = false
+    auto_delete = true
+    type        = "PERSISTENT"
   }
 
   network_interface {
@@ -88,7 +103,9 @@ resource "google_compute_instance_template" "elastic_search_template" {
     startup-script = templatefile(
       "${path.module}/scripts/instance_startup.sh",
       {
-        ELASTIC_SEARCH_VERSION = var.vm_elastic_search_version
+        GCP_DEVICE_DISK_PREFIX   = local.gcp_device_disk_prefix,
+        DATA_DISK_DEVICE_NAME_ES = local.elastic_search_data_disk_device,
+        ELASTIC_SEARCH_VERSION   = var.vm_elastic_search_version
       }
     )
     google-logging-enabled = true
@@ -145,7 +162,7 @@ resource "google_compute_region_instance_group_manager" "regmig_elastic_search" 
 
   auto_healing_policies {
     health_check      = google_compute_health_check.elastic_search_healthcheck.id
-    initial_delay_sec = 300
+    initial_delay_sec = 120
   }
 
   update_policy {
@@ -155,6 +172,10 @@ resource "google_compute_region_instance_group_manager" "regmig_elastic_search" 
     max_surge_fixed              = local.compute_zones_n_total
     max_unavailable_fixed        = 0
     min_ready_sec                = 30
+  }
+
+  instance_lifecycle_policy {
+    force_update_on_repair = "YES"
   }
 }
 
@@ -166,10 +187,10 @@ resource "google_compute_region_autoscaler" "autoscaler_elastic_search" {
 
   autoscaling_policy {
     max_replicas    = local.compute_zones_n_total * 2
-    min_replicas    = 1
+    min_replicas    = 3
     cooldown_period = 60
     cpu_utilization {
-      target = 0.75
+      target = 0.45
     }
   }
 }

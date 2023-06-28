@@ -42,21 +42,25 @@ variable "config_deployment_regions" {
 variable "config_vm_elastic_search_image_project" {
   description = "This allows to specify a different than deployment project for the deployed Elastic Search Instance image to be used."
   type        = string
+  default     = "cos-cloud"
 }
 
 variable "config_vm_elastic_search_vcpus" {
-  description = "CPU count configuration for the deployed Elastic Search Instances"
+  description = "CPU count configuration for the deployed Elastic Search Instances, default '6'"
   type        = number
+  default     = "6"
 }
 
 variable "config_vm_elastic_search_mem" {
   description = "RAM configuration for the deployed Elastic Search Instances"
   type        = number
+  default     = "39936"
 }
 
 variable "config_vm_elastic_search_image" {
   description = "Disk image to use for the deployed Elastic Search Instances"
   type        = string
+  default     = "cos-stable"
 }
 
 variable "config_vm_elastic_search_version" {
@@ -67,6 +71,18 @@ variable "config_vm_elastic_search_version" {
 variable "config_vm_elastic_search_boot_disk_size" {
   description = "Boot disk size to use for the deployed Elastic Search Instances"
   type        = string
+  default     = "16GB"
+}
+
+variable "config_vm_elastic_search_data_volume_image" {
+  description = "Elastic Search Data image name"
+  type        = string
+}
+
+variable "config_vm_elastic_search_data_volume_image_project" {
+  description = "Elastic Search Data image project, default 'open-targets-eu-dev'"
+  type        = string
+  default     = "open-targets-eu-dev"
 }
 
 variable "config_vm_elasticsearch_flag_preemptible" {
@@ -77,23 +93,39 @@ variable "config_vm_elasticsearch_flag_preemptible" {
 
 // --- Clickhouse configuration --- //
 variable "config_vm_clickhouse_vcpus" {
-  description = "CPU count for Clickhouse instances"
+  description = "CPU count for Clickhouse instances, default '4'"
   type        = number
+  default     = "4"
 }
 
 variable "config_vm_clickhouse_mem" {
-  description = "Amount of memory allocated for Clickhouse instances"
+  description = "Amount of memory allocated for Clickhouse instances, default '26624'"
   type        = number
+  default     = "26624"
 }
 
 variable "config_vm_clickhouse_image" {
   description = "Image to use for launching Clickhouse instances"
   type        = string
+  default     = "cos-stable"
 }
 
 variable "config_vm_clickhouse_image_project" {
   description = "Project where to find the instance image to use"
   type        = string
+  default     = "cos-cloud"
+}
+
+variable "config_vm_clickhouse_docker_image" {
+  description = "Docker image to use for running Clickhouse"
+  type        = string
+  default     = "clickhouse/clickhouse-server"
+}
+
+variable "config_vm_clickhouse_docker_image_version" {
+  description = "Clickhouse docker image version to deploy, default '23.3.1.2823'"
+  type        = string
+  default     = "23.3.1.2823"
 }
 
 variable "config_vm_clickhouse_flag_preemptible" {
@@ -105,6 +137,18 @@ variable "config_vm_clickhouse_flag_preemptible" {
 variable "config_vm_clickhouse_boot_disk_size" {
   description = "Boot disk size to be used in Clickhouse instances"
   type        = string
+  default     = "16GB"
+}
+
+variable "config_vm_clickhouse_data_volume_image" {
+  description = "Clickhouse Data image name"
+  type        = string
+}
+
+variable "config_vm_clickhouse_data_volume_image_project" {
+  description = "Clickhouse Data image project, default 'open-targets-eu-dev'"
+  type        = string
+  default     = "open-targets-eu-dev"
 }
 
 // --- API Configuration --- //
@@ -113,24 +157,29 @@ variable "config_vm_platform_api_image_version" {
   type        = string
 }
 variable "config_vm_api_vcpus" {
-  description = "CPU count for API nodes"
+  description = "CPU count for API nodes, default '2'"
   type        = number
+  default     = "2"
 }
 variable "config_vm_api_mem" {
   description = "Memory allocation for API VMs (MiB)"
   type        = number
+  default     = "7680"
 }
 variable "config_vm_api_image" {
   description = "VM image to use for running API nodes"
   type        = string
+  default     = "cos-stable"
 }
 variable "config_vm_api_image_project" {
   description = "Project hosting the API VM image"
   type        = string
+  default     = "cos-cloud"
 }
 variable "config_vm_api_boot_disk_size" {
   description = "Boot disk size for API VM nodes"
   type        = string
+  default     = "10GB"
 }
 
 variable "config_vm_api_flag_preemptible" {
@@ -164,6 +213,12 @@ variable "config_dns_platform_api_subdomain" {
   description = "Subdomain for platform API DNS entry, default 'api'"
   type        = string
   default     = "api"
+}
+
+variable "config_dns_platform_openai_api_subdomain" {
+  description = "Subdomain for Open Targets Platform OpenAI API DNS entry, default 'ai'"
+  type        = string
+  default     = "ai"
 }
 
 variable "config_dns_platform_subdomain" {
@@ -279,28 +334,42 @@ variable "config_vm_webserver_flag_preemptible" {
   default     = false
 }
 
-
 // --- Global Load Balancer --- //
 variable "config_glb_webapp_enable_cdn" {
   description = "This parameters indicates the GLB whether we want to use a CDN or not, default 'true'"
-  default     = true
+  type        = bool
+  default     = false
+}
+
+variable "config_glb_openai_api_enable_cdn" {
+  description = "This parameters indicates the GLB whether we want to use a CDN or not for OpenAI API, default 'false'"
+  type        = bool
+  default     = false
 }
 
 // --- Network Security --- //
 variable "config_security_api_enable" {
   description = "Enable security policies for the platform API, default 'false'"
-  default     = false
+  type        = bool
+  default     = true
 }
 
 variable "config_security_webapp_enable" {
   description = "Enable security policies for the web application, default 'false'"
-  default     = false
+  type        = bool
+  default     = true
 }
 
-variable "config_security_restrict_source_ips_cidrs_file" {
-  description = "Text file within the 'profiles' folder that contains the list of CIDRs allowed to access the platform"
+variable "config_security_cidrs_allowed" {
+  description = "File that contains the listing of CIDRs allowed to access the platform, default 'netsec_cidr_allowed.default'"
   type        = string
-  default     = "netsec_cidr.default"
+  default     = "netsec_cidr_allowed.default"
+}
+
+variable "config_security_cidrs_blocked" {
+  description = "File that contains the listing of CIDRs prevented from accessing the platform, default 'netsec_cidr_blocked.default'"
+  type        = string
+  default     = "netsec_cidr_blocked.default"
 }
 // --- Development --- //
 variable "config_set_dev_mode_on" {
@@ -344,4 +413,29 @@ variable "config_vm_data_iteration" {
   description = "API data - iteration"
   type        = string
   default     = "0"
+}
+
+// --- OpenAI API --- //
+variable "config_openai_api_docker_image_version" {
+  description = "OpenAI API Docker image version to use in deployment"
+  type        = string
+}
+
+variable "config_openai_api_flag_preemptible" {
+  description = "Use this flag for deploying OpenAI API on preemptible VMs, default 'false'"
+  type        = bool
+  default     = false
+}
+
+variable "config_openai_credentials_filename" {
+  description = "Name of the file containing the OpenAI credentials"
+  type        = string
+  default     = "openai_credentials.txt"
+}
+
+// --- Credentials --- //
+variable "config_credentials_local_path" {
+  description = "Local path to credentials repository, 'credentials' by default"
+  type        = string
+  default     = "credentials"
 }
