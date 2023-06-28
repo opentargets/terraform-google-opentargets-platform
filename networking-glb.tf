@@ -114,6 +114,24 @@ module "glb_platform" {
       session_affinity                = null
       affinity_cookie_ttl_sec         = null
 
+      cdn_policy = {
+        cache_mode = "CACHE_ALL_STATIC"
+        default_ttl = 3600
+        client_ttl = 600
+        max_ttl = 10800
+        serve_while_stale = 300
+        cache_key_policy = {
+          include_host = true
+          include_protocol = true
+          include_query_string = true
+          query_string_whitelist = null
+          query_string_blacklist = null
+          include_http_headers = null
+          http_header_whitelist = null
+          http_header_blacklist = null
+        }
+      }
+
       health_check = {
         check_interval_sec  = null
         timeout_sec         = null
