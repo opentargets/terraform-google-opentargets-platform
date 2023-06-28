@@ -49,6 +49,8 @@ config_webapp_robots_profile = "production"
 // Sitemaps generation
 config_webapp_sitemaps_bigquery_table   = "platform"
 config_webapp_sitemaps_bigquery_project = "open-targets-prod"
+// --- GLB configuration --- //
+config_glb_webapp_enable_cdn = true
 // --- Security Configuration --- //
 // Enable / Disable network security policies application (Platform 'production' default is false)
 config_security_api_enable    = false
