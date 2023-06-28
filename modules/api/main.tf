@@ -190,7 +190,7 @@ resource "google_compute_region_autoscaler" "autoscaler_otpapi" {
 
   autoscaling_policy {
     max_replicas    = length(data.google_compute_zones.available[count.index].names) * 2
-    min_replicas    = 1
+    min_replicas    = 2
     cooldown_period = 60
     //    load_balancing_utilization {
     //      target = 0.6
