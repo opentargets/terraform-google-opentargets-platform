@@ -219,6 +219,7 @@ module "glb_platform" {
       enable_cdn              = local.glb_openai_api_cdn_enabled
       compression_mode        = null
       custom_request_headers  = null
+      //custom_response_headers = ["Access-Control-Allow-Origin: https://partner-platform.dev.opentargets.xyz", "Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE, HEAD, PATCH", "Access-Control-Allow-Headers: X-Requested-With, Content-Type, Origin, Authorization, Accept, Client-Security-Token, Accept-Encoding"]
       custom_response_headers = null
       security_policy         = null
       edge_security_policy    = null
