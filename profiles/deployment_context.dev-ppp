@@ -22,7 +22,7 @@ config_vm_data_month                 = "06"
 config_vm_data_iteration             = "0"
 
 // --- OpenAI API configuration --- //
-config_openai_api_docker_image_version = "0.0.8"
+config_openai_api_docker_image_version = "0.0.9"
 
 // --- DNS configuration --- //
 config_dns_platform_subdomain       = "partner-platform"
