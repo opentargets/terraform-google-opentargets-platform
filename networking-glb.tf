@@ -211,14 +211,14 @@ module "glb_platform" {
     }
     // OpenAI API
     openaiapi = {
-      description             = "Backend configuration for OpenAI API"
-      protocol                = "HTTP"
-      port                    = module.openai_api.api_port
-      port_name               = module.openai_api.api_port_name
-      timeout_sec             = 45
-      enable_cdn              = local.glb_openai_api_cdn_enabled
-      compression_mode        = null
-      custom_request_headers  = null
+      description            = "Backend configuration for OpenAI API"
+      protocol               = "HTTP"
+      port                   = module.openai_api.api_port
+      port_name              = module.openai_api.api_port_name
+      timeout_sec            = 45
+      enable_cdn             = local.glb_openai_api_cdn_enabled
+      compression_mode       = null
+      custom_request_headers = null
       //custom_response_headers = ["Access-Control-Allow-Origin: https://partner-platform.dev.opentargets.xyz", "Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE, HEAD, PATCH", "Access-Control-Allow-Headers: X-Requested-With, Content-Type, Origin, Authorization, Accept, Client-Security-Token, Accept-Encoding"]
       custom_response_headers = null
       security_policy         = null
