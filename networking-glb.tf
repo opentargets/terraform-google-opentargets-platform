@@ -111,7 +111,7 @@ module "glb_platform" {
       edge_security_policy    = null
 
       connection_draining_timeout_sec = null
-      session_affinity                = null
+      session_affinity                = "NONE"
       affinity_cookie_ttl_sec         = null
 
       cdn_policy = {
@@ -179,7 +179,7 @@ module "glb_platform" {
       port                    = module.backend_api.api_port
       port_name               = module.backend_api.api_port_name
       timeout_sec             = 10
-      enable_cdn              = false
+      enable_cdn              = local.glb_api_cdn_enabled
       compression_mode        = null
       custom_request_headers  = null
       custom_response_headers = null
@@ -187,8 +187,28 @@ module "glb_platform" {
       edge_security_policy    = null
 
       connection_draining_timeout_sec = null
-      session_affinity                = null
+      session_affinity                = "NONE"
       affinity_cookie_ttl_sec         = null
+
+      cdn_policy = {
+        cache_mode = "FORCE_CACHE_ALL"
+        default_ttl = 3600
+        client_ttl = 600
+        //max_ttl = 7200
+        serve_while_stale = 300
+        signed_url_cache_max_age_sec = 300
+        negative_caching = true
+        cache_key_policy = {
+          include_host = true
+          include_protocol = true
+          include_query_string = true
+          query_string_whitelist = null
+          query_string_blacklist = null
+          include_http_headers = null
+          http_header_whitelist = null
+          http_header_blacklist = null
+        }
+      }
 
       health_check = {
         check_interval_sec  = null
