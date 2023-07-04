@@ -58,6 +58,9 @@ locals {
   glb_netsec_effective_policy_api    = local.netsec_enable_policies_api ? google_compute_security_policy.netsec_policy_api[0].self_link : null
   glb_netsec_effective_policy_webapp = local.netsec_enable_policies_webapp ? google_compute_security_policy.netsec_policy_webapp[0].self_link : null
 
+  // CDN for the GraphQL API --- //
+  glb_api_cdn_enabled = local.glb_webapp_cdn_enabled
+
   //---  Network Security --- //
   netsec_path_allowed_source_ips_cidrs_file = "${path.module}/${local.path_private_assets_prefix}/${local.path_profiles_prefix}/${var.config_security_cidrs_allowed}"
   netsec_path_blocked_source_ips_cidrs_file = "${path.module}/${local.path_private_assets_prefix}/${local.path_profiles_prefix}/${var.config_security_cidrs_blocked}"

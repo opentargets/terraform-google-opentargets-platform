@@ -187,7 +187,7 @@ resource "google_compute_region_autoscaler" "autoscaler_elastic_search" {
 
   autoscaling_policy {
     max_replicas    = local.compute_zones_n_total * 2
-    min_replicas    = 3
+    min_replicas    = 2
     cooldown_period = 60
     cpu_utilization {
       target = 0.45

@@ -49,6 +49,8 @@ config_webapp_robots_profile = "production"
 // Sitemaps generation
 config_webapp_sitemaps_bigquery_table   = "platform"
 config_webapp_sitemaps_bigquery_project = "open-targets-prod"
+// --- GLB configuration --- //
+config_glb_webapp_enable_cdn = true
 // --- Security Configuration --- //
 // Enable / Disable network security policies application (Platform 'production' default is false)
 config_security_api_enable    = false
@@ -61,3 +63,8 @@ config_vm_elasticsearch_flag_preemptible = false
 config_vm_webserver_flag_preemptible     = false
 config_openai_api_flag_preemptible       = false
 // --------------------------------------------------------------------------------------- //
+
+// --- 3007 - ES CPU usage issue --- //
+// Elastic Search --- //
+config_vm_elastic_search_vcpus          = "12"
+config_vm_elastic_search_mem            = "79872"

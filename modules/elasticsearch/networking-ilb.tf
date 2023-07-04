@@ -25,6 +25,8 @@ resource "google_compute_region_backend_service" "ilb_backend_service" {
   ]
 
   enable_cdn = false
+  session_affinity = "NONE"
+  //locality_lb_policy = "ROUND_ROBIN"
 
   backend {
     group = google_compute_region_instance_group_manager.regmig_elastic_search.instance_group
