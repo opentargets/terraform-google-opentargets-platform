@@ -132,7 +132,7 @@ resource "google_compute_security_policy" "netsec_policy_webapp" {
     content {
       description = "Redirect requests for '/' to '/unauthorized.html'"
       action      = "redirect"
-      priority    = "2147483646"
+      priority    = "2147483645"
       match {
         expr {
           expression = "request.path == '/'"
