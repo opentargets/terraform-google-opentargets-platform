@@ -126,7 +126,7 @@ resource "google_compute_security_policy" "netsec_policy_webapp" {
       }
     }
   }
-  // Redirect rule for root path
+  // Redirect rule for root path (DUPLICATED) - TODO: remove
   dynamic "rule" {
     for_each = local.netsec_enable_policies_webapp ? [1] : []
     content {
