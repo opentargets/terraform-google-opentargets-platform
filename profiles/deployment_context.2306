@@ -66,5 +66,5 @@ config_openai_api_flag_preemptible       = false
 
 // --- 3007 - ES CPU usage issue --- //
 // Elastic Search --- //
-config_vm_elastic_search_vcpus          = "12"
-config_vm_elastic_search_mem            = "79872"
+config_vm_elastic_search_vcpus          = "16"
+config_vm_elastic_search_mem            = "61440"
