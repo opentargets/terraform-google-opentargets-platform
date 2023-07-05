@@ -172,7 +172,7 @@ resource "google_compute_region_instance_group_manager" "regmig_otpapi" {
     minimal_action               = "REPLACE"
     max_surge_fixed              = length(data.google_compute_zones.available[count.index].names)
     max_unavailable_fixed        = length(data.google_compute_zones.available[count.index].names)
-    min_ready_sec                = 25
+    min_ready_sec                = 30
   }
 
   instance_lifecycle_policy {
