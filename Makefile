@@ -54,13 +54,14 @@ clone_profile: ## Clone an existing profile to a new one, starting with an empty
 	@make status
 
 delete_profile: ## Delete an existing profile, use parameter 'profile'
-	@echo "[WARNING] Deleting deployment context profile '${profile}'"
-	@rm -f ${folder_path_profiles}/${file_name_depcontext_prefix}.${profile}
+	@make set_profile profile='${profile}'
 	@echo "[WARNING] Deleting Terraform Workspace '${profile}'"
-	@terraform workspace select ${profile}
 	@terraform destroy --auto-approve
 	@terraform workspace select default
 	@terraform workspace delete ${profile}
+	@make unset_profile profile='${profile}'
+	@echo "[WARNING] Deleting deployment context profile '${profile}'"
+	@rm -f ${folder_path_profiles}/${file_name_depcontext_prefix}.${profile}
 
 tmp: ## Temporary folder for provisioning tasks
 	@echo "[SETUP] Creating temporary folder for provisioning tasks"
