@@ -159,12 +159,12 @@ variable "config_vm_platform_api_image_version" {
 variable "config_vm_api_vcpus" {
   description = "CPU count for API nodes, default '2'"
   type        = number
-  default     = "2"
+  default     = "4"
 }
 variable "config_vm_api_mem" {
   description = "Memory allocation for API VMs (MiB)"
   type        = number
-  default     = "7680"
+  default     = "15360"
 }
 variable "config_vm_api_image" {
   description = "VM image to use for running API nodes"
