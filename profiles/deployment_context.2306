@@ -68,7 +68,7 @@ config_openai_api_flag_preemptible       = false
 // Elastic Search --- //
 config_vm_elastic_search_vcpus          = "16"
 config_vm_elastic_search_mem            = "61440"
-config_vm_elastic_search_boot_disk_size = "128GB"
+config_vm_elastic_search_boot_disk_size = "128"
 
 // API --- //
 config_vm_api_vcpus = "4"

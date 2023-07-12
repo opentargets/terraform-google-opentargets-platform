@@ -22,6 +22,7 @@ resource "random_string" "random" {
     vm_elastic_search_version            = var.vm_elastic_search_version,
     vm_startup_script                    = md5(file("${path.module}/scripts/instance_startup.sh"))
     vm_flag_preemptible                  = var.vm_flag_preemptible
+    vm_api_boot_disk_size                = var.vm_elastic_search_boot_disk_size
   }
 }
 

@@ -91,7 +91,7 @@ variable "vm_elastic_search_image_project" {
 variable "vm_elastic_search_boot_disk_size" {
   description = "Elastic Search instances boot disk size, default '500GB'"
   type        = string
-  default     = "16GB"
+  default     = "16"
 }
 
 variable "vm_elastic_search_data_volume_image" {
