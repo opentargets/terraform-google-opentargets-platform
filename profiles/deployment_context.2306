@@ -71,5 +71,5 @@ config_vm_elastic_search_mem            = "61440"
 config_vm_elastic_search_boot_disk_size = "128GB"
 
 // API --- //
-config_vm_api_vcpus          = "4"
-config_vm_api_mem            = "15360"
+config_vm_api_vcpus = "4"
+config_vm_api_mem   = "15360"

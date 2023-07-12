@@ -115,22 +115,22 @@ module "glb_platform" {
       affinity_cookie_ttl_sec         = null
 
       cdn_policy = {
-        cache_mode = "CACHE_ALL_STATIC"
-        default_ttl = 3600
-        client_ttl = 600
-        max_ttl = 10800
-        serve_while_stale = 300
+        cache_mode                   = "CACHE_ALL_STATIC"
+        default_ttl                  = 3600
+        client_ttl                   = 600
+        max_ttl                      = 10800
+        serve_while_stale            = 300
         signed_url_cache_max_age_sec = 300
-        negative_caching = true
+        negative_caching             = true
         cache_key_policy = {
-          include_host = true
-          include_protocol = true
-          include_query_string = true
+          include_host           = true
+          include_protocol       = true
+          include_query_string   = true
           query_string_whitelist = null
           query_string_blacklist = null
-          include_http_headers = null
-          http_header_whitelist = null
-          http_header_blacklist = null
+          include_http_headers   = null
+          http_header_whitelist  = null
+          http_header_blacklist  = null
         }
       }
 
@@ -191,22 +191,22 @@ module "glb_platform" {
       affinity_cookie_ttl_sec         = null
 
       cdn_policy = {
-        cache_mode = "FORCE_CACHE_ALL"
+        cache_mode  = "FORCE_CACHE_ALL"
         default_ttl = 3600
-        client_ttl = 600
+        client_ttl  = 600
         //max_ttl = 7200
-        serve_while_stale = 300
+        serve_while_stale            = 300
         signed_url_cache_max_age_sec = 300
-        negative_caching = true
+        negative_caching             = true
         cache_key_policy = {
-          include_host = true
-          include_protocol = true
-          include_query_string = true
+          include_host           = true
+          include_protocol       = true
+          include_query_string   = true
           query_string_whitelist = null
           query_string_blacklist = null
-          include_http_headers = null
-          http_header_whitelist = null
-          http_header_blacklist = null
+          include_http_headers   = null
+          http_header_whitelist  = null
+          http_header_blacklist  = null
         }
       }
 

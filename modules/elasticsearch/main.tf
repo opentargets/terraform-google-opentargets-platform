@@ -76,6 +76,7 @@ resource "google_compute_instance_template" "elastic_search_template" {
     boot         = true
     mode         = "READ_WRITE"
     // Disk size inherited from the image
+    disk_size_gb  = var.vm_elastic_search_boot_disk_size
   }
 
   // Attach Elastic Search data disk
