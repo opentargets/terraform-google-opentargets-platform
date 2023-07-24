@@ -22,6 +22,7 @@ resource "random_string" "random" {
     vm_elastic_search_version            = var.vm_elastic_search_version,
     vm_startup_script                    = md5(file("${path.module}/scripts/instance_startup.sh"))
     vm_flag_preemptible                  = var.vm_flag_preemptible
+    vm_api_boot_disk_size                = var.vm_elastic_search_boot_disk_size
   }
 }
 
@@ -76,6 +77,7 @@ resource "google_compute_instance_template" "elastic_search_template" {
     boot         = true
     mode         = "READ_WRITE"
     // Disk size inherited from the image
+    disk_size_gb  = var.vm_elastic_search_boot_disk_size
   }
 
   // Attach Elastic Search data disk
@@ -123,7 +125,7 @@ resource "google_compute_health_check" "elastic_search_healthcheck" {
   check_interval_sec  = 5
   timeout_sec         = 5
   healthy_threshold   = 2
-  unhealthy_threshold = 10
+  unhealthy_threshold = 2
 
   tcp_health_check {
     // Elastic Search Requests Port
@@ -162,7 +164,7 @@ resource "google_compute_region_instance_group_manager" "regmig_elastic_search" 
 
   auto_healing_policies {
     health_check      = google_compute_health_check.elastic_search_healthcheck.id
-    initial_delay_sec = 120
+    initial_delay_sec = 30
   }
 
   update_policy {
@@ -171,7 +173,7 @@ resource "google_compute_region_instance_group_manager" "regmig_elastic_search" 
     minimal_action               = "REPLACE"
     max_surge_fixed              = local.compute_zones_n_total
     max_unavailable_fixed        = 0
-    min_ready_sec                = 30
+    min_ready_sec                = 25
   }
 
   instance_lifecycle_policy {
@@ -187,10 +189,10 @@ resource "google_compute_region_autoscaler" "autoscaler_elastic_search" {
 
   autoscaling_policy {
     max_replicas    = local.compute_zones_n_total * 2
-    min_replicas    = 2
+    min_replicas    = 1
     cooldown_period = 60
     cpu_utilization {
-      target = 0.45
+      target = 0.35
     }
   }
 }
