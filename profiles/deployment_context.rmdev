@@ -1,0 +1,46 @@
+// --- Open Targets Platform PERMANENT development deployment ---//
+// --- Release information --- //
+config_release_name = "rmdevpf"
+
+// --- Deployment configuration --- //
+config_deployment_regions = ["europe-west1"]
+
+// --- Elastic Search configuration --- //
+config_vm_elastic_search_data_volume_image = "posdevpf-20230724-0952-es"
+
+// --- Clickhouse configuration --- //
+config_vm_clickhouse_data_volume_image = "posdevpf-20230724-0952-ch"
+
+// --- API configuration --- //
+config_vm_platform_api_image_version = "dev23.06.8"
+config_vm_version_major              = "23"
+config_vm_version_minor              = "06"
+config_vm_version_patch              = "6"
+config_vm_data_year                  = "23"
+config_vm_data_month                 = "06"
+config_vm_data_iteration             = "0"
+
+// --- OpenAI API configuration --- //
+config_openai_api_docker_image_version = "0.0.5"
+
+// --- Web App configuration --- //
+config_webapp_release = "v0.4.10"
+// Data Context
+config_webapp_data_context_release    = "23.06"
+
+// --- DNS configuration --- //
+config_dns_subdomain_prefix       = "rmdev"
+config_dns_platform_api_subdomain = "api"
+
+// --- Security Configuration --- //
+// Enable / Disable network security policies application (Platform 'dev' default is false)
+config_security_api_enable    = false
+config_security_webapp_enable = false
+
+// --- VMs provisioning model --- //
+// Use on-demand machines
+//config_vm_api_flag_preemptible           = false
+//config_vm_clickhouse_flag_preemptible    = false
+//config_vm_elasticsearch_flag_preemptible = false
+//config_vm_webserver_flag_preemptible     = false
+//config_openai_api_flag_preemptible       = false
