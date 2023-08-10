@@ -6,18 +6,18 @@ config_release_name = "mbdevpf"
 config_deployment_regions = ["europe-west1"]
 
 // --- Elastic Search configuration --- //
-config_vm_elastic_search_data_volume_image = "posdevpf-20230724-0952-es"
+config_vm_elastic_search_data_volume_image = "posdevpf-20230728-0836-es"
 
 // --- Clickhouse configuration --- //
-config_vm_clickhouse_data_volume_image = "posdevpf-20230724-0952-ch"
+config_vm_clickhouse_data_volume_image = "posdevpf-20230728-0836-ch"
 
 // --- API configuration --- //
-config_vm_platform_api_image_version = "dev23.06.8"
+config_vm_platform_api_image_version = "dev23.09.2"
 config_vm_version_major              = "23"
-config_vm_version_minor              = "06"
-config_vm_version_patch              = "6"
+config_vm_version_minor              = "09"
+config_vm_version_patch              = "2"
 config_vm_data_year                  = "23"
-config_vm_data_month                 = "06"
+config_vm_data_month                 = "09"
 config_vm_data_iteration             = "0"
 
 // --- OpenAI API configuration --- //
