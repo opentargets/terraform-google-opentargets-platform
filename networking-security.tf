@@ -107,7 +107,7 @@ resource "google_compute_security_policy" "netsec_policy_webapp" {
       }
       redirect_options {
         type   = "EXTERNAL_302"
-        target = "https://platform.opentargets.org/unauthorized.html"
+        target = "https://platform.opentargets.org/unauthorised.html"
       }
     }
   }
@@ -130,7 +130,7 @@ resource "google_compute_security_policy" "netsec_policy_webapp" {
   dynamic "rule" {
     for_each = local.netsec_enable_policies_webapp ? [1] : []
     content {
-      description = "Redirect requests for '/' to '/unauthorized.html'"
+      description = "Redirect requests for '/' to '/unauthorised.html'"
       action      = "redirect"
       priority    = "2147483645"
       match {
@@ -140,7 +140,7 @@ resource "google_compute_security_policy" "netsec_policy_webapp" {
       }
       redirect_options {
         type   = "EXTERNAL_302"
-        target = "https://platform.opentargets.org/unauthorized.html"
+        target = "https://platform.opentargets.org/unauthorised.html"
       }
     }
   }
@@ -148,7 +148,7 @@ resource "google_compute_security_policy" "netsec_policy_webapp" {
   dynamic "rule" {
     for_each = local.netsec_enable_policies_webapp ? [1] : []
     content {
-      description = "Redirect requests for '/' to '/unauthorized.html'"
+      description = "Redirect requests for '/' to '/unauthorised.html'"
       action      = "redirect"
       priority    = "2147483646"
       match {
