@@ -7,16 +7,16 @@ config_project_id         = "open-targets-partner-platform"
 config_deployment_regions = ["europe-west1"]
 
 // --- Elastic Search configuration --- //
-config_vm_elastic_search_data_volume_image = "ppp-20230911-1336-es"
+config_vm_elastic_search_data_volume_image = "ppp-20230922-0636-es"
 
 // --- Clickhouse configuration --- //
-config_vm_clickhouse_data_volume_image = "ppp-20230911-1336-ch"
+config_vm_clickhouse_data_volume_image = "ppp-20230922-0636-ch"
 
 // --- API configuration --- //
-config_vm_platform_api_image_version = "dev23.09.6"
+config_vm_platform_api_image_version = "dev23.09.7"
 config_vm_version_major              = "23"
 config_vm_version_minor              = "09"
-config_vm_version_patch              = "6"
+config_vm_version_patch              = "7"
 config_vm_data_year                  = "23"
 config_vm_data_month                 = "09"
 config_vm_data_iteration             = "0"
@@ -30,7 +30,7 @@ config_dns_subdomain_prefix       = "dev"
 config_dns_platform_api_subdomain = "api"
 
 // --- Web App configuration --- //
-config_webapp_release = "v0.5.1"
+config_webapp_release = "v0.5.7"
 // Data Context
 config_webapp_data_context_release = "partners/23.09"
 config_webapp_deployment_context_map = {
