@@ -61,3 +61,19 @@ docker run --rm -d \
   --ulimit memlock=-1:-1 \
   --ulimit nofile=65536:65536 \
   $${docker_image_string_es}
+
+
+# Wait for Elastic Search to be yellow
+function wait_for_elasticsearch() {
+  log "[INFO] Waiting for Elastic Search to be ready"
+  while ! curl -s http://localhost:9200/_cluster/health?pretty | grep -q '"status" : "yellow"'; do
+    sleep 1
+  done
+  log "[INFO] Elastic Search is ready"
+}
+
+wait_for_elasticsearch
+
+curl -X DELETE http://localhost:9200/.opensearch-sap-log-types-config
+curl -X DELETE http://localhost:9200/.opensearch-sap-pre-packaged-rules-config
+curl -X DELETE http://localhost:9200/.plugins-ml-config
