@@ -178,7 +178,7 @@ module "glb_platform" {
       protocol                = "HTTP"
       port                    = module.backend_api.api_port
       port_name               = module.backend_api.api_port_name
-      timeout_sec             = 10
+      timeout_sec             = 60
       enable_cdn              = local.glb_api_cdn_enabled
       compression_mode        = null
       custom_request_headers  = null
