@@ -31,7 +31,7 @@ config_vm_api_mem = 30720
 config_openai_api_docker_image_version = "0.0.10"
 
 // --- Web App configuration --- //
-config_webapp_release = "v0.5.6"
+config_webapp_release = "v0.5.12"
 // Data Context
 config_webapp_data_context_release    = "23.09"
 // --- DNS configuration --- //
@@ -49,3 +49,10 @@ config_security_webapp_enable = false
 //config_vm_elasticsearch_flag_preemptible = false
 //config_vm_webserver_flag_preemptible     = false
 //config_openai_api_flag_preemptible       = false
+
+// Default configuration for the web application is the Development Environment
+config_webapp_deployment_context_map = {
+  DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API      = "'https://api.platform.os.opentargets.xyz/api/v4/graphql'"
+  DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API_BETA = "'https://api.platform.os.opentargets.xyz/api/v4/graphql'"
+  DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_EFO_URL      = "'/data/ontology/efo_json/diseases_efo.jsonl'"
+}
