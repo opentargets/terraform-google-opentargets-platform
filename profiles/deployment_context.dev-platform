@@ -24,6 +24,7 @@ config_vm_version_patch              = "1"
 config_vm_data_year                  = "23"
 config_vm_data_month                 = "09"
 config_vm_data_iteration             = "0"
+config_vm_api_ignore_cache           = true
 config_vm_api_vcpus = 8
 config_vm_api_mem = 30720
 
