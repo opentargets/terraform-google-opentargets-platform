@@ -12,4 +12,5 @@ docker run -d \
   -e META_DATA_YEAR='${API_DATA_YEAR}' \
   -e META_DATA_MONTH='${API_DATA_MONTH}' \
   -e META_DATA_ITERATION='${API_DATA_ITER}' \
+  -e PLATFORM_API_IGNORE_CACHE='${API_IGNORE_CACHE}' \
   quay.io/opentargets/platform-api:${PLATFORM_API_VERSION}

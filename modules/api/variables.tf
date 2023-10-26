@@ -133,6 +133,11 @@ variable "api_d_iteration" {
   description = "API data - iteration"
   type        = string
 }
+variable "api_ignore_cache" {
+  description = "Disable API caching"
+  type        = bool
+  default     = false
+}
 
 // --- Backend Connection Information --- //
 variable "backend_connection_map" {

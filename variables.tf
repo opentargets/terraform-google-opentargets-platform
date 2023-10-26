@@ -414,6 +414,11 @@ variable "config_vm_data_iteration" {
   type        = string
   default     = "0"
 }
+variable "config_vm_api_ignore_cache" {
+  description = "Disable API caching"
+  type        = bool
+  default     = false
+}
 
 // --- OpenAI API --- //
 variable "config_openai_api_docker_image_version" {
