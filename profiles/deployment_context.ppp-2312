@@ -13,10 +13,10 @@ config_vm_elastic_search_data_volume_image = "ppp-20231127-1011-es"
 config_vm_clickhouse_data_volume_image = "ppp-20231127-1011-ch"
 
 // --- API configuration --- //
-config_vm_platform_api_image_version = "dev23.12.6"
+config_vm_platform_api_image_version = "dev23.12.7"
 config_vm_version_major              = "23"
 config_vm_version_minor              = "12"
-config_vm_version_patch              = "6"
+config_vm_version_patch              = "7"
 config_vm_data_year                  = "23"
 config_vm_data_month                 = "12"
 config_vm_data_iteration             = "0"
@@ -83,5 +83,5 @@ config_openai_api_flag_preemptible       = false
 // config_vm_clickhouse_mem = "30720"
 
 // API --- //
-// config_vm_api_vcpus = "8"
-// config_vm_api_mem = "30720"
+config_vm_api_vcpus = "8"
+config_vm_api_mem = "30720"
