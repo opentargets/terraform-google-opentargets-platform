@@ -429,7 +429,7 @@ variable "config_openai_api_docker_image_version" {
 variable "config_openai_api_flag_preemptible" {
   description = "Use this flag for deploying OpenAI API on preemptible VMs, default 'false'"
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "config_openai_credentials_filename" {
