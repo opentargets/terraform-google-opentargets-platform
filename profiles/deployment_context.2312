@@ -66,14 +66,14 @@ config_openai_api_flag_preemptible       = false
 
 // --- 3007 - ES CPU usage issue --- //
 // Elastic Search --- //
-config_vm_elastic_search_vcpus          = "16"
-config_vm_elastic_search_mem            = "61440"
-config_vm_elastic_search_boot_disk_size = "128"
+// config_vm_elastic_search_vcpus          = "16"
+// config_vm_elastic_search_mem            = "61440"
+// config_vm_elastic_search_boot_disk_size = "128"
 
 // --- Clickhouse configuration --- //
-config_vm_clickhouse_vcpus = "8"
-config_vm_clickhouse_mem = "30720"
+// config_vm_clickhouse_vcpus = "8"
+// config_vm_clickhouse_mem = "30720"
 
 // API --- //
-config_vm_api_vcpus = "8"
-config_vm_api_mem = "30720"
+// config_vm_api_vcpus = "8"
+// config_vm_api_mem = "30720"

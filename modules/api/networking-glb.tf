@@ -15,7 +15,7 @@ module "gce_lb_http" {
   // SSL Configuration
   ssl                             = true
   managed_ssl_certificate_domains = [var.dns_domain_api]
-  use_ssl_certificates            = false
+//  use_ssl_certificates            = false
   https_redirect                  = true
 
   backends = {
