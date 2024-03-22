@@ -18,7 +18,7 @@ path_script_replace_with_env_vars_values = helpers/replace_with_env_vars_values.
 
 # Targets --- ##
 help: ## show help message
-	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m\033[0m\n"} /^[$$()% a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
+	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m\033[0m\n"} /^[$$()% a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-21s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 
 status: ## Show the current status of the deployment context
 	@echo "[STATUS] Deployment Context Profile: $(shell ls -alh ${file_name_depcontext} | awk '{print $$NF}')"
