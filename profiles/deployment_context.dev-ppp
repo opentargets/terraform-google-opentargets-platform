@@ -7,18 +7,18 @@ config_project_id         = "open-targets-partner-platform"
 config_deployment_regions = ["europe-west1"]
 
 // --- Elastic Search configuration --- //
-config_vm_elastic_search_data_volume_image = "ppp-20231127-1011-es"
+config_vm_elastic_search_data_volume_image = "ppp-20240320-1101-es"
 
 // --- Clickhouse configuration --- //
-config_vm_clickhouse_data_volume_image = "ppp-20231127-1011-ch"
+config_vm_clickhouse_data_volume_image = "ppp-20240320-1101-ch"
 
 // --- API configuration --- //
-config_vm_platform_api_image_version = "dev23.12.7"
-config_vm_version_major              = "23"
-config_vm_version_minor              = "12"
-config_vm_version_patch              = "7"
-config_vm_data_year                  = "23"
-config_vm_data_month                 = "12"
+config_vm_platform_api_image_version = "24.0.3"
+config_vm_version_major              = "24"
+config_vm_version_minor              = "0"
+config_vm_version_patch              = "3"
+config_vm_data_year                  = "24"
+config_vm_data_month                 = "03"
 config_vm_data_iteration             = "0"
 config_vm_api_ignore_cache           = true
 
@@ -31,9 +31,9 @@ config_dns_subdomain_prefix       = "dev"
 config_dns_platform_api_subdomain = "api"
 
 // --- Web App configuration --- //
-config_webapp_release = "v0.7.1"
+config_webapp_release = "v0.7.8"
 // Data Context
-config_webapp_data_context_release = "partners/23.12"
+config_webapp_data_context_release = "partners/24.03"
 config_webapp_deployment_context_map = {
   DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API       = "'https://api.partner-platform.dev.opentargets.xyz/api/v4/graphql'"
   DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API_BETA  = "'https://api.partner-platform.dev.opentargets.xyz/api/v4/graphql'"
