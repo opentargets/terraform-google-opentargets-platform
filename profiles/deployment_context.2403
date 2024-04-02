@@ -1,0 +1,79 @@
+// --- PRODUCTION Open Targets Platform ---//
+// --------------------------------------------------------------------------------------- //
+// --- Release Specific Information (THIS IS THE MAIN PLACE WHERE THINGS CHANGE BETWEEN PRODUCTION RELEASES) --- //
+// --- Elastic Search configuration --- //
+config_vm_elastic_search_data_volume_image = "posdevpf-20240305-1702-es"
+// --- Clickhouse configuration --- //
+config_vm_clickhouse_data_volume_image = "posdevpf-20240305-1702-ch"
+// --- API configuration --- //
+config_vm_platform_api_image_version = "24.0.3"
+config_vm_version_major              = "24"
+config_vm_version_minor              = "0"
+config_vm_version_patch              = "3"
+config_vm_data_year                  = "24"
+config_vm_data_month                 = "03"
+config_vm_data_iteration             = "0"
+// --- OpenAI API configuration --- //
+config_openai_api_docker_image_version = "0.0.10"
+// --- Web App configuration --- //
+config_webapp_release = "v0.7.8"
+// Web App Data Context
+config_webapp_bucket_name_data_assets = "open-targets-pre-data-releases"
+config_webapp_data_context_release    = "24.03"
+// -[END]- Release Specific Information --- //
+// --------------------------------------------------------------------------------------- //
+
+
+// --------------------------------------------------------------------------------------- //
+// --- This section is common to all production releases, unless custom changes need to be made --- //
+// Deployment configuration
+config_release_name = "production"
+config_project_id   = "open-targets-platform"
+// Regions
+config_deployment_regions = ["europe-west1"]
+// DNS
+config_dns_project_id             = "open-targets-prod"
+config_dns_subdomain_prefix       = null
+config_dns_managed_zone_name      = "opentargets-org"
+config_dns_managed_zone_dns_name  = "opentargets.org."
+config_dns_platform_api_subdomain = "api"
+// Web App configuration
+config_webapp_deployment_context_map = {
+  DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API               = "'https://api.platform.opentargets.org/api/v4/graphql'"
+  DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API_BETA          = "'https://api.platform.opentargets.org/api/v4/graphql'"
+  DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_EFO_URL               = "'/data/ontology/efo_json/diseases_efo.jsonl'"
+  DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_GOOGLE_TAG_MANAGER_ID = "'GTM-WPXWRDV'"
+}
+// Robots.txt profile
+config_webapp_robots_profile = "production"
+// Sitemaps generation
+config_webapp_sitemaps_bigquery_table   = "platform"
+config_webapp_sitemaps_bigquery_project = "open-targets-prod"
+// --- GLB configuration --- //
+config_glb_webapp_enable_cdn = true
+// --- Security Configuration --- //
+// Enable / Disable network security policies application (Platform 'production' default is false)
+config_security_api_enable    = false
+config_security_webapp_enable = false
+// --- VMs provisioning model --- //
+// For Production, we use 'on-demand' provisioning model
+config_vm_api_flag_preemptible           = false
+config_vm_clickhouse_flag_preemptible    = false
+config_vm_elasticsearch_flag_preemptible = false
+config_vm_webserver_flag_preemptible     = false
+config_openai_api_flag_preemptible       = false
+// --------------------------------------------------------------------------------------- //
+
+// --- 3007 - ES CPU usage issue --- //
+// Elastic Search --- //
+// config_vm_elastic_search_vcpus          = "16"
+// config_vm_elastic_search_mem            = "61440"
+// config_vm_elastic_search_boot_disk_size = "128"
+
+// --- Clickhouse configuration --- //
+// config_vm_clickhouse_vcpus = "8"
+// config_vm_clickhouse_mem = "30720"
+
+// API --- //
+// config_vm_api_vcpus = "8"
+// config_vm_api_mem = "30720"
