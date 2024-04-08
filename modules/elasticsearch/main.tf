@@ -164,7 +164,7 @@ resource "google_compute_region_instance_group_manager" "regmig_elastic_search" 
 
   auto_healing_policies {
     health_check      = google_compute_health_check.elastic_search_healthcheck.id
-    initial_delay_sec = 30
+    initial_delay_sec = 20
   }
 
   update_policy {
@@ -173,7 +173,7 @@ resource "google_compute_region_instance_group_manager" "regmig_elastic_search" 
     minimal_action               = "REPLACE"
     max_surge_fixed              = local.compute_zones_n_total
     max_unavailable_fixed        = 0
-    min_ready_sec                = 25
+    min_ready_sec                = 20
   }
 
   instance_lifecycle_policy {
@@ -190,9 +190,9 @@ resource "google_compute_region_autoscaler" "autoscaler_elastic_search" {
   autoscaling_policy {
     max_replicas    = local.compute_zones_n_total * 2
     min_replicas    = 1
-    cooldown_period = 60
+    cooldown_period = 30
     cpu_utilization {
-      target = 0.35
+      target = 0.65
     }
   }
 }
