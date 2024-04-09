@@ -141,7 +141,7 @@ resource "google_compute_region_instance_group_manager" "regmig_webserver" {
 
   auto_healing_policies {
     health_check      = google_compute_health_check.webserver_healthcheck.id
-    initial_delay_sec = 30
+    initial_delay_sec = 20
   }
 
   update_policy {
@@ -165,7 +165,7 @@ resource "google_compute_region_autoscaler" "autoscaler_webserver" {
   autoscaling_policy {
     max_replicas    = length(data.google_compute_zones.available[count.index].names) * 2
     min_replicas    = 1
-    cooldown_period = 60
+    cooldown_period = 30
     load_balancing_utilization {
       target = 0.5
     }
