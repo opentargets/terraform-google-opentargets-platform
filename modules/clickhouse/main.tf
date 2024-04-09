@@ -161,7 +161,7 @@ resource "google_compute_region_instance_group_manager" "regmig_clickhouse" {
 
   auto_healing_policies {
     health_check      = google_compute_health_check.clickhouse_healthcheck.id
-    initial_delay_sec = 120
+    initial_delay_sec = 20
   }
 
   update_policy {
@@ -170,7 +170,7 @@ resource "google_compute_region_instance_group_manager" "regmig_clickhouse" {
     minimal_action               = "REPLACE"
     max_surge_fixed              = length(data.google_compute_zones.available.names)
     max_unavailable_fixed        = 0
-    min_ready_sec                = 30
+    min_ready_sec                = 20
   }
   instance_lifecycle_policy {
     force_update_on_repair = "YES"
@@ -187,9 +187,9 @@ resource "google_compute_region_autoscaler" "autoscaler_clickhouse" {
   autoscaling_policy {
     max_replicas    = local.compute_zones_n_total * 2
     min_replicas    = 1
-    cooldown_period = 60
+    cooldown_period = 30
     cpu_utilization {
-      target = 0.45
+      target = 0.65
     }
   }
 }
