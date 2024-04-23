@@ -13,12 +13,12 @@ config_vm_elastic_search_data_volume_image = "ppp-20240320-1101-es"
 config_vm_clickhouse_data_volume_image = "ppp-20240320-1101-ch"
 
 // --- API configuration --- //
-config_vm_platform_api_image_version = "24.0.3"
+config_vm_platform_api_image_version = "24.1.0-dev.5"
 config_vm_version_major              = "24"
-config_vm_version_minor              = "0"
-config_vm_version_patch              = "3"
+config_vm_version_minor              = "1"
+config_vm_version_patch              = "0"
 config_vm_data_year                  = "24"
-config_vm_data_month                 = "03"
+config_vm_data_month                 = "06"
 config_vm_data_iteration             = "0"
 config_vm_api_ignore_cache           = true
 
@@ -33,7 +33,8 @@ config_dns_platform_api_subdomain = "api"
 // --- Web App configuration --- //
 config_webapp_release = "v0.7.11"
 // Data Context
-config_webapp_data_context_release = "partners/24.03"
+config_webapp_bucket_name_data_assets = "open-targets-ppp-releases"
+config_webapp_data_context_release = "24.06dev"
 config_webapp_deployment_context_map = {
   DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API       = "'https://api.partner-platform.dev.opentargets.xyz/api/v4/graphql'"
   DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API_BETA  = "'https://api.partner-platform.dev.opentargets.xyz/api/v4/graphql'"
