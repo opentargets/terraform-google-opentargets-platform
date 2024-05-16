@@ -32,7 +32,7 @@ config_vm_api_mem = 30720
 config_openai_api_docker_image_version = "0.0.10"
 
 // --- Web App configuration --- //
-config_webapp_release = "v0.7.8"
+config_webapp_release = "v0.7.11"
 // Data Context
 config_webapp_data_context_release    = "24.03"
 
@@ -49,5 +49,3 @@ config_security_webapp_enable = false
 //config_vm_elasticsearch_flag_preemptible = false
 //config_vm_webserver_flag_preemptible     = false
 //config_openai_api_flag_preemptible       = false
-
-

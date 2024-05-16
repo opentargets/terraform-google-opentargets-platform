@@ -31,7 +31,7 @@ config_dns_subdomain_prefix       = "dev"
 config_dns_platform_api_subdomain = "api"
 
 // --- Web App configuration --- //
-config_webapp_release = "v0.7.8"
+config_webapp_release = "v0.7.11"
 // Data Context
 config_webapp_data_context_release = "partners/24.03"
 config_webapp_deployment_context_map = {
