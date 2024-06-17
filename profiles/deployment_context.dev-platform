@@ -6,18 +6,18 @@ config_release_name = "mbdevpf"
 config_deployment_regions = ["europe-west1"]
 
 // --- Elastic Search configuration --- //
-config_vm_elastic_search_data_volume_image = "posdevpf-20240423-0841-es"
+config_vm_elastic_search_data_volume_image = "posdevpf-20240604-1515-es"
 // config_vm_elastic_search_vcpus          = "16"
 // config_vm_elastic_search_mem            = "61440"
 // config_vm_elastic_search_boot_disk_size = "128"
 
 // --- Clickhouse configuration --- //
-config_vm_clickhouse_data_volume_image = "posdevpf-20240423-0841-ch"
+config_vm_clickhouse_data_volume_image = "posdevpf-20240604-1515-ch"
 //config_vm_clickhouse_vcpus = 8
 //config_vm_clickhouse_mem = 30720
 
 // --- API configuration --- //
-config_vm_platform_api_image_version = "24.1.0-dev.5"
+config_vm_platform_api_image_version = "24.1.0-dev.6"
 config_vm_version_major              = "24"
 config_vm_version_minor              = "1"
 config_vm_version_patch              = "0"
@@ -32,9 +32,9 @@ config_vm_api_mem = 30720
 config_openai_api_docker_image_version = "0.0.10"
 
 // --- Web App configuration --- //
-config_webapp_release = "v0.7.11"
+config_webapp_release = "v0.8.0"
 // Data Context
-config_webapp_data_context_release    = "24.03"
+config_webapp_data_context_release    = "24.06"
 
 
 // --- Security Configuration --- //

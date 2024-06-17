@@ -7,13 +7,13 @@ config_release_name = "devppp"
 config_deployment_regions = ["europe-west1"]
 
 // --- Elastic Search configuration --- //
-config_vm_elastic_search_data_volume_image = "ppp-20240320-1101-es"
+config_vm_elastic_search_data_volume_image = "ppp-20240610-0905-es"
 
 // --- Clickhouse configuration --- //
-config_vm_clickhouse_data_volume_image = "ppp-20240320-1101-ch"
+config_vm_clickhouse_data_volume_image = "ppp-20240610-0905-ch"
 
 // --- API configuration --- //
-config_vm_platform_api_image_version = "24.1.0-dev.5"
+config_vm_platform_api_image_version = "24.1.0-dev.6"
 config_vm_version_major              = "24"
 config_vm_version_minor              = "1"
 config_vm_version_patch              = "0"
@@ -31,7 +31,7 @@ config_dns_subdomain_prefix       = "dev"
 config_dns_platform_api_subdomain = "api"
 
 // --- Web App configuration --- //
-config_webapp_release = "v0.7.11"
+config_webapp_release = "v0.8.0"
 // Data Context
 config_webapp_bucket_name_data_assets = "open-targets-ppp-releases"
 config_webapp_data_context_release = "24.06dev"
