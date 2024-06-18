@@ -7,10 +7,10 @@ config_release_name = "devppp"
 config_deployment_regions = ["europe-west1"]
 
 // --- Elastic Search configuration --- //
-config_vm_elastic_search_data_volume_image = "ppp-20240610-0905-es"
+config_vm_elastic_search_data_volume_image = "ppp-20240618-1043-es"
 
 // --- Clickhouse configuration --- //
-config_vm_clickhouse_data_volume_image = "ppp-20240610-0905-ch"
+config_vm_clickhouse_data_volume_image = "ppp-20240618-1043-ch"
 
 // --- API configuration --- //
 config_vm_platform_api_image_version = "24.1.0-dev.6"
