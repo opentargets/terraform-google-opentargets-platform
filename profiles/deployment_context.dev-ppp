@@ -13,7 +13,7 @@ config_vm_elastic_search_data_volume_image = "ppp-20240618-1043-es"
 config_vm_clickhouse_data_volume_image = "ppp-20240618-1043-ch"
 
 // --- API configuration --- //
-config_vm_platform_api_image_version = "24.1.0-dev.7"
+config_vm_platform_api_image_version = "24.1.0-dev.8"
 config_vm_version_major              = "24"
 config_vm_version_minor              = "1"
 config_vm_version_patch              = "0"
