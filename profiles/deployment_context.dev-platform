@@ -17,7 +17,7 @@ config_vm_clickhouse_data_volume_image = "posdevpf-20240604-1515-ch"
 //config_vm_clickhouse_mem = 30720
 
 // --- API configuration --- //
-config_vm_platform_api_image_version = "24.1.0-dev.6"
+config_vm_platform_api_image_version = "24.1.0-dev.7"
 config_vm_version_major              = "24"
 config_vm_version_minor              = "1"
 config_vm_version_patch              = "0"
@@ -32,7 +32,7 @@ config_vm_api_mem = 30720
 config_openai_api_docker_image_version = "0.0.10"
 
 // --- Web App configuration --- //
-config_webapp_release = "v0.8.1"
+config_webapp_release = "v0.8.2"
 // Data Context
 config_webapp_data_context_release    = "24.06"
 
