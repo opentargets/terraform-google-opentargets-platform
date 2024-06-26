@@ -3,7 +3,7 @@
 config_release_name = "devppp"
 
 // --- Deployment configuration --- //
-//config_project_id         = "open-targets-partner-platform"
+//config_project_id       = "open-targets-partner-platform"
 config_deployment_regions = ["europe-west1"]
 
 // --- Elastic Search configuration --- //
@@ -34,8 +34,8 @@ config_dns_platform_api_subdomain = "api"
 config_webapp_release = "v0.8.4"
 // Data Context
 config_webapp_bucket_name_data_assets = "open-targets-ppp-releases"
-config_webapp_data_context_release = "24.06dev"
-config_webapp_deployment_context_map = {
+config_webapp_data_context_release    = "24.06dev"
+config_webapp_deployment_context_map  = {
   DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API       = "'https://api.partner-platform.dev.opentargets.xyz/api/v4/graphql'"
   DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API_BETA  = "'https://api.partner-platform.dev.opentargets.xyz/api/v4/graphql'"
   DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_OT_AI_API_URL = "'https://ai.partner-platform.dev.opentargets.xyz'"
