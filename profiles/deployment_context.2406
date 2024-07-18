@@ -6,10 +6,10 @@ config_vm_elastic_search_data_volume_image = "posdevpf-20240604-1515-es"
 // --- Clickhouse configuration --- //
 config_vm_clickhouse_data_volume_image = "posdevpf-20240604-1515-ch"
 // --- API configuration --- //
-config_vm_platform_api_image_version = "24.1.0-dev.6"
+config_vm_platform_api_image_version = "24.1.4"
 config_vm_version_major              = "24"
 config_vm_version_minor              = "1"
-config_vm_version_patch              = "0"
+config_vm_version_patch              = "4"
 config_vm_data_year                  = "24"
 config_vm_data_month                 = "06"
 config_vm_data_iteration             = "0"
