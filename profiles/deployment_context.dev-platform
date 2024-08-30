@@ -17,10 +17,10 @@ config_vm_clickhouse_data_volume_image = "posdevpf-20240818-1538-ch"
 //config_vm_clickhouse_mem = 30720
 
 // --- API configuration --- //
-config_vm_platform_api_image_version = "24.2.0"
+config_vm_platform_api_image_version = "24.2.1-beta"
 config_vm_version_major              = "24"
 config_vm_version_minor              = "2"
-config_vm_version_patch              = "0"
+config_vm_version_patch              = "1"
 config_vm_data_year                  = "24"
 config_vm_data_month                 = "09"
 config_vm_data_iteration             = "0"
