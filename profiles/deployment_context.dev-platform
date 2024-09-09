@@ -29,7 +29,7 @@ config_vm_api_vcpus = 8
 config_vm_api_mem = 30720
 
 // --- OpenAI API configuration --- //
-config_openai_api_docker_image_version = "0.0.10"
+config_openai_api_docker_image_version = "0.0.11"
 
 // --- Web App configuration --- //
 config_webapp_release = "v0.9.6"

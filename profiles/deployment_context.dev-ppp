@@ -23,7 +23,7 @@ config_vm_data_iteration             = "0"
 config_vm_api_ignore_cache           = true
 
 // --- OpenAI API configuration --- //
-config_openai_api_docker_image_version = "0.0.10"
+config_openai_api_docker_image_version = "0.0.11"
 
 // --- DNS configuration --- //
 config_dns_platform_subdomain     = "partner-platform"
