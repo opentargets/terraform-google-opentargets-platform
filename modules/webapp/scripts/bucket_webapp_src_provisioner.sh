@@ -22,6 +22,6 @@ docker run -v ${folder_root_webapp}:/src \
     node:${docker_node_version} /bin/bash -c "chmod 750 /build_script.sh; /build_script.sh; exit"
 
 echo "[BUCKET] Uploading webapp to bucket"
-gsutil cp -r ${folder_webapp_build}/* ${bucket_webapp_url}
+gsutil -m cp -r ${folder_webapp_build}/* ${bucket_webapp_url}
 
 echo "[DONE] Process Completed"
