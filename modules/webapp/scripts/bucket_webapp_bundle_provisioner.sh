@@ -48,7 +48,7 @@ echo "[BUILD] Preparing data context destination at '${data_context_dst_folder}'
 mkdir -p ${data_context_dst_folder}
 
 echo "[BUILD] Collecting data context from '${data_context_url}'"
-gsutil cp -r ${data_context_url}/* ${data_context_dst_folder}/.
+gsutil -m cp -r ${data_context_url}/* ${data_context_dst_folder}/.
 
 echo "[SITEMAPS] Preparing destination folder at '${sitemaps_path_dst_sitemap_folder}', it may already exist if part of the bundle"
 mkdir -p ${sitemaps_path_dst_sitemap_folder}
@@ -67,6 +67,6 @@ tar czvf ../${deployment_bundle_filename} *
 cp ../${deployment_bundle_filename} .
 
 echo "[DEPLOY] Uploading webapp to bucket '${bucket_webapp_url}'"
-gsutil cp -r $(pwd)/* ${bucket_webapp_url}
+gsutil -m cp -r $(pwd)/* ${bucket_webapp_url}
 
 echo "[DONE] Process Completed ---"

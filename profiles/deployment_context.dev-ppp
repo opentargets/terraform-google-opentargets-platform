@@ -7,23 +7,23 @@ config_release_name = "devppp"
 config_deployment_regions = ["europe-west1"]
 
 // --- Elastic Search configuration --- //
-config_vm_elastic_search_data_volume_image = "ppp-20240618-1043-es"
+config_vm_elastic_search_data_volume_image = "ppp-20240917-1659-es"
 
 // --- Clickhouse configuration --- //
-config_vm_clickhouse_data_volume_image = "ppp-20240618-1043-ch"
+config_vm_clickhouse_data_volume_image = "ppp-20240917-1659-ch"
 
 // --- API configuration --- //
-config_vm_platform_api_image_version = "24.1.3"
+config_vm_platform_api_image_version = "24.2.1-beta.6"
 config_vm_version_major              = "24"
-config_vm_version_minor              = "1"
-config_vm_version_patch              = "3"
+config_vm_version_minor              = "2"
+config_vm_version_patch              = "1"
 config_vm_data_year                  = "24"
-config_vm_data_month                 = "06"
+config_vm_data_month                 = "09"
 config_vm_data_iteration             = "0"
 config_vm_api_ignore_cache           = true
 
 // --- OpenAI API configuration --- //
-config_openai_api_docker_image_version = "0.0.10"
+config_openai_api_docker_image_version = "0.0.11"
 
 // --- DNS configuration --- //
 config_dns_platform_subdomain     = "partner-platform"
@@ -31,10 +31,10 @@ config_dns_subdomain_prefix       = "dev"
 config_dns_platform_api_subdomain = "api"
 
 // --- Web App configuration --- //
-config_webapp_release = "v0.9.4"
+config_webapp_release = "v0.9.11"
 // Data Context
 config_webapp_bucket_name_data_assets = "open-targets-ppp-releases"
-config_webapp_data_context_release    = "24.06dev"
+config_webapp_data_context_release    = "24.09dev"
 config_webapp_deployment_context_map  = {
   DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API       = "'https://api.partner-platform.dev.opentargets.xyz/api/v4/graphql'"
   DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API_BETA  = "'https://api.partner-platform.dev.opentargets.xyz/api/v4/graphql'"
