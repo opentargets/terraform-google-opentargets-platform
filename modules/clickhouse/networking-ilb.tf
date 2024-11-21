@@ -30,7 +30,7 @@ resource "google_compute_region_backend_service" "ilb_backend_service" {
   enable_cdn = false
   backend {
     group = google_compute_region_instance_group_manager.regmig_clickhouse.instance_group
-    //balancing_mode = "UTILIZATION"
+    balancing_mode = "CONNECTION"
     //capacity_scaler = 1.0
   }
 
