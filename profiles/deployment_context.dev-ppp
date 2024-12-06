@@ -13,7 +13,7 @@ config_vm_elastic_search_data_volume_image = "posgenpf-20241205-1259-es"
 config_vm_clickhouse_data_volume_image = "posgenpf-20241205-1259-ch"
 
 // --- API configuration --- //
-config_vm_platform_api_image_version = "24.3.0-beta.24"
+config_vm_platform_api_image_version = "24.3.0-beta.25"
 config_vm_version_major              = "24"
 config_vm_version_minor              = "3"
 config_vm_version_patch              = "0"
