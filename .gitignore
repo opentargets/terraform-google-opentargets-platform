@@ -12,6 +12,5 @@ tfbackend.tf.bak
 .idea
 # Ignore the active deployment context profile
 deployment_context.auto.tfvars
-.vscode
 # Ignore possibly present credentials files
 credentials/*
