@@ -13,7 +13,7 @@ config_vm_elastic_search_data_volume_image = "posgenpf-20241205-1259-es"
 config_vm_clickhouse_data_volume_image = "posgenpf-20241205-1259-ch"
 
 // --- API configuration --- //
-config_vm_platform_api_image_version = "24.3.0-beta.25"
+config_vm_platform_api_image_version = "24.3.0"
 config_vm_version_major              = "24"
 config_vm_version_minor              = "3"
 config_vm_version_patch              = "0"
@@ -31,7 +31,7 @@ config_dns_subdomain_prefix       = "dev"
 config_dns_platform_api_subdomain = "api"
 
 // --- Web App configuration --- //
-config_webapp_release = "v0.10.15"
+config_webapp_release = "v0.10.16"
 // Data Context
 config_webapp_bucket_name_data_assets = "open-targets-ppp-releases"
 config_webapp_data_context_release    = "genetics-dev"
