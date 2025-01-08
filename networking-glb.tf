@@ -70,7 +70,7 @@ resource "google_compute_url_map" "url_map_platform_glb" {
 
 module "glb_platform" {
   source  = "GoogleCloudPlatform/lb-http/google"
-  version = "= 9.0.0"
+  version = "= 12.0.0"
 
   // Dependencies
   depends_on = [
@@ -91,7 +91,7 @@ module "glb_platform" {
   // SSL Configuration
   ssl = true
   // managed_ssl_certificate_domains = local.ssl_managed_certificate_domain_names
-  use_ssl_certificates = true
+  // use_ssl_certificates = true
   ssl_certificates     = google_compute_managed_ssl_certificate.glb_ssl_cert.*.self_link
   https_redirect       = true
 
