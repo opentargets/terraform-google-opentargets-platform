@@ -6,13 +6,13 @@ config_release_name = "mbdevpf"
 config_deployment_regions = ["europe-west1"]
 
 // --- Elastic Search configuration --- //
-config_vm_elastic_search_data_volume_image = "posgenpf-20250304-1828-es"
+config_vm_elastic_search_data_volume_image = "posgenpf-20250305-1223-es"
 // config_vm_elastic_search_vcpus          = "16"
 // config_vm_elastic_search_mem            = "61440"
 // config_vm_elastic_search_boot_disk_size = "128"
 
 // --- Clickhouse configuration --- //
-config_vm_clickhouse_data_volume_image = "posgenpf-20250304-1828-ch"
+config_vm_clickhouse_data_volume_image = "posgenpf-20250305-1223-ch"
 //config_vm_clickhouse_vcpus = 8
 //config_vm_clickhouse_mem = 30720
 
