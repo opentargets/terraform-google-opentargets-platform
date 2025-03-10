@@ -20,7 +20,7 @@ wget --no-check-certificate "${sitemaps_url_script_download}"
 cd ${path_build}
 
 echo "[BUILD] Unpack bundle"
-tar xzvf "${working_dir}/bundle-platform.tgz"
+tar xzvf "${working_dir}/bundle.tar.gz"
 
 echo "[BUILD] Attach deployment context at '${file_name_devops_context_instance}'"
 cp ${file_name_devops_context_template} ${file_name_devops_context_instance}

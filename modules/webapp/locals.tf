@@ -36,7 +36,7 @@ locals {
   webapp_src_path_folder_build_web_app                     = "${local.webapp_src_provisioner_path_folder_root_webapp}/build"
   // Bundle Based provisioner --- //
   webapp_bundle_provisioner_path_script                       = abspath("${path.module}/scripts/bucket_webapp_bundle_provisioner.sh")
-  webapp_bundle_provisioner_url_bundle_download               = "https://github.com/${local.webapp_provisioner_repo_name}/releases/download/${var.webapp_release}/bundle-platform.tgz"
+  webapp_bundle_provisioner_url_bundle_download               = "https://github.com/${local.webapp_provisioner_repo_name}/releases/download/${var.webapp_release}/bundle.tar.gz"
   webapp_bundle_provisioner_path_build                        = "${local.webapp_provisioner_path_working_dir}/build"
   webapp_bundle_provisioner_file_name_devops_context_template = "config.template"
   webapp_bundle_provisioner_file_name_devops_context_instance = "config.js"
