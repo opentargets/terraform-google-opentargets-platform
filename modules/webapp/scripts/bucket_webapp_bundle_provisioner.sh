@@ -21,6 +21,7 @@ cd ${path_build}
 
 echo "[BUILD] Unpack bundle"
 tar xzvf "${working_dir}/bundle.tar.gz"
+cd bundle
 
 echo "[BUILD] Attach deployment context at '${file_name_devops_context_instance}'"
 cp ${file_name_devops_context_template} ${file_name_devops_context_instance}

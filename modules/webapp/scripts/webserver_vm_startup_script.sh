@@ -11,7 +11,7 @@ echo "[DEVOPS] Populate Web Root content from '${deployment_bundle_url}' "
 cd $${site_folder}/..
 wget --no-check-certificate ${deployment_bundle_url}
 cd $${site_folder}
-tar xzvf ../${deployment_bundle_filename}
+tar xzvf ../${deployment_bundle_filename} --strip-components=1
 echo "[DEVOPS] Prepare Nginx configuration"
 mkdir -p $${nginx_conf_folder}
 cat > $${nginx_conf_folder}/default.conf <<'EOF'
@@ -24,7 +24,7 @@ server {
     brotli_comp_level   6;
     brotli_static       on;
     brotli_types        application/atom+xml application/javascript application/json application/rss+xml application/vnd.ms-fontobject application/x-font-opentype application/x-font-truetype application/x-font-ttf application/x-javascript application/xhtml+xml application/xml font/eot font/opentype font/otf font/truetype image/svg+xml image/vnd.microsoft.icon image/x-icon image/x-win-bitmap text/css text/javascript text/plain text/xml;
-    
+
     keepalive_timeout 650;
     keepalive_requests 10000;
 
