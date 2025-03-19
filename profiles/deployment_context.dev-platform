@@ -17,7 +17,7 @@ config_vm_clickhouse_data_volume_image = "posgenpf-20250307-1356-ch"
 //config_vm_clickhouse_mem = 30720
 
 // --- API configuration --- //
-config_vm_platform_api_image_version = "25.0.0-alpha.13"
+config_vm_platform_api_image_version = "25.0.0"
 config_vm_version_major              = "25"
 config_vm_version_minor              = "0"
 config_vm_version_patch              = "0"
@@ -32,9 +32,9 @@ config_vm_api_mem                    = 30720
 config_openai_api_docker_image_version = "0.0.11"
 
 // --- Web App configuration --- //
-config_webapp_release = "v0.11.12"
+config_webapp_release = "v0.11.13"
 // Data Context
-config_webapp_data_context_release = "2503-testrun-3"
+config_webapp_data_context_release = "25.03"
 
 
 // --- Security Configuration --- //
