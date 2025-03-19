@@ -32,7 +32,7 @@ config_vm_api_mem                    = 30720
 config_openai_api_docker_image_version = "0.0.11"
 
 // --- Web App configuration --- //
-config_webapp_release = "v0.11.14"
+config_webapp_release = "v0.11.15"
 // Data Context
 config_webapp_data_context_release = "25.03"
 
