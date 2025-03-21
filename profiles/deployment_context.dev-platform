@@ -25,14 +25,14 @@ config_vm_data_year                  = "25"
 config_vm_data_month                 = "03"
 config_vm_data_iteration             = "0"
 config_vm_api_ignore_cache           = true
-config_vm_api_vcpus                  = 8
-config_vm_api_mem                    = 30720
+# config_vm_api_vcpus                  = 8
+# config_vm_api_mem                    = 30720
 
 // --- OpenAI API configuration --- //
 config_openai_api_docker_image_version = "0.0.11"
 
 // --- Web App configuration --- //
-config_webapp_release = "v0.11.15"
+config_webapp_release = "v0.11.16"
 // Data Context
 config_webapp_data_context_release = "25.03"
 

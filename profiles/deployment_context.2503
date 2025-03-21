@@ -16,7 +16,7 @@ config_vm_data_iteration             = "0"
 // --- OpenAI API configuration --- //
 config_openai_api_docker_image_version = "0.0.11"
 // --- Web App configuration --- //
-config_webapp_release = "v0.11.15"
+config_webapp_release = "v0.11.16"
 // Web App Data Context
 config_webapp_bucket_name_data_assets = "open-targets-pre-data-releases"
 config_webapp_data_context_release    = "25.03"
@@ -63,3 +63,15 @@ config_vm_elasticsearch_flag_preemptible = false
 config_vm_webserver_flag_preemptible     = false
 config_openai_api_flag_preemptible       = false
 // --------------------------------------------------------------------------------------- //
+
+
+// api vm
+config_vm_api_vcpus = 16
+config_vm_api_mem   = 61440
+
+// clickhouse vm
+config_vm_clickhouse_vcpus = 8
+config_vm_clickhouse_mem   = 30720
+
+// elasticsearch vm
+config_vm_elastic_search_mem            = "53248"
