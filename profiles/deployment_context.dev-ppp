@@ -7,10 +7,10 @@ config_release_name = "devppp"
 config_deployment_regions = ["europe-west1"]
 
 // --- Elastic Search configuration --- //
-config_vm_elastic_search_data_volume_image = "pos-ppp-dev--20250319-1515-es"
+config_vm_elastic_search_data_volume_image = "pos-ppp-dev--20250324-1334-es"
 
 // --- Clickhouse configuration --- //
-config_vm_clickhouse_data_volume_image = "pos-ppp-dev--20250319-1515-ch"
+config_vm_clickhouse_data_volume_image = "pos-ppp-dev--20250324-1334-ch"
 
 // --- API configuration --- //
 config_vm_platform_api_image_version = "25.0.0"
@@ -31,10 +31,11 @@ config_dns_subdomain_prefix       = "dev"
 config_dns_platform_api_subdomain = "api"
 
 // --- Web App configuration --- //
-config_webapp_release = "v0.11.15"
+config_webapp_release = "v0.11.17"
 // Data Context
-config_webapp_bucket_name_data_assets = "open-targets-ppp-releases"
-config_webapp_data_context_release    = "genetics-dev"
+//config_webapp_bucket_name_data_assets = "open-targets-ppp-releases"
+//config_webapp_data_context_release    = "genetics-dev"
+config_webapp_data_context_release = "partners/25.03"
 config_webapp_deployment_context_map = {
   DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API       = "'https://api.partner-platform.dev.opentargets.xyz/api/v4/graphql'"
   DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API_BETA  = "'https://api.partner-platform.dev.opentargets.xyz/api/v4/graphql'"
