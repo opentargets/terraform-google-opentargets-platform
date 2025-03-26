@@ -9,6 +9,7 @@ resource "random_string" "random_web_server_suffix" {
     deployment_bundle_filename = local.webapp_deployment_bundle_filename
     deployment_bundle_url      = local.webapp_deployment_bundle_url
     nginx_docker_image_version = var.webserver_docker_image_version
+    webapp_image_tag           = var.webapp_image_tag
     startup_script             = md5(file("${path.module}/scripts/webserver_vm_startup_script.sh"))
     vm_flag_preemptible        = var.vm_flag_preemptible
   }
@@ -88,7 +89,10 @@ resource "google_compute_instance_template" "webserver_template" {
         dev_www_data_disk          = local.webapp_webserver_disk_web_dev_name
         deployment_bundle_url      = local.webapp_deployment_bundle_url
         deployment_bundle_filename = local.webapp_deployment_bundle_filename
-        docker_image_version       = var.webserver_docker_image_version
+        webapp_image_tag           = var.webapp_image_tag
+        webapp_flavor              = var.webapp_flavor
+        webapp_api_url             = var.webapp_api_url
+        webapp_ot_ai_api_url       = var.webapp_ot_ai_api_url
       }
     )
     google-logging-enabled = true

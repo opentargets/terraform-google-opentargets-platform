@@ -28,6 +28,30 @@ variable "webapp_release" {
   type        = string
 }
 
+variable "webapp_image_tag" {
+  description = "Docker image tag to use for the web application deployment"
+  type        = string
+}
+
+variable "webapp_flavor" {
+  description = "Web application flavour to deploy, default 'platform'"
+  type        = string
+  default     = "platform"
+}
+
+variable "webapp_api_url" {
+  description = "Web application API URL to use, default 'https://api.platform.dev.opentargets.xyz/api/v4/graphql'"
+  type        = string
+  default     = "https://api.platform.dev.opentargets.xyz/api/v4/graphql"
+}
+
+variable "webapp_ot_ai_api_url" {
+  description = "Web application Open Targets AI API URL to use, default 'https://ai.platform.dev.opentargets.xyz'"
+  type        = string
+  default     = "https://ai.platform.dev.opentargets.xyz"
+}
+
+
 variable "webapp_deployment_context_placeholder" {
   description = "This defines the placeholder to replace within the public index.html, with the deployment context, default 'DEVOPS_CONTEXT_DEPLOYMENT' (DEPRECATED)"
   type        = string
