@@ -191,6 +191,10 @@ module "web_app" {
   location                  = var.config_webapp_location
   webapp_repo_name          = var.config_webapp_repo_name
   webapp_release            = var.config_webapp_release
+  webapp_image_tag          = var.config_webapp_image_tag
+  webapp_flavor             = var.config_webapp_flavor
+  webapp_api_url            = var.config_webapp_api_url
+  webapp_ot_ai_api_url      = var.config_webapp_ot_ai_api_url
   webapp_deployment_context = var.config_webapp_deployment_context_map
   webapp_robots_profile     = var.config_webapp_robots_profile
   webapp_custom_profile     = var.config_webapp_custom_profile

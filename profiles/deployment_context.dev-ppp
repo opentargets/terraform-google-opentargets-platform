@@ -31,7 +31,15 @@ config_dns_subdomain_prefix       = "dev"
 config_dns_platform_api_subdomain = "api"
 
 // --- Web App configuration --- //
-config_webapp_release = "v0.11.17"
+config_webapp_release = "v0.11.20"
+
+// VARS for webapp image
+config_webapp_image_tag = "0.11.20"
+config_webapp_flavor    = "ppp"
+config_webapp_api_url   = "https://api.partner-platform.dev.opentargets.xyz/api/v4/graphql"
+config_webapp_ot_ai_api_url = "https://ai.partner-platform.dev.opentargets.xyz"
+
+
 // Data Context
 //config_webapp_bucket_name_data_assets = "open-targets-ppp-releases"
 //config_webapp_data_context_release    = "genetics-dev"
