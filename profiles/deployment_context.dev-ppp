@@ -32,12 +32,18 @@ config_dns_platform_api_subdomain = "api"
 
 // --- Web App configuration --- //
 config_webapp_release = "v0.11.20"
+config_webapp_image_version = "0.11.21"
 
-// VARS for webapp image
-config_webapp_image_tag = "0.11.20"
-config_webapp_flavor    = "ppp"
-config_webapp_api_url   = "https://api.partner-platform.dev.opentargets.xyz/api/v4/graphql"
-config_webapp_ot_ai_api_url = "https://ai.partner-platform.dev.opentargets.xyz"
+# Environment variables for webapp container
+config_webapp_deployment_context = {
+  WEBAPP_FLAVOR         = "ppp"
+  WEBAPP_API_URL        = "https://api.partner-platform.dev.opentargets.xyz/api/v4/graphql"
+  WEBAPP_OPENAI_URL     = "https://ai.partner-platform.dev.opentargets.xyz"
+}
+
+# config_webapp_flavor    = "ppp"
+# config_webapp_api_url   = "https://api.partner-platform.dev.opentargets.xyz/api/v4/graphql"
+# config_webapp_ot_ai_api_url = "https://ai.partner-platform.dev.opentargets.xyz"
 
 
 // Data Context
@@ -53,7 +59,7 @@ config_webapp_deployment_context_map = {
 // Robots.txt profile --- //
 // config_webapp_robots_profile = "default"
 // Web Application Customisation Profile --- //
-config_webapp_custom_profile = "ppp.js"
+# config_webapp_custom_profile = "ppp.js"
 
 // --- Security Configuration --- //
 // Use defaults for now

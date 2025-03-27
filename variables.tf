@@ -238,27 +238,19 @@ variable "config_webapp_release" {
   type        = string
 }
 
-variable "config_webapp_image_tag" {
+variable "config_webapp_image_version" {
   description = "Release version of the web docker image to deploy"
   type        = string
 }
 
-variable "config_webapp_flavor" {
-  description = "Web application flavor to deploy, default 'platform'. Use 'ppp' for partner platform"
-  type        = string
-  default     = "platform"
-}
-
-variable "config_webapp_api_url" {
-  description = "API URL to use in the web application, default is dev 'https://api.platform.dev.opentargets.xyz/api/v4/graphql'"
-  type        = string
-  default     = "https://api.platform.dev.opentargets.xyz/api/v4/graphql"
-}
-
-variable "config_webapp_ot_ai_api_url" {
-  description = "Open Targets AI API URL to use in the web application, default is dev 'https://ai.platform.dev.opentargets.xyz'"
-  type        = string
-  default     = "https://ai.platform.dev.opentargets.xyz"
+variable "config_webapp_deployment_context" {
+  description = "A map of values to pass to the webapp container as environment variables"
+  type        = any
+  default     = {
+    WEBAPP_FLAVOR         = "platform"
+    WEBAPP_URL_API        = "https://api.platform.dev.opentargets.xyz/api/v4/graphql"
+    WEBAPP_OPENAI_URL     = "https://ai.platform.dev.opentargets.xyz"
+  }
 }
 
 variable "config_webapp_deployment_context_map" {
