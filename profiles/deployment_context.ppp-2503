@@ -7,10 +7,10 @@ config_project_id         = "open-targets-prod"
 config_deployment_regions = ["europe-west1"]
 
 // --- Elastic Search configuration --- //
-config_vm_elastic_search_data_volume_image = "pos-ppp-dev--20250319-1515-es"
+config_vm_elastic_search_data_volume_image = "pos-ppp-dev--20250324-1334-es"
 
 // --- Clickhouse configuration --- //
-config_vm_clickhouse_data_volume_image = "pos-ppp-dev--20250319-1515-ch"
+config_vm_clickhouse_data_volume_image = "pos-ppp-dev--20250324-1334-ch"
 
 // --- API configuration --- //
 config_vm_platform_api_image_version = "25.0.0"
@@ -33,7 +33,24 @@ config_dns_managed_zone_name      = "opentargets-org"
 config_dns_managed_zone_dns_name  = "opentargets.org."
 
 // --- Web App configuration --- //
-config_webapp_release = "v0.11.15"
+config_webapp_release = "v0.11.21"
+
+
+// VARS for webapp image
+config_webapp_image_version = "0.11.21"
+
+config_webapp_deployment_context = {
+  WEBAPP_FLAVOR         = "ppp"
+  WEBAPP_API_URL        = "https://api.partner-platform.opentargets.org/api/v4/graphql"
+  WEBAPP_OPENAI_URL     = "https://ai.partner-platform.opentargets.org"
+  GOOGLE_TAG_MANAGER_ID = "GTM-5BSVCXB"
+}
+
+config_webapp_flavor    = "ppp"
+config_webapp_api_url   = "https://api.partner-platform.opentargets.org/api/v4/graphql"
+config_webapp_ot_ai_api_url = "https://ai.partner-platform.opentargets.org"
+config_webapp_google_tag_manager_id = "GTM-5BSVCXB"
+
 // Data Context
 config_webapp_bucket_name_data_assets = "open-targets-ppp-releases"
 config_webapp_data_context_release    = "partners/25.03"

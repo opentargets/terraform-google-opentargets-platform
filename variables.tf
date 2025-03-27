@@ -238,6 +238,21 @@ variable "config_webapp_release" {
   type        = string
 }
 
+variable "config_webapp_image_version" {
+  description = "Release version of the web docker image to deploy"
+  type        = string
+}
+
+variable "config_webapp_deployment_context" {
+  description = "A map of values to pass to the webapp container as environment variables"
+  type        = any
+  default = {
+    WEBAPP_FLAVOR     = "platform"
+    WEBAPP_URL_API    = "https://api.platform.dev.opentargets.xyz/api/v4/graphql"
+    WEBAPP_OPENAI_URL = "https://ai.platform.dev.opentargets.xyz"
+  }
+}
+
 variable "config_webapp_deployment_context_map" {
   description = "A map with values for those parameters that need to be customized in the deployment of the web application, see module defaults as an example"
   // In this iteration, we use 'any' type here, while we converge on the mapping model for the web application

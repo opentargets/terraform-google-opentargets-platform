@@ -28,10 +28,20 @@ variable "webapp_release" {
   type        = string
 }
 
+variable "webapp_image_version" {
+  description = "Webapp image tag to use for the web application deployment"
+  type        = string
+}
+
 variable "webapp_deployment_context_placeholder" {
   description = "This defines the placeholder to replace within the public index.html, with the deployment context, default 'DEVOPS_CONTEXT_DEPLOYMENT' (DEPRECATED)"
   type        = string
   default     = "DEVOPS_CONTEXT_DEPLOYMENT"
+}
+
+variable "webapp_deployment_context_env" {
+  description = "This defines the environment variable to use for the deployment context"
+  type        = any
 }
 
 variable "webapp_deployment_context" {
