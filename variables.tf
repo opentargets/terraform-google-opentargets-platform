@@ -246,10 +246,10 @@ variable "config_webapp_image_version" {
 variable "config_webapp_deployment_context" {
   description = "A map of values to pass to the webapp container as environment variables"
   type        = any
-  default     = {
-    WEBAPP_FLAVOR         = "platform"
-    WEBAPP_URL_API        = "https://api.platform.dev.opentargets.xyz/api/v4/graphql"
-    WEBAPP_OPENAI_URL     = "https://ai.platform.dev.opentargets.xyz"
+  default = {
+    WEBAPP_FLAVOR     = "platform"
+    WEBAPP_URL_API    = "https://api.platform.dev.opentargets.xyz/api/v4/graphql"
+    WEBAPP_OPENAI_URL = "https://ai.platform.dev.opentargets.xyz"
   }
 }
 
