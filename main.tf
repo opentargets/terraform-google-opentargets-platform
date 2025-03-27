@@ -183,19 +183,19 @@ module "backend_api" {
 
 // --- Web Application --- //
 module "web_app" {
-  source                    = "./modules/webapp"
-  project_id                = var.config_project_id
-  depends_on                = [module.vpc_network]
-  module_wide_prefix_scope  = "${var.config_release_name}-web"
-  folder_tmp                = local.folder_tmp
-  location                  = var.config_webapp_location
-  webapp_repo_name          = var.config_webapp_repo_name
-  webapp_release            = var.config_webapp_release
-  webapp_image_version      = var.config_webapp_image_version
+  source                        = "./modules/webapp"
+  project_id                    = var.config_project_id
+  depends_on                    = [module.vpc_network]
+  module_wide_prefix_scope      = "${var.config_release_name}-web"
+  folder_tmp                    = local.folder_tmp
+  location                      = var.config_webapp_location
+  webapp_repo_name              = var.config_webapp_repo_name
+  webapp_release                = var.config_webapp_release
+  webapp_image_version          = var.config_webapp_image_version
   webapp_deployment_context_env = var.config_webapp_deployment_context
-  webapp_deployment_context = var.config_webapp_deployment_context_map
-  webapp_robots_profile     = var.config_webapp_robots_profile
-  webapp_custom_profile     = var.config_webapp_custom_profile
+  webapp_deployment_context     = var.config_webapp_deployment_context_map
+  webapp_robots_profile         = var.config_webapp_robots_profile
+  webapp_custom_profile         = var.config_webapp_custom_profile
   // Data Context --- //
   webapp_bucket_data_context_name    = var.config_webapp_bucket_name_data_assets
   webapp_bucket_data_context_release = var.config_webapp_data_context_release
