@@ -27,7 +27,9 @@ resource "random_string" "random" {
     vm_api_data_year              = var.api_d_year,
     vm_api_data_month             = var.api_d_month,
     vm_api_data_iter              = var.api_d_iteration,
-    vm_api_ignore_cache           = var.api_ignore_cache
+    vm_api_ignore_cache           = var.api_ignore_cache,
+    jvm_xms                       = var.jvm_xms,
+    jvm_xmx                       = var.jvm_xmx
   }
 }
 
@@ -112,6 +114,8 @@ resource "google_compute_instance_template" "otpapi_template" {
         API_DATA_MONTH       = var.api_d_month,
         API_DATA_ITER        = var.api_d_iteration,
         API_IGNORE_CACHE     = var.api_ignore_cache
+        JVM_XMS              = var.jvm_xms,
+        JVM_XMX              = var.jvm_xmx
       }
     )
     google-logging-enabled = true

@@ -434,6 +434,16 @@ variable "config_vm_api_ignore_cache" {
   type        = bool
   default     = false
 }
+variable "config_api_jvm_xms" {
+  description = "Xms (initial memory allocation pool) parameter for the API JVM"
+  type        = string
+  default     = "2g"
+}
+variable "config_api_jvm_xmx" {
+  description = "Xmx (maximum memory allocation pool) parameter for the API JVM"
+  type        = string
+  default     = "7g"
+}
 
 // --- OpenAI API --- //
 variable "config_openai_api_docker_image_version" {
