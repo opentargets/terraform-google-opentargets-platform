@@ -6,19 +6,21 @@ config_vm_elastic_search_data_volume_image = "posgenpf-20250307-1356-es"
 // --- Clickhouse configuration --- //
 config_vm_clickhouse_data_volume_image = "posgenpf-20250307-1356-ch"
 // --- API configuration --- //
-config_vm_platform_api_image_version = "25.0.0"
+config_vm_platform_api_image_version = "25.0.1"
 config_vm_version_major              = "25"
 config_vm_version_minor              = "0"
-config_vm_version_patch              = "0"
+config_vm_version_patch              = "1"
 config_vm_data_year                  = "25"
 config_vm_data_month                 = "03"
 config_vm_data_iteration             = "0"
+config_api_jvm_xms                   = "30g"
+config_api_jvm_xmx                   = "48g"
 // --- OpenAI API configuration --- //
 config_openai_api_docker_image_version = "0.0.11"
 // --- Web App configuration --- //
 config_webapp_release = "v0.11.16"
 // Web App Data Context
-config_webapp_image_version = "0.11.21"
+config_webapp_image_version = "0.11.16"
 
 config_webapp_deployment_context = {
   WEBAPP_FLAVOR         = "platform"
