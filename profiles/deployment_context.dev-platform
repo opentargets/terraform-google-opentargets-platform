@@ -25,6 +25,8 @@ config_vm_data_year                  = "25"
 config_vm_data_month                 = "03"
 config_vm_data_iteration             = "0"
 config_vm_api_ignore_cache           = true
+config_api_jvm_xms                   = "2g"
+config_api_jvm_xmx                   = "7g"
 # config_vm_api_vcpus                  = 8
 # config_vm_api_mem                    = 30720
 

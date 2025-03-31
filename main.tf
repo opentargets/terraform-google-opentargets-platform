@@ -160,6 +160,8 @@ module "backend_api" {
   api_d_month                   = var.config_vm_data_month
   api_d_iteration               = var.config_vm_data_iteration
   api_ignore_cache              = var.config_vm_api_ignore_cache
+  jvm_xms                       = var.config_api_jvm_xms
+  jvm_xmx                       = var.config_api_jvm_xmx
   vm_flag_preemptible           = var.config_vm_api_flag_preemptible
   backend_connection_map = zipmap(
     var.config_deployment_regions,

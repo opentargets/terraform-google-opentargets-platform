@@ -78,6 +78,18 @@ variable "vm_api_mem" {
   default     = "7680"
 }
 
+variable "jvm_xms" {
+  description = "JVM initial heap size, default '2g'"
+  type        = string
+  default     = "2g"
+}
+
+variable "jvm_xmx" {
+  description = "JVM maximum heap size, default '7g'"
+  type        = string
+  default     = "7g"
+}
+
 variable "vm_api_image" {
   description = "VM image to use for API nodes, default 'cos-stable'"
   type        = string
