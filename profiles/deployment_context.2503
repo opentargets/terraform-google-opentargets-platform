@@ -26,7 +26,7 @@ config_webapp_deployment_context = {
   WEBAPP_FLAVOR         = "platform"
   WEBAPP_API_URL        = "https://api.platform.opentargets.org/api/v4/graphql"
   WEBAPP_OPENAI_URL     = "https://ai.platform.opentargets.org"
-  GOOGLE_TAG_MANAGER_ID = "GTM-WPXWRDV"
+  WEBAPP_GOOGLE_TAG_MANAGER_ID = "GTM-WPXWRDV"
 }
 
 config_webapp_bucket_name_data_assets = "open-targets-pre-data-releases"

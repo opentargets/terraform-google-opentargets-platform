@@ -43,7 +43,7 @@ config_webapp_deployment_context = {
   WEBAPP_FLAVOR         = "ppp"
   WEBAPP_API_URL        = "https://api.partner-platform.opentargets.org/api/v4/graphql"
   WEBAPP_OPENAI_URL     = "https://ai.partner-platform.opentargets.org"
-  GOOGLE_TAG_MANAGER_ID = "GTM-5BSVCXB"
+  WEBAPP_GOOGLE_TAG_MANAGER_ID = "GTM-5BSVCXB"
 }
 
 config_webapp_flavor    = "ppp"
