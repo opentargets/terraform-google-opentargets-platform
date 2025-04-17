@@ -6,13 +6,13 @@ config_release_name = "mbdevpf"
 config_deployment_regions = ["europe-west1"]
 
 // --- Elastic Search configuration --- //
-config_vm_elastic_search_data_volume_image = "posgenpf-20250307-1356-es"
+config_vm_elastic_search_data_volume_image = "posdevpf-20250416-0857-es"
 // config_vm_elastic_search_vcpus          = "16"
 // config_vm_elastic_search_mem            = "61440"
 // config_vm_elastic_search_boot_disk_size = "128"
 
 // --- Clickhouse configuration --- //
-config_vm_clickhouse_data_volume_image = "posgenpf-20250307-1356-ch"
+config_vm_clickhouse_data_volume_image = "posdevpf-20250416-0857-ch"
 //config_vm_clickhouse_vcpus = 8
 //config_vm_clickhouse_mem = 30720
 
@@ -29,6 +29,12 @@ config_api_jvm_xms                   = "3g"
 config_api_jvm_xmx                   = "8g"
 # config_vm_api_vcpus                  = 8
 # config_vm_api_mem                    = 30720
+
+config_webapp_deployment_context = {
+  WEBAPP_FLAVOR         = "platform"
+  WEBAPP_API_URL        = "https://api.platform.dev.opentargets.xyz/api/v4/graphql"
+  WEBAPP_OPENAI_URL     = "https://ai.platform.dev.opentargets.xyz"
+}
 
 // --- OpenAI API configuration --- //
 config_openai_api_docker_image_version = "0.0.11"
