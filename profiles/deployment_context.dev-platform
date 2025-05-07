@@ -6,21 +6,21 @@ config_release_name = "mbdevpf"
 config_deployment_regions = ["europe-west1"]
 
 // --- Elastic Search configuration --- //
-config_vm_elastic_search_data_volume_image = "posgenpf-20250307-1356-es"
+config_vm_elastic_search_data_volume_snapshot = "pos-20250425-0903-os-snapshot"
 // config_vm_elastic_search_vcpus          = "16"
 // config_vm_elastic_search_mem            = "61440"
 // config_vm_elastic_search_boot_disk_size = "128"
 
 // --- Clickhouse configuration --- //
-config_vm_clickhouse_data_volume_image = "posgenpf-20250307-1356-ch"
+config_vm_clickhouse_data_volume_snapshot = "pos-20250423-1436-ch-snapshot"
 //config_vm_clickhouse_vcpus = 8
 //config_vm_clickhouse_mem = 30720
 
 // --- API configuration --- //
-config_vm_platform_api_image_version = "25.0.2-alpha.2"
+config_vm_platform_api_image_version = "25.0.2-alpha.4"
 config_vm_version_major              = "25"
 config_vm_version_minor              = "0"
-config_vm_version_patch              = "1"
+config_vm_version_patch              = "2"
 config_vm_data_year                  = "25"
 config_vm_data_month                 = "03"
 config_vm_data_iteration             = "0"

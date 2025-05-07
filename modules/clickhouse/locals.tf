@@ -11,7 +11,7 @@ locals {
   clickhouse_template_tags         = concat(var.vm_firewall_tags, [local.fw_tag_clickhouse_node])
   clickhouse_template_machine_type = "custom-${var.vm_clickhouse_vcpus}-${var.vm_clickhouse_mem}"
   clickhouse_template_source_image = "${var.vm_clickhouse_image_project}/${var.vm_clickhouse_image}"
-  clickhouse_data_disk_image       = "${var.vm_clickhouse_data_volume_image_project}/${var.vm_clickhouse_data_volume_image}"
+  clickhouse_data_disk_snapshot       = "global/snapshots/${var.vm_clickhouse_data_volume_snapshot}"
   clickhouse_docker_image          = "${var.vm_clickhouse_docker_image}:${var.vm_clickhouse_docker_image_version}"
   // Clickhouse data disk device name
   clickhouse_data_disk_device = "ch-data"

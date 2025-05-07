@@ -85,8 +85,8 @@ variable "vm_clickhouse_boot_disk_size" {
   default     = "16GB"
 }
 
-variable "vm_clickhouse_data_volume_image" {
-  description = "Clickhouse Data image name"
+variable "vm_clickhouse_data_volume_snapshot" {
+  description = "Clickhouse Data volume snapshot name"
   type        = string
 }
 
