@@ -4,4 +4,4 @@
 
 // Elastic Search node --- //
 // This is the Elastic Search Docker image we will use for the Elastic Search node.
-config_vm_elastic_search_version = "2.10.0"
+config_vm_elastic_search_version = "2.19.0"

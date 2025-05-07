@@ -74,8 +74,8 @@ variable "config_vm_elastic_search_boot_disk_size" {
   default     = "16"
 }
 
-variable "config_vm_elastic_search_data_volume_image" {
-  description = "Elastic Search Data image name"
+variable "config_vm_elastic_search_data_volume_snapshot" {
+  description = "Elastic Search Data volume snapshot name"
   type        = string
 }
 
@@ -140,8 +140,8 @@ variable "config_vm_clickhouse_boot_disk_size" {
   default     = "16GB"
 }
 
-variable "config_vm_clickhouse_data_volume_image" {
-  description = "Clickhouse Data image name"
+variable "config_vm_clickhouse_data_volume_snapshot" {
+  description = "Clickhouse Data volume snapshot name"
   type        = string
 }
 

@@ -53,7 +53,7 @@ module "backend_elastic_search" {
   vm_elastic_search_image             = var.config_vm_elastic_search_image
   vm_elastic_search_image_project     = var.config_vm_elastic_search_image_project
   vm_elastic_search_boot_disk_size    = var.config_vm_elastic_search_boot_disk_size
-  vm_elastic_search_data_volume_image = var.config_vm_elastic_search_data_volume_image
+  vm_elastic_search_data_volume_snapshot = var.config_vm_elastic_search_data_volume_snapshot
   vm_flag_preemptible                 = var.config_vm_elasticsearch_flag_preemptible
   // Additional firewall tags if development mode is 'ON'
   vm_firewall_tags       = local.dev_mode_fw_tags
@@ -81,7 +81,7 @@ module "backend_clickhouse" {
   vm_clickhouse_image                = var.config_vm_clickhouse_image
   vm_clickhouse_image_project        = var.config_vm_clickhouse_image_project
   vm_clickhouse_boot_disk_size       = var.config_vm_clickhouse_boot_disk_size
-  vm_clickhouse_data_volume_image    = var.config_vm_clickhouse_data_volume_image
+  vm_clickhouse_data_volume_snapshot    = var.config_vm_clickhouse_data_volume_snapshot
   vm_clickhouse_docker_image         = var.config_vm_clickhouse_docker_image
   vm_clickhouse_docker_image_version = var.config_vm_clickhouse_docker_image_version
   vm_flag_preemptible                = var.config_vm_clickhouse_flag_preemptible
