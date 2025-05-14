@@ -185,6 +185,43 @@ module "backend_api" {
   dns_domain_api = local.dns_platform_api_dns_name
 }
 
+// --- Prometheus --- //
+module "backend_prometheus" {
+  source     = "./modules/prometheus"
+  project_id = var.config_project_id
+  depends_on = [
+    module.vpc_network,
+    module.backend_elastic_search,
+    module.backend_clickhouse,
+    module.backend_api
+  ]
+  module_wide_prefix_scope = "${var.config_release_name}-pro"
+  network_name             = module.vpc_network.network_name
+  network_self_link        = module.vpc_network.network_self_link
+  network_subnet_name      = local.vpc_network_main_subnet_name
+  // We are using an root module defined GLB, so we need this tag to be appended to api nodes, for them to be visible to the GLB. Include development mode firewall tags
+  vm_firewall_tags = concat([local.tag_glb_target_node], local.dev_mode_fw_tags)
+  // API VMs configuration
+  vm_flag_preemptible           = var.config_vm_prometheus_flag_preemptible
+  backend_connection_map = zipmap(
+    var.config_deployment_regions,
+    [
+      for idx, region in var.config_deployment_regions : {
+        host_clickhouse     = module.backend_clickhouse[idx].ilb_ip_address
+        host_elastic_search = module.backend_elastic_search[idx].ilb_ip_address
+      }
+    ]
+  )
+  deployment_regions     = var.config_deployment_regions
+  deployment_target_size = 1
+  // This can be
+  //  INTERNAL   - ILB
+  //  GLOBAL    - GLB
+  //  NONE      - To not attach a load balancer to the instance groups
+  load_balancer_type = "NONE"
+  // I have to pass this value until I implement a validation mechanism, but the module won't use it, because it's set to 'NONE' LB
+}
+
 // --- Web Application --- //
 module "web_app" {
   source                        = "./modules/webapp"
