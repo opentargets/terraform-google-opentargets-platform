@@ -186,6 +186,13 @@ variable "config_vm_api_flag_preemptible" {
   description = "Use this flag for deploying API nodes on preemptible VMs, default 'false'"
   type        = bool
   default     = false
+
+// --- DNS Configuration --- //
+}
+variable "config_vm_prometheus_flag_preemptible" {
+  description = "Use this flag for deploying API nodes on preemptible VMs, default 'false'"
+  type        = bool
+  default     = false
 }
 
 // --- DNS Configuration --- //
