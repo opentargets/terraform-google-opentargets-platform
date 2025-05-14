@@ -1,0 +1,70 @@
+// --- Open Targets Platform PERMANENT development deployment ---//
+// --- Release information --- //
+config_release_name = "promdevpf"
+
+// --- Deployment configuration --- //
+config_deployment_regions = ["europe-west1"]
+
+// --- Elastic Search configuration --- //
+config_vm_elastic_search_data_volume_image = "posgenpf-20250307-1356-es"
+// config_vm_elastic_search_vcpus          = "16"
+// config_vm_elastic_search_mem            = "61440"
+// config_vm_elastic_search_boot_disk_size = "128"
+
+// --- Clickhouse configuration --- //
+config_vm_clickhouse_data_volume_image = "posgenpf-20250307-1356-ch"
+//config_vm_clickhouse_vcpus = 8
+//config_vm_clickhouse_mem = 30720
+
+// --- API configuration --- //
+config_vm_platform_api_image_version = "25.2.0-prom.2"
+config_vm_version_major              = "25"
+config_vm_version_minor              = "0"
+config_vm_version_patch              = "1"
+config_vm_data_year                  = "25"
+config_vm_data_month                 = "03"
+config_vm_data_iteration             = "0"
+config_vm_api_ignore_cache           = true
+config_api_jvm_xms                   = "3g"
+config_api_jvm_xmx                   = "8g"
+# config_vm_api_vcpus                  = 8
+# config_vm_api_mem                    = 30720
+
+// --- DNS configuration --- //
+config_dns_platform_subdomain     = "platform"
+config_dns_subdomain_prefix       = "prom"
+config_dns_platform_api_subdomain = "api"
+
+config_webapp_deployment_context = {
+  WEBAPP_FLAVOR         = "platform"
+  WEBAPP_API_URL        = "https://api.platform.prom.opentargets.xyz/api/v4/graphql"
+  WEBAPP_OPENAI_URL     = "https://ai.platform.prom.opentargets.xyz"
+}
+
+// --- OpenAI API configuration --- //
+config_openai_api_docker_image_version = "0.0.11"
+
+// --- Web App configuration --- //
+config_webapp_release       = "v0.11.16"
+config_webapp_image_version = "0.11.16"
+// Data Context
+config_webapp_data_context_release = "25.03"
+config_webapp_deployment_context_map = {
+  DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API       = "'https://api.platform.prom.opentargets.xyz/api/v4/graphql'"
+  DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_URL_API_BETA  = "'https://api.platform.prom.opentargets.xyz/api/v4/graphql'"
+  DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_OT_AI_API_URL = "'https://ai.platform.prom.opentargets.xyz'"
+  DEVOPS_CONTEXT_PLATFORM_APP_CONFIG_EFO_URL       = "'/data/ontology/efo_json/diseases_efo.jsonl'"
+}
+
+// --- Security Configuration --- //
+// Enable / Disable network security policies application (Platform 'dev' default is false)
+config_security_api_enable    = false
+config_security_webapp_enable = false
+
+// --- VMs provisioning model --- //
+// Use on-demand machines
+//config_vm_api_flag_preemptible           = false
+//config_vm_clickhouse_flag_preemptible    = false
+//config_vm_elasticsearch_flag_preemptible = false
+//config_vm_webserver_flag_preemptible     = false
+//config_openai_api_flag_preemptible       = false
