@@ -33,6 +33,12 @@ apt-get install -y docker-ce docker-ce-cli containerd.io
 
 mkdir /opt/prometheus
 
-# cp /home/prometheus.yml /opt/prometheus/prometheus.yml
+git clone -b rm-prometheus https://github.com/opentargets/terraform-google-opentargets-platform.git
 
-# docker compose up -d
+# copy prometheus config
+cp terraform-google-opentargets-platform/modules/prometheus/config/prometheus.yml /opt/prometheus/prometheus.yml
+
+# Start prometheus and grafana
+cd terraform-google-opentargets-platform/modules/prometheus/config
+
+docker compose up -d
