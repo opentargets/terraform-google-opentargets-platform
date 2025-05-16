@@ -187,7 +187,7 @@ variable "config_vm_api_flag_preemptible" {
   type        = bool
   default     = false
 
-// --- DNS Configuration --- //
+  // --- DNS Configuration --- //
 }
 variable "config_vm_prometheus_flag_preemptible" {
   description = "Use this flag for deploying API nodes on preemptible VMs, default 'false'"
@@ -474,6 +474,16 @@ variable "config_openai_credentials_filename" {
   description = "Name of the file containing the OpenAI credentials"
   type        = string
   default     = "openai_credentials.txt"
+}
+
+variable "common_tags" {
+  description = "Common tags to be used in all resources"
+  type        = list(string)
+  default = [
+    "dev",
+    "open-targets",
+    "platform"
+  ]
 }
 
 // --- Credentials --- //
