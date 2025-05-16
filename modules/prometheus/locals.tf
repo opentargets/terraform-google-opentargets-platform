@@ -1,7 +1,7 @@
 locals {
   // PROMETHEUS Communication Ports
   otp_prometheus_port      = 9090
-  otp_grafana_port      = 3000
+  otp_grafana_port         = 3000
   otp_prometheus_port_name = "otpprometheusport"
   // Firewall
   fw_tag_otp_prometheus_node = "otpprometheusnode"

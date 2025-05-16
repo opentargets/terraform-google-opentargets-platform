@@ -71,11 +71,11 @@ locals {
   // Web Application Deployment Bundle
   webapp_deployment_bundle_filename = "deployment_bundle.tgz"
   webapp_deployment_bundle_url      = "https://storage.googleapis.com/${local.bucket_name}/${local.webapp_deployment_bundle_filename}"
-  
+
   // --- Web App Deployment Context --- //
   webapp_env_vars = join(" ",
-   [for key, value in var.webapp_deployment_context_env :
-     "-e \"${key}=${value}\""
-   ]
-   )
+    [for key, value in var.webapp_deployment_context_env :
+      "-e \"${key}=${value}\""
+    ]
+  )
 }
