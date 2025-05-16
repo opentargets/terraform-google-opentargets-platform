@@ -14,7 +14,7 @@ resource "google_compute_firewall" "vpc_netfw_otprometheus_node" {
 
   target_tags = [local.fw_tag_otp_prometheus_node]
 
-  source_ranges = [ "0.0.0.0/0" ]
+  source_ranges = ["0.0.0.0/0"]
 }
 
 // Health Checks Traffic --- //
@@ -32,5 +32,5 @@ resource "google_compute_firewall" "vpc_netfw_otprometheus_healthchecks" {
 
   target_tags = [local.fw_tag_otp_prometheus_node]
 
-  source_ranges = [ "0.0.0.0/0" ]
+  source_ranges = ["0.0.0.0/0"]
 }
