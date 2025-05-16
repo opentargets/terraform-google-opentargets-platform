@@ -14,10 +14,10 @@ resource "random_string" "random" {
   upper   = false
   special = false
   keepers = {
-    otpprometheus_template_tags          = join("", sort(local.otpprometheus_template_tags)),
-    otpprometheus_template_machine_type  = local.otpprometheus_template_machine_type,
-    vm_startup_script             = md5(file("${path.module}/scripts/instance_startup.sh")),
-    vm_flag_preemptible           = var.vm_flag_preemptible
+    otpprometheus_template_tags         = join("", sort(local.otpprometheus_template_tags)),
+    otpprometheus_template_machine_type = local.otpprometheus_template_machine_type,
+    vm_startup_script                   = md5(file("${path.module}/scripts/instance_startup.sh")),
+    vm_flag_preemptible                 = var.vm_flag_preemptible
   }
 }
 
@@ -54,7 +54,7 @@ resource "google_compute_instance_template" "otpprometheus_template" {
   count = length(var.deployment_regions)
 
   name                 = "${var.module_wide_prefix_scope}-${count.index}-otprometheus-template-${random_string.random.result}"
-  description          = "Open Targets Platform Prometheus node template, Prometheus docker image version XXXX and Grafana XXXX"//TODO: Set the description to the versions used
+  description          = "Open Targets Platform Prometheus node template, Prometheus docker image version XXXX and Grafana XXXX" //TODO: Set the description to the versions used
   instance_description = "Open Targets Platform Prometheus node, Prometheus docker image version XXXX and Grafana XXXX"
   region               = var.deployment_regions[count.index]
 
@@ -89,7 +89,7 @@ resource "google_compute_instance_template" "otpprometheus_template" {
   }
 
   metadata = {
-    startup-script = file("${path.module}/scripts/instance_startup.sh")
+    startup-script         = file("${path.module}/scripts/instance_startup.sh")
     google-logging-enabled = true
   }
 
