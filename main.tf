@@ -183,7 +183,7 @@ module "backend_api" {
   load_balancer_type = "NONE"
   // I have to pass this value until I implement a validation mechanism, but the module won't use it, because it's set to 'NONE' LB
   dns_domain_api = local.dns_platform_api_dns_name
-  common_tags = var.common_tags
+  common_tags    = var.common_tags
 }
 
 // --- Prometheus --- //
