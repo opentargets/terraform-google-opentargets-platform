@@ -150,6 +150,10 @@ variable "api_ignore_cache" {
   type        = bool
   default     = false
 }
+variable "common_tags" {
+  description = "List of common tags to attach to resources"
+  type        = list(string)
+}
 
 // --- Backend Connection Information --- //
 variable "backend_connection_map" {

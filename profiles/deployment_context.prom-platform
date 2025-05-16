@@ -17,7 +17,7 @@ config_vm_clickhouse_data_volume_image = "posgenpf-20250307-1356-ch"
 //config_vm_clickhouse_mem = 30720
 
 // --- API configuration --- //
-config_vm_platform_api_image_version = "25.0.2-prom.4"
+config_vm_platform_api_image_version = "25.0.2-prom.6"
 config_vm_version_major              = "25"
 config_vm_version_minor              = "0"
 config_vm_version_patch              = "1"
@@ -36,9 +36,9 @@ config_dns_subdomain_prefix       = "prom"
 config_dns_platform_api_subdomain = "api"
 
 config_webapp_deployment_context = {
-  WEBAPP_FLAVOR         = "platform"
-  WEBAPP_API_URL        = "https://api.platform.prom.opentargets.xyz/api/v4/graphql"
-  WEBAPP_OPENAI_URL     = "https://ai.platform.prom.opentargets.xyz"
+  WEBAPP_FLAVOR     = "platform"
+  WEBAPP_API_URL    = "https://api.platform.prom.opentargets.xyz/api/v4/graphql"
+  WEBAPP_OPENAI_URL = "https://ai.platform.prom.opentargets.xyz"
 }
 
 // --- OpenAI API configuration --- //
@@ -68,3 +68,9 @@ config_security_webapp_enable = false
 //config_vm_elasticsearch_flag_preemptible = false
 //config_vm_webserver_flag_preemptible     = false
 //config_openai_api_flag_preemptible       = false
+
+common_tags = [
+    "prom",
+    "open-targets",
+    "platform"
+  ]

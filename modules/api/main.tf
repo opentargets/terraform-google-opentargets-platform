@@ -69,7 +69,7 @@ resource "google_compute_instance_template" "otpapi_template" {
   region               = var.deployment_regions[count.index]
 
 
-  tags = local.otpapi_template_tags
+  tags = concat(local.otpapi_template_tags, var.common_tags)
 
   machine_type   = local.otpapi_template_machine_type
   can_ip_forward = false
