@@ -17,6 +17,8 @@ resource "random_string" "random" {
     otpprometheus_template_tags         = join("", sort(local.otpprometheus_template_tags)),
     otpprometheus_template_machine_type = local.otpprometheus_template_machine_type,
     vm_startup_script                   = md5(file("${path.module}/scripts/instance_startup.sh")),
+    vm_compose                          = md5(file("${path.module}/config/compose.yml")),
+    vm_prometheus                       = md5(file("${path.module}/config/prometheus.yml")),
     vm_flag_preemptible                 = var.vm_flag_preemptible
   }
 }
