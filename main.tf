@@ -221,6 +221,7 @@ module "backend_prometheus" {
   //  NONE      - To not attach a load balancer to the instance groups
   load_balancer_type = "NONE"
   // I have to pass this value until I implement a validation mechanism, but the module won't use it, because it's set to 'NONE' LB
+  common_tags = var.common_tags
 }
 
 // --- Web Application --- //
