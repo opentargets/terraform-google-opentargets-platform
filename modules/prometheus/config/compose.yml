@@ -24,7 +24,7 @@ services:
     volumes:
       - /opt/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus-data:/prometheus
-      # - /opt/prometheus/open-targets-eu-dev-3570d8fdec04.json:/etc/prometheus/application_default_credentials.json
+      - /opt/prometheus/application_default_credentials.json:/etc/prometheus/application_default_credentials.json
     command:
       - '--web.enable-lifecycle'
       - '--config.file=/etc/prometheus/prometheus.yml'

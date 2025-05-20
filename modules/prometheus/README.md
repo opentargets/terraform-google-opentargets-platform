@@ -1,3 +1,14 @@
+# Pending
+- [ ] add tags to resources to further filter metrics. I need to check how to apply the tags to the vm not the template
+- [ ] Update the Prometheus configuration file with all possible zones for each region
+- [ ] Generate and attach credentials file to Prometheus vm. Set env variable GOOGLE_APPLICATION_CREDENTIALS
+- [ ] Update vm definition to not use manager
+- [ ] Pre configure Grafana
+- [ ] Update documentation
+- [ ] Check JVM metrics and how to ignore the problematic ones
+- [ ] Expose CH and ES metrics endpoint
+- [ ] Update vm definitios to 
+
 # Open Targets Platform API TODO: Update this documentation
 This submodule defines the infrastructure needed to deploy Open Targets Platform API.
 
