@@ -31,7 +31,7 @@ data "google_compute_zones" "available" {
 }
 
 // --- Service Account Configuration ---
-resource "google_service_account" "gcp_service_acc_apis" {
+resource "google_service_account" "gcp_service_acc_prom" {
   project      = var.project_id
   account_id   = "${var.module_wide_prefix_scope}-svcacc-${random_string.random.result}"
   display_name = "${var.module_wide_prefix_scope}-GCP-service-account"
@@ -42,13 +42,17 @@ resource "google_service_account" "gcp_service_acc_apis" {
 resource "google_project_iam_member" "logging-writer" {
   project = var.project_id
   role    = "roles/logging.logWriter"
-  member  = "serviceAccount:${google_service_account.gcp_service_acc_apis.email}"
+  member  = "serviceAccount:${google_service_account.gcp_service_acc_prom.email}"
 }
 // TODO: Check if this is needed
 resource "google_project_iam_member" "monitoring-writer" {
   project = var.project_id
   role    = "roles/monitoring.metricWriter"
-  member  = "serviceAccount:${google_service_account.gcp_service_acc_apis.email}"
+  member  = "serviceAccount:${google_service_account.gcp_service_acc_prom.email}"
+}
+
+resource "google_service_account_key" "gcp_service_acc_prom_key" {
+  service_account_id = google_service_account.gcp_service_acc_prom.name
 }
 // --- /Service Account Configuration/ ---
 
@@ -60,7 +64,7 @@ resource "google_compute_instance_template" "otpprometheus_template" {
   instance_description = "Open Targets Platform Prometheus node, Prometheus docker image version XXXX and Grafana XXXX"
   region               = var.deployment_regions[count.index]
 
-  tags = local.otpprometheus_template_tags
+  tags = concat(local.otpprometheus_template_tags, var.common_tags)
 
   machine_type   = local.otpprometheus_template_machine_type
   can_ip_forward = false
@@ -91,13 +95,15 @@ resource "google_compute_instance_template" "otpprometheus_template" {
   }
 
   metadata = {
-    startup-script         = file("${path.module}/scripts/instance_startup.sh")
+    startup-script         = templatefile("${path.module}/scripts/instance_startup.sh", {
+      svc_acc_key = replace(base64decode(google_service_account_key.gcp_service_acc_prom_key.private_key), "$", "\\$")
+    })
     google-logging-enabled = true
   }
 
   service_account {
     // This is useless anyway, maybe it's not covered by the google provider
-    email = google_service_account.gcp_service_acc_apis.email
+    email = google_service_account.gcp_service_acc_prom.email
     // This WAS SUPPOSED TO BE LEGACY...
     // TODO: Check if logging and monitoring are needed
     scopes = ["cloud-platform", "logging-write", "monitoring-write"]
@@ -170,7 +176,7 @@ resource "google_compute_region_autoscaler" "autoscaler_otprometheus" {
   target = google_compute_region_instance_group_manager.regmig_otprometheus[count.index].id
 
   autoscaling_policy {
-    max_replicas    = 2
+    max_replicas    = 1
     min_replicas    = 1
     cooldown_period = 30
     //    load_balancing_utilization {

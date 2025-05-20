@@ -91,6 +91,11 @@ variable "deployment_target_size" {
   default     = 1
 }
 
+variable "common_tags" {
+  description = "List of common tags to attach to resources"
+  type        = list(string)
+}
+
 // --- Backend Connection Information --- //
 variable "backend_connection_map" {
   description = "Information on where to connect to data backend services"
