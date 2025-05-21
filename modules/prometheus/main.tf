@@ -38,16 +38,21 @@ resource "google_service_account" "gcp_service_acc_prom" {
 }
 
 // Roles ---
-// TODO: Check if this is needed
 resource "google_project_iam_member" "logging-writer" {
   project = var.project_id
   role    = "roles/logging.logWriter"
   member  = "serviceAccount:${google_service_account.gcp_service_acc_prom.email}"
 }
-// TODO: Check if this is needed
 resource "google_project_iam_member" "monitoring-writer" {
   project = var.project_id
   role    = "roles/monitoring.metricWriter"
+  member  = "serviceAccount:${google_service_account.gcp_service_acc_prom.email}"
+}
+
+# This is needed for the discovery of the instance by the prometheus service
+resource "google_project_iam_member" "network-viewer" {
+  project = var.project_id
+  role    = "roles/compute.networkViewer"
   member  = "serviceAccount:${google_service_account.gcp_service_acc_prom.email}"
 }
 
@@ -95,7 +100,7 @@ resource "google_compute_instance_template" "otpprometheus_template" {
   }
 
   metadata = {
-    startup-script         = templatefile("${path.module}/scripts/instance_startup.sh", {
+    startup-script = templatefile("${path.module}/scripts/instance_startup.sh", {
       svc_acc_key = replace(base64decode(google_service_account_key.gcp_service_acc_prom_key.private_key), "$", "\\$")
     })
     google-logging-enabled = true
