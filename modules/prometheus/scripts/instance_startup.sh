@@ -39,11 +39,6 @@ git clone -b rm-prometheus https://github.com/opentargets/terraform-google-opent
 cp terraform-google-opentargets-platform/modules/prometheus/config/prometheus.yml /opt/prometheus/prometheus.yml
 
 # insert service account key
-# echo "svc_acc_key" > /opt/prometheus/application_default_credentials.json
-# cat > /etc/example-service-account.json <<EOF
-#     svc_acc_key
-#     EOF
-
 cat <<EOF > /opt/prometheus/application_default_credentials.json
 ${svc_acc_key}
 EOF

@@ -1,5 +1,6 @@
 # Pending
 - [ ] add tags to resources to further filter metrics. I need to check how to apply the tags to the vm not the template
+- [ ] Change machine definition to match the ai definition
 - [ ] Update the Prometheus configuration file with all possible zones for each region
 - [ ] Generate and attach credentials file to Prometheus vm. Set env variable GOOGLE_APPLICATION_CREDENTIALS
 - [ ] Update vm definition to not use manager
