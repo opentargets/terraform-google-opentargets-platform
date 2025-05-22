@@ -35,13 +35,62 @@ mkdir /opt/prometheus
 
 git clone -b rm-prometheus https://github.com/opentargets/terraform-google-opentargets-platform.git
 
-# copy prometheus config
-cp terraform-google-opentargets-platform/modules/prometheus/config/prometheus.yml /opt/prometheus/prometheus.yml
-
 # insert service account key
 cat <<EOF > /opt/prometheus/application_default_credentials.json
 ${svc_acc_key}
 EOF
+
+# Start - Create Prometheus config
+cat <<EOF > /opt/prometheus/prometheus.yml
+global:
+  scrape_interval: 15s
+scrape_configs:
+EOF
+
+zones=${available_zones}
+# Configure scrape configs for api
+cat <<EOF >> /opt/prometheus/prometheus.yml
+  - job_name: 'api'
+    gce_sd_configs:
+EOF
+for zone in $(echo $zones | tr "," "\n")
+do
+cat <<EOF >> /opt/prometheus/prometheus.yml
+      - zone: $zone
+        project: open-targets-eu-dev
+        port: 8080
+        filter: (name:${instance_prefix})
+EOF
+done
+# Configure scrape configs for node-exporter
+cat <<EOF >> /opt/prometheus/prometheus.yml
+  - job_name: 'node'
+    gce_sd_configs:
+EOF
+for zone in $(echo $zones | tr "," "\n")
+do
+cat <<EOF >> /opt/prometheus/prometheus.yml
+      - zone: $zone
+        project: open-targets-eu-dev
+        port: 9100
+        filter: (name:${instance_prefix})
+EOF
+done
+# Configure scrape configs for prometheus
+cat <<EOF >> /opt/prometheus/prometheus.yml
+  - job_name: 'prometheus'
+    gce_sd_configs:
+EOF
+for zone in $(echo $zones | tr "," "\n")
+do
+cat <<EOF >> /opt/prometheus/prometheus.yml
+      - zone: $zone
+        project: open-targets-eu-dev
+        port: 9090
+        filter: (name:${instance_prefix})
+EOF
+done
+# End - Create Prometheus config
 
 # Start prometheus and grafana
 cd terraform-google-opentargets-platform/modules/prometheus/config
