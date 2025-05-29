@@ -38,11 +38,11 @@ variable "config_deployment_regions" {
   type        = list(string)
 }
 
-// --- Elastic Search Configuration --- //
+// --- Elastic Search Configuration --- //#TODO: Rename module configs to opensearch
 variable "config_vm_elastic_search_image_project" {
   description = "This allows to specify a different than deployment project for the deployed Elastic Search Instance image to be used."
   type        = string
-  default     = "cos-cloud"
+  default     = "debian-cloud"
 }
 
 variable "config_vm_elastic_search_vcpus" {
@@ -60,7 +60,7 @@ variable "config_vm_elastic_search_mem" {
 variable "config_vm_elastic_search_image" {
   description = "Disk image to use for the deployed Elastic Search Instances"
   type        = string
-  default     = "cos-stable"
+  default     = "projects/debian-cloud/global/images/debian-12-bookworm-v20250415"
 }
 
 variable "config_vm_elastic_search_version" {
