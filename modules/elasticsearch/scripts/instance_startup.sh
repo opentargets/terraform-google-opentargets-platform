@@ -1,4 +1,37 @@
 #!/bin/bash
+echo "[LAUNCH] Open Targets OpenSearch"
+# Installing docker compose
+set +x
+# remove man
+apt-get remove -y --purge man-db
+
+# update package lists
+apt-get update -y
+
+# install dependencies
+apt-get install -y \
+  apt-transport-https \
+  ca-certificates \
+  curl \
+  gnupg \
+  lsb-release \
+  git \
+  build-essential
+
+# add docker gpg key
+curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+
+# add docker repository
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian \
+  $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+# update package lists again
+apt-get update -y
+
+# install docker
+apt-get install -y docker-ce docker-ce-cli containerd.io
+
 # Local environment
 export path_mount_es_data_volume="/mnt/disks/esdata"
 export device_disk_es_data=${GCP_DEVICE_DISK_PREFIX}${DATA_DISK_DEVICE_NAME_ES}
@@ -42,25 +75,76 @@ export MACHINE_SIZE=`cat /proc/meminfo | grep MemTotal | grep -o '[0-9]\+'`
 export JVM_SIZE=`expr $(expr $MACHINE_SIZE / 1048576) - 1`
 export JVM_SIZE_HALF=`expr $MACHINE_SIZE / 2097152`
 logi "[INFO] Elastic Search docker container name: $${es_docker_container_name}, cluster name: $${es_cluster_name}, data volume: $${docker_volume_name_es}, JVM Memory: $${JVM_SIZE}GiB"
-docker run --rm -d \
-  --name $${es_docker_container_name} \
-  --log-driver=gcplogs \
-  -p 9200:9200 \
-  -p 9300:9600 \
-  -e "path.data=/usr/share/opensearch/data" \
-  -e "path.logs=/usr/share/opensearch/logs" \
-  -e "cluster.name=$${es_cluster_name}" \
-  -e "network.host=0.0.0.0" \
-  -e "discovery.type=single-node" \
-  -e "discovery.seed_hosts=[]" \
-  -e "bootstrap.memory_lock=true" \
-  -e "search.max_open_scroll_context=5000" \
-  -e OPENSEARCH_JAVA_OPTS="-Xms$${JVM_SIZE_HALF}g -Xmx$${JVM_SIZE_HALF}g" \
-  -e DISABLE_SECURITY_PLUGIN=true \
-  -v $${docker_volume_name_es}:/usr/share/opensearch/data \
-  --ulimit memlock=-1:-1 \
-  --ulimit nofile=65536:65536 \
-  $${docker_image_string_es}
+
+# Create the docker-compose file
+mkdir -p /opt/ot-os
+cat << EOF >> /opt/ot-os/compose.yml
+services:
+  opensearch:
+    iamge: $${docker_image_string_es}
+    container_name: $${es_docker_container_name}
+    logging:
+      driver: gcplogs
+    ports:
+      - "9200:9200"
+      - "9300:9600"
+    environment:
+      - cluster.name=$${es_cluster_name}
+      - network.host=0.0.0.0
+      - discovery.type=single-node
+      - discovery.seed_hosts=[]
+      - bootstrap.memory_lock=true
+      - search.max_open_scroll_context=5000
+      - OPENSEARCH_JAVA_OPTS=-Xms$${JVM_SIZE_HALF}g -Xmx$${JVM_SIZE_HALF}g
+      - DISABLE_SECURITY_PLUGIN=true
+    volumes:
+      - $${docker_volume_name_es}:/usr/share/opensearch/data
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+  elasticsearch_exporter:
+    image: quay.io/prometheuscommunity/elasticsearch-exporter:latest
+    command:
+     - '--es.uri=http://$${es_cluster_name}:9200'
+    restart: always
+    ports:
+    - "127.0.0.1:9114:9114"
+  node_exporter:
+    image: quay.io/prometheus/node-exporter:latest
+    container_name: node_exporter
+    command:
+      - '--path.rootfs=/host'
+    network_mode: host
+    pid: host
+    restart: unless-stopped
+    volumes:
+      - '/:/host:ro,rslave'
+
+EOF
+
+# docker run --rm -d \
+#   --name $${es_docker_container_name} \
+#   --log-driver=gcplogs \
+#   -p 9200:9200 \
+#   -p 9300:9600 \
+#   -e "path.data=/usr/share/opensearch/data" \
+#   -e "path.logs=/usr/share/opensearch/logs" \
+#   -e "cluster.name=$${es_cluster_name}" \
+#   -e "network.host=0.0.0.0" \
+#   -e "discovery.type=single-node" \
+#   -e "discovery.seed_hosts=[]" \
+#   -e "bootstrap.memory_lock=true" \
+#   -e "search.max_open_scroll_context=5000" \
+#   -e OPENSEARCH_JAVA_OPTS="-Xms$${JVM_SIZE_HALF}g -Xmx$${JVM_SIZE_HALF}g" \
+#   -e DISABLE_SECURITY_PLUGIN=true \
+#   -v $${docker_volume_name_es}:/usr/share/opensearch/data \
+#   --ulimit memlock=-1:-1 \
+#   --ulimit nofile=65536:65536 \
+#   $${docker_image_string_es}
 
 
 # Wait for Elastic Search to be yellow
