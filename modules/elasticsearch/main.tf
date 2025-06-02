@@ -163,6 +163,16 @@ resource "google_compute_region_instance_group_manager" "regmig_elastic_search" 
   }
 
   named_port {
+    name = local.elastic_search_port_exporter_name
+    port = local.elastic_search_port_exporter
+  }
+
+  named_port {
+    name = local.elastic_search_port_node_exporter_name
+    port = local.elastic_search_port_node_exporter
+  }
+
+  named_port {
     name = local.elastic_search_port_comms_name
     port = local.elastic_search_port_comms
   }

@@ -8,7 +8,7 @@ resource "google_compute_firewall" "vpc_netfw_elasticsearch_requests" {
 
   allow {
     protocol = "tcp"
-    ports    = [local.elastic_search_port_requests]
+    ports    = [local.elastic_search_port_requests, local.elastic_search_port_node_exporter, local.elastic_search_port_exporter]
   }
 
   target_tags   = [local.fw_tag_elasticsearch_requests]
