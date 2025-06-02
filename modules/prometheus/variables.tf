@@ -6,6 +6,11 @@ variable "module_wide_prefix_scope" {
   default     = "otpdevprometheus"
 }
 
+variable "config_release_name" {
+  description = "Open Targets Platform release name, not related to any configuration parameter."
+  type        = string
+}
+
 variable "project_id" {
   description = "Project ID where to deploy resources"
   type        = string
@@ -52,13 +57,13 @@ variable "vm_firewall_tags" {
 variable "vm_prometheus_vcpus" {
   description = "CPU count for prometheus nodes, default '2'"
   type        = number
-  default     = "1"
+  default     = "2"
 }
 
 variable "vm_prometheus_mem" {
   description = "Amount of memory allocated for prometheus nodes (MiB), default '7680'"
   type        = number
-  default     = "3584"
+  default     = "7680"
 }
 
 variable "vm_prometheus_image" {

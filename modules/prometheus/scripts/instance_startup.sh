@@ -59,7 +59,7 @@ cat <<EOF >> /opt/prometheus/prometheus.yml
       - zone: $zone
         project: open-targets-eu-dev
         port: 8080
-        filter: (name:${instance_prefix})
+        filter: (name:${instance_prefix}*)
 EOF
 done
 # Configure scrape configs for node-exporter
@@ -73,7 +73,21 @@ cat <<EOF >> /opt/prometheus/prometheus.yml
       - zone: $zone
         project: open-targets-eu-dev
         port: 9100
-        filter: (name:${instance_prefix})
+        filter: (name:${instance_prefix}*)
+EOF
+done
+# Configure scrape configs for opensearch-exporter
+cat <<EOF >> /opt/prometheus/prometheus.yml
+  - job_name: 'opensearch'
+    gce_sd_configs:
+EOF
+for zone in $(echo $zones | tr "," "\n")
+do
+cat <<EOF >> /opt/prometheus/prometheus.yml
+      - zone: $zone
+        project: open-targets-eu-dev
+        port: 9114
+        filter: (name:${instance_prefix}*)
 EOF
 done
 # Configure scrape configs for prometheus
@@ -87,7 +101,7 @@ cat <<EOF >> /opt/prometheus/prometheus.yml
       - zone: $zone
         project: open-targets-eu-dev
         port: 9090
-        filter: (name:${instance_prefix})
+        filter: (name:${pro_instance_prefix}*)
 EOF
 done
 # End - Create Prometheus config
