@@ -2,8 +2,12 @@ locals {
   // Ports
   elastic_search_port_requests      = 9200
   elastic_search_port_comms         = 9300
+  elastic_search_port_exporter      = 9114
+  elastic_search_port_node_exporter = 9100
   elastic_search_port_requests_name = "esportrequests"
   elastic_search_port_comms_name    = "esportcomms"
+  elastic_search_port_node_exporter_name    = "esportexnodeporter"
+  elastic_search_port_exporter_name    = "esportexporter"
   // Firewall tags
   fw_tag_elasticsearch_requests = "elasticsearchrequests"
   fw_tag_elasticsearch_comms    = "elasticsearchcomms"

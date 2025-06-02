@@ -197,6 +197,7 @@ module "backend_prometheus" {
     module.backend_api
   ]
   module_wide_prefix_scope = "${var.config_release_name}-pro"
+  config_release_name      = var.config_release_name
   network_name             = module.vpc_network.network_name
   network_self_link        = module.vpc_network.network_self_link
   network_subnet_name      = local.vpc_network_main_subnet_name
