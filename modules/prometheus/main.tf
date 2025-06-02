@@ -101,9 +101,10 @@ resource "google_compute_instance_template" "otpprometheus_template" {
 
   metadata = {
     startup-script = templatefile("${path.module}/scripts/instance_startup.sh", {
-      svc_acc_key     = replace(base64decode(google_service_account_key.gcp_service_acc_prom_key.private_key), "$", "\\$"),
-      available_zones = join(",", data.google_compute_zones.available[count.index].names)
-      instance_prefix = var.module_wide_prefix_scope
+      svc_acc_key         = replace(base64decode(google_service_account_key.gcp_service_acc_prom_key.private_key), "$", "\\$"),
+      available_zones     = join(",", data.google_compute_zones.available[count.index].names)
+      instance_prefix     = var.config_release_name
+      pro_instance_prefix = var.module_wide_prefix_scope
     })
     google-logging-enabled = true
   }
