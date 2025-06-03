@@ -1,8 +1,10 @@
 locals {
   // Ports
   clickhouse_http_req_port      = 8123
+  clickhouse_node_exporter_port = 9100
   clickhouse_cli_req_port       = 9000
   clickhouse_http_req_port_name = "portclickhousehttp"
+  clickhouse_node_exporter_name = "portclickhousenodeexp"
   clickhouse_cli_req_port_name  = "portclickhousereq"
   // Firewall tags
   fw_tag_clickhouse_node = "clickhousenode"
