@@ -12,6 +12,7 @@ resource "google_compute_forwarding_rule" "ilb_forwarding_rule" {
   ports = [
     local.clickhouse_http_req_port,
     local.clickhouse_node_exporter_port,
+    local.clickhouse_metrics_port,
     local.clickhouse_cli_req_port
   ]
   depends_on = [

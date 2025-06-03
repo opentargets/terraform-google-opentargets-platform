@@ -7,7 +7,7 @@ resource "google_compute_firewall" "vpc_netfw_clickhouse_node" {
 
   allow {
     protocol = "tcp"
-    ports    = [local.clickhouse_http_req_port, local.clickhouse_cli_req_port, local.clickhouse_node_exporter_port]
+    ports    = [local.clickhouse_http_req_port, local.clickhouse_cli_req_port, local.clickhouse_node_exporter_port, local.clickhouse_metrics_port]
   }
 
   target_tags   = [local.fw_tag_clickhouse_node]
