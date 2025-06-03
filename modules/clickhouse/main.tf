@@ -160,6 +160,11 @@ resource "google_compute_region_instance_group_manager" "regmig_clickhouse" {
   }
 
   named_port {
+    name = local.clickhouse_node_exporter_name
+    port = local.clickhouse_node_exporter_port
+  }
+
+  named_port {
     name = local.clickhouse_cli_req_port_name
     port = local.clickhouse_cli_req_port
   }
