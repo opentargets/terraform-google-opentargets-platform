@@ -32,6 +32,14 @@ output "port_clickhouse_node_exporter_name" {
   value = local.clickhouse_node_exporter_name
 }
 
+output "port_clickhouse_metrics_port" {
+  value = local.clickhouse_metrics_port
+}
+
+output "port_clickhouse_metrics_name" {
+  value = local.clickhouse_metrics_port_name
+}
+
 output "port_clickhouse_cli" {
   value = local.clickhouse_cli_req_port
 }
