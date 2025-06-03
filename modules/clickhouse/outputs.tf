@@ -24,6 +24,14 @@ output "port_clickhouse_http_name" {
   value = local.clickhouse_http_req_port_name
 }
 
+output "port_clickhouse_node_exporter_port" {
+  value = local.clickhouse_node_exporter_port
+}
+
+output "port_clickhouse_node_exporter_name" {
+  value = local.clickhouse_node_exporter_name
+}
+
 output "port_clickhouse_cli" {
   value = local.clickhouse_cli_req_port
 }
