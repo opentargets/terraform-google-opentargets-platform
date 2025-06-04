@@ -6,6 +6,16 @@ variable "module_wide_prefix_scope" {
   default     = "otpdevprometheus"
 }
 
+variable "module_wide_prefix_es" {
+  description = "Scoping prefix for resources from elastisearch module"
+  type        = string
+}
+
+variable "module_wide_prefix_api" {
+  description = "Scoping prefix for resources from api module"
+  type        = string
+}
+
 variable "config_release_name" {
   description = "Open Targets Platform release name, not related to any configuration parameter."
   type        = string
