@@ -9,6 +9,7 @@
 - [ ] Check JVM metrics and how to ignore the problematic ones
 - [ ] Expose CH and ES metrics endpoint
 - [ ] Update vm definitios to 
+- [ ] make node exporter and other exporters variables with defaults so they can be configured
 
 # Open Targets Platform API TODO: Update this documentation
 This submodule defines the infrastructure needed to deploy Open Targets Platform API.
