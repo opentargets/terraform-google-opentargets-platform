@@ -59,7 +59,7 @@ cat <<EOF >> /opt/prometheus/prometheus.yml
       - zone: $zone
         project: open-targets-eu-dev
         port: 8080
-        filter: (name:${instance_prefix}*)
+        filter: (name:${module_wide_prefix_api}*)
 EOF
 done
 # Configure scrape configs for node-exporter
@@ -87,7 +87,7 @@ cat <<EOF >> /opt/prometheus/prometheus.yml
       - zone: $zone
         project: open-targets-eu-dev
         port: 9114
-        filter: (name:${instance_prefix}*)
+        filter: (name:${module_wide_prefix_es}*)
 EOF
 done
 # Configure scrape configs for prometheus
