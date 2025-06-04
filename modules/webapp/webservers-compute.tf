@@ -89,6 +89,7 @@ resource "google_compute_instance_template" "webserver_template" {
       {
         webapp_image_version = var.webapp_image_version
         env_vars             = local.webapp_env_vars
+        test_compose2        = yamlencode(local.test_compose)
       }
     )
     google-logging-enabled = true
@@ -137,6 +138,11 @@ resource "google_compute_region_instance_group_manager" "regmig_webserver" {
   named_port {
     name = local.webapp_webserver_port_name
     port = local.webapp_webserver_port
+  }
+
+  named_port {
+    name = local.node_exporter_webserver_port_name
+    port = local.node_exporter_webserver_port
   }
 
   auto_healing_policies {
