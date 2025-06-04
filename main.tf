@@ -38,7 +38,7 @@ module "backend_elastic_search" {
   count = length(var.config_deployment_regions)
 
   depends_on               = [module.vpc_network]
-  module_wide_prefix_scope = "${var.config_release_name}-es-${count.index}"
+  module_wide_prefix_scope = "${local.module_wide_prefix_es}-${count.index}"
   network_name             = module.vpc_network.network_name
   network_self_link        = module.vpc_network.network_self_link
   network_subnet_name      = local.vpc_network_main_subnet_name
@@ -70,7 +70,7 @@ module "backend_clickhouse" {
   count = length(var.config_deployment_regions)
 
   depends_on               = [module.vpc_network]
-  module_wide_prefix_scope = "${var.config_release_name}-ch-${count.index}"
+  module_wide_prefix_scope = "${local.module_wide_prefix_ch}-${count.index}"
   network_name             = module.vpc_network.network_name
   network_self_link        = module.vpc_network.network_self_link
   network_subnet_name      = local.vpc_network_main_subnet_name
@@ -100,7 +100,7 @@ module "openai_api" {
   project_id               = var.config_project_id
   depends_on               = [module.vpc_network]
   deployment_regions       = var.config_deployment_regions
-  module_wide_prefix_scope = "${var.config_release_name}-ai"
+  module_wide_prefix_scope = local.module_wide_prefix_ai
   network_name             = module.vpc_network.network_name
   network_self_link        = module.vpc_network.network_self_link
   network_subnet_name      = local.vpc_network_main_subnet_name
@@ -134,7 +134,7 @@ module "backend_api" {
     module.backend_elastic_search,
     module.backend_clickhouse
   ]
-  module_wide_prefix_scope = "${var.config_release_name}-api"
+  module_wide_prefix_scope = local.module_wide_prefix_api
   network_name             = module.vpc_network.network_name
   network_self_link        = module.vpc_network.network_self_link
   network_subnet_name      = local.vpc_network_main_subnet_name
@@ -196,7 +196,9 @@ module "backend_prometheus" {
     module.backend_clickhouse,
     module.backend_api
   ]
-  module_wide_prefix_scope = "${var.config_release_name}-pro"
+  module_wide_prefix_scope = local.module_wide_prefix_pro
+  module_wide_prefix_api   = local.module_wide_prefix_api
+  module_wide_prefix_es    = local.module_wide_prefix_es
   config_release_name      = var.config_release_name
   network_name             = module.vpc_network.network_name
   network_self_link        = module.vpc_network.network_self_link
@@ -230,7 +232,7 @@ module "web_app" {
   source                        = "./modules/webapp"
   project_id                    = var.config_project_id
   depends_on                    = [module.vpc_network]
-  module_wide_prefix_scope      = "${var.config_release_name}-web"
+  module_wide_prefix_scope      = local.module_wide_prefix_web
   folder_tmp                    = local.folder_tmp
   location                      = var.config_webapp_location
   webapp_repo_name              = var.config_webapp_repo_name
