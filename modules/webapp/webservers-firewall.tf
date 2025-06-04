@@ -9,7 +9,7 @@ resource "google_compute_firewall" "vpc_netfw_webserver_node" {
 
   allow {
     protocol = "tcp"
-    ports    = [local.webapp_webserver_port]
+    ports    = [local.webapp_webserver_port, local.node_exporter_webserver_port]
   }
 
   target_tags = [local.fw_tag_webserver_node]

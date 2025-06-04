@@ -186,13 +186,13 @@ variable "webserver_vm_mem" {
 variable "webserver_vm_image" {
   description = "VM image to use for Web Server nodes, default 'cos-stable'"
   type        = string
-  default     = "cos-stable"
+  default     = "projects/debian-cloud/global/images/debian-12-bookworm-v20250415"
 }
 
 variable "webserver_vm_image_project" {
   description = "Project hosting the VM image, default 'cos-cloud'"
   type        = string
-  default     = "cos-cloud"
+  default     = "debian-cloud"
 }
 
 variable "webserver_vm_boot_disk_size" {
