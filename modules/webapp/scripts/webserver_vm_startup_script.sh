@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "[LAUNCH] Open Targets Prometheus"
+echo "[LAUNCH] Open Targets WebApp"
 set +x
 # remove man
 apt-get remove -y --purge man-db
@@ -33,8 +33,8 @@ apt-get install -y docker-ce docker-ce-cli containerd.io
 
 logi "Generating compose file"
 # Create the docker-compose file
-mkdir -p /opt/ot-ch
-cd /opt/ot-ch
+mkdir -p /opt/ot-wa
+cd /opt/ot-wa
 
 cat << EOF >> compose.yml
 ${test_compose2}
