@@ -46,9 +46,9 @@ The module implements the following input parameters.
 
 >**vm_api_mem**, amount of memory allocated for API nodes (MiB), default '7680'.
 
->**vm_api_image**, VM image to use for API nodes, default 'cos-stable'.
+>**vm_api_image**, VM image to use for API nodes, default 'debian-12-bookworm-v20250415'.
 
->**vm_api_image_project**, project hosting the VM image, default 'cos-cloud'.
+>**vm_api_image_project**, project hosting the VM image, default 'debian-cloud'.
 
 >**vm_api_boot_disk_size**, boot disk size for API nodes, default '10GB'.
 
