@@ -191,10 +191,7 @@ module "backend_prometheus" {
   source     = "./modules/prometheus"
   project_id = var.config_project_id
   depends_on = [
-    module.vpc_network,
-    module.backend_elastic_search,
-    module.backend_clickhouse,
-    module.backend_api
+    module.vpc_network
   ]
   module_wide_prefix_scope = local.module_wide_prefix_pro
   module_wide_prefix_api   = local.module_wide_prefix_api

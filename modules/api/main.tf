@@ -167,6 +167,11 @@ resource "google_compute_region_instance_group_manager" "regmig_otpapi" {
     port = local.otp_api_port
   }
 
+  named_port {
+    name = local.otp_api_node_exporter_port_name
+    port = local.otp_api_node_exporter_port
+  }
+
   auto_healing_policies {
     health_check      = google_compute_health_check.otpapi_healthcheck.id
     initial_delay_sec = 20
