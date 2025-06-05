@@ -1,7 +1,9 @@
 locals {
   // API Communication Ports
-  otp_api_port      = 8080
-  otp_api_port_name = "otpapiport"
+  otp_api_port                    = 8080
+  otp_api_node_exporter_port      = 9100
+  otp_api_node_exporter_port_name = "otpapinodeexpport"
+  otp_api_port_name               = "otpapiport"
   // Firewall
   fw_tag_otp_api_node = "otpapinode"
   // GLB tagging for traffic destination
