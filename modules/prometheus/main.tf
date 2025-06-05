@@ -1,5 +1,5 @@
 // Open Targets Platform Prometheus deployment definition
-// Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+// Author: Ricardo Esteban Martinez Osorio <remo87@gmail.com>
 
 /*
     This module defines a multi-regional deployment of Open Target Platform Prometheus
