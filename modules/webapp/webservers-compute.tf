@@ -171,7 +171,7 @@ resource "google_compute_region_autoscaler" "autoscaler_webserver" {
   autoscaling_policy {
     max_replicas    = length(data.google_compute_zones.available[count.index].names) * 2
     min_replicas    = 1
-    cooldown_period = 30
+    cooldown_period = 120
     load_balancing_utilization {
       target = 0.5
     }
