@@ -202,7 +202,7 @@ resource "google_compute_region_autoscaler" "autoscaler_clickhouse" {
   autoscaling_policy {
     max_replicas    = local.compute_zones_n_total * 2
     min_replicas    = 1
-    cooldown_period = 30
+    cooldown_period = 120
     cpu_utilization {
       target = 0.65
     }
