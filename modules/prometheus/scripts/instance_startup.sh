@@ -90,6 +90,20 @@ cat <<EOF >> /opt/prometheus/prometheus.yml
         filter: (name:${module_wide_prefix_es}*)
 EOF
 done
+# Configure scrape configs for clickhouse-exporter
+cat <<EOF >> /opt/prometheus/prometheus.yml
+  - job_name: 'clickhouse'
+    gce_sd_configs:
+EOF
+for zone in $(echo $zones | tr "," "\n")
+do
+cat <<EOF >> /opt/prometheus/prometheus.yml
+      - zone: $zone
+        project: open-targets-eu-dev
+        port: 9363
+        filter: (name:${module_wide_prefix_ch}*)
+EOF
+done
 # Configure scrape configs for prometheus
 cat <<EOF >> /opt/prometheus/prometheus.yml
   - job_name: 'prometheus'
