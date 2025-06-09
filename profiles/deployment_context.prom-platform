@@ -12,7 +12,7 @@ config_vm_elastic_search_data_volume_snapshot = "pos-20250603-0930-os-snapshot"
 // config_vm_elastic_search_boot_disk_size = "128"
 
 // --- Clickhouse configuration --- //
-config_vm_clickhouse_data_volume_snapshot = "pos-20250603-1109-ch-snapshot"
+config_vm_clickhouse_data_volume_snapshot = "pos-20250605-1516-ch-snapshot"
 //config_vm_clickhouse_vcpus = 8
 //config_vm_clickhouse_mem = 30720
 
