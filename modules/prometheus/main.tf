@@ -106,6 +106,7 @@ resource "google_compute_instance_template" "otpprometheus_template" {
       instance_prefix        = var.config_release_name
       pro_instance_prefix    = var.module_wide_prefix_scope
       module_wide_prefix_es  = var.module_wide_prefix_es
+      module_wide_prefix_ch  = var.module_wide_prefix_ch
       module_wide_prefix_api = var.module_wide_prefix_api
     })
     google-logging-enabled = true

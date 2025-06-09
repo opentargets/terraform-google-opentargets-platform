@@ -11,6 +11,11 @@ variable "module_wide_prefix_es" {
   type        = string
 }
 
+variable "module_wide_prefix_ch" {
+  description = "Scoping prefix for resources from clickhouse module"
+  type        = string
+}
+
 variable "module_wide_prefix_api" {
   description = "Scoping prefix for resources from api module"
   type        = string
