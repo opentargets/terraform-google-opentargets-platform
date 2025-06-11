@@ -124,7 +124,7 @@ resource "google_compute_health_check" "openai_api_node_health_check" {
   unhealthy_threshold = 3
 
   tcp_health_check {
-    port = local.openai_node_exporter_port
+    port = local.openai_api_port
   }
 }
 
