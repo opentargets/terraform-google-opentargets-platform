@@ -124,7 +124,7 @@ resource "google_compute_health_check" "openai_api_node_health_check" {
   unhealthy_threshold = 3
 
   tcp_health_check {
-    port = local.openai_api_port
+    port = local.openai_node_exporter_port
   }
 }
 
@@ -149,6 +149,11 @@ resource "google_compute_region_instance_group_manager" "remig_openai_api" {
   named_port {
     name = local.openai_api_port_name
     port = local.openai_api_port
+  }
+
+  named_port {
+    name = local.openai_node_exporter_port_name
+    port = local.openai_node_exporter_port
   }
 
   auto_healing_policies {
@@ -181,7 +186,7 @@ resource "google_compute_region_autoscaler" "openai_api_node" {
   autoscaling_policy {
     max_replicas    = length(data.google_compute_zones.available[count.index].names) * 2
     min_replicas    = 1
-    cooldown_period = 30
+    cooldown_period = 120
     cpu_utilization {
       target = 0.8
     }
