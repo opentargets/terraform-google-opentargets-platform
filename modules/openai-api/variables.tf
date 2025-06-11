@@ -41,13 +41,13 @@ variable "vm_disk_size" {
 variable "vm_image" {
   description = "Machine image to use for the OpenAI API deployment, default 'cos-stable'"
   type        = string
-  default     = "cos-stable"
+  default     = "projects/debian-cloud/global/images/debian-12-bookworm-v20250415"
 }
 
 variable "vm_image_project" {
   description = "Machine image project to use for the OpenAI API deployment, default 'cos-cloud'"
   type        = string
-  default     = "cos-cloud"
+  default     = "debian-cloud"
 }
 
 // --- Machine Persona --- //
