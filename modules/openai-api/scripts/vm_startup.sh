@@ -12,7 +12,7 @@ export secret_response=$(curl -s \
 echo "Secret Response Acquired"
 
 # Parse the secret value from the response JSON using Docker container with jq
-secret_value=$(echo $${secret_response} | docker run -i --rm stedolan/jq -r .payload.data)
+secret_value=$(echo $${secret_response} | docker run -i --rm backplane/jq -r .payload.data)
 echo "Secret Value parsed"
 
 # Base64-decode the secret value
