@@ -38,7 +38,7 @@ cd terraform-google-opentargets-platform/modules/prometheus/config
 
 mkdir /opt/grafana
 
-cp datasources.yml /opt/grafana/datasources.yml
+cp datasource.yml /opt/grafana/datasource.yml
 
 mkdir /opt/prometheus
 
