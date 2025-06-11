@@ -1,7 +1,9 @@
 locals {
   // Communication Ports
-  openai_api_port      = 8080
-  openai_api_port_name = "openaiapiport"
+  openai_api_port                = 8080
+  openai_node_exporter_port      = 9100
+  openai_api_port_name           = "openaiapiport"
+  openai_node_exporter_port_name = "openainodeexpport"
   // Firewall
   fw_tag_openai_api = "openaiapinode"
   // Compute
