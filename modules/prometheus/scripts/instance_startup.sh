@@ -31,9 +31,16 @@ apt-get update -y
 # install docker
 apt-get install -y docker-ce docker-ce-cli containerd.io
 
-mkdir /opt/prometheus
 
 git clone -b rm-prometheus https://github.com/opentargets/terraform-google-opentargets-platform.git
+
+cd terraform-google-opentargets-platform/modules/prometheus/config
+
+mkdir /opt/grafana
+
+cp datasources.yml /opt/grafana/datasources.yml
+
+mkdir /opt/prometheus
 
 # insert service account key
 cat <<EOF > /opt/prometheus/application_default_credentials.json
@@ -121,6 +128,4 @@ done
 # End - Create Prometheus config
 
 # Start prometheus and grafana
-cd terraform-google-opentargets-platform/modules/prometheus/config
-
 docker compose up -d
