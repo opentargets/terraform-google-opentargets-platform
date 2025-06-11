@@ -17,7 +17,7 @@ config_vm_clickhouse_data_volume_snapshot = "pos-20250605-1516-ch-snapshot"
 //config_vm_clickhouse_mem = 30720
 
 // --- API configuration --- //
-config_vm_platform_api_image_version = "25.0.2-alpha.10"
+config_vm_platform_api_image_version = "25.0.2-alpha.11"
 config_vm_version_major              = "25"
 config_vm_version_minor              = "0"
 config_vm_version_patch              = "2"
