@@ -39,3 +39,4 @@ services:
     restart: unless-stopped
     volumes:
       - grafana-data:/var/lib/grafana
+      - /opt/grafana:/etc/grafana/provisioning/datasources/datasource.yml
