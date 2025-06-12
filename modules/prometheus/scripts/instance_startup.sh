@@ -36,11 +36,11 @@ git clone -b rm-prometheus https://github.com/opentargets/terraform-google-opent
 
 cd terraform-google-opentargets-platform/modules/prometheus/config
 
-mkdir -b /opt/grafana/dashboards
+mkdir -p /opt/grafana/dashboards
 
 cp datasource.yml /opt/grafana/datasource.yml
 
-cp -r dashboards /opt/grafana/dashboards
+cp -r dashboards/* /opt/grafana/dashboards
 
 mkdir /opt/prometheus
 
