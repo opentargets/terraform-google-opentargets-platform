@@ -3533,7 +3533,7 @@
       {
         "current": {
           "text": "prometheus",
-          "value": "eeojpqxci11j4b"
+          "value": "prometheusdatasource"
         },
         "includeAll": false,
         "name": "datasource",
