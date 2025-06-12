@@ -39,6 +39,7 @@ cd terraform-google-opentargets-platform/modules/prometheus/config
 mkdir -p /opt/grafana/dashboards
 
 cp datasource.yml /opt/grafana/datasource.yml
+cp dashboards.yml /opt/grafana/dashboards.yml
 
 cp -r dashboards/* /opt/grafana/dashboards
 
