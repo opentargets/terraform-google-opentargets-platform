@@ -1861,7 +1861,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "eeojpqxci11j4b"
+            "uid": "prometheusdatasource"
           },
           "description": "CPU time usage split by state, normalized across all CPU cores",
           "fieldConfig": {
