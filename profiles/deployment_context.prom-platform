@@ -74,3 +74,6 @@ common_tags = [
   "open-targets",
   "platform"
 ]
+
+// --- GIT Repository --- //
+git_branch = "rm-prometheus" 
