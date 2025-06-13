@@ -32,7 +32,7 @@ apt-get update -y
 apt-get install -y docker-ce docker-ce-cli containerd.io
 
 
-git clone -b rm-prometheus https://github.com/opentargets/terraform-google-opentargets-platform.git
+git clone -b ${git_branch} ${git_repository}
 
 cd terraform-google-opentargets-platform/modules/prometheus/config
 

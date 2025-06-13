@@ -140,3 +140,13 @@ variable "load_balancer_type" {
     error_message = "Allowed values for 'load_balancer_type' are [ 'INTERNAL', 'GLOBAL', 'NONE' ]."
   }
 }
+
+variable "git_branch" {
+  description = "value"
+  default     = "main"
+}
+
+variable "git_repository" {
+  description = "value"
+  default     = "https://github.com/opentargets/terraform-google-opentargets-platform.git"
+}

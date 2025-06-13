@@ -492,3 +492,13 @@ variable "config_credentials_local_path" {
   type        = string
   default     = "credentials"
 }
+
+variable "git_branch" {
+  description = "value"
+  default     = "main"
+}
+
+variable "git_repository" {
+  description = "value"
+  default     = "https://github.com/opentargets/terraform-google-opentargets-platform.git"
+}
