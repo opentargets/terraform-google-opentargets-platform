@@ -108,6 +108,8 @@ resource "google_compute_instance_template" "otpprometheus_template" {
       module_wide_prefix_es  = var.module_wide_prefix_es
       module_wide_prefix_ch  = var.module_wide_prefix_ch
       module_wide_prefix_api = var.module_wide_prefix_api
+      git_repository         = var.git_repository
+      git_branch             = var.git_branch
     })
     google-logging-enabled = true
   }
