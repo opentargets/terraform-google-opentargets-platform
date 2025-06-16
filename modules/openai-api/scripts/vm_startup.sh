@@ -59,7 +59,7 @@ mkdir -p /opt/ot-ai
 cd /opt/ot-ai
 cat << EOF >> compose.yml
 services:
-  clickhouse:
+  api:
     image: ${openai_api_docker_image}
     container_name: ${openai_api_container_name}
     logging:
