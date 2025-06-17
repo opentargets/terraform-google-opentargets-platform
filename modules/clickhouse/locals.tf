@@ -22,6 +22,10 @@ locals {
   // Google Device Disk prefix
   gcp_device_disk_prefix = "/dev/disk/by-id/google-"
 
+  ch_data_volume = "/mnt/disks/chdata"
+
   // Compute Zones internal parameters
   compute_zones_n_total = length(data.google_compute_zones.available.names)
+
+  node_exporter_image = "${var.node_exporter_image_name}:${var.node_exporter_image_version}"
 }
