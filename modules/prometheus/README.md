@@ -1,31 +1,18 @@
-# Pending
-- [ ] add tags to resources to further filter metrics. I need to check how to apply the tags to the vm not the template
-- [ ] Change machine definition to match the ai definition
-- [ ] Update the Prometheus configuration file with all possible zones for each region
-- [ ] Generate and attach credentials file to Prometheus vm. Set env variable GOOGLE_APPLICATION_CREDENTIALS
-- [ ] Update vm definition to not use manager
-- [ ] Pre configure Grafana
-- [ ] Update documentation
-- [ ] Check JVM metrics and how to ignore the problematic ones
-- [ ] Expose CH and ES metrics endpoint
-- [ ] Update vm definitios to 
-- [ ] make node exporter and other exporters variables with defaults so they can be configured
+# Open Targets Platform Prometheus
+This submodule defines the infrastructure needed to deploy Open Targets Platform Prometheus and Grafana Server.
 
-# Open Targets Platform API TODO: Update this documentation
-This submodule defines the infrastructure needed to deploy Open Targets Platform API.
+![Open Targets Platform Prometheus, Deployment Unit](../../docs/img/open_targets_platform_api.png "Open Targets Platform Prometheus, Deployment Unit")
 
-![Open Targets Platform API, Deployment Unit](../../docs/img/open_targets_platform_api.png "Open Targets Platform API, Deployment Unit")
+The picture above these lines represents the Open Targets Platform Prometheus and Grafana elements defined by this infrastructure definition.
 
-The picture above these lines represents the Open Targets Platform API elements defined by this infrastructure definition.
-
-VM instances running the Open Targets Platform API services are configured in a regional instance group, deployed in the given regions, and tagged accordingly, with the option of having an internal load balancer or global load balancer at front, or none of them.
+VM instances running the Open Targets Platform Prometheus and Grafana services are configured in a regional instance group, deployed in the given regions, and tagged accordingly, with the option of having an internal load balancer or global load balancer at front, or none of them.
 
 # How to use the module
 The module can be sourced from its GitHub URL as shown below.
 ```terraform
-// --- Open Targets Platform API --- //
-module "backend_api" {
-  source = "github.com/opentargets/terraform-google-opentargets-platform//modules/api"
+// --- Open Targets Platform Prometheus and Grafana --- //
+module "backend_prometheus" {
+  source = "github.com/opentargets/terraform-google-opentargets-platform//modules/prometheus"
   // ...
 }
 ```
@@ -34,7 +21,15 @@ module "backend_api" {
 The module implements the following input parameters.
 
 ## General configuration
->**module_wide_prefix_scope**, scoping prefix for resources names deployed by this module, default 'otpdevapi'.
+>**module_wide_prefix_scope**, scoping prefix for resources names deployed by this module, default 'otpdevprometheus'.
+
+>**module_wide_prefix_es** Scoping prefix for resources from elastisearch module. This value is used to filter for the OpenSearch resources that will be scraped by Prometheus monitoring.
+
+>**module_wide_prefix_ch** Scoping prefix for resources from elastisearch module. This value is used to filter for the ClickHouse resources that will be scraped by Prometheus monitoring.
+
+>**module_wide_prefix_api** Scoping prefix for resources from elastisearch module. This value is used to filter for the API resources that will be scraped by Prometheus monitoring.
+
+>**config_release_name** Open Targets Platform release name. Used to filter to select only the resources related to the specific release.
 
 >**project_id**, ID of the project where resources should be deployed.
 
@@ -44,56 +39,48 @@ The module implements the following input parameters.
 
 >**network_subnet_name**, name of the subnet, within the 'network_name', and the given region, where instances should be connected to, default 'main-subnet'.
 
->**network_source_ranges_map**, CIDR that represents which IPs we want to grant access to the deployed resources.
-
 >**network_sources_health_checks**, source CIDR for health checks, default '[ 130.211.0.0/22, 35.191.0.0/16 ]', which are the source CIDRs used by Google Cloud infrastructure.
 
-## API instances configuration
->**deployment_regions**, list of regions where the API nodes should be deployed.
+## Prometheus instances configuration
+>**deployment_regions**, list of regions where the Prometheus nodes should be deployed.
 
->**vm_firewall_tags**, list of additional tags to attach to API nodes.
+>**vm_firewall_tags**, list of additional tags to attach to Prometheus nodes.
 
->**vm_platform_api_image_version**, API Docker image version to use in deployment.
+>**vm_prometheus_vcpus**, CPU count for Prometheus nodes, default '2'.
 
->**vm_api_vcpus**, CPU count for API nodes, default '2'.
+>**vm_prometheus_mem**, amount of memory allocated for Prometheus nodes (MiB), default '7680'.
 
->**vm_api_mem**, amount of memory allocated for API nodes (MiB), default '7680'.
+>**vm_prometheus_image**, VM image to use for Prometheus nodes, default 'debian-12-bookworm-v20250415'.
 
->**vm_api_image**, VM image to use for API nodes, default 'debian-12-bookworm-v20250415'.
+>**vm_prometheus_image_project**, project hosting the VM image, default 'debian-cloud'.
 
->**vm_api_image_project**, project hosting the VM image, default 'debian-cloud'.
+>**vm_prometheus_boot_disk_size**, boot disk size for Prometheus nodes, default '50GB'.
 
->**vm_api_boot_disk_size**, boot disk size for API nodes, default '10GB'.
+>**deployment_target_size**, initial Prometheus node count per region.
 
->**deployment_target_size**, initial API node count per region.
-
-
-## Data Backend configuration
->**backend_connection_map**, information on where to connect to data backend services.
+>**common_tags** List of common tags to attach to resources
 
 
 ## Load Balancer configuration
 >**load_balancer_type**, this will tell the module whether an internal load balancer, a global load balancer, or no load balancer at all should be created. Valid values are: 'INTERNAL', 'GLOBAL' (**UNDER REVIEW, DO NOT USE**), 'NONE'.
 
-## DNS configuration
->**dns_domain_api**, domain name used for generation of managed SSL certificate to be configured in the load balancer. (**THIS OPTION IS UNDER REVIEW, DO NOT USE**)
+## Git Repository
+>**git_branch** Git branch in which the resources will be available. This variable is made available in case the changes are not in the default branch.
+
+>**git_repository** Git repository that stores the Prometheus and Grafana module. This repository contains cofiguration files used to start the containers and pre configure Grafana.
 
 # Output Information
 Once the infrastructure has been successfully deployed, the following details are revealed by this module as output.
 
->**deployment_regions**, a list of regions where API nodes have been deployed.
+>**deployment_regions**, a list of regions where Prometheus nodes have been deployed.
 
->**map_region_to_instance_group_manager**, for every region, API nodes are deployed within a managed regional instance group, and this map provides a per region reference to every deployed instance group.
+>**map_region_to_instance_group_manager**, for every region, Prometheus nodes are deployed within a managed regional instance group, and this map provides a per region reference to every deployed instance group.
 
->**capacity_scalers**, a map between deployment regions and the defined capacity scalers in each region.
+>**prometheus_port**, Open Targets Platform Prometheus listening port.
 
->**api_port**, Open Targets Platform API listening port.
-
->**api_port_name**, named port corresponding to Open Targets Platform API listening port
+>**prometheus_port_name**, named port corresponding to Open Targets Platform Prometheus listening port
 
 >**ilb_ip_addresses**, a map from region to the corresponding deployed internal load balancer, in case 'INTERNAL' was chosen as the load balancer option.
-
->**glb_external_ip**, external IP of the deployed global load balancer, in case 'GLOBAL' was chosen as the load balancer option.
 
 #### Disclaimer
 Infrastructure visual diagrams use AWS icons and visual elements, but their meaning in Open Targets Google Cloud Infrastructure is the same, from the conceptual point of view.
