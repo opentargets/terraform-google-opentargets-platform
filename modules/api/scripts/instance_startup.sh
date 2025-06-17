@@ -35,37 +35,8 @@ apt-get install -y docker-ce docker-ce-cli containerd.io
 # Create compose file and start containers
 mkdir -p /opt/ot-api
 cd /opt/ot-api
-cat << EOF >> compose.yml
-services:
-  clickhouse:
-    image: ghcr.io/opentargets/platform-api:${PLATFORM_API_VERSION}
-    logging:
-      driver: gcplogs
-    environment:
-      - SLICK_CLICKHOUSE_URL=${SLICK_CLICKHOUSE_URL}
-      - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
-      - META_APIVERSION_MAJOR=${API_VERSION_MAJOR}
-      - META_APIVERSION_MINOR=${API_VERSION_MINOR}
-      - META_APIVERSION_PATCH=${API_VERSION_PATCH}
-      - META_DATA_YEAR=${API_DATA_YEAR}
-      - META_DATA_MONTH=${API_DATA_MONTH}
-      - META_DATA_ITERATION=${API_DATA_ITER}
-      - PLATFORM_API_IGNORE_CACHE=${API_IGNORE_CACHE}
-      - JVM_XMS=${JVM_XMS}
-      - JVM_XMX=${JVM_XMX}
-    ports:
-      - ${OTP_API_PORT}:${OTP_API_PORT}
-  node_exporter:
-    image: quay.io/prometheus/node-exporter:latest
-    container_name: node_exporter
-    command:
-      - '--path.rootfs=/host'
-    network_mode: host
-    pid: host
-    restart: unless-stopped
-    volumes:
-      - '/:/host:ro,rslave'
-EOF
+
+curl -s -H 'Metadata-Flavor: Google' 'http://metadata.google.internal/computeMetadata/v1/instance/attributes/docker_compose' > compose.yml
 
 logi "execute docker compose up"
 docker compose up -d
