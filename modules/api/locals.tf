@@ -26,4 +26,5 @@ locals {
   )
   otpapi_template_machine_type = "custom-${var.vm_api_vcpus}-${var.vm_api_mem}"
   otpapi_template_source_image = "${var.vm_api_image_project}/${var.vm_api_image}"
+  node_exporter_image          = "${var.node_exporter_image_name}:${var.node_exporter_image_version}"
 }
