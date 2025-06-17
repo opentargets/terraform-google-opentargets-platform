@@ -91,6 +91,9 @@ module "backend_clickhouse" {
   vm_firewall_tags       = local.dev_mode_fw_tags
   deployment_region      = var.config_deployment_regions[count.index]
   deployment_target_size = 1
+  // prometheus configs
+  node_exporter_image_name    = var.node_exporter_image_name
+  node_exporter_image_version = var.node_exporter_image_version
 }
 
 // --- OpenAI API --- //
