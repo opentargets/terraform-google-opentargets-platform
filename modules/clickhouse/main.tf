@@ -20,6 +20,7 @@ resource "random_string" "random" {
     clickhouse_data_image            = var.vm_clickhouse_data_volume_snapshot,
     clickhouse_data_snapshot_project = var.vm_clickhouse_data_volume_snapshot_project
     vm_startup_script                = md5(file("${path.module}/scripts/instance_startup.sh"))
+    docker_compose                   = md5(file("${path.module}/config/compose.yml"))
     vm_flag_preemptible              = var.vm_flag_preemptible
   }
 }
@@ -111,7 +112,17 @@ resource "google_compute_instance_template" "clickhouse_template" {
       {
         GCP_DEVICE_DISK_PREFIX   = local.gcp_device_disk_prefix,
         DATA_DISK_DEVICE_NAME_CH = local.clickhouse_data_disk_device,
-        DOCKER_IMAGE_CLICKHOUSE  = local.clickhouse_docker_image
+        CH_DATA_VOLUME           = local.ch_data_volume
+      }
+    )
+    docker_compose = templatefile(
+      "${path.module}/config/compose.yml",
+      {
+        GCP_DEVICE_DISK_PREFIX     = local.gcp_device_disk_prefix,
+        DATA_DISK_DEVICE_NAME_CH   = local.clickhouse_data_disk_device,
+        DOCKER_IMAGE_CLICKHOUSE    = local.clickhouse_docker_image
+        CH_DATA_VOLUME             = local.ch_data_volume
+        DOCKER_IMAGE_NODE_EXPORTER = local.node_exporter_image
       }
     )
     google-logging-enabled = true
