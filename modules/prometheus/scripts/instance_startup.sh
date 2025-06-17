@@ -131,4 +131,8 @@ done
 # End - Create Prometheus config
 
 # Start prometheus and grafana
+cd /opt/prometheus
+
+curl -s -H 'Metadata-Flavor: Google' 'http://metadata.google.internal/computeMetadata/v1/instance/attributes/docker_compose' | cut -d'"' -f 4 > compose.yml
+
 docker compose up -d
