@@ -204,16 +204,7 @@ module "backend_prometheus" {
   // We are using an root module defined GLB, so we need this tag to be appended to api nodes, for them to be visible to the GLB. Include development mode firewall tags
   vm_firewall_tags = concat([local.tag_glb_target_node], local.dev_mode_fw_tags)
   // API VMs configuration
-  vm_flag_preemptible = var.config_vm_prometheus_flag_preemptible
-  backend_connection_map = zipmap(
-    var.config_deployment_regions,
-    [
-      for idx, region in var.config_deployment_regions : {
-        host_clickhouse     = module.backend_clickhouse[idx].ilb_ip_address
-        host_elastic_search = module.backend_elastic_search[idx].ilb_ip_address
-      }
-    ]
-  )
+  vm_flag_preemptible    = var.config_vm_prometheus_flag_preemptible
   deployment_regions     = var.config_deployment_regions
   deployment_target_size = 1
   // This can be
