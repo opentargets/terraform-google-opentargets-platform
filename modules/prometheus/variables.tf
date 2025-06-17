@@ -22,7 +22,7 @@ variable "module_wide_prefix_api" {
 }
 
 variable "config_release_name" {
-  description = "Open Targets Platform release name, not related to any configuration parameter."
+  description = "Open Targets Platform release name. Used to filter to select only the resources related to the specific release."
   type        = string
 }
 
@@ -116,21 +116,6 @@ variable "common_tags" {
   type        = list(string)
 }
 
-// --- Backend Connection Information --- //
-variable "backend_connection_map" {
-  description = "Information on where to connect to data backend services"
-  // This iteration won't check the type, this definition will be refined in future iterations
-  type = any
-  /*
-  {
-    "region" = {
-      "host_clickhouse" = "127.0.0.0",
-      "host_elastic_search" = "127.0.0.0"
-    }
-  }
-  */
-}
-
 // --- Load Balancer configuration --- //
 variable "load_balancer_type" {
   description = "This will tell the module whether an ILB, GLB or no load balancer at all should be created"
@@ -142,11 +127,11 @@ variable "load_balancer_type" {
 }
 
 variable "git_branch" {
-  description = "value"
+  description = "Git branch in which the resources will be available."
   default     = "main"
 }
 
 variable "git_repository" {
-  description = "value"
+  description = "Git repository that stores the Prometheus and Grafana module."
   default     = "https://github.com/opentargets/terraform-google-opentargets-platform.git"
 }
