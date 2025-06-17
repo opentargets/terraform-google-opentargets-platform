@@ -5,7 +5,7 @@ volumes:
 
 services:
   node_exporter:
-    image: quay.io/prometheus/node-exporter:latest
+    image: ${node_exporter_image}
     container_name: node_exporter
     command:
       - '--path.rootfs=/host'
@@ -16,10 +16,10 @@ services:
       - '/:/host:ro,rslave'
 
   prometheus:
-    image: prom/prometheus:latest
+    image: ${prometheus_image}
     container_name: prometheus
     ports:
-      - '9090:9090'
+      - '${prometheus_port}:9090'
     restart: unless-stopped
     volumes:
       - /opt/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
@@ -32,10 +32,10 @@ services:
       - GOOGLE_APPLICATION_CREDENTIALS=/etc/prometheus/application_default_credentials.json
 
   grafana:
-    image: grafana/grafana:latest
+    image: ${grafana_image}
     container_name: grafana
     ports:
-      - '3000:3000'
+      - '${grafana_port}:3000'
     restart: unless-stopped
     volumes:
       - grafana-data:/var/lib/grafana
