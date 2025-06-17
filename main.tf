@@ -182,8 +182,10 @@ module "backend_api" {
   //  NONE      - To not attach a load balancer to the instance groups
   load_balancer_type = "NONE"
   // I have to pass this value until I implement a validation mechanism, but the module won't use it, because it's set to 'NONE' LB
-  dns_domain_api = local.dns_platform_api_dns_name
-  common_tags    = var.common_tags
+  dns_domain_api              = local.dns_platform_api_dns_name
+  common_tags                 = var.common_tags
+  node_exporter_image_name    = var.node_exporter_image_name
+  node_exporter_image_version = var.node_exporter_image_version
 }
 
 // --- Prometheus --- //
@@ -213,9 +215,11 @@ module "backend_prometheus" {
   //  NONE      - To not attach a load balancer to the instance groups
   load_balancer_type = "NONE"
   // I have to pass this value until I implement a validation mechanism, but the module won't use it, because it's set to 'NONE' LB
-  common_tags    = var.common_tags
-  git_branch     = var.git_branch
-  git_repository = var.git_repository
+  common_tags                 = var.common_tags
+  git_branch                  = var.git_branch
+  git_repository              = var.git_repository
+  node_exporter_image_name    = var.node_exporter_image_name
+  node_exporter_image_version = var.node_exporter_image_version
 }
 
 // --- Web Application --- //
