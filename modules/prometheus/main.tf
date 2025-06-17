@@ -112,6 +112,13 @@ resource "google_compute_instance_template" "otpprometheus_template" {
       git_branch             = var.git_branch
     })
     google-logging-enabled = true
+    docker_compose = templatefile("${path.module}/config/compose.yml", {
+      node_exporter_image = local.node_exporter_image
+      prometheus_image    = local.prometheus_image
+      prometheus_port     = var.prometheus_container_port
+      grafana_image       = local.grafana_image
+      grafana_port        = var.grafana_container_port
+    })
   }
 
   service_account {

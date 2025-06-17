@@ -126,6 +126,7 @@ variable "load_balancer_type" {
   }
 }
 
+// --- Git Repository --- //
 variable "git_branch" {
   description = "Git branch in which the resources will be available."
   default     = "main"
@@ -134,4 +135,45 @@ variable "git_branch" {
 variable "git_repository" {
   description = "Git repository that stores the Prometheus and Grafana module."
   default     = "https://github.com/opentargets/terraform-google-opentargets-platform.git"
+}
+
+// --- Docker configurations --- //
+variable "prometheus_image_name" {
+  description = "Image used to create the prometheus container."
+  default     = "prom/prometheus"
+}
+
+variable "prometheus_image_version" {
+  description = "Image version of the prometheus image."
+  default     = "latest"
+}
+
+variable "prometheus_container_port" {
+  description = "Port number that will be exposed in the prometheus container."
+  default     = 9090
+}
+
+variable "grafana_image_name" {
+  description = "Image used to create the prometheus container."
+  default     = "grafana/grafana"
+}
+
+variable "grafana_image_version" {
+  description = "Image version of the prometheus image."
+  default     = "latest"
+}
+
+variable "grafana_container_port" {
+  description = "Port number that will be exposed in the grafnaa container."
+  default     = 3000
+}
+
+variable "node_exporter_image_name" {
+  description = "Image used to create the node exporter container."
+  default     = "quay.io/prometheus/node-exporter"
+}
+
+variable "node_exporter_image_version" {
+  description = "Image version of the node exporter image."
+  default     = "latest"
 }
