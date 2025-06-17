@@ -185,3 +185,13 @@ variable "dns_domain_api" {
   description = "This is the baseline DNS to use for all the forwarding rules that will be configured in the GLB, if chosen"
   type        = string
 }
+
+variable "node_exporter_image_name" {
+  description = "Image used to create the node exporter container."
+  default     = "quay.io/prometheus/node-exporter"
+}
+
+variable "node_exporter_image_version" {
+  description = "Image version of the node exporter image."
+  default     = "latest"
+}
