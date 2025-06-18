@@ -17,8 +17,8 @@ resource "random_string" "random" {
     elastic_search_template_machine_type = local.elastic_search_template_machine_type,
     elastic_search_template_source_image = local.elastic_search_template_source_image,
     elastic_search_template_tags         = join("", sort(local.elastic_search_template_tags)),
-    elastic_search_data_snapshot            = var.vm_elastic_search_data_volume_snapshot,
-    elastic_search_data_image_project    = var.vm_elastic_search_data_volume_image_project,
+    elastic_search_data_snapshot         = var.vm_elastic_search_data_volume_snapshot,
+    elastic_search_data_snapshot_project = var.vm_elastic_search_data_volume_snapshot_project,
     vm_elastic_search_version            = var.vm_elastic_search_version,
     vm_startup_script                    = md5(file("${path.module}/scripts/instance_startup.sh"))
     vm_flag_preemptible                  = var.vm_flag_preemptible
@@ -49,6 +49,11 @@ resource "google_project_iam_member" "monitoring-writer" {
   role    = "roles/monitoring.metricWriter"
   member  = "serviceAccount:${google_service_account.gcp_service_acc_apis.email}"
 }
+resource "google_project_iam_member" "service-agent" {
+  project = var.vm_elastic_search_data_volume_snapshot_project
+  role    = "roles/compute.serviceAgent"
+  member  = "serviceAccount:${google_service_account.gcp_service_acc_apis.email}"
+}
 // --- /Service Account Configuration/ ---
 
 resource "google_compute_instance_template" "elastic_search_template" {
@@ -77,15 +82,15 @@ resource "google_compute_instance_template" "elastic_search_template" {
     boot         = true
     mode         = "READ_WRITE"
     // Disk size inherited from the image
-    disk_size_gb  = var.vm_elastic_search_boot_disk_size
+    disk_size_gb = var.vm_elastic_search_boot_disk_size
   }
 
   // Attach Elastic Search data disk
   disk {
-    device_name  = local.elastic_search_data_disk_device
+    device_name     = local.elastic_search_data_disk_device
     source_snapshot = local.elastic_search_data_disk_snapshot
-    mode         = "READ_WRITE"
-    disk_type    = "pd-ssd"
+    mode            = "READ_WRITE"
+    disk_type       = "pd-ssd"
     // Disk size inherited from the image
     boot        = false
     auto_delete = true

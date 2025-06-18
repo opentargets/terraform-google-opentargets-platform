@@ -87,8 +87,8 @@ resource "google_compute_instance_template" "webserver_template" {
     startup-script = templatefile(
       "${path.module}/scripts/webserver_vm_startup_script.sh",
       {
-        webapp_image_version       = var.webapp_image_version
-        env_vars                   = local.webapp_env_vars
+        webapp_image_version = var.webapp_image_version
+        env_vars             = local.webapp_env_vars
       }
     )
     google-logging-enabled = true
