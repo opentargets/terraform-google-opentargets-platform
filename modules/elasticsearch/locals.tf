@@ -21,7 +21,7 @@ locals {
   // Compute Zones internal parameters
   compute_zones_n_total = length(data.google_compute_zones.available.names)
   // Elastic Search Data Volume
-  elastic_search_data_disk_snapshot = "global/snapshots/${var.vm_elastic_search_data_volume_snapshot}"
+  elastic_search_data_disk_snapshot = "projects/open-targets-eu-dev/global/snapshots/${var.vm_elastic_search_data_volume_snapshot}"
   // Clickhouse data disk device name
   elastic_search_data_disk_device = "es-data"
   // Google Device Disk prefix

@@ -99,7 +99,7 @@ variable "vm_elastic_search_data_volume_snapshot" {
   type        = string
 }
 
-variable "vm_elastic_search_data_volume_image_project" {
+variable "vm_elastic_search_data_volume_snapshot_project" {
   description = "Elastic Search Data image project, default 'open-targets-eu-dev'"
   type        = string
   default     = "open-targets-eu-dev"

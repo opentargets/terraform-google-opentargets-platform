@@ -31,9 +31,9 @@ config_api_jvm_xmx                   = "8g"
 # config_vm_api_mem                    = 30720
 
 config_webapp_deployment_context = {
-  WEBAPP_FLAVOR         = "platform"
-  WEBAPP_API_URL        = "https://api.platform.dev.opentargets.xyz/api/v4/graphql"
-  WEBAPP_OPENAI_URL     = "https://ai.platform.dev.opentargets.xyz"
+  WEBAPP_FLAVOR     = "platform"
+  WEBAPP_API_URL    = "https://api.platform.dev.opentargets.xyz/api/v4/graphql"
+  WEBAPP_OPENAI_URL = "https://ai.platform.dev.opentargets.xyz"
 }
 
 // --- OpenAI API configuration --- //
