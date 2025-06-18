@@ -18,7 +18,7 @@ resource "random_string" "random" {
     clickhouse_template_machine_type = local.clickhouse_template_machine_type,
     clickhouse_template_source_image = local.clickhouse_template_source_image,
     clickhouse_data_image            = var.vm_clickhouse_data_volume_snapshot,
-    clickhouse_data_image_project    = var.vm_clickhouse_data_volume_image_project
+    clickhouse_data_snapshot_project = var.vm_clickhouse_data_volume_snapshot_project
     vm_startup_script                = md5(file("${path.module}/scripts/instance_startup.sh"))
     vm_flag_preemptible              = var.vm_flag_preemptible
   }
@@ -45,6 +45,11 @@ resource "google_project_iam_member" "logging-writer" {
 resource "google_project_iam_member" "monitoring-writer" {
   project = var.project_id
   role    = "roles/monitoring.metricWriter"
+  member  = "serviceAccount:${google_service_account.gcp_service_acc_apis.email}"
+}
+resource "google_project_iam_member" "service-agent" {
+  project = var.vm_clickhouse_data_volume_snapshot_project
+  role    = "roles/compute.serviceAgent"
   member  = "serviceAccount:${google_service_account.gcp_service_acc_apis.email}"
 }
 // --- /Service Account Configuration/ ---
@@ -79,10 +84,10 @@ resource "google_compute_instance_template" "clickhouse_template" {
 
   // Attach Clickhouse data disk
   disk {
-    device_name  = local.clickhouse_data_disk_device
+    device_name     = local.clickhouse_data_disk_device
     source_snapshot = local.clickhouse_data_disk_snapshot
-    mode         = "READ_WRITE"
-    disk_type    = "pd-ssd"
+    mode            = "READ_WRITE"
+    disk_type       = "pd-ssd"
     // Disk size inherited from the image
     //disk_size_gb = var.vm_clickhouse_data_disk_size
     boot        = false

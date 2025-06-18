@@ -29,7 +29,7 @@ resource "google_compute_region_backend_service" "ilb_backend_service" {
   //locality_lb_policy = "ROUND_ROBIN"
 
   backend {
-    group = google_compute_region_instance_group_manager.regmig_elastic_search.instance_group
+    group          = google_compute_region_instance_group_manager.regmig_elastic_search.instance_group
     balancing_mode = "CONNECTION"
     //capacity_scaler = 1.0
   }

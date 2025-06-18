@@ -90,7 +90,7 @@ variable "vm_clickhouse_data_volume_snapshot" {
   type        = string
 }
 
-variable "vm_clickhouse_data_volume_image_project" {
+variable "vm_clickhouse_data_volume_snapshot_project" {
   description = "Clickhouse Data image project, default 'open-targets-eu-dev'"
   type        = string
   default     = "open-targets-eu-dev"
