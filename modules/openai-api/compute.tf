@@ -98,12 +98,17 @@ resource "google_compute_instance_template" "openai_api_node_template" {
     startup-script = templatefile(
       "${path.module}/scripts/vm_startup.sh",
       {
+        openai_token = var.openai_token,
+        project_id   = var.project_id,
+      }
+    )
+    docker_compose = templatefile(
+      "${path.module}/config/compose.yml",
+      {
         openai_api_docker_image   = local.openai_api_docker_image,
         openai_api_external_port  = local.openai_api_port,
         openai_api_internal_port  = local.openai_api_port,
         openai_api_container_name = local.openai_api_container_name,
-        openai_token              = var.openai_token,
-        project_id                = var.project_id,
       }
     )
     google-logging-enabled = "true"

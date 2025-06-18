@@ -57,28 +57,7 @@ log "[INFO] Generating compose file"
 # Create the docker-compose file
 mkdir -p /opt/ot-ai
 cd /opt/ot-ai
-cat << EOF >> compose.yml
-services:
-  api:
-    image: ${openai_api_docker_image}
-    container_name: ${openai_api_container_name}
-    logging:
-      driver: gcplogs
-    ports:
-      - ${openai_api_external_port}:${openai_api_internal_port}
-    environment:
-      - OPENAI_TOKEN=$${secret_value}
-  node_exporter:
-    image: quay.io/prometheus/node-exporter:latest
-    container_name: node_exporter
-    command:
-      - '--path.rootfs=/host'
-    network_mode: host
-    pid: host
-    restart: unless-stopped
-    volumes:
-      - '/:/host:ro,rslave'
-EOF
+curl -s -H 'Metadata-Flavor: Google' 'http://metadata.google.internal/computeMetadata/v1/instance/attributes/docker_compose' > compose.yml
 
 log "[INFO] execute docker compose up"
 docker compose up -d
