@@ -33,8 +33,8 @@ config_dns_subdomain_prefix       = "dev"
 config_dns_platform_api_subdomain = "api"
 
 // --- Web App configuration --- //
-config_webapp_release       = "v0.12.7"
-config_webapp_image_version = "0.12.7"
+config_webapp_release       = "v0.12.8"
+config_webapp_image_version = "0.12.8"
 
 # Environment variables for webapp container
 config_webapp_deployment_context = {
