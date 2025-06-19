@@ -21,6 +21,7 @@ resource "random_string" "random" {
     elastic_search_data_snapshot_project = var.vm_elastic_search_data_volume_snapshot_project,
     vm_elastic_search_version            = var.vm_elastic_search_version,
     vm_startup_script                    = md5(file("${path.module}/scripts/instance_startup.sh"))
+    docker_compose                       = md5(file("${path.module}/config/compose.yml"))
     vm_flag_preemptible                  = var.vm_flag_preemptible
     vm_api_boot_disk_size                = var.vm_elastic_search_boot_disk_size
   }
@@ -113,6 +114,12 @@ resource "google_compute_instance_template" "elastic_search_template" {
         GCP_DEVICE_DISK_PREFIX   = local.gcp_device_disk_prefix,
         DATA_DISK_DEVICE_NAME_ES = local.elastic_search_data_disk_device,
         ELASTIC_SEARCH_VERSION   = var.vm_elastic_search_version
+      }
+    )
+    docker_compose = templatefile(
+      "${path.module}/config/compose.yml",
+      {
+        ELASTIC_SEARCH_VERSION = var.vm_elastic_search_version
       }
     )
     google-logging-enabled = true
