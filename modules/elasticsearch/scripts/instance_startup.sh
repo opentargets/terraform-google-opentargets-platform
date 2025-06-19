@@ -33,40 +33,40 @@ apt-get update -y
 apt-get install -y docker-ce docker-ce-cli containerd.io
 
 # Local environment
-export path_mount_es_data_volume="/mnt/disks/esdata"
-export device_disk_es_data=${GCP_DEVICE_DISK_PREFIX}${DATA_DISK_DEVICE_NAME_ES}
-export path_es_data_volume=$${path_mount_es_data_volume}/data
-export docker_volume_name_es="esdata"
-export docker_image_string_es="opensearchproject/opensearch:${ELASTIC_SEARCH_VERSION}"
-export es_docker_container_name="otp-es"
-export es_cluster_name=`hostname`
-export es_vol_path_data=$${path_es_data_volume}
+export PATH_MOUNT_ES_DATA_VOLUME="/mnt/disks/esdata"
+export DEVICE_DISK_ES_DATA=${GCP_DEVICE_DISK_PREFIX}${DATA_DISK_DEVICE_NAME_ES}
+export PATH_ES_DATA_VOLUME=$${PATH_MOUNT_ES_DATA_VOLUME}/data
+export DOCKER_VOLUME_NAME_ES="esdata"
+export DOCKER_IMAGE_STRING_ES="opensearchproject/opensearch:${ELASTIC_SEARCH_VERSION}"
+export ES_DOCKER_CONTAINER_NAME="otp-es"
+export ES_CLUSTER_NAME=`hostname`
+export ES_VOL_PATH_DATA=$${PATH_ES_DATA_VOLUME}
 
 # Logging functions
 function log() {
     echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]$@"
 }
-function Logi() {
+function logi() {
   log "[INFO] $@"
 }
 
-function Logw() {
+function logw() {
   log "[WARNING] $@"
 }
 
-function Loge() {
+function loge() {
   log "[ERROR] $@"
 }
 
 # Prepare the data volume
-logi "Prepare data mount point at '$${path_mount_es_data_volume}'"
-mkdir -p $${path_mount_es_data_volume}
-logi "Mount Elastic Seardh data disk device '$${device_disk_es_data}' at '$${path_mount_es_data_volume}'"
-mount $${device_disk_es_data} $${path_mount_es_data_volume}
-logi "Create a Docker volume at the Elastic Search Data Volume '$${docker_volume_name_es}' bound to folder '$${path_es_data_volume}'"
+logi "Prepare data mount point at '$${PATH_MOUNT_ES_DATA_VOLUME}'"
+mkdir -p $${PATH_MOUNT_ES_DATA_VOLUME}
+logi "Mount Elastic Seardh data disk device '$${DEVICE_DISK_ES_DATA}' at '$${PATH_MOUNT_ES_DATA_VOLUME}'"
+mount $${DEVICE_DISK_ES_DATA} $${PATH_MOUNT_ES_DATA_VOLUME}
+logi "Create a Docker volume at the Elastic Search Data Volume '$${DOCKER_VOLUME_NAME_ES}' bound to folder '$${PATH_ES_DATA_VOLUME}'"
 
 # Launch Elastic Search
-logi "Running Elastic Search via Docker, using image $${docker_image_string_es}"
+logi "Running Elastic Search via Docker, using image $${DOCKER_IMAGE_STRING_ES}"
 logi "Setting vm.max_map_count to 262144"
 sysctl -w vm.max_map_count=262144
 # Get machine available memory (KiB)
@@ -74,64 +74,13 @@ export MACHINE_SIZE=`cat /proc/meminfo | grep MemTotal | grep -o '[0-9]\+'`
 # Use all the machine memory for the JVM minus 1GiB
 export JVM_SIZE=`expr $(expr $MACHINE_SIZE / 1048576) - 1`
 export JVM_SIZE_HALF=`expr $MACHINE_SIZE / 2097152`
-logi "[INFO] Elastic Search docker container name: $${es_docker_container_name}, cluster name: $${es_cluster_name}, data volume: $${docker_volume_name_es}, JVM Memory: $${JVM_SIZE}GiB"
+logi "[INFO] Elastic Search docker container name: $${ES_DOCKER_CONTAINER_NAME}, cluster name: $${es_cluster_name}, data volume: $${DOCKER_VOLUME_NAME_ES}, JVM Memory: $${JVM_SIZE}GiB"
 
-logi "Generating compose file"
-# Create the docker-compose file
+logi "ES_CLUSTER_NAMEose file"
+# Create the docker-ES_VOL_PATH_DATA
 mkdir -p /opt/ot-os
 cd /opt/ot-os
-cat << EOF >> compose.yml
-services:
-  opensearch:
-    image: $${docker_image_string_es}
-    container_name: $${es_docker_container_name}
-    logging:
-      driver: gcplogs
-    ports:
-      - "9200:9200"
-      - "9300:9600"
-    environment:
-      - cluster.name=$${es_cluster_name}
-      - network.host=0.0.0.0
-      - discovery.type=single-node
-      - discovery.seed_hosts=[]
-      - bootstrap.memory_lock=true
-      - search.max_open_scroll_context=5000
-      - OPENSEARCH_JAVA_OPTS=-Xms$${JVM_SIZE_HALF}g -Xmx$${JVM_SIZE_HALF}g
-      - DISABLE_SECURITY_PLUGIN=true
-    volumes:
-      - $${docker_volume_name_es}:/usr/share/opensearch/data
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-      nofile:
-        soft: 65536
-        hard: 65536
-  elasticsearch_exporter:
-    image: quay.io/prometheuscommunity/elasticsearch-exporter:latest
-    command:
-     - '--es.uri=http://$${es_cluster_name}:9200'
-    restart: always
-    ports:
-    - "9114:9114"
-  node_exporter:
-    image: quay.io/prometheus/node-exporter:latest
-    container_name: node_exporter
-    command:
-      - '--path.rootfs=/host'
-    network_mode: host
-    pid: host
-    restart: unless-stopped
-    volumes:
-      - '/:/host:ro,rslave'
-volumes:
-  $${docker_volume_name_es}:
-    driver_opts:
-      type: "none"
-      device: $${path_es_data_volume}
-      o: bind
-EOF
+curl -s -H 'Metadata-Flavor: Google' 'http://metadata.google.internal/computeMetadata/v1/instance/attributes/docker_compose' > compose.yml
 
 logi "execute docker compose up"
 docker compose up -d

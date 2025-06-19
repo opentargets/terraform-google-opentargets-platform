@@ -1,0 +1,50 @@
+services:
+  opensearch:
+    image: opensearchproject/opensearch:${ELASTIC_SEARCH_VERSION}
+    container_name: $${ES_DOCKER_CONTAINER_NAME}
+    logging:
+      driver: gcplogs
+    ports:
+      - "9200:9200"
+      - "9300:9600"
+    environment:
+      - cluster.name=$${ES_CLUSTER_NAME}
+      - network.host=0.0.0.0
+      - discovery.type=single-node
+      - discovery.seed_hosts=[]
+      - bootstrap.memory_lock=true
+      - search.max_open_scroll_context=5000
+      - OPENSEARCH_JAVA_OPTS=-Xms$${JVM_SIZE_HALF}g -Xmx$${JVM_SIZE_HALF}g
+      - DISABLE_SECURITY_PLUGIN=true
+    volumes:
+      - esdata:/usr/share/opensearch/data
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+  elasticsearch_exporter:
+    image: quay.io/prometheuscommunity/elasticsearch-exporter:latest
+    command:
+     - '--es.uri=http://$${ES_CLUSTER_NAME}:9200'
+    restart: always
+    ports:
+    - "9114:9114"
+  node_exporter:
+    image: quay.io/prometheus/node-exporter:latest
+    container_name: node_exporter
+    command:
+      - '--path.rootfs=/host'
+    network_mode: host
+    pid: host
+    restart: unless-stopped
+    volumes:
+      - '/:/host:ro,rslave'
+volumes:
+  esdata:
+    driver_opts:
+      type: "none"
+      device: $${PATH_ES_DATA_VOLUME}
+      o: bind
