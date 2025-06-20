@@ -97,7 +97,7 @@ locals {
     restart        = "unless-stopped"
     volumes        = ["/:/host:ro,rslave"]
   }
-  test_compose = {
+  docker_compose = {
     services = {
       clickhouse    = local.clickhouse_service
       node_exporter = local.node_exporter_service
