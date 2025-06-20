@@ -33,7 +33,7 @@ services:
     ports:
     - "9114:9114"
   node_exporter:
-    image: quay.io/prometheus/node-exporter:latest
+    image: ${NODE_EXPORTER_IMAGE}
     container_name: node_exporter
     command:
       - '--path.rootfs=/host'
