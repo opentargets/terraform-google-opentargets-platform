@@ -10,6 +10,7 @@ resource "random_string" "openai_api_node" {
     source_image      = local.vm_template_source_image,
     docker_fqdn_image = local.openai_api_docker_image,
     startup_script    = md5(file("${path.module}/scripts/vm_startup.sh"))
+    docker_compose    = md5(file("${path.module}/config/compose.yml"))
     openai_token      = var.openai_token
   }
 }
@@ -109,6 +110,7 @@ resource "google_compute_instance_template" "openai_api_node_template" {
         openai_api_external_port  = local.openai_api_port,
         openai_api_internal_port  = local.openai_api_port,
         openai_api_container_name = local.openai_api_container_name,
+        node_exporter_image       = local.node_exporter_image
       }
     )
     google-logging-enabled = "true"
