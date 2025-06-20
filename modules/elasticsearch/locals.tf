@@ -30,4 +30,6 @@ locals {
   elastic_search_data_disk_device = "es-data"
   // Google Device Disk prefix
   gcp_device_disk_prefix = "/dev/disk/by-id/google-"
+
+  node_exporter_image = "${var.node_exporter_image_name}:${var.node_exporter_image_version}"
 }
