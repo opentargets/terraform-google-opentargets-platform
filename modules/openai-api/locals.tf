@@ -19,4 +19,6 @@ locals {
   openai_api_docker_image = "${var.openai_api_docker_image}:${var.openai_api_docker_image_version}"
   // Docker Container name
   openai_api_container_name = "ot-openai-api"
+
+  node_exporter_image = "${var.node_exporter_image_name}:${var.node_exporter_image_version}"
 }
