@@ -60,6 +60,9 @@ module "backend_elastic_search" {
   vm_firewall_tags       = local.dev_mode_fw_tags
   deployment_region      = var.config_deployment_regions[count.index]
   deployment_target_size = 1
+  // Prometheus
+  node_exporter_image_name    = var.node_exporter_image_name
+  node_exporter_image_version = var.node_exporter_image_version
 }
 
 // --- Clickhouse Backend --- //
@@ -126,6 +129,9 @@ module "openai_api" {
   vm_flag_preemptible = var.config_vm_api_flag_preemptible
   // OpenAI
   openai_token = google_secret_manager_secret.openai_api_token.name
+  // Node exporter
+  node_exporter_image_name    = var.node_exporter_image_name
+  node_exporter_image_version = var.node_exporter_image_version
 }
 
 // --- API --- //
