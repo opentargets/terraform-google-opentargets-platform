@@ -89,7 +89,7 @@ resource "google_compute_instance_template" "webserver_template" {
       {
         webapp_image_version = var.webapp_image_version
         env_vars             = local.webapp_env_vars
-        test_compose2        = yamlencode(local.test_compose)
+        docker_compose       = yamlencode(local.docker_compose)
       }
     )
     google-logging-enabled = true

@@ -37,7 +37,7 @@ mkdir -p /opt/ot-wa
 cd /opt/ot-wa
 
 cat << EOF >> compose.yml
-${test_compose2}
+${docker_compose}
 EOF
 
 logi "execute docker compose up"
