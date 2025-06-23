@@ -3,14 +3,13 @@
 
 // --- GLB SSL Managed Certificates --- //
 resource "google_compute_managed_ssl_certificate" "glb_ssl_cert" {
-  count = length(local.ssl_managed_certificate_domain_names)
-
-  name = "${var.config_release_name}-ssl-cert-${md5(local.ssl_managed_certificate_domain_names[count.index])}"
+  name = "${var.config_release_name}-ssl-cert"
 
   managed {
-    domains = [local.ssl_managed_certificate_domain_names[count.index]]
+    domains = local.ssl_managed_certificate_domain_names
   }
 }
+
 
 // --- GLB Randomization for the resource --- //
 resource "random_string" "random_netglb" {
@@ -92,7 +91,7 @@ module "glb_platform" {
   ssl = true
   // managed_ssl_certificate_domains = local.ssl_managed_certificate_domain_names
   // use_ssl_certificates = true
-  ssl_certificates = google_compute_managed_ssl_certificate.glb_ssl_cert.*.self_link
+  ssl_certificates = [google_compute_managed_ssl_certificate.glb_ssl_cert.self_link]
   https_redirect   = true
 
   backends = {
