@@ -30,10 +30,7 @@ locals {
   dns_platform_base_name           = "${var.config_dns_platform_subdomain}.${local.dns_effective_dns_name}"
   dns_platform_api_dns_name        = "${var.config_dns_platform_api_subdomain}.${local.dns_platform_base_name}"
   dns_platform_openai_api_dns_name = "${var.config_dns_platform_openai_api_subdomain}.${local.dns_platform_base_name}"
-  dns_platform_webapp_domain_names = [
-    "www.${local.dns_platform_base_name}",
-    local.dns_platform_base_name
-  ]
+  dns_platform_webapp_domain_names = [local.dns_platform_base_name, "www.${local.dns_platform_base_name}"]
   // The DNS name for the platform, without the trailing dot in the configuration
   dns_name_for_platform = trimsuffix(local.dns_platform_base_name, ".")
   // The DNS name for the platform API, without the trailing dot in the configuration
@@ -50,7 +47,14 @@ locals {
   glb_dns_platform_webapp_domain_names = [for hostname in local.dns_platform_webapp_domain_names : trimsuffix(hostname, ".")]
 
   // SSL --- //
-  ssl_managed_certificate_domain_names = concat(local.dns_platform_webapp_domain_names, [local.dns_platform_api_dns_name, local.dns_platform_openai_api_dns_name])
+  ssl_managed_certificate_domain_names = concat(
+    local.dns_platform_webapp_domain_names,
+    var.config_dns_genetics_domain_names,
+    [
+      local.dns_platform_api_dns_name,
+      local.dns_platform_openai_api_dns_name
+    ]
+  )
 
   // CDN for web app backend --- //
   glb_webapp_cdn_enabled             = var.config_glb_webapp_enable_cdn
@@ -80,7 +84,7 @@ locals {
   netsec_enable_policies_webapp        = var.config_security_webapp_enable && ((length(local.netsec_allowed_cidrs_policy_listings) > 0) || (length(local.netsec_blocked_cidrs_policy_listings) > 0))
 
 
-  // --- Debugging --- // 
+  // --- Debugging --- //
   canaryvm_zone = "${var.config_deployment_regions[0]}-b"
 
   // --- Development Mode --- //

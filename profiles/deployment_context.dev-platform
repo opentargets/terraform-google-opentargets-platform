@@ -31,19 +31,21 @@ config_api_jvm_xmx                   = "8g"
 # config_vm_api_mem                    = 30720
 
 config_webapp_deployment_context = {
-  WEBAPP_FLAVOR         = "platform"
-  WEBAPP_API_URL        = "https://api.platform.dev.opentargets.xyz/api/v4/graphql"
-  WEBAPP_OPENAI_URL     = "https://ai.platform.dev.opentargets.xyz"
+  WEBAPP_FLAVOR     = "platform"
+  WEBAPP_API_URL    = "https://api.platform.dev.opentargets.xyz/api/v4/graphql"
+  WEBAPP_OPENAI_URL = "https://ai.platform.dev.opentargets.xyz"
 }
 
 // --- OpenAI API configuration --- //
 config_openai_api_docker_image_version = "0.0.11"
 
 // --- Web App configuration --- //
-config_webapp_release       = "v0.12.8"
-config_webapp_image_version = "0.12.8"
+config_webapp_release       = "v0.12.9-beta.1"
+config_webapp_image_version = "0.12.9-beta.1"
 // Data Context
 config_webapp_data_context_release = "25.06"
+// Genetics domain names to redirect to this deployment
+config_dns_genetics_domain_names = ["genetics-dev.opentargets.org"]
 
 
 // --- Security Configuration --- //

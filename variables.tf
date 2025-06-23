@@ -215,6 +215,12 @@ variable "config_dns_platform_api_subdomain" {
   default     = "api"
 }
 
+variable "config_dns_genetics_domain_names" {
+  description = "List of subdomains for the Genetics Platform, used for redirection to the merged platform"
+  type        = list(string)
+  default     = []
+}
+
 variable "config_dns_platform_openai_api_subdomain" {
   description = "Subdomain for Open Targets Platform OpenAI API DNS entry, default 'ai'"
   type        = string
