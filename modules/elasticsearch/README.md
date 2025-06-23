@@ -1,7 +1,7 @@
 # Open Targets Platform Elastic Search Data Backend
 This submodule defines the infrastructure needed to deploy an Elastic Search based data backend, within the context of Open Targets Platform.
 
-![Open Targets Platform Elastic Search, Deployment Unit](../../docs/img/open_targets_platform_elastic_search.png "Open Targets Platform Elastic Search, Deployment Unit")
+![Open Targets Platform Elastic Search, Deployment Unit](../../docs/img/open_targets_platform_elastic_search.svg "Open Targets Platform Elastic Search, Deployment Unit")
 
 The picture above these lines represents a deployment unit of Open Targets Platform Elastic Search data backend.
 
