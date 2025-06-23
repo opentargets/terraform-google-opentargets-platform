@@ -1,7 +1,7 @@
 # Open Targets Platform API
 This submodule defines the infrastructure needed to deploy Open Targets Platform API.
 
-![Open Targets Platform API, Deployment Unit](../../docs/img/open_targets_platform_api.png "Open Targets Platform API, Deployment Unit")
+![Open Targets Platform API, Deployment Unit](../../docs/img/open_targets_platform_api.svg "Open Targets Platform API, Deployment Unit")
 
 The picture above these lines represents the Open Targets Platform API elements defined by this infrastructure definition.
 

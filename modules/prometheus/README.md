@@ -1,7 +1,7 @@
 # Open Targets Platform Prometheus
 This submodule defines the infrastructure needed to deploy Open Targets Platform Prometheus and Grafana Server.
 
-![Open Targets Platform Prometheus, Deployment Unit](../../docs/img/open_targets_platform_api.png "Open Targets Platform Prometheus, Deployment Unit")
+![Open Targets Platform Prometheus, Deployment Unit](../../docs/img/open_targets_platform_infrastructure.svg "Open Targets Platform Prometheus, Deployment Unit")
 
 The picture above these lines represents the Open Targets Platform Prometheus and Grafana elements defined by this infrastructure definition.
 
