@@ -41,7 +41,7 @@ variable "vm_disk_size" {
 variable "vm_image" {
   description = "Machine image to use for the OpenAI API deployment, default 'cos-stable'"
   type        = string
-  default     = "projects/debian-cloud/global/images/debian-12-bookworm-v20250415"
+  default     = "debian-12"
 }
 
 variable "vm_image_project" {

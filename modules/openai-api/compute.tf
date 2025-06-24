@@ -5,13 +5,13 @@ resource "random_string" "openai_api_node" {
   upper   = false
   lower   = true
   keepers = {
-    template_tags     = join("", sort(local.fw_vm_tags)),
-    machine_type      = local.vm_machine_type,
-    source_image      = local.vm_template_source_image,
-    docker_fqdn_image = local.openai_api_docker_image,
-    startup_script    = md5(file("${path.module}/scripts/vm_startup.sh"))
-    docker_compose    = md5(file("${path.module}/config/compose.yml"))
-    openai_token      = var.openai_token
+    template_tags         = join("", sort(local.fw_vm_tags)),
+    template_source_image = data.google_compute_image.debian.id,
+    machine_type          = local.vm_machine_type,
+    docker_fqdn_image     = local.openai_api_docker_image,
+    startup_script        = md5(file("${path.module}/scripts/vm_startup.sh"))
+    docker_compose        = md5(file("${path.module}/config/compose.yml"))
+    openai_token          = var.openai_token
   }
 }
 
@@ -79,7 +79,7 @@ resource "google_compute_instance_template" "openai_api_node_template" {
   }
 
   disk {
-    source_image = local.vm_template_source_image
+    source_image = data.google_compute_image.debian.self_link
     auto_delete  = true
     boot         = true
     disk_type    = "pd-ssd"
