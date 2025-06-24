@@ -84,7 +84,7 @@ variable "vm_prometheus_mem" {
 variable "vm_prometheus_image" {
   description = "VM image to use for prometheus nodes, default 'cos-stable'"
   type        = string
-  default     = "projects/debian-cloud/global/images/debian-12-bookworm-v20250415"
+  default     = "debian-12"
 }
 
 variable "vm_prometheus_image_project" {

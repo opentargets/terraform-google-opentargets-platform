@@ -16,7 +16,7 @@ resource "random_string" "random" {
   keepers = {
     otpapi_template_tags          = join("", sort(local.otpapi_template_tags)),
     otpapi_template_machine_type  = local.otpapi_template_machine_type,
-    otpapi_template_source_image  = local.otpapi_template_source_image,
+    otpapi_template_source_image  = data.google_compute_image.main.self_link
     vm_platform_api_image_version = var.vm_platform_api_image_version,
     vm_platform_api_image_version = var.vm_platform_api_image_version,
     vm_startup_script             = md5(file("${path.module}/scripts/instance_startup.sh")),
@@ -84,7 +84,7 @@ resource "google_compute_instance_template" "otpapi_template" {
   }
 
   disk {
-    source_image = local.otpapi_template_source_image
+    source_image = data.google_compute_image.main.self_link
     auto_delete  = true
     disk_type    = "pd-ssd"
     boot         = true

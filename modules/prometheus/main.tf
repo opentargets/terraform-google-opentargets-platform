@@ -16,6 +16,7 @@ resource "random_string" "random" {
   keepers = {
     otpprometheus_template_tags         = join("", sort(local.otpprometheus_template_tags)),
     otpprometheus_template_machine_type = local.otpprometheus_template_machine_type,
+    template_source_image               = data.google_compute_image.main.id,
     vm_startup_script                   = md5(file("${path.module}/scripts/instance_startup.sh")),
     vm_compose                          = md5(file("${path.module}/config/compose.yml")),
     datasources                         = md5(file("${path.module}/config/datasource.yml")),
@@ -83,7 +84,7 @@ resource "google_compute_instance_template" "otpprometheus_template" {
   }
 
   disk {
-    source_image = local.otpprometheus_template_source_image
+    source_image = data.google_compute_image.main.self_link
     auto_delete  = true
     disk_type    = "pd-ssd"
     boot         = true

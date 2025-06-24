@@ -69,7 +69,6 @@ locals {
   webapp_webserver_disk_web_dev_name = "webdisk"
   // Machine geometry
   webapp_webserver_template_machine_type = "custom-${var.webserver_vm_vcpus}-${var.webserver_vm_mem}"
-  webapp_webserver_template_source_image = "${var.webserver_vm_image_project}/${var.webserver_vm_image}"
   // Web Application Deployment Bundle
   webapp_deployment_bundle_filename = "deployment_bundle.tgz"
   webapp_deployment_bundle_url      = "https://storage.googleapis.com/${local.bucket_name}/${local.webapp_deployment_bundle_filename}"

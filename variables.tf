@@ -58,9 +58,9 @@ variable "config_vm_elastic_search_mem" {
 }
 
 variable "config_vm_elastic_search_image" {
-  description = "Disk image to use for the deployed Elastic Search Instances"
+  description = "Disk image family to use for the deployed Elastic Search Instances"
   type        = string
-  default     = "projects/debian-cloud/global/images/debian-12-bookworm-v20250415"
+  default     = "debian-12"
 }
 
 variable "config_vm_elastic_search_version" {
@@ -105,9 +105,9 @@ variable "config_vm_clickhouse_mem" {
 }
 
 variable "config_vm_clickhouse_image" {
-  description = "Image to use for launching Clickhouse instances"
+  description = "Image family to use for launching Clickhouse instances"
   type        = string
-  default     = "projects/debian-cloud/global/images/debian-12-bookworm-v20250415"
+  default     = "debian-12"
 }
 
 variable "config_vm_clickhouse_image_project" {
@@ -167,9 +167,9 @@ variable "config_vm_api_mem" {
   default     = "30720"
 }
 variable "config_vm_api_image" {
-  description = "VM image to use for running API nodes"
+  description = "VM image family to use for running API nodes"
   type        = string
-  default     = "debian-12-bookworm-v20250415"
+  default     = "debian-12"
 }
 variable "config_vm_api_image_project" {
   description = "Project hosting the API VM image"
@@ -339,9 +339,9 @@ variable "config_webapp_webserver_vm_mem" {
 }
 
 variable "config_webapp_webserver_vm_image" {
-  description = "VM image to use for Web Server nodes, default 'debian 12'"
+  description = "VM image family to use for Web Server nodes, default 'debian 12'"
   type        = string
-  default     = "projects/debian-cloud/global/images/debian-12-bookworm-v20250415"
+  default     = "debian-12"
 }
 
 variable "config_webapp_webserver_vm_image_project" {
