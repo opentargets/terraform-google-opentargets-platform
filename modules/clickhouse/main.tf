@@ -16,7 +16,6 @@ resource "random_string" "random" {
   keepers = {
     clickhouse_template_tags         = join("", sort(local.clickhouse_template_tags)),
     clickhouse_template_machine_type = local.clickhouse_template_machine_type,
-    clickhouse_template_source_image = local.clickhouse_template_source_image,
     clickhouse_data_image            = var.vm_clickhouse_data_volume_snapshot,
     clickhouse_data_snapshot_project = var.vm_clickhouse_data_volume_snapshot_project
     vm_startup_script                = md5(file("${path.module}/scripts/instance_startup.sh"))
@@ -75,7 +74,7 @@ resource "google_compute_instance_template" "clickhouse_template" {
   }
 
   disk {
-    source_image = local.clickhouse_template_source_image
+    source_image = data.google_compute_image.main.self_link
     auto_delete  = true
     disk_type    = "pd-ssd"
     boot         = true

@@ -21,7 +21,6 @@ locals {
     ]
   )
   elastic_search_template_machine_type = "custom-${var.vm_elastic_search_vcpus}-${var.vm_elastic_search_mem}"
-  elastic_search_template_source_image = "${var.vm_elastic_search_image_project}/${var.vm_elastic_search_image}"
   // Compute Zones internal parameters
   compute_zones_n_total = length(data.google_compute_zones.available.names)
   // Elastic Search Data Volume

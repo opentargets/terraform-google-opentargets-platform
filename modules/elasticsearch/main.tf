@@ -15,7 +15,6 @@ resource "random_string" "random" {
   special = false
   keepers = {
     elastic_search_template_machine_type = local.elastic_search_template_machine_type,
-    elastic_search_template_source_image = local.elastic_search_template_source_image,
     elastic_search_template_tags         = join("", sort(local.elastic_search_template_tags)),
     elastic_search_data_snapshot         = var.vm_elastic_search_data_volume_snapshot,
     elastic_search_data_snapshot_project = var.vm_elastic_search_data_volume_snapshot_project,
@@ -77,7 +76,7 @@ resource "google_compute_instance_template" "elastic_search_template" {
   }
 
   disk {
-    source_image = local.elastic_search_template_source_image
+    source_image = data.google_compute_image.main.self_link
     auto_delete  = true
     disk_type    = "pd-ssd"
     boot         = true

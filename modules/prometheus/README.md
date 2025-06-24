@@ -50,7 +50,7 @@ The module implements the following input parameters.
 
 >**vm_prometheus_mem**, amount of memory allocated for Prometheus nodes (MiB), default '7680'.
 
->**vm_prometheus_image**, VM image to use for Prometheus nodes, default 'debian-12-bookworm-v20250415'.
+>**vm_prometheus_image**, VM image to use for Prometheus nodes, default 'debian-12'.
 
 >**vm_prometheus_image_project**, project hosting the VM image, default 'debian-cloud'.
 

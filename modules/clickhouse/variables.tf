@@ -70,7 +70,7 @@ variable "vm_clickhouse_mem" {
 variable "vm_clickhouse_image" {
   description = "VM image to use for Clickhouse nodes"
   type        = string
-  default     = "projects/debian-cloud/global/images/debian-12-bookworm-v20250415"
+  default     = "debian-12"
 }
 
 variable "vm_clickhouse_image_project" {
