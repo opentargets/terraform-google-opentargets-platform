@@ -93,7 +93,7 @@ variable "jvm_xmx" {
 variable "vm_api_image" {
   description = "VM image to use for API nodes, default 'cos-stable'"
   type        = string
-  default     = "debian-12-bookworm-v20250415"
+  default     = "debian-12"
 }
 
 variable "vm_api_image_project" {

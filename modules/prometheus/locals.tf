@@ -24,7 +24,6 @@ locals {
     ]
   )
   otpprometheus_template_machine_type = "custom-${var.vm_prometheus_vcpus}-${var.vm_prometheus_mem}"
-  otpprometheus_template_source_image = "${var.vm_prometheus_image_project}/${var.vm_prometheus_image}"
   node_exporter_image                 = "${var.node_exporter_image_name}:${var.node_exporter_image_version}"
   prometheus_image                    = "${var.prometheus_image_name}:${var.prometheus_image_version}"
   grafana_image                       = "${var.grafana_image_name}:${var.grafana_image_version}"

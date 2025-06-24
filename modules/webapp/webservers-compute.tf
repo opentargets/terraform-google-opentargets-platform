@@ -8,6 +8,7 @@ resource "random_string" "random_web_server_suffix" {
     webapp_bucket_name         = local.bucket_name
     deployment_bundle_filename = local.webapp_deployment_bundle_filename
     deployment_bundle_url      = local.webapp_deployment_bundle_url
+    template_source_image      = data.google_compute_image.main.id,
     nginx_docker_image_version = var.webserver_docker_image_version
     webapp_image_version       = var.webapp_image_version
     webapp_env_vars            = local.webapp_env_vars
@@ -67,7 +68,7 @@ resource "google_compute_instance_template" "webserver_template" {
   }
 
   disk {
-    source_image = local.webapp_webserver_template_source_image
+    source_image = data.google_compute_image.main.self_link
     auto_delete  = true
     disk_type    = "pd-ssd"
     boot         = true
