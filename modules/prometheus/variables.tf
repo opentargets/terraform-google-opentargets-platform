@@ -49,14 +49,6 @@ variable "network_subnet_name" {
   default     = "main-subnet"
 }
 
-variable "network_sources_health_checks" {
-  description = "Source CIDR for health checks, default '[ 130.211.0.0/22, 35.191.0.0/16 ]'"
-  default = [
-    "130.211.0.0/22",
-    "35.191.0.0/16"
-  ]
-}
-
 // --- prometheus Instances configuration --- //
 variable "deployment_regions" {
   description = "List of regions where the prometheus nodes should be deployed"
@@ -69,16 +61,10 @@ variable "vm_firewall_tags" {
   default     = []
 }
 
-variable "vm_prometheus_vcpus" {
-  description = "CPU count for prometheus nodes, default '2'"
-  type        = number
-  default     = "2"
-}
-
-variable "vm_prometheus_mem" {
-  description = "Amount of memory allocated for prometheus nodes (MiB), default '7680'"
-  type        = number
-  default     = "7680"
+variable "vm_prometheus_type" {
+  description = "Machine type to use for the OpenAI API deployment, default 'n1-standard-1'"
+  type        = string
+  default     = "n1-standard-1"
 }
 
 variable "vm_prometheus_image" {
@@ -114,16 +100,6 @@ variable "deployment_target_size" {
 variable "common_tags" {
   description = "List of common tags to attach to resources"
   type        = list(string)
-}
-
-// --- Load Balancer configuration --- //
-variable "load_balancer_type" {
-  description = "This will tell the module whether an ILB, GLB or no load balancer at all should be created"
-  type        = string
-  validation {
-    condition     = contains(["INTERNAL", "GLOBAL", "NONE"], var.load_balancer_type)
-    error_message = "Allowed values for 'load_balancer_type' are [ 'INTERNAL', 'GLOBAL', 'NONE' ]."
-  }
 }
 
 // --- Git Repository --- //
