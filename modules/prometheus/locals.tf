@@ -15,7 +15,7 @@ locals {
     ]
   )
   otpprometheus_machine_type = var.vm_prometheus_type
-  node_exporter_image                 = "${var.node_exporter_image_name}:${var.node_exporter_image_version}"
-  prometheus_image                    = "${var.prometheus_image_name}:${var.prometheus_image_version}"
-  grafana_image                       = "${var.grafana_image_name}:${var.grafana_image_version}"
+  node_exporter_image        = "${var.node_exporter_image_name}:${var.node_exporter_image_version}"
+  prometheus_image           = "${var.prometheus_image_name}:${var.prometheus_image_version}"
+  grafana_image              = "${var.grafana_image_name}:${var.grafana_image_version}"
 }

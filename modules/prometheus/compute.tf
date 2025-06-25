@@ -77,15 +77,23 @@ resource "google_compute_instance" "default" {
   boot_disk {
     initialize_params {
       image = data.google_compute_image.main.self_link
-      type = "pd-ssd"
+      type  = "pd-ssd"
     }
-    mode         = "READ_WRITE"
+    mode        = "READ_WRITE"
     auto_delete = true
   }
 
   network_interface {
     network    = var.network_name
     subnetwork = var.network_subnet_name
+  }
+
+  scheduling {
+    automatic_restart           = !var.vm_flag_preemptible
+    on_host_maintenance         = var.vm_flag_preemptible ? "TERMINATE" : "MIGRATE"
+    preemptible                 = var.vm_flag_preemptible
+    provisioning_model          = var.vm_flag_preemptible ? "SPOT" : "STANDARD"
+    instance_termination_action = var.vm_flag_preemptible ? "STOP" : null
   }
 
   metadata = {
