@@ -218,11 +218,6 @@ module "backend_prometheus" {
   vm_flag_preemptible    = var.config_vm_prometheus_flag_preemptible
   deployment_regions     = var.config_deployment_regions
   deployment_target_size = 1
-  // This can be
-  //  INTERNAL   - ILB
-  //  GLOBAL    - GLB
-  //  NONE      - To not attach a load balancer to the instance groups
-  load_balancer_type = "NONE"
   // I have to pass this value until I implement a validation mechanism, but the module won't use it, because it's set to 'NONE' LB
   common_tags                 = var.common_tags
   git_branch                  = var.git_branch
