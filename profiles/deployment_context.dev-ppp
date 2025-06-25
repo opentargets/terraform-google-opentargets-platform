@@ -7,18 +7,18 @@ config_release_name = "devppp"
 config_deployment_regions = ["europe-west1"]
 
 // --- Elastic Search configuration --- //
-config_vm_elastic_search_data_volume_image = "pos-ppp-dev--20250324-1334-es"
+config_vm_elastic_search_data_volume_snapshot = "pos-20250623-1407-os-snapshot"
 
 // --- Clickhouse configuration --- //
-config_vm_clickhouse_data_volume_image = "pos-ppp-dev--20250324-1334-ch"
+config_vm_clickhouse_data_volume_snapshot = "pos-20250623-0947-ch-snapshot"
 
 // --- API configuration --- //
-config_vm_platform_api_image_version = "25.0.2-alpha.12"
+config_vm_platform_api_image_version = "25.0.2"
 config_vm_version_major              = "25"
 config_vm_version_minor              = "0"
 config_vm_version_patch              = "2"
 config_vm_data_year                  = "25"
-config_vm_data_month                 = "03"
+config_vm_data_month                 = "06"
 config_vm_data_iteration             = "0"
 config_vm_api_ignore_cache           = true
 config_api_jvm_xms                   = "3g"
