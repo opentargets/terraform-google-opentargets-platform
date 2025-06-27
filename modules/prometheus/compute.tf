@@ -56,11 +56,6 @@ resource "google_project_iam_member" "network-viewer" {
   member  = "serviceAccount:${google_service_account.gcp_service_acc_prom.email}"
 }
 
-resource "google_service_account" "default" {
-  account_id   = "my-custom-sa"
-  display_name = "Custom SA for VM Instance"
-}
-
 resource "google_service_account_key" "gcp_service_acc_prom_key" {
   service_account_id = google_service_account.gcp_service_acc_prom.name
 }

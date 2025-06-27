@@ -39,13 +39,13 @@ variable "vm_disk_size" {
 
 // --- Machine image --- //
 variable "vm_image" {
-  description = "Machine image to use for the OpenAI API deployment, default 'cos-stable'"
+  description = "Machine image to use for the OpenAI API deployment, default 'debian-12'"
   type        = string
   default     = "debian-12"
 }
 
 variable "vm_image_project" {
-  description = "Machine image project to use for the OpenAI API deployment, default 'cos-cloud'"
+  description = "Machine image project to use for the OpenAI API deployment, default 'debian-cloud'"
   type        = string
   default     = "debian-cloud"
 }
@@ -123,5 +123,5 @@ variable "node_exporter_image_name" {
 
 variable "node_exporter_image_version" {
   description = "Image version of the node exporter image."
-  default     = "latest"
+  default     = "v1.9.1"
 }
