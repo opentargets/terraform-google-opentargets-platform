@@ -113,8 +113,8 @@ The fourth layer defines the operating system that will be used in the deployed 
 As an example of operating system settings, the following snippet shows the values for the API machines:
 ```hcl
 // API node --- //
-config_vm_api_image         = "cos-stable"
-config_vm_api_image_project = "cos-cloud"
+config_vm_api_image         = "debian-12"
+config_vm_api_image_project = "debian-cloud"
 ```
 
 ### Layer 5, Software

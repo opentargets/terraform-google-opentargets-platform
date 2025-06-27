@@ -91,13 +91,13 @@ variable "jvm_xmx" {
 }
 
 variable "vm_api_image" {
-  description = "VM image to use for API nodes, default 'cos-stable'"
+  description = "VM image to use for API nodes, default 'debian-12'"
   type        = string
   default     = "debian-12"
 }
 
 variable "vm_api_image_project" {
-  description = "Project hosting the VM image, default 'cos-cloud'"
+  description = "Project hosting the VM image, default 'debian-cloud'"
   type        = string
   default     = "debian-cloud"
 }
@@ -193,5 +193,5 @@ variable "node_exporter_image_name" {
 
 variable "node_exporter_image_version" {
   description = "Image version of the node exporter image."
-  default     = "latest"
+  default     = "v1.9.1"
 }
