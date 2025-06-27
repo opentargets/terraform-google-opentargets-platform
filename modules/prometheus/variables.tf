@@ -68,7 +68,7 @@ variable "vm_prometheus_type" {
 }
 
 variable "vm_prometheus_image" {
-  description = "VM image to use for prometheus nodes, default 'cos-stable'"
+  description = "VM image to use for prometheus nodes, default 'debian-12'"
   type        = string
   default     = "debian-12"
 }
@@ -121,7 +121,7 @@ variable "prometheus_image_name" {
 
 variable "prometheus_image_version" {
   description = "Image version of the prometheus image."
-  default     = "latest"
+  default     = "v3.4.2"
 }
 
 variable "prometheus_container_port" {
@@ -136,7 +136,7 @@ variable "grafana_image_name" {
 
 variable "grafana_image_version" {
   description = "Image version of the prometheus image."
-  default     = "latest"
+  default     = "12.0.2"
 }
 
 variable "grafana_container_port" {
@@ -151,5 +151,5 @@ variable "node_exporter_image_name" {
 
 variable "node_exporter_image_version" {
   description = "Image version of the node exporter image."
-  default     = "latest"
+  default     = "v1.9.1"
 }
