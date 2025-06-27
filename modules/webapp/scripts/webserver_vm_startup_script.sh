@@ -7,6 +7,14 @@ apt-get remove -y --purge man-db
 # update package lists
 apt-get update -y
 
+# Logging functions
+function log() {
+    echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]$@"
+}
+function logi() {
+  log "[INFO] $@"
+}
+
 # install dependencies
 apt-get install -y \
   apt-transport-https \
