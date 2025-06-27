@@ -53,11 +53,11 @@ echo "Secret Value parsed"
 export secret_value=$(echo $${secret_value} | base64 --decode)
 echo "Secret Value decoded"
 
-log "[INFO] Generating compose file"
+echo "[INFO] Generating compose file"
 # Create the docker-compose file
 mkdir -p /opt/ot-ai
 cd /opt/ot-ai
 curl -s -H 'Metadata-Flavor: Google' 'http://metadata.google.internal/computeMetadata/v1/instance/attributes/docker_compose' > compose.yml
 
-log "[INFO] execute docker compose up"
+echo "[INFO] execute docker compose up"
 docker compose up -d
