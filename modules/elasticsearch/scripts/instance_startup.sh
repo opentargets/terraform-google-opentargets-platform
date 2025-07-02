@@ -74,7 +74,7 @@ export MACHINE_SIZE=`cat /proc/meminfo | grep MemTotal | grep -o '[0-9]\+'`
 # Use all the machine memory for the JVM minus 1GiB
 export JVM_SIZE=`expr $(expr $MACHINE_SIZE / 1048576) - 1`
 export JVM_SIZE_HALF=`expr $MACHINE_SIZE / 2097152`
-logi "[INFO] Elastic Search docker container name: $${ES_DOCKER_CONTAINER_NAME}, cluster name: $${es_cluster_name}, data volume: $${DOCKER_VOLUME_NAME_ES}, JVM Memory: $${JVM_SIZE}GiB"
+logi "Elastic Search docker container name: $${ES_DOCKER_CONTAINER_NAME}, cluster name: $${es_cluster_name}, data volume: $${DOCKER_VOLUME_NAME_ES}, JVM Memory: $${JVM_SIZE}GiB"
 
 logi "ES_CLUSTER_NAMEose file"
 # Create the docker-ES_VOL_PATH_DATA
