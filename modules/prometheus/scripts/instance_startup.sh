@@ -57,10 +57,15 @@ global:
 scrape_configs:
 EOF
 
+relabling_config = 'relabel_configs:
+      - source_labels: [__meta_gce_instance_name]
+        target_label: nodename'
+
 zones=${available_zones}
 # Configure scrape configs for api
 cat <<EOF >> /opt/prometheus/prometheus.yml
   - job_name: 'api'
+    $${relabling_config}
     gce_sd_configs:
 EOF
 for zone in $(echo $zones | tr "," "\n")
@@ -75,6 +80,7 @@ done
 # Configure scrape configs for node-exporter
 cat <<EOF >> /opt/prometheus/prometheus.yml
   - job_name: 'node'
+    $${relabling_config}
     gce_sd_configs:
 EOF
 for zone in $(echo $zones | tr "," "\n")
@@ -89,6 +95,7 @@ done
 # Configure scrape configs for opensearch-exporter
 cat <<EOF >> /opt/prometheus/prometheus.yml
   - job_name: 'opensearch'
+    $${relabling_config}
     gce_sd_configs:
 EOF
 for zone in $(echo $zones | tr "," "\n")
@@ -103,6 +110,7 @@ done
 # Configure scrape configs for clickhouse-exporter
 cat <<EOF >> /opt/prometheus/prometheus.yml
   - job_name: 'clickhouse'
+    $${relabling_config}
     gce_sd_configs:
 EOF
 for zone in $(echo $zones | tr "," "\n")
@@ -117,6 +125,7 @@ done
 # Configure scrape configs for prometheus
 cat <<EOF >> /opt/prometheus/prometheus.yml
   - job_name: 'prometheus'
+    $${relabling_config}
     gce_sd_configs:
 EOF
 for zone in $(echo $zones | tr "," "\n")
