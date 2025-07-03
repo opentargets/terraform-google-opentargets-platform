@@ -20,8 +20,9 @@ resource "random_string" "random" {
     vm_startup_script                   = md5(file("${path.module}/scripts/instance_startup.sh")),
     vm_compose                          = md5(file("${path.module}/config/compose.yml")),
     datasources                         = md5(file("${path.module}/config/datasource.yml")),
+    dashboards                          = join("-", fileset("${path.module}/config/dashboards", "*.json"))
     vm_flag_preemptible                 = var.vm_flag_preemptible
-  }
+  } //TODO: Calculate md5 of the dashboards
 }
 
 data "google_compute_zones" "available" {
