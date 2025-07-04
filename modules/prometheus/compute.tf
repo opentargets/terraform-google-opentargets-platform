@@ -4,7 +4,6 @@
 /*
     This module defines a multi-regional deployment of Open Target Platform Prometheus
 */
-
 // --- Machine Template --- //
 // TODO - Refactor using
 //      https://github.com/terraform-google-modules/terraform-google-vm
@@ -13,7 +12,7 @@ resource "random_string" "random" {
   lower   = true
   upper   = false
   special = false
-  keepers = {
+  keepers = merge({
     otpprometheus_template_tags         = join("", sort(local.otpprometheus_template_tags)),
     otpprometheus_template_machine_type = local.otpprometheus_machine_type,
     template_source_image               = data.google_compute_image.main.id,
@@ -22,7 +21,7 @@ resource "random_string" "random" {
     datasources                         = md5(file("${path.module}/config/datasource.yml")),
     dashboards                          = join("-", fileset("${path.module}/config/dashboards", "*.json"))
     vm_flag_preemptible                 = var.vm_flag_preemptible
-  } //TODO: Calculate md5 of the dashboards
+  }, local.dashboards_md5) //TODO: Calculate md5 of the dashboards
 }
 
 data "google_compute_zones" "available" {

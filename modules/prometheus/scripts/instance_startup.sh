@@ -57,7 +57,7 @@ global:
 scrape_configs:
 EOF
 
-relabling_config = 'relabel_configs:
+relabling_config='relabel_configs:
       - source_labels: [__meta_gce_instance_name]
         target_label: nodename'
 
