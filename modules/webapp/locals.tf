@@ -55,8 +55,10 @@ locals {
 
   // --- Web Servers --- //
   // Communication Ports
-  webapp_webserver_port      = 8080
-  webapp_webserver_port_name = "webappserverport"
+  node_exporter_webserver_port      = 9100
+  webapp_webserver_port             = 8080
+  webapp_webserver_port_name        = "webappserverport"
+  node_exporter_webserver_port_name = "webappnodeexporterport"
   // Firewall
   fw_tag_webserver_node = "webappservernode"
   // Web Server VM instance template values
@@ -67,15 +69,44 @@ locals {
   webapp_webserver_disk_web_dev_name = "webdisk"
   // Machine geometry
   webapp_webserver_template_machine_type = "custom-${var.webserver_vm_vcpus}-${var.webserver_vm_mem}"
-  webapp_webserver_template_source_image = "${var.webserver_vm_image_project}/${var.webserver_vm_image}"
   // Web Application Deployment Bundle
   webapp_deployment_bundle_filename = "deployment_bundle.tgz"
   webapp_deployment_bundle_url      = "https://storage.googleapis.com/${local.bucket_name}/${local.webapp_deployment_bundle_filename}"
 
+  clickhouse_service = {
+    image = "ghcr.io/opentargets/ot-ui-apps/ot-ui-apps:${var.webapp_image_version}"
+    logging = {
+      driver = "gcplogs"
+    }
+    ports       = ["8080:8080"]
+    environment = var.webapp_deployment_context_env
+    ulimits = {
+      nofile = {
+        soft = 262144
+        hard = 262144
+      }
+    }
+  }
+  node_exporter_service = {
+    image          = "quay.io/prometheus/node-exporter:latest"
+    container_name = "node_exporter"
+    command        = ["--path.rootfs=/host"]
+    network_mode   = "host"
+    pid            = "host"
+    restart        = "unless-stopped"
+    volumes        = ["/:/host:ro,rslave"]
+  }
+  docker_compose = {
+    services = {
+      clickhouse    = local.clickhouse_service
+      node_exporter = local.node_exporter_service
+    }
+  }
+
   // --- Web App Deployment Context --- //
   webapp_env_vars = join(" ",
     [for key, value in var.webapp_deployment_context_env :
-      "-e \"${key}=${value}\""
+      "${key}=${value}\"\n"
     ]
   )
 }

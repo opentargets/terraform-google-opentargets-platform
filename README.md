@@ -1,7 +1,7 @@
 # Infrastructure definition
 This repository defines the Open Targets Platform infrastructure, using Hashicorp Configuration Language (HCL) and [Terraform](https://terraform.io).
 
-![Open Targets Platform, Deployment Unit](docs/img/open_targets_platform_infrastructure.png "Open Targets Platform, Deployment Unit")
+![Open Targets Platform, Deployment Unit](docs/img/open_targets_platform_infrastructure.svg "Open Targets Platform, Deployment Unit")
 
 As shown in the figure above, a deployment unit consists of two data backends, based on Elastic Search and Clickhouse services. Set to automatically scale up on demand and self-heal, as part of the managing activities in their scoping regional instance group.
 
@@ -113,8 +113,8 @@ The fourth layer defines the operating system that will be used in the deployed 
 As an example of operating system settings, the following snippet shows the values for the API machines:
 ```hcl
 // API node --- //
-config_vm_api_image         = "cos-stable"
-config_vm_api_image_project = "cos-cloud"
+config_vm_api_image         = "debian-12"
+config_vm_api_image_project = "debian-cloud"
 ```
 
 ### Layer 5, Software

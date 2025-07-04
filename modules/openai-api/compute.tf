@@ -5,12 +5,13 @@ resource "random_string" "openai_api_node" {
   upper   = false
   lower   = true
   keepers = {
-    template_tags     = join("", sort(local.fw_vm_tags)),
-    machine_type      = local.vm_machine_type,
-    source_image      = local.vm_template_source_image,
-    docker_fqdn_image = local.openai_api_docker_image,
-    startup_script    = md5(file("${path.module}/scripts/vm_startup.sh"))
-    openai_token      = var.openai_token
+    template_tags         = join("", sort(local.fw_vm_tags)),
+    template_source_image = data.google_compute_image.debian.id,
+    machine_type          = local.vm_machine_type,
+    docker_fqdn_image     = local.openai_api_docker_image,
+    startup_script        = md5(file("${path.module}/scripts/vm_startup.sh"))
+    docker_compose        = md5(file("${path.module}/config/compose.yml"))
+    openai_token          = var.openai_token
   }
 }
 
@@ -78,7 +79,7 @@ resource "google_compute_instance_template" "openai_api_node_template" {
   }
 
   disk {
-    source_image = local.vm_template_source_image
+    source_image = data.google_compute_image.debian.self_link
     auto_delete  = true
     boot         = true
     disk_type    = "pd-ssd"
@@ -98,12 +99,18 @@ resource "google_compute_instance_template" "openai_api_node_template" {
     startup-script = templatefile(
       "${path.module}/scripts/vm_startup.sh",
       {
+        openai_token = var.openai_token,
+        project_id   = var.project_id,
+      }
+    )
+    docker_compose = templatefile(
+      "${path.module}/config/compose.yml",
+      {
         openai_api_docker_image   = local.openai_api_docker_image,
         openai_api_external_port  = local.openai_api_port,
         openai_api_internal_port  = local.openai_api_port,
         openai_api_container_name = local.openai_api_container_name,
-        openai_token              = var.openai_token,
-        project_id                = var.project_id,
+        node_exporter_image       = local.node_exporter_image
       }
     )
     google-logging-enabled = "true"
@@ -151,6 +158,11 @@ resource "google_compute_region_instance_group_manager" "remig_openai_api" {
     port = local.openai_api_port
   }
 
+  named_port {
+    name = local.openai_node_exporter_port_name
+    port = local.openai_node_exporter_port
+  }
+
   auto_healing_policies {
     health_check      = google_compute_health_check.openai_api_node_health_check.self_link
     initial_delay_sec = 30
@@ -181,7 +193,7 @@ resource "google_compute_region_autoscaler" "openai_api_node" {
   autoscaling_policy {
     max_replicas    = length(data.google_compute_zones.available[count.index].names) * 2
     min_replicas    = 1
-    cooldown_period = 30
+    cooldown_period = 120
     cpu_utilization {
       target = 0.8
     }
