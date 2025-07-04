@@ -18,4 +18,8 @@ locals {
   node_exporter_image        = "${var.node_exporter_image_name}:${var.node_exporter_image_version}"
   prometheus_image           = "${var.prometheus_image_name}:${var.prometheus_image_version}"
   grafana_image              = "${var.grafana_image_name}:${var.grafana_image_version}"
+
+  // calculate md5 for each dashboard to deploy when there's a change in the dashboards
+  dashboards     = fileset("${path.module}/config/dashboards", "*.json")
+  dashboards_md5 = zipmap(local.dashboards, [for dashboard in local.dashboards : md5(file("${path.module}/config/dashboards/${dashboard}"))])
 }
