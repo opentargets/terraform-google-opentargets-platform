@@ -70,13 +70,13 @@ variable "vm_clickhouse_mem" {
 variable "vm_clickhouse_image" {
   description = "VM image to use for Clickhouse nodes"
   type        = string
-  default     = "cos-stable"
+  default     = "debian-12"
 }
 
 variable "vm_clickhouse_image_project" {
   description = "Project hosting Clickhouse VM image"
   type        = string
-  default     = "cos-cloud"
+  default     = "debian-cloud"
 }
 
 variable "vm_clickhouse_boot_disk_size" {
@@ -124,4 +124,14 @@ variable "deployment_target_size" {
   description = "This number configures how many instances should be running, default '1'"
   type        = number
   default     = 1
+}
+
+variable "node_exporter_image_name" {
+  description = "Image used to create the node exporter container."
+  default     = "quay.io/prometheus/node-exporter"
+}
+
+variable "node_exporter_image_version" {
+  description = "Image version of the node exporter image."
+  default     = "v1.9.1"
 }
