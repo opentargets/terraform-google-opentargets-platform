@@ -39,15 +39,15 @@ variable "vm_disk_size" {
 
 // --- Machine image --- //
 variable "vm_image" {
-  description = "Machine image to use for the OpenAI API deployment, default 'cos-stable'"
+  description = "Machine image to use for the OpenAI API deployment, default 'debian-12'"
   type        = string
-  default     = "cos-stable"
+  default     = "debian-12"
 }
 
 variable "vm_image_project" {
-  description = "Machine image project to use for the OpenAI API deployment, default 'cos-cloud'"
+  description = "Machine image project to use for the OpenAI API deployment, default 'debian-cloud'"
   type        = string
-  default     = "cos-cloud"
+  default     = "debian-cloud"
 }
 
 // --- Machine Persona --- //
@@ -114,4 +114,14 @@ variable "deployment_regions" {
 variable "openai_token" {
   description = "Google Cloud Secret that contains the OpenAI API token"
   type        = string
+}
+
+variable "node_exporter_image_name" {
+  description = "Image used to create the node exporter container."
+  default     = "quay.io/prometheus/node-exporter"
+}
+
+variable "node_exporter_image_version" {
+  description = "Image version of the node exporter image."
+  default     = "v1.9.1"
 }
