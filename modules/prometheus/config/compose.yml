@@ -25,6 +25,7 @@ services:
       - /opt/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus-data:/prometheus
       - /opt/prometheus/application_default_credentials.json:/etc/prometheus/application_default_credentials.json
+      - /mnt/prometheus-data:/prometheus/data
     command:
       - '--web.enable-lifecycle'
       - '--config.file=/etc/prometheus/prometheus.yml'
