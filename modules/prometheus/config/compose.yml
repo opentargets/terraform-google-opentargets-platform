@@ -28,6 +28,7 @@ services:
     command:
       - '--web.enable-lifecycle'
       - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.retention.time=30d'
     environment:
       - GOOGLE_APPLICATION_CREDENTIALS=/etc/prometheus/application_default_credentials.json
 
