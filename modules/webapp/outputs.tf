@@ -32,3 +32,13 @@ output "webserver_port_name" {
   // Output the custom named port for the instance group
   value = local.webapp_webserver_port_name
 }
+
+output "webserver_node_exporter_port" {
+  // Output the listening port for the Open Targets Platform Web Server
+  value = local.node_exporter_webserver_port
+}
+
+output "webserver_node_exporter_port_name" {
+  // Output the custom named port for the instance group
+  value = local.node_exporter_webserver_port_name
+}

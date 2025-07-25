@@ -9,7 +9,7 @@ resource "google_compute_firewall" "vpc_netfw_openai_api_node" {
 
   allow {
     protocol = "tcp"
-    ports    = [local.openai_api_port]
+    ports    = [local.openai_api_port, local.openai_node_exporter_port]
   }
 
   target_tags = [local.fw_tag_openai_api]
