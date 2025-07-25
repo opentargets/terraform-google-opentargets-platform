@@ -31,6 +31,10 @@ apt-get update -y
 # install docker
 apt-get install -y docker-ce docker-ce-cli containerd.io
 
+# mount prometheus data disk
+echo "Mounting Prometheus data disk at /mnt/prometheus-data"
+mkdir -p /mnt/prometheus-data
+mount -o discard,defaults /dev/disk/by-id/google-prometheus-data /mnt/prometheus-data
 
 git clone -b ${git_branch} ${git_repository}
 

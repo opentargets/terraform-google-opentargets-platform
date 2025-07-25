@@ -60,6 +60,21 @@ resource "google_service_account_key" "gcp_service_acc_prom_key" {
   service_account_id = google_service_account.gcp_service_acc_prom.name
 }
 
+resource "google_compute_disk" "prometheus_data" {
+  count = length(var.deployment_regions)
+
+  name = "${var.module_wide_prefix_scope}-${count.index}-prometheus-data-${random_string.random.result}"
+  type = "pd-ssd"
+  zone = data.google_compute_zones.available[count.index].names[0]
+  size = var.vm_prometheus_data_disk_size
+
+  labels = {
+    environment = var.module_wide_prefix_scope
+    component   = "prometheus"
+    purpose     = "data-storage"
+  }
+}
+
 resource "google_compute_instance" "default" {
   count = length(var.deployment_regions)
 
@@ -76,6 +91,12 @@ resource "google_compute_instance" "default" {
     }
     mode        = "READ_WRITE"
     auto_delete = true
+  }
+
+  attached_disk {
+    source      = google_compute_disk.prometheus_data[count.index].id
+    device_name = "prometheus-data"
+    mode        = "READ_WRITE"
   }
 
   network_interface {

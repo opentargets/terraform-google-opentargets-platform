@@ -85,6 +85,12 @@ variable "vm_prometheus_boot_disk_size" {
   default     = "50GB"
 }
 
+variable "vm_prometheus_data_disk_size" {
+  description = "Data disk size for prometheus nodes, default '300GB' accounting for a 30 days retention period"
+  type        = string
+  default     = 30
+}
+
 variable "vm_flag_preemptible" {
   description = "Use this flag to tell the module to use a preemptible instance, default: 'false'"
   type        = bool
