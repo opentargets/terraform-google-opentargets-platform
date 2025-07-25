@@ -31,10 +31,26 @@ apt-get update -y
 # install docker
 apt-get install -y docker-ce docker-ce-cli containerd.io
 
-# mount prometheus data disk
+# Mount prometheus data disk
 echo "Mounting Prometheus data disk at /mnt/prometheus-data"
 mkdir -p /mnt/prometheus-data
+
+# Check if disk is formatted, format if needed
+if ! blkid /dev/disk/by-id/google-prometheus-data; then
+    echo "Formatting prometheus data disk..."
+    mkfs.ext4 -F /dev/disk/by-id/google-prometheus-data
+fi
+
+# Mount the disk
 mount -o discard,defaults /dev/disk/by-id/google-prometheus-data /mnt/prometheus-data
+
+# Set correct ownership and permissions for Prometheus
+chown -R 65534:65534 /mnt/prometheus-data
+chmod 755 /mnt/prometheus-data
+
+# Add to fstab for persistence
+echo "/dev/disk/by-id/google-prometheus-data /mnt/prometheus-data ext4 discard,defaults,nofail 0 2" >> /etc/fstab
+
 
 git clone -b ${git_branch} ${git_repository}
 
