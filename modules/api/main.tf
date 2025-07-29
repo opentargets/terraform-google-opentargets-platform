@@ -19,8 +19,7 @@ resource "random_string" "random" {
     otpapi_template_source_image  = data.google_compute_image.main.self_link
     vm_platform_api_image_version = var.vm_platform_api_image_version,
     vm_platform_api_image_version = var.vm_platform_api_image_version,
-    vm_startup_script             = md5(file("${path.module}/scripts/instance_startup.sh")),
-    docker_compose                = md5(file("${path.module}/config/compose.yml")),
+    cloud-init                    = md5(file("${path.module}/config/cloud-init.yaml")),
     vm_flag_preemptible           = var.vm_flag_preemptible,
     vm_api_version_major          = var.api_v_major,
     vm_api_version_minor          = var.api_v_minor,
@@ -101,9 +100,8 @@ resource "google_compute_instance_template" "otpapi_template" {
   }
 
   metadata = {
-    startup-script = file("${path.module}/scripts/instance_startup.sh")
-    docker_compose = templatefile(
-      "${path.module}/config/compose.yml",
+    user-data = templatefile(
+      "${path.module}/config/cloud-init.yaml",
       {
         PLATFORM_API_VERSION = var.vm_platform_api_image_version,
         SLICK_CLICKHOUSE_URL = "jdbc:clickhouse://${var.backend_connection_map[var.deployment_regions[count.index]].host_clickhouse}:8123",
