@@ -91,15 +91,15 @@ variable "jvm_xmx" {
 }
 
 variable "vm_api_image" {
-  description = "VM image to use for API nodes, default 'debian-12'"
+  description = "VM image to use for API nodes, default 'cos-stable'"
   type        = string
-  default     = "debian-12"
+  default     = "cos-stable"
 }
 
 variable "vm_api_image_project" {
-  description = "Project hosting the VM image, default 'debian-cloud'"
+  description = "Project hosting the VM image, default 'cos-cloud'"
   type        = string
-  default     = "debian-cloud"
+  default     = "cos-cloud"
 }
 
 variable "vm_api_boot_disk_size" {

@@ -1,0 +1,31 @@
+#cloud-config
+
+users:
+  - name: cloudservice
+    uid: 2000
+
+write_files:
+  - path: /etc/systemd/system/nodeexporter.service
+    permissions: 0644
+    owner: root
+    content: |
+      [Unit]
+      Description=Start node exporter from a docker container
+
+      [Service]
+      ExecStart=/usr/bin/docker run --name=nodeexporter --rm -d --net="host" --pid="host" -v "/:/host:ro,rslave" quay.io/prometheus/node-exporter:latest --path.rootfs=/host
+
+  - path: /etc/systemd/system/cloudservice.service
+    permissions: 0644
+    owner: root
+    content: |
+      [Unit]
+      Description=Start open targets platform API docker container
+
+      [Service]
+      ExecStart=/usr/bin/docker run -d -p ${OTP_API_PORT}:${OTP_API_PORT} --log-driver=gcplogs -e SLICK_CLICKHOUSE_URL='${SLICK_CLICKHOUSE_URL}' -e ELASTICSEARCH_HOST='${ELASTICSEARCH_HOST}' -e META_APIVERSION_MAJOR='${API_VERSION_MAJOR}' -e META_APIVERSION_MINOR='${API_VERSION_MINOR}' -e META_APIVERSION_PATCH='${API_VERSION_PATCH}' -e META_DATA_YEAR='${API_DATA_YEAR}' -e META_DATA_MONTH='${API_DATA_MONTH}' -e META_DATA_ITERATION='${API_DATA_ITER}' -e PLATFORM_API_IGNORE_CACHE='${API_IGNORE_CACHE}' -e JVM_XMS='${JVM_XMS}' -e JVM_XMX='${JVM_XMX}' ghcr.io/opentargets/platform-api:${PLATFORM_API_VERSION}
+
+runcmd:
+- systemctl daemon-reload
+- systemctl start cloudservice.service
+- systemctl start nodeexporter.service
