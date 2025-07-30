@@ -20,7 +20,7 @@ write_files:
     owner: root
     content: |
       [Unit]
-      Description=Start open targets platform API docker container
+      Description=Start open targets platform Open AI API docker container
 
       [Service]
       ExecStart=/bin/bash -c '/usr/bin/docker run -d -p ${openai_api_external_port}:${openai_api_internal_port} --name ${openai_api_container_name} --log-driver=gcplogs -e OPENAI_TOKEN="$(cat /tmp/openai_api_secret_value)" ${openai_api_docker_image}'
