@@ -39,15 +39,15 @@ variable "vm_disk_size" {
 
 // --- Machine image --- //
 variable "vm_image" {
-  description = "Machine image to use for the OpenAI API deployment, default 'debian-12'"
+  description = "Machine image to use for the OpenAI API deployment, default 'cos-stable'"
   type        = string
-  default     = "debian-12"
+  default     = "cos-stable"
 }
 
 variable "vm_image_project" {
-  description = "Machine image project to use for the OpenAI API deployment, default 'debian-cloud'"
+  description = "Machine image project to use for the OpenAI API deployment, default 'cos-cloud'"
   type        = string
-  default     = "debian-cloud"
+  default     = "cos-cloud"
 }
 
 // --- Machine Persona --- //

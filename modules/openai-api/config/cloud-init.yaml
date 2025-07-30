@@ -1,0 +1,37 @@
+#cloud-config
+
+users:
+  - name: cloudservice
+    uid: 2000
+
+write_files:
+  - path: /etc/systemd/system/nodeexporter.service
+    permissions: 0644
+    owner: root
+    content: |
+      [Unit]
+      Description=Start node exporter from a docker container
+
+      [Service]
+      ExecStart=/usr/bin/docker run --name=nodeexporter --rm -d --net="host" --pid="host" -v "/:/host:ro,rslave" quay.io/prometheus/node-exporter:latest --path.rootfs=/host
+
+  - path: /etc/systemd/system/cloudservice.service
+    permissions: 0644
+    owner: root
+    content: |
+      [Unit]
+      Description=Start open targets platform API docker container
+
+      [Service]
+      ExecStart=/bin/bash -c '/usr/bin/docker run -d -p ${openai_api_external_port}:${openai_api_internal_port} --name ${openai_api_container_name} --log-driver=gcplogs -e OPENAI_TOKEN="$(cat /tmp/openai_api_secret_value)" ${openai_api_docker_image}'
+
+runcmd:
+- |
+  export access_token="$(curl -s -H 'Metadata-Flavor: Google' 'http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token' | cut -d'"' -f 4)"
+  export secret_response=$(curl -s -H "Authorization: Bearer $access_token" -H "X-Goog-User-Project: ${project_id}" "https://secretmanager.googleapis.com/v1/${openai_token}/versions/latest:access")
+  secret_value=$(echo $secret_response | docker run -i --rm backplane/jq -r .payload.data)
+  export secret_value=$(echo $secret_value | base64 --decode)
+  echo $secret_value > /tmp/openai_api_secret_value
+  systemctl daemon-reload
+  systemctl start cloudservice.service
+  systemctl start nodeexporter.service
