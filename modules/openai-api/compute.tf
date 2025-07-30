@@ -6,11 +6,10 @@ resource "random_string" "openai_api_node" {
   lower   = true
   keepers = {
     template_tags         = join("", sort(local.fw_vm_tags)),
-    template_source_image = data.google_compute_image.debian.id,
+    template_source_image = data.google_compute_image.main.id,
     machine_type          = local.vm_machine_type,
     docker_fqdn_image     = local.openai_api_docker_image,
-    startup_script        = md5(file("${path.module}/scripts/vm_startup.sh"))
-    docker_compose        = md5(file("${path.module}/config/compose.yml"))
+    cloud_init            = md5(file("${path.module}/config/cloud-init.yaml"))
     openai_token          = var.openai_token
   }
 }
@@ -79,7 +78,7 @@ resource "google_compute_instance_template" "openai_api_node_template" {
   }
 
   disk {
-    source_image = data.google_compute_image.debian.self_link
+    source_image = data.google_compute_image.main.self_link
     auto_delete  = true
     boot         = true
     disk_type    = "pd-ssd"
@@ -96,16 +95,11 @@ resource "google_compute_instance_template" "openai_api_node_template" {
   }
 
   metadata = {
-    startup-script = templatefile(
-      "${path.module}/scripts/vm_startup.sh",
+    user-data = templatefile(
+      "${path.module}/config/cloud-init.yaml",
       {
-        openai_token = var.openai_token,
-        project_id   = var.project_id,
-      }
-    )
-    docker_compose = templatefile(
-      "${path.module}/config/compose.yml",
-      {
+        openai_token              = var.openai_token,
+        project_id                = var.project_id,
         openai_api_docker_image   = local.openai_api_docker_image,
         openai_api_external_port  = local.openai_api_port,
         openai_api_internal_port  = local.openai_api_port,
