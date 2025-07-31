@@ -18,8 +18,7 @@ resource "random_string" "random" {
     clickhouse_template_machine_type = local.clickhouse_template_machine_type,
     clickhouse_data_image            = var.vm_clickhouse_data_volume_snapshot,
     clickhouse_data_snapshot_project = var.vm_clickhouse_data_volume_snapshot_project
-    vm_startup_script                = md5(file("${path.module}/scripts/instance_startup.sh"))
-    docker_compose                   = md5(file("${path.module}/config/compose.yml"))
+    cloud-init                       = md5(file("${path.module}/config/cloud-init.yaml"))
     vm_flag_preemptible              = var.vm_flag_preemptible
   }
 }
@@ -106,16 +105,8 @@ resource "google_compute_instance_template" "clickhouse_template" {
 
   // There is no startup script for Clickhouse, it's just available in the image
   metadata = {
-    startup-script = templatefile(
-      "${path.module}/scripts/instance_startup.sh",
-      {
-        GCP_DEVICE_DISK_PREFIX   = local.gcp_device_disk_prefix,
-        DATA_DISK_DEVICE_NAME_CH = local.clickhouse_data_disk_device,
-        CH_DATA_VOLUME           = local.ch_data_volume
-      }
-    )
-    docker_compose = templatefile(
-      "${path.module}/config/compose.yml",
+    user-data = templatefile(
+      "${path.module}/config/cloud-init.yaml",
       {
         GCP_DEVICE_DISK_PREFIX     = local.gcp_device_disk_prefix,
         DATA_DISK_DEVICE_NAME_CH   = local.clickhouse_data_disk_device,

@@ -70,13 +70,13 @@ variable "vm_clickhouse_mem" {
 variable "vm_clickhouse_image" {
   description = "VM image to use for Clickhouse nodes"
   type        = string
-  default     = "debian-12"
+  default     = "cos-stable"
 }
 
 variable "vm_clickhouse_image_project" {
   description = "Project hosting Clickhouse VM image"
   type        = string
-  default     = "debian-cloud"
+  default     = "cos-cloud"
 }
 
 variable "vm_clickhouse_boot_disk_size" {

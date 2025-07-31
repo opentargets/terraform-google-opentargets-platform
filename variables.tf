@@ -107,13 +107,13 @@ variable "config_vm_clickhouse_mem" {
 variable "config_vm_clickhouse_image" {
   description = "Image family to use for launching Clickhouse instances"
   type        = string
-  default     = "debian-12"
+  default     = "cos-stable"
 }
 
 variable "config_vm_clickhouse_image_project" {
   description = "Project where to find the instance image to use"
   type        = string
-  default     = "debian-cloud"
+  default     = "cos-cloud"
 }
 
 variable "config_vm_clickhouse_docker_image" {
