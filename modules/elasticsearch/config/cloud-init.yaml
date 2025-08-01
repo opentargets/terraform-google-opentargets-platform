@@ -1,0 +1,51 @@
+#cloud-config
+
+users:
+  - name: cloudservice
+    uid: 2000
+
+write_files:
+  - path: /etc/systemd/system/nodeexporter.service
+    permissions: 0644
+    owner: root
+    content: |
+      [Unit]
+      Description=Start node exporter from a docker container
+
+      [Service]
+      ExecStart=/usr/bin/docker run --name=nodeexporter --rm -d --net="host" --pid="host" -v "/:/host:ro,rslave" ${NODE_EXPORTER_IMAGE}
+  
+  - path: /etc/systemd/system/esexporter.service
+    permissions: 0644
+    owner: root
+    content: |
+      [Unit]
+      Description=Start Elasticsearch exporter from a docker container
+
+      [Service]
+      ExecStart=/usr/bin/docker run --rm -d --name elasticsearch_exporter -p 9114:9114 quay.io/prometheuscommunity/elasticsearch-exporter:latest --es.uri=http://localhost:9200
+
+  - path: /etc/systemd/system/cloudservice.service
+    permissions: 0644
+    owner: root
+    content: |
+      [Unit]
+      Description=Start open targets platform Opensearch docker container
+
+      [Service]
+      ExecStart=/bin/bash -c '/usr/bin/docker run --rm -d --name otp-es --log-driver=gcplogs -p 9200:9200 -p 9300:9600 -e "path.data=/usr/share/opensearch/data" -e "path.logs=/usr/share/opensearch/logs" -e "cluster.name=$(hostname)" -e "network.host=0.0.0.0" -e "discovery.type=single-node" -e "discovery.seed_hosts=[]" -e "bootstrap.memory_lock=true" -e "search.max_open_scroll_context=5000" -e OPENSEARCH_JAVA_OPTS="-Xms$(cat /tmp/jvm_size_half)g -Xmx$(cat /tmp/jvm_size_half)g" -e DISABLE_SECURITY_PLUGIN=true -v /mnt/disks/esdata/data:/usr/share/opensearch/data --ulimit memlock=-1:-1 --ulimit nofile=65536:65536 opensearchproject/opensearch:${ELASTIC_SEARCH_VERSION}'
+
+runcmd:
+- |
+  export MACHINE_SIZE=`cat /proc/meminfo | grep MemTotal | grep -o '[0-9]\+'`
+  export JVM_SIZE=`expr $(expr $MACHINE_SIZE / 1048576) - 1`
+  export JVM_SIZE_HALF=`expr $MACHINE_SIZE / 2097152`
+  echo $JVM_SIZE_HALF > /tmp/jvm_size_half
+  systemctl daemon-reload
+  systemctl start cloudservice.service
+  systemctl start nodeexporter.service
+  systemctl start esexporter.service
+
+bootcmd:
+- mkdir -p "/mnt/disks/esdata"
+- mount ${GCP_DEVICE_DISK_PREFIX}${DATA_DISK_DEVICE_NAME_ES} "/mnt/disks/esdata"

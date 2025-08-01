@@ -79,13 +79,13 @@ variable "vm_elastic_search_mem" {
 variable "vm_elastic_search_image" {
   description = "VM Image to use for Elastic Search instances"
   type        = string
-  default     = "debian-12"
+  default     = "cos-stable"
 }
 
 variable "vm_elastic_search_image_project" {
   description = "Project hosting the Elastic Search VM Instance image"
   type        = string
-  default     = "debian-cloud"
+  default     = "cos-cloud"
 }
 
 variable "vm_elastic_search_boot_disk_size" {

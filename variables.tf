@@ -42,7 +42,7 @@ variable "config_deployment_regions" {
 variable "config_vm_elastic_search_image_project" {
   description = "This allows to specify a different than deployment project for the deployed Elastic Search Instance image to be used."
   type        = string
-  default     = "debian-cloud"
+  default     = "cos-cloud"
 }
 
 variable "config_vm_elastic_search_vcpus" {
@@ -60,7 +60,7 @@ variable "config_vm_elastic_search_mem" {
 variable "config_vm_elastic_search_image" {
   description = "Disk image family to use for the deployed Elastic Search Instances"
   type        = string
-  default     = "debian-12"
+  default     = "cos-stable"
 }
 
 variable "config_vm_elastic_search_version" {
