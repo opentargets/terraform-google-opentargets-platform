@@ -12,7 +12,7 @@ resource "random_string" "random_web_server_suffix" {
     nginx_docker_image_version = var.webserver_docker_image_version
     webapp_image_version       = var.webapp_image_version
     webapp_env_vars            = local.webapp_env_vars
-    startup_script             = md5(file("${path.module}/scripts/webserver_vm_startup_script.sh"))
+    cloud-init                 = md5(file("${path.module}/config/cloud-init.yaml"))
     vm_flag_preemptible        = var.vm_flag_preemptible
   }
 }
@@ -85,12 +85,11 @@ resource "google_compute_instance_template" "webserver_template" {
   }
 
   metadata = {
-    startup-script = templatefile(
-      "${path.module}/scripts/webserver_vm_startup_script.sh",
+    user-data = templatefile(
+      "${path.module}/config/cloud-init.yaml",
       {
         webapp_image_version = var.webapp_image_version
         env_vars             = local.webapp_env_vars
-        docker_compose       = yamlencode(local.docker_compose)
       }
     )
     google-logging-enabled = true
