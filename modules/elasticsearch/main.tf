@@ -19,7 +19,7 @@ resource "random_string" "random" {
     elastic_search_data_snapshot         = var.vm_elastic_search_data_volume_snapshot,
     elastic_search_data_snapshot_project = var.vm_elastic_search_data_volume_snapshot_project,
     vm_elastic_search_version            = var.vm_elastic_search_version,
-    cloud_init                       = md5(file("${path.module}/config/cloud-init.yaml"))
+    cloud_init                           = md5(file("${path.module}/config/cloud-init.yaml"))
     vm_flag_preemptible                  = var.vm_flag_preemptible
     vm_api_boot_disk_size                = var.vm_elastic_search_boot_disk_size
   }
@@ -112,8 +112,8 @@ resource "google_compute_instance_template" "elastic_search_template" {
         GCP_DEVICE_DISK_PREFIX   = local.gcp_device_disk_prefix,
         DATA_DISK_DEVICE_NAME_ES = local.elastic_search_data_disk_device,
         ELASTIC_SEARCH_VERSION   = var.vm_elastic_search_version
-        ELASTIC_SEARCH_VERSION = var.vm_elastic_search_version
-        NODE_EXPORTER_IMAGE    = local.node_exporter_image
+        ELASTIC_SEARCH_VERSION   = var.vm_elastic_search_version
+        NODE_EXPORTER_IMAGE      = local.node_exporter_image
       }
     )
     google-logging-enabled = true
