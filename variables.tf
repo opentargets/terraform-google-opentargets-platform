@@ -339,15 +339,15 @@ variable "config_webapp_webserver_vm_mem" {
 }
 
 variable "config_webapp_webserver_vm_image" {
-  description = "VM image family to use for Web Server nodes, default 'debian 12'"
+  description = "VM image family to use for Web Server nodes, default 'cos-stable'"
   type        = string
-  default     = "debian-12"
+  default     = "cos-stable"
 }
 
 variable "config_webapp_webserver_vm_image_project" {
-  description = "Project hosting the VM image, default 'debian-cloud'"
+  description = "Project hosting the VM image, default 'cos-cloud'"
   type        = string
-  default     = "debian-cloud"
+  default     = "cos-cloud"
 }
 
 variable "config_webapp_webserver_vm_boot_disk_size" {
