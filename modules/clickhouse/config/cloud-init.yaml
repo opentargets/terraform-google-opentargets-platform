@@ -23,7 +23,7 @@ write_files:
       Description=Start open targets platform Clickhouse docker container
 
       [Service]
-      ExecStart=/usr/bin/docker run --rm -d --name otp-ch --log-driver=gcplogs -p 9000:9000 -p 8123:8123 -v ${CH_DATA_VOLUME}/config.d:/etc/clickhouse-server/config.d -v ${CH_DATA_VOLUME}/users.d:/etc/clickhouse-server/users.d -v ${CH_DATA_VOLUME}/data:/var/lib/clickhouse --ulimit nofile=262144:262144 ${DOCKER_IMAGE_CLICKHOUSE}
+      ExecStart=/usr/bin/docker run --rm -d --name otp-ch --log-driver=gcplogs -p 9000:9000 -p 8123:8123 -p 9363:9363 -v ${CH_DATA_VOLUME}/config.d:/etc/clickhouse-server/config.d -v ${CH_DATA_VOLUME}/users.d:/etc/clickhouse-server/users.d -v ${CH_DATA_VOLUME}/data:/var/lib/clickhouse --ulimit nofile=262144:262144 ${DOCKER_IMAGE_CLICKHOUSE}
 
 runcmd:
 - systemctl daemon-reload
