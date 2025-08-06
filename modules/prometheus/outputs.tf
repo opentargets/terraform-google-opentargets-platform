@@ -17,3 +17,10 @@ output "gramafa_port" {
   // Output the listening port for the Open Targets Platform Grafana
   value = local.otp_grafana_port
 }
+
+output "prometheus_config" {
+  value = local.prometheus_config_file
+}
+output "prometheus_zones" {
+  value = local.zones
+}

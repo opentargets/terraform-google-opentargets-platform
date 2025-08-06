@@ -68,15 +68,15 @@ variable "vm_prometheus_type" {
 }
 
 variable "vm_prometheus_image" {
-  description = "VM image to use for prometheus nodes, default 'debian-12'"
+  description = "VM image to use for prometheus nodes, default 'cos-stable'"
   type        = string
-  default     = "debian-12"
+  default     = "cos-stable"
 }
 
 variable "vm_prometheus_image_project" {
-  description = "Project hosting the VM image, default 'debian-cloud'"
+  description = "Project hosting the VM image, default 'cos-cloud'"
   type        = string
-  default     = "debian-cloud"
+  default     = "cos-cloud"
 }
 
 variable "vm_prometheus_boot_disk_size" {
@@ -89,6 +89,18 @@ variable "vm_prometheus_data_disk_size" {
   description = "Data disk size for prometheus nodes, default '300GB' accounting for a 30 days retention period"
   type        = string
   default     = 30
+}
+
+# variable "vm_prometheus_config_disk_size" {
+#   description = "Data disk size for prometheus nodes to store config information, default '1GB'"
+#   type        = string
+#   default     = 1
+# }
+
+variable "vm_prometheus_retention_period" {
+  description = "Retention period for the prometheus data, default '30d'. The format is 'Xy' where X is the magnitude and y is the unit."
+  type        = string
+  default     = "30d"
 }
 
 variable "vm_flag_preemptible" {

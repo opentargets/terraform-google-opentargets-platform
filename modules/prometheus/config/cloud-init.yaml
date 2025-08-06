@@ -1,0 +1,73 @@
+#cloud-config
+
+users:
+  - name: prometheus
+    uid: 2000
+
+write_files:
+  - path: /etc/systemd/system/config-firewall.service
+    permissions: 0644
+    owner: root
+    content: |
+      [Unit]
+      Description=Configures the host firewall
+
+      [Service]
+      Type=oneshot
+      RemainAfterExit=true
+      ExecStart=/sbin/iptables -A INPUT -p tcp --dport 9100 -j ACCEPT
+  - path: /etc/systemd/system/nodeexporter.service
+    permissions: 0644
+    owner: root
+    content: |
+      [Unit]
+      Description=Start node exporter from a docker container
+
+      [Service]
+      ExecStart=/usr/bin/docker run --name=nodeexporter --rm -d --net="host" --pid="host" -v "/:/host:ro,rslave" quay.io/prometheus/node-exporter:latest --path.rootfs=/host --web.listen-address=0.0.0.0:9100
+
+  - path: /etc/systemd/system/prometheus.service
+    permissions: 0644
+    owner: root
+    content: |
+      [Unit]
+      Description=Start prometheus from a docker container
+
+      [Service]
+      ExecStart=docker run -d --name prometheus -p ${prometheus_port}:9090 --restart unless-stopped -v prometheus-data:/prometheus -v /home/prometheus/prometheus-config/prom-config:/etc/prometheus/prometheus.yml -v /home/prometheus/prometheus-config/svc-account:/etc/prometheus/application_default_credentials.json -v /mnt/disks/prometheus-data:/prometheus/data -e GOOGLE_APPLICATION_CREDENTIALS=/etc/prometheus/application_default_credentials.json ${prometheus_image} --web.enable-lifecycle --config.file=/etc/prometheus/prometheus.yml --storage.tsdb.retention.time=30d
+
+  - path: /etc/systemd/system/grafana.service
+    permissions: 0644
+    owner: root
+    content: |
+      [Unit]
+      Description=Start grafana from a docker container
+
+      [Service]
+      ExecStart=docker run -d --name grafana -p ${grafana_port}:3000 --restart unless-stopped -v grafana-data:/var/lib/grafana -v /home/prometheus/grafana-config/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml -v /home/prometheus/grafana-config/dashboards.yml:/etc/grafana/provisioning/dashboards/dashboards.yml -v /home/prometheus/grafana-config/dashboards:/opt/grafana/dashboards ${grafana_image}
+
+runcmd: 
+- |
+  cd /home/prometheus
+  mkdir -p prometheus-config
+  wget --header='Metadata-Flavor: Google' 'http://metadata.google.internal/computeMetadata/v1/instance/attributes/prom-config'
+  mv prom-config prometheus-config/
+  wget --header='Metadata-Flavor: Google' 'http://metadata.google.internal/computeMetadata/v1/instance/attributes/svc-account'
+  mv svc-account prometheus-config/
+  mkdir -p grafana-config/dashboards
+  rm -rf terraform-google-opentargets-platform
+  git clone -b ${git_branch} ${git_repository}
+  cd terraform-google-opentargets-platform/modules/prometheus/config
+  cp datasource.yml /home/prometheus/grafana-config/
+  cp dashboards.yml /home/prometheus/grafana-config/
+  cp -r dashboards/* /home/prometheus/grafana-config/dashboards/
+  systemctl daemon-reload
+  systemctl start config-firewall.service
+  systemctl start prometheus.service
+  systemctl start grafana.service
+  systemctl start nodeexporter.service
+
+bootcmd:
+  - mkdir -p "/mnt/disks/prometheus-data"
+  - mount /dev/disk/by-id/google-prometheus-data /mnt/disks/prometheus-data
+  - chown 65534:65534 -R /mnt/disks/prometheus-data
