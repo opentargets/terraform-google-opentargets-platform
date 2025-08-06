@@ -5,6 +5,17 @@ users:
     uid: 2000
 
 write_files:
+  - path: /etc/systemd/system/config-firewall.service
+    permissions: 0644
+    owner: root
+    content: |
+      [Unit]
+      Description=Configures the host firewall
+
+      [Service]
+      Type=oneshot
+      RemainAfterExit=true
+      ExecStart=/sbin/iptables -A INPUT -p tcp --dport 9100 -j ACCEPT
   - path: /etc/systemd/system/nodeexporter.service
     permissions: 0644
     owner: root
@@ -33,5 +44,6 @@ runcmd:
   export secret_value=$(echo $secret_value | base64 --decode)
   echo $secret_value > /tmp/openai_api_secret_value
   systemctl daemon-reload
+  systemctl start config-firewall.service
   systemctl start cloudservice.service
   systemctl start nodeexporter.service
