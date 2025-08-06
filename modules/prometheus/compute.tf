@@ -69,9 +69,8 @@ resource "google_compute_disk" "prometheus_data" {
   size = var.vm_prometheus_data_disk_size
 
   labels = {
-    environment = var.module_wide_prefix_scope
-    component   = "prometheus"
-    purpose     = "data-storage"
+    component = "prometheus"
+    purpose   = "data-storage"
   }
 }
 
@@ -114,26 +113,19 @@ resource "google_compute_instance" "default" {
 
   metadata = {
     google-logging-enabled = true
-    docker_compose = templatefile("${path.module}/config/compose.yml", {
+    user-data = templatefile("${path.module}/config/cloud-init.yaml", {
       node_exporter_image = local.node_exporter_image
       prometheus_image    = local.prometheus_image
       prometheus_port     = var.prometheus_container_port
       grafana_image       = local.grafana_image
       grafana_port        = var.grafana_container_port
+      git_repository      = var.git_repository
+      git_branch          = var.git_branch
+      # svc_acc_key         = replace(base64decode(google_service_account_key.gcp_service_acc_prom_key.private_key), "$", "\\$"),
     })
+    prom-config = yamlencode(local.prometheus_config_file)
+    svc-account = replace(base64decode(google_service_account_key.gcp_service_acc_prom_key.private_key), "$", "\\$"),
   }
-
-  metadata_startup_script = templatefile("${path.module}/scripts/instance_startup.sh", {
-    svc_acc_key            = replace(base64decode(google_service_account_key.gcp_service_acc_prom_key.private_key), "$", "\\$"),
-    available_zones        = join(",", data.google_compute_zones.available[count.index].names)
-    instance_prefix        = var.config_release_name
-    pro_instance_prefix    = var.module_wide_prefix_scope
-    module_wide_prefix_es  = var.module_wide_prefix_es
-    module_wide_prefix_ch  = var.module_wide_prefix_ch
-    module_wide_prefix_api = var.module_wide_prefix_api
-    git_repository         = var.git_repository
-    git_branch             = var.git_branch
-  })
 
   service_account {
     email = google_service_account.gcp_service_acc_prom.email
