@@ -3,6 +3,7 @@ locals {
   otp_prometheus_port      = 9090
   otp_grafana_port         = 3000
   otp_prometheus_port_name = "otpprometheusport"
+  otp_prometheus_disk_name = "prometheus-data"
   // Firewall
   fw_tag_otp_prometheus_node = "otpprometheusnode"
   // GLB tagging for traffic destination
@@ -88,7 +89,7 @@ locals {
   prometheus_exporter_scraping_config = {
     job_name        = "prometheus"
     relabel_configs = local.relabeling_config
-    static_configs  = [
+    static_configs = [
       {
         targets = ["localhost:9090"]
       }

@@ -24,7 +24,7 @@ write_files:
       Description=Start node exporter from a docker container
 
       [Service]
-      ExecStart=/usr/bin/docker run --name=nodeexporter --rm -d --net="host" --pid="host" -v "/:/host:ro,rslave" quay.io/prometheus/node-exporter:latest --path.rootfs=/host --web.listen-address=0.0.0.0:9100
+      ExecStart=/usr/bin/docker run --name=nodeexporter --rm -d --net="host" --pid="host" -v "/:/host:ro,rslave" ${node_exporter_image} --path.rootfs=/host --web.listen-address=0.0.0.0:9100
 
   - path: /etc/systemd/system/prometheus.service
     permissions: 0644
@@ -34,7 +34,7 @@ write_files:
       Description=Start prometheus from a docker container
 
       [Service]
-      ExecStart=docker run -d --name prometheus -p ${prometheus_port}:9090 --restart unless-stopped -v prometheus-data:/prometheus -v /home/prometheus/prometheus-config/prom-config:/etc/prometheus/prometheus.yml -v /home/prometheus/prometheus-config/svc-account:/etc/prometheus/application_default_credentials.json -v /mnt/disks/prometheus-data:/prometheus/data -e GOOGLE_APPLICATION_CREDENTIALS=/etc/prometheus/application_default_credentials.json ${prometheus_image} --web.enable-lifecycle --config.file=/etc/prometheus/prometheus.yml --storage.tsdb.retention.time=30d
+      ExecStart=docker run -d --name prometheus --network=prometheus-network -p ${prometheus_port}:9090 --restart unless-stopped -v /home/prometheus/prometheus-config/prom-config:/etc/prometheus/prometheus.yml -v /home/prometheus/prometheus-config/svc-account:/etc/prometheus/application_default_credentials.json -v /mnt/disks/prometheus-data:/prometheus -e GOOGLE_APPLICATION_CREDENTIALS=/etc/prometheus/application_default_credentials.json ${prometheus_image} --web.enable-lifecycle --config.file=/etc/prometheus/prometheus.yml --storage.tsdb.retention.time=30d
 
   - path: /etc/systemd/system/grafana.service
     permissions: 0644
@@ -44,7 +44,7 @@ write_files:
       Description=Start grafana from a docker container
 
       [Service]
-      ExecStart=docker run -d --name grafana -p ${grafana_port}:3000 --restart unless-stopped -v grafana-data:/var/lib/grafana -v /home/prometheus/grafana-config/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml -v /home/prometheus/grafana-config/dashboards.yml:/etc/grafana/provisioning/dashboards/dashboards.yml -v /home/prometheus/grafana-config/dashboards:/opt/grafana/dashboards ${grafana_image}
+      ExecStart=docker run -d --name grafana --network=prometheus-network -p ${grafana_port}:3000 --restart unless-stopped -v grafana-data:/var/lib/grafana -v /home/prometheus/grafana-config/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml -v /home/prometheus/grafana-config/dashboards.yml:/etc/grafana/provisioning/dashboards/dashboards.yml -v /home/prometheus/grafana-config/dashboards:/opt/grafana/dashboards ${grafana_image}
 
 runcmd: 
 - |
@@ -61,13 +61,23 @@ runcmd:
   cp datasource.yml /home/prometheus/grafana-config/
   cp dashboards.yml /home/prometheus/grafana-config/
   cp -r dashboards/* /home/prometheus/grafana-config/dashboards/
+  docker network create prometheus-network
   systemctl daemon-reload
   systemctl start config-firewall.service
   systemctl start prometheus.service
   systemctl start grafana.service
   systemctl start nodeexporter.service
 
+# TODO: pass path to disks as arguments to the script
 bootcmd:
-  - mkdir -p "/mnt/disks/prometheus-data"
-  - mount /dev/disk/by-id/google-prometheus-data /mnt/disks/prometheus-data
+  - |
+    if ! blkid /dev/disk/by-id/google-${otp_prometheus_disk_name}; then
+      echo "No filesystem found on disk, formatting with ext4..."
+      mkfs.ext4 -F /dev/disk/by-id/google-${otp_prometheus_disk_name}
+    else
+      echo "Filesystem found, running fsck..."
+      fsck.ext4 -vy /dev/disk/by-id/google-${otp_prometheus_disk_name}
+    fi
+  - mkdir -p /mnt/disks/prometheus-data
+  - mount -t ext4 /dev/disk/by-id/google-${otp_prometheus_disk_name} /mnt/disks/prometheus-data
   - chown 65534:65534 -R /mnt/disks/prometheus-data
