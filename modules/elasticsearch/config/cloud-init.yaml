@@ -59,5 +59,6 @@ runcmd:
   systemctl start esexporter.service
 
 bootcmd:
+- fsck.ext4 -tvy ${GCP_DEVICE_DISK_PREFIX}${DATA_DISK_DEVICE_NAME_ES}
 - mkdir -p "/mnt/disks/esdata"
-- mount ${GCP_DEVICE_DISK_PREFIX}${DATA_DISK_DEVICE_NAME_ES} "/mnt/disks/esdata"
+- mount -t ext4 ${GCP_DEVICE_DISK_PREFIX}${DATA_DISK_DEVICE_NAME_ES} "/mnt/disks/esdata"
