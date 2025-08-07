@@ -16,8 +16,7 @@ resource "random_string" "random" {
     otpprometheus_template_tags         = join("", sort(local.otpprometheus_template_tags)),
     otpprometheus_template_machine_type = local.otpprometheus_machine_type,
     template_source_image               = data.google_compute_image.main.id,
-    vm_startup_script                   = md5(file("${path.module}/scripts/instance_startup.sh")),
-    vm_compose                          = md5(file("${path.module}/config/compose.yml")),
+    cloud-init                          = md5(file("${path.module}/config/cloud-init.yaml")),
     datasources                         = md5(file("${path.module}/config/datasource.yml")),
     dashboards                          = join("-", fileset("${path.module}/config/dashboards", "*.json"))
     vm_flag_preemptible                 = var.vm_flag_preemptible
@@ -94,7 +93,7 @@ resource "google_compute_instance" "default" {
 
   attached_disk {
     source      = google_compute_disk.prometheus_data[count.index].id
-    device_name = "prometheus-data"
+    device_name = local.otp_prometheus_disk_name
     mode        = "READ_WRITE"
   }
 
@@ -114,14 +113,14 @@ resource "google_compute_instance" "default" {
   metadata = {
     google-logging-enabled = true
     user-data = templatefile("${path.module}/config/cloud-init.yaml", {
-      node_exporter_image = local.node_exporter_image
-      prometheus_image    = local.prometheus_image
-      prometheus_port     = var.prometheus_container_port
-      grafana_image       = local.grafana_image
-      grafana_port        = var.grafana_container_port
-      git_repository      = var.git_repository
-      git_branch          = var.git_branch
-      # svc_acc_key         = replace(base64decode(google_service_account_key.gcp_service_acc_prom_key.private_key), "$", "\\$"),
+      node_exporter_image      = local.node_exporter_image
+      prometheus_image         = local.prometheus_image
+      prometheus_port          = var.prometheus_container_port
+      grafana_image            = local.grafana_image
+      grafana_port             = var.grafana_container_port
+      git_repository           = var.git_repository
+      git_branch               = var.git_branch
+      otp_prometheus_disk_name = local.otp_prometheus_disk_name
     })
     prom-config = yamlencode(local.prometheus_config_file)
     svc-account = replace(base64decode(google_service_account_key.gcp_service_acc_prom_key.private_key), "$", "\\$"),

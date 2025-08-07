@@ -168,6 +168,6 @@ variable "node_exporter_image_name" {
 }
 
 variable "node_exporter_image_version" {
-  description = "Image version of the node exporter image."
+  description = "Image version of the node exporter container."
   default     = "v1.9.1"
 }
