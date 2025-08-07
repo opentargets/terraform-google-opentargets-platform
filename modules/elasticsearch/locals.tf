@@ -30,5 +30,6 @@ locals {
   // Google Device Disk prefix
   gcp_device_disk_prefix = "/dev/disk/by-id/google-"
 
-  node_exporter_image = "${var.node_exporter_image_name}:${var.node_exporter_image_version}"
+  node_exporter_image    = "${var.node_exporter_image_name}:${var.node_exporter_image_version}"
+  elastic_exporter_image = "${var.elastic_exporter_image_name}:${var.elastic_exporter_image_version}"
 }
