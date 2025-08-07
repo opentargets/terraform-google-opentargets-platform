@@ -90,6 +90,7 @@ resource "google_compute_instance_template" "webserver_template" {
       {
         webapp_image_version = var.webapp_image_version
         env_vars             = local.webapp_env_vars
+        node_exporter_image  = local.node_exporter_image
       }
     )
     google-logging-enabled = true

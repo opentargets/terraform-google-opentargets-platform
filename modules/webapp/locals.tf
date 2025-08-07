@@ -79,4 +79,6 @@ locals {
       "-e ${key}=${value}"
     ]
   )
+
+  node_exporter_image = "${var.node_exporter_image_name}:${var.node_exporter_image_version}"
 }

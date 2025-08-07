@@ -24,7 +24,7 @@ write_files:
       Description=Start node exporter from a docker container
 
       [Service]
-      ExecStart=/usr/bin/docker run --name=nodeexporter --rm -d --net="host" --pid="host" -v "/:/host:ro,rslave" quay.io/prometheus/node-exporter:latest --path.rootfs=/host
+      ExecStart=/usr/bin/docker run --name=nodeexporter --rm -d --net="host" --pid="host" -v "/:/host:ro,rslave" ${NODE_EXPORTER_IMAGE} --path.rootfs=/host
 
   - path: /etc/systemd/system/cloudservice.service
     permissions: 0644

@@ -114,6 +114,7 @@ resource "google_compute_instance_template" "elastic_search_template" {
         ELASTIC_SEARCH_VERSION   = var.vm_elastic_search_version
         ELASTIC_SEARCH_VERSION   = var.vm_elastic_search_version
         NODE_EXPORTER_IMAGE      = local.node_exporter_image
+        ELASTIC_EXPORTER_IMAGE   = local.elastic_exporter_image
       }
     )
     google-logging-enabled = true

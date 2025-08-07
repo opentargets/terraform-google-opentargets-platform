@@ -34,7 +34,7 @@ write_files:
       Description=Start Elasticsearch exporter from a docker container
 
       [Service]
-      ExecStart=/usr/bin/docker run --rm -d --name elasticsearch_exporter -p 9114:9114 quay.io/prometheuscommunity/elasticsearch-exporter:latest --es.uri=http://localhost:9200
+      ExecStart=/usr/bin/docker run --rm -d --name elasticsearch_exporter -p 9114:9114 ${ELASTIC_EXPORTER_IMAGE} --es.uri=http://localhost:9200
 
   - path: /etc/systemd/system/cloudservice.service
     permissions: 0644
