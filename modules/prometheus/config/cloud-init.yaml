@@ -34,7 +34,7 @@ write_files:
       Description=Start prometheus from a docker container
 
       [Service]
-      ExecStart=docker run -d --name prometheus --network=prometheus-network -p ${prometheus_port}:9090 --restart unless-stopped -v /home/prometheus/prometheus-config/prom-config:/etc/prometheus/prometheus.yml -v /home/prometheus/prometheus-config/svc-account:/etc/prometheus/application_default_credentials.json -v /mnt/disks/prometheus-data:/prometheus -e GOOGLE_APPLICATION_CREDENTIALS=/etc/prometheus/application_default_credentials.json ${prometheus_image} --web.enable-lifecycle --config.file=/etc/prometheus/prometheus.yml --storage.tsdb.retention.time=30d
+      ExecStart=docker run -d --name prometheus --network=prometheus-network -p ${prometheus_port}:9090 --restart unless-stopped -v /home/prometheus/prometheus-config/prom-config:/etc/prometheus/prometheus.yml -v /home/prometheus/prometheus-config/svc-account:/etc/prometheus/application_default_credentials.json -v /mnt/disks/prometheus-data:/prometheus -e GOOGLE_APPLICATION_CREDENTIALS=/etc/prometheus/application_default_credentials.json ${prometheus_image} --web.enable-lifecycle --config.file=/etc/prometheus/prometheus.yml --storage.tsdb.retention.time=${prometheus_retention_period}
 
   - path: /etc/systemd/system/grafana.service
     permissions: 0644

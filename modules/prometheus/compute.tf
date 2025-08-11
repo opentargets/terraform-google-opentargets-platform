@@ -113,14 +113,15 @@ resource "google_compute_instance" "default" {
   metadata = {
     google-logging-enabled = true
     user-data = templatefile("${path.module}/config/cloud-init.yaml", {
-      node_exporter_image      = local.node_exporter_image
-      prometheus_image         = local.prometheus_image
-      prometheus_port          = var.prometheus_container_port
-      grafana_image            = local.grafana_image
-      grafana_port             = var.grafana_container_port
-      git_repository           = var.git_repository
-      git_branch               = var.git_branch
-      otp_prometheus_disk_name = local.otp_prometheus_disk_name
+      node_exporter_image         = local.node_exporter_image
+      prometheus_image            = local.prometheus_image
+      prometheus_port             = var.prometheus_container_port
+      grafana_image               = local.grafana_image
+      grafana_port                = var.grafana_container_port
+      git_repository              = var.git_repository
+      git_branch                  = var.git_branch
+      otp_prometheus_disk_name    = local.otp_prometheus_disk_name
+      prometheus_retention_period = var.vm_prometheus_retention_period
     })
     prom-config = yamlencode(local.prometheus_config_file)
     svc-account = replace(base64decode(google_service_account_key.gcp_service_acc_prom_key.private_key), "$", "\\$"),
