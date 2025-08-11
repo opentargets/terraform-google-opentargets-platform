@@ -6,13 +6,13 @@ config_release_name = "promdevpf"
 config_deployment_regions = ["europe-west1"]
 
 // --- Elastic Search configuration --- //
-config_vm_elastic_search_data_volume_snapshot = "pos-20250613-1203-os-snapshot"
+config_vm_elastic_search_data_volume_snapshot = "platform-2506-os"
 // config_vm_elastic_search_vcpus          = "16"
 // config_vm_elastic_search_mem            = "61440"
 // config_vm_elastic_search_boot_disk_size = "128"
 
 // --- Clickhouse configuration --- //
-config_vm_clickhouse_data_volume_snapshot = "pos-20250613-1203-ch-snapshot"
+config_vm_clickhouse_data_volume_snapshot = "platform-2506-ch"
 //config_vm_clickhouse_vcpus = 8
 //config_vm_clickhouse_mem = 30720
 
