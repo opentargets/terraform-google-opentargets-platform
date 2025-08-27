@@ -15,7 +15,7 @@ variable "project_id" {
 variable "openai_api_docker_image" {
   description = "OpenAI API Docker image to deploy"
   type        = string
-  default     = "quay.io/opentargets/ot-ai-api"
+  default     = "ghcr.io/opentargets/ot-ai-api"
 }
 
 variable "openai_api_docker_image_version" {
