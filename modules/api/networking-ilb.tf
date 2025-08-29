@@ -13,7 +13,7 @@ resource "google_compute_forwarding_rule" "ilb_forwarding_rule" {
   region                = var.deployment_regions[count.index]
   subnetwork            = var.network_subnet_name
   backend_service       = google_compute_region_backend_service.ilb_backend_service[count.index].id
-  ports                 = [local.otp_api_port]
+  ports                 = [local.otp_api_port, local.otp_api_node_exporter_port]
   depends_on = [
     google_compute_region_backend_service.ilb_backend_service
   ]

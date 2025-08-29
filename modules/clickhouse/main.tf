@@ -16,10 +16,9 @@ resource "random_string" "random" {
   keepers = {
     clickhouse_template_tags         = join("", sort(local.clickhouse_template_tags)),
     clickhouse_template_machine_type = local.clickhouse_template_machine_type,
-    clickhouse_template_source_image = local.clickhouse_template_source_image,
     clickhouse_data_image            = var.vm_clickhouse_data_volume_snapshot,
     clickhouse_data_snapshot_project = var.vm_clickhouse_data_volume_snapshot_project
-    vm_startup_script                = md5(file("${path.module}/scripts/instance_startup.sh"))
+    cloud-init                       = md5(file("${path.module}/config/cloud-init.yaml"))
     vm_flag_preemptible              = var.vm_flag_preemptible
   }
 }
@@ -74,7 +73,7 @@ resource "google_compute_instance_template" "clickhouse_template" {
   }
 
   disk {
-    source_image = local.clickhouse_template_source_image
+    source_image = data.google_compute_image.main.self_link
     auto_delete  = true
     disk_type    = "pd-ssd"
     boot         = true
@@ -106,12 +105,14 @@ resource "google_compute_instance_template" "clickhouse_template" {
 
   // There is no startup script for Clickhouse, it's just available in the image
   metadata = {
-    startup-script = templatefile(
-      "${path.module}/scripts/instance_startup.sh",
+    user-data = templatefile(
+      "${path.module}/config/cloud-init.yaml",
       {
-        GCP_DEVICE_DISK_PREFIX   = local.gcp_device_disk_prefix,
-        DATA_DISK_DEVICE_NAME_CH = local.clickhouse_data_disk_device,
-        DOCKER_IMAGE_CLICKHOUSE  = local.clickhouse_docker_image
+        GCP_DEVICE_DISK_PREFIX     = local.gcp_device_disk_prefix,
+        DATA_DISK_DEVICE_NAME_CH   = local.clickhouse_data_disk_device,
+        DOCKER_IMAGE_CLICKHOUSE    = local.clickhouse_docker_image
+        CH_DATA_VOLUME             = local.ch_data_volume
+        DOCKER_IMAGE_NODE_EXPORTER = local.node_exporter_image
       }
     )
     google-logging-enabled = true
@@ -160,6 +161,16 @@ resource "google_compute_region_instance_group_manager" "regmig_clickhouse" {
   }
 
   named_port {
+    name = local.clickhouse_node_exporter_name
+    port = local.clickhouse_node_exporter_port
+  }
+
+  named_port {
+    name = local.clickhouse_metrics_port_name
+    port = local.clickhouse_metrics_port
+  }
+
+  named_port {
     name = local.clickhouse_cli_req_port_name
     port = local.clickhouse_cli_req_port
   }
@@ -192,7 +203,7 @@ resource "google_compute_region_autoscaler" "autoscaler_clickhouse" {
   autoscaling_policy {
     max_replicas    = local.compute_zones_n_total * 2
     min_replicas    = 1
-    cooldown_period = 30
+    cooldown_period = 120
     cpu_utilization {
       target = 0.65
     }

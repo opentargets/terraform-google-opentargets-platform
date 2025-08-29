@@ -15,12 +15,11 @@ resource "random_string" "random" {
   special = false
   keepers = {
     elastic_search_template_machine_type = local.elastic_search_template_machine_type,
-    elastic_search_template_source_image = local.elastic_search_template_source_image,
     elastic_search_template_tags         = join("", sort(local.elastic_search_template_tags)),
     elastic_search_data_snapshot         = var.vm_elastic_search_data_volume_snapshot,
     elastic_search_data_snapshot_project = var.vm_elastic_search_data_volume_snapshot_project,
     vm_elastic_search_version            = var.vm_elastic_search_version,
-    vm_startup_script                    = md5(file("${path.module}/scripts/instance_startup.sh"))
+    cloud_init                           = md5(file("${path.module}/config/cloud-init.yaml"))
     vm_flag_preemptible                  = var.vm_flag_preemptible
     vm_api_boot_disk_size                = var.vm_elastic_search_boot_disk_size
   }
@@ -76,7 +75,7 @@ resource "google_compute_instance_template" "elastic_search_template" {
   }
 
   disk {
-    source_image = local.elastic_search_template_source_image
+    source_image = data.google_compute_image.main.self_link
     auto_delete  = true
     disk_type    = "pd-ssd"
     boot         = true
@@ -107,12 +106,15 @@ resource "google_compute_instance_template" "elastic_search_template" {
   }
 
   metadata = {
-    startup-script = templatefile(
-      "${path.module}/scripts/instance_startup.sh",
+    user-data = templatefile(
+      "${path.module}/config/cloud-init.yaml",
       {
         GCP_DEVICE_DISK_PREFIX   = local.gcp_device_disk_prefix,
         DATA_DISK_DEVICE_NAME_ES = local.elastic_search_data_disk_device,
         ELASTIC_SEARCH_VERSION   = var.vm_elastic_search_version
+        ELASTIC_SEARCH_VERSION   = var.vm_elastic_search_version
+        NODE_EXPORTER_IMAGE      = local.node_exporter_image
+        ELASTIC_EXPORTER_IMAGE   = local.elastic_exporter_image
       }
     )
     google-logging-enabled = true
@@ -163,6 +165,16 @@ resource "google_compute_region_instance_group_manager" "regmig_elastic_search" 
   }
 
   named_port {
+    name = local.elastic_search_port_exporter_name
+    port = local.elastic_search_port_exporter
+  }
+
+  named_port {
+    name = local.elastic_search_port_node_exporter_name
+    port = local.elastic_search_port_node_exporter
+  }
+
+  named_port {
     name = local.elastic_search_port_comms_name
     port = local.elastic_search_port_comms
   }
@@ -195,7 +207,7 @@ resource "google_compute_region_autoscaler" "autoscaler_elastic_search" {
   autoscaling_policy {
     max_replicas    = local.compute_zones_n_total * 2
     min_replicas    = 1
-    cooldown_period = 30
+    cooldown_period = 120
     cpu_utilization {
       target = 0.65
     }

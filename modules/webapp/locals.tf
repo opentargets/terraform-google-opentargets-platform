@@ -55,8 +55,10 @@ locals {
 
   // --- Web Servers --- //
   // Communication Ports
-  webapp_webserver_port      = 8080
-  webapp_webserver_port_name = "webappserverport"
+  node_exporter_webserver_port      = 9100
+  webapp_webserver_port             = 8080
+  webapp_webserver_port_name        = "webappserverport"
+  node_exporter_webserver_port_name = "webappnodeexporterport"
   // Firewall
   fw_tag_webserver_node = "webappservernode"
   // Web Server VM instance template values
@@ -67,7 +69,6 @@ locals {
   webapp_webserver_disk_web_dev_name = "webdisk"
   // Machine geometry
   webapp_webserver_template_machine_type = "custom-${var.webserver_vm_vcpus}-${var.webserver_vm_mem}"
-  webapp_webserver_template_source_image = "${var.webserver_vm_image_project}/${var.webserver_vm_image}"
   // Web Application Deployment Bundle
   webapp_deployment_bundle_filename = "deployment_bundle.tgz"
   webapp_deployment_bundle_url      = "https://storage.googleapis.com/${local.bucket_name}/${local.webapp_deployment_bundle_filename}"
@@ -75,7 +76,9 @@ locals {
   // --- Web App Deployment Context --- //
   webapp_env_vars = join(" ",
     [for key, value in var.webapp_deployment_context_env :
-      "-e \"${key}=${value}\""
+      "-e ${key}=${value}"
     ]
   )
+
+  node_exporter_image = "${var.node_exporter_image_name}:${var.node_exporter_image_version}"
 }

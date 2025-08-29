@@ -38,7 +38,7 @@ variable "config_deployment_regions" {
   type        = list(string)
 }
 
-// --- Elastic Search Configuration --- //
+// --- Elastic Search Configuration --- //#TODO: Rename module configs to opensearch
 variable "config_vm_elastic_search_image_project" {
   description = "This allows to specify a different than deployment project for the deployed Elastic Search Instance image to be used."
   type        = string
@@ -58,7 +58,7 @@ variable "config_vm_elastic_search_mem" {
 }
 
 variable "config_vm_elastic_search_image" {
-  description = "Disk image to use for the deployed Elastic Search Instances"
+  description = "Disk image family to use for the deployed Elastic Search Instances"
   type        = string
   default     = "cos-stable"
 }
@@ -105,7 +105,7 @@ variable "config_vm_clickhouse_mem" {
 }
 
 variable "config_vm_clickhouse_image" {
-  description = "Image to use for launching Clickhouse instances"
+  description = "Image family to use for launching Clickhouse instances"
   type        = string
   default     = "cos-stable"
 }
@@ -167,7 +167,7 @@ variable "config_vm_api_mem" {
   default     = "30720"
 }
 variable "config_vm_api_image" {
-  description = "VM image to use for running API nodes"
+  description = "VM image family to use for running API nodes"
   type        = string
   default     = "cos-stable"
 }
@@ -183,6 +183,13 @@ variable "config_vm_api_boot_disk_size" {
 }
 
 variable "config_vm_api_flag_preemptible" {
+  description = "Use this flag for deploying API nodes on preemptible VMs, default 'false'"
+  type        = bool
+  default     = false
+
+  // --- DNS Configuration --- //
+}
+variable "config_vm_prometheus_flag_preemptible" {
   description = "Use this flag for deploying API nodes on preemptible VMs, default 'false'"
   type        = bool
   default     = false
@@ -332,7 +339,7 @@ variable "config_webapp_webserver_vm_mem" {
 }
 
 variable "config_webapp_webserver_vm_image" {
-  description = "VM image to use for Web Server nodes, default 'cos-stable'"
+  description = "VM image family to use for Web Server nodes, default 'cos-stable'"
   type        = string
   default     = "cos-stable"
 }
@@ -469,9 +476,39 @@ variable "config_openai_credentials_filename" {
   default     = "openai_credentials.txt"
 }
 
+variable "common_tags" {
+  description = "Common tags to be used in all resources"
+  type        = list(string)
+  default = [
+    "dev",
+    "open-targets",
+    "platform"
+  ]
+}
+
 // --- Credentials --- //
 variable "config_credentials_local_path" {
   description = "Local path to credentials repository, 'credentials' by default"
   type        = string
   default     = "credentials"
+}
+
+variable "git_branch" {
+  description = "value"
+  default     = "main"
+}
+
+variable "git_repository" {
+  description = "value"
+  default     = "https://github.com/opentargets/terraform-google-opentargets-platform.git"
+}
+
+variable "node_exporter_image_name" {
+  description = "Image used to create the node exporter container."
+  default     = "quay.io/prometheus/node-exporter"
+}
+
+variable "node_exporter_image_version" {
+  description = "Image version of the node exporter image."
+  default     = "v1.9.1"
 }
