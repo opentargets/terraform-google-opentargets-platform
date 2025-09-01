@@ -122,6 +122,7 @@ resource "google_compute_instance" "default" {
       git_branch                  = var.git_branch
       otp_prometheus_disk_name    = local.otp_prometheus_disk_name
       prometheus_retention_period = var.vm_prometheus_retention_period
+      grafana_password            = random_password.grafana_password.result
     })
     prom-config = yamlencode(local.prometheus_config_file)
     svc-account = replace(base64decode(google_service_account_key.gcp_service_acc_prom_key.private_key), "$", "\\$"),

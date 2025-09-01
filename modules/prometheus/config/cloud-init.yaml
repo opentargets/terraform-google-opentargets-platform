@@ -67,6 +67,17 @@ runcmd:
   systemctl start prometheus.service
   systemctl start grafana.service
   systemctl start nodeexporter.service
+  # Wait for Grafana to be ready
+  echo "Waiting for Grafana to start..."
+  for i in {1..60}; do
+    if curl -s -f http://localhost:3000/api/health > /dev/null 2>&1; then
+      echo "Grafana is ready!"
+      curl -X PUT -H "Content-Type: application/json" -d '{"oldPassword": "admin","newPassword": "${grafana_password}","confirmNew": "${grafana_password}"}' http://admin:admin@localhost:3000/api/user/password
+      break
+    fi
+    echo "Attempt $i: Grafana not ready yet, waiting 5 seconds..."
+    sleep 5
+  done
 
 # TODO: pass path to disks as arguments to the script
 bootcmd:
