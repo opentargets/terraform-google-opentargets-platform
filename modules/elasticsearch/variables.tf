@@ -112,3 +112,22 @@ variable "vm_flag_preemptible" {
   default     = false
 }
 
+variable "node_exporter_image_name" {
+  description = "Image used to create the node exporter container."
+  default     = "quay.io/prometheus/node-exporter"
+}
+
+variable "node_exporter_image_version" {
+  description = "Image version of the node exporter image."
+  default     = "v1.9.1"
+}
+
+variable "elastic_exporter_image_name" {
+  description = "Image used to create the elastic exporter container."
+  default     = "quay.io/prometheuscommunity/elasticsearch-exporter"
+}
+
+variable "elastic_exporter_image_version" {
+  description = "Image version of the elastic exporter image."
+  default     = "v1.9.0"
+}

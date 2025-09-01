@@ -37,6 +37,14 @@ output "dns_records" {
   )
 }
 
+output "prometheus_config" {
+  value = module.backend_prometheus.prometheus_config
+}
+
+output "prometheus_zones" {
+  value = yamlencode(module.backend_prometheus.prometheus_zones)
+}
+
 // --- Development Mode output information --- //
 /*output "inspection_vms" {
   value = zipmap(

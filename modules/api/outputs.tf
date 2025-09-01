@@ -27,6 +27,16 @@ output "api_port_name" {
   value = local.otp_api_port_name
 }
 
+output "api_nodeexporter_port" {
+  // Output the listening port for the Open Targets Platform API
+  value = local.otp_api_node_exporter_port
+}
+
+output "api_node_exporter_port_name" {
+  // Output the custom named port for the instance group
+  value = local.otp_api_node_exporter_port_name
+}
+
 output "ilb_ip_addresses" {
   value = zipmap(
     [for ilb in google_compute_forwarding_rule.ilb_forwarding_rule : ilb.region],

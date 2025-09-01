@@ -16,10 +16,10 @@ resource "random_string" "random" {
   keepers = {
     otpapi_template_tags          = join("", sort(local.otpapi_template_tags)),
     otpapi_template_machine_type  = local.otpapi_template_machine_type,
-    otpapi_template_source_image  = local.otpapi_template_source_image,
+    otpapi_template_source_image  = data.google_compute_image.main.self_link
     vm_platform_api_image_version = var.vm_platform_api_image_version,
     vm_platform_api_image_version = var.vm_platform_api_image_version,
-    vm_startup_script             = md5(file("${path.module}/scripts/instance_startup.sh")),
+    cloud-init                    = md5(file("${path.module}/config/cloud-init.yaml")),
     vm_flag_preemptible           = var.vm_flag_preemptible,
     vm_api_version_major          = var.api_v_major,
     vm_api_version_minor          = var.api_v_minor,
@@ -69,7 +69,7 @@ resource "google_compute_instance_template" "otpapi_template" {
   region               = var.deployment_regions[count.index]
 
 
-  tags = local.otpapi_template_tags
+  tags = concat(local.otpapi_template_tags, var.common_tags)
 
   machine_type   = local.otpapi_template_machine_type
   can_ip_forward = false
@@ -83,7 +83,7 @@ resource "google_compute_instance_template" "otpapi_template" {
   }
 
   disk {
-    source_image = local.otpapi_template_source_image
+    source_image = data.google_compute_image.main.self_link
     auto_delete  = true
     disk_type    = "pd-ssd"
     boot         = true
@@ -100,12 +100,12 @@ resource "google_compute_instance_template" "otpapi_template" {
   }
 
   metadata = {
-    startup-script = templatefile(
-      "${path.module}/scripts/instance_startup.sh",
+    user-data = templatefile(
+      "${path.module}/config/cloud-init.yaml",
       {
+        PLATFORM_API_VERSION = var.vm_platform_api_image_version,
         SLICK_CLICKHOUSE_URL = "jdbc:clickhouse://${var.backend_connection_map[var.deployment_regions[count.index]].host_clickhouse}:8123",
         ELASTICSEARCH_HOST   = var.backend_connection_map[var.deployment_regions[count.index]].host_elastic_search,
-        PLATFORM_API_VERSION = var.vm_platform_api_image_version,
         OTP_API_PORT         = local.otp_api_port,
         API_VERSION_MAJOR    = var.api_v_major,
         API_VERSION_MINOR    = var.api_v_minor,
@@ -116,6 +116,7 @@ resource "google_compute_instance_template" "otpapi_template" {
         API_IGNORE_CACHE     = var.api_ignore_cache
         JVM_XMS              = var.jvm_xms,
         JVM_XMX              = var.jvm_xmx
+        NODE_EXPORTER_IMAGE  = local.node_exporter_image
       }
     )
     google-logging-enabled = true
@@ -167,6 +168,11 @@ resource "google_compute_region_instance_group_manager" "regmig_otpapi" {
     port = local.otp_api_port
   }
 
+  named_port {
+    name = local.otp_api_node_exporter_port_name
+    port = local.otp_api_node_exporter_port
+  }
+
   auto_healing_policies {
     health_check      = google_compute_health_check.otpapi_healthcheck.id
     initial_delay_sec = 20
@@ -197,7 +203,7 @@ resource "google_compute_region_autoscaler" "autoscaler_otpapi" {
   autoscaling_policy {
     max_replicas    = length(data.google_compute_zones.available[count.index].names) * 2
     min_replicas    = 1
-    cooldown_period = 30
+    cooldown_period = 120
     //    load_balancing_utilization {
     //      target = 0.6
     //    }

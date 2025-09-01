@@ -3,7 +3,7 @@
 //      https://github.com/terraform-google-modules/terraform-google-lb-internal
 // Forwarding rule
 resource "google_compute_forwarding_rule" "ilb_forwarding_rule" {
-  name                  = "${var.module_wide_prefix_scope}-ilb-forwarding-rule"
+  name                  = "${var.module_wide_prefix_scope}-ilb-forwarding-rule-${random_string.random.result}"
   load_balancing_scheme = "INTERNAL"
   network               = var.network_self_link
   region                = var.deployment_region
@@ -11,6 +11,8 @@ resource "google_compute_forwarding_rule" "ilb_forwarding_rule" {
   backend_service       = google_compute_region_backend_service.ilb_backend_service.id
   ports = [
     local.clickhouse_http_req_port,
+    local.clickhouse_node_exporter_port,
+    local.clickhouse_metrics_port,
     local.clickhouse_cli_req_port
   ]
   depends_on = [

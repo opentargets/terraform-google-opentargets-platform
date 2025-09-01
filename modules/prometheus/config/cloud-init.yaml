@@ -1,0 +1,94 @@
+#cloud-config
+
+users:
+  - name: prometheus
+    uid: 2000
+
+write_files:
+  - path: /etc/systemd/system/config-firewall.service
+    permissions: 0644
+    owner: root
+    content: |
+      [Unit]
+      Description=Configures the host firewall
+
+      [Service]
+      Type=oneshot
+      RemainAfterExit=true
+      ExecStart=/sbin/iptables -A INPUT -p tcp --dport 9100 -j ACCEPT
+  - path: /etc/systemd/system/nodeexporter.service
+    permissions: 0644
+    owner: root
+    content: |
+      [Unit]
+      Description=Start node exporter from a docker container
+
+      [Service]
+      ExecStart=/usr/bin/docker run --name=nodeexporter --rm -d --net="host" --pid="host" -v "/:/host:ro,rslave" ${node_exporter_image} --path.rootfs=/host --web.listen-address=0.0.0.0:9100
+
+  - path: /etc/systemd/system/prometheus.service
+    permissions: 0644
+    owner: root
+    content: |
+      [Unit]
+      Description=Start prometheus from a docker container
+
+      [Service]
+      ExecStart=docker run -d --name prometheus --network=prometheus-network -p ${prometheus_port}:9090 --restart unless-stopped -v /home/prometheus/prometheus-config/prom-config:/etc/prometheus/prometheus.yml -v /home/prometheus/prometheus-config/svc-account:/etc/prometheus/application_default_credentials.json -v /mnt/disks/prometheus-data:/prometheus -e GOOGLE_APPLICATION_CREDENTIALS=/etc/prometheus/application_default_credentials.json ${prometheus_image} --web.enable-lifecycle --config.file=/etc/prometheus/prometheus.yml --storage.tsdb.retention.time=${prometheus_retention_period}
+
+  - path: /etc/systemd/system/grafana.service
+    permissions: 0644
+    owner: root
+    content: |
+      [Unit]
+      Description=Start grafana from a docker container
+
+      [Service]
+      ExecStart=docker run -d --name grafana --network=prometheus-network -p ${grafana_port}:3000 --restart unless-stopped -v grafana-data:/var/lib/grafana -v /home/prometheus/grafana-config/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml -v /home/prometheus/grafana-config/dashboards.yml:/etc/grafana/provisioning/dashboards/dashboards.yml -v /home/prometheus/grafana-config/dashboards:/opt/grafana/dashboards ${grafana_image}
+
+runcmd: 
+- |
+  cd /home/prometheus
+  mkdir -p prometheus-config
+  wget --header='Metadata-Flavor: Google' 'http://metadata.google.internal/computeMetadata/v1/instance/attributes/prom-config'
+  mv prom-config prometheus-config/
+  wget --header='Metadata-Flavor: Google' 'http://metadata.google.internal/computeMetadata/v1/instance/attributes/svc-account'
+  mv svc-account prometheus-config/
+  mkdir -p grafana-config/dashboards
+  rm -rf terraform-google-opentargets-platform
+  git clone -b ${git_branch} ${git_repository}
+  cd terraform-google-opentargets-platform/modules/prometheus/config
+  cp datasource.yml /home/prometheus/grafana-config/
+  cp dashboards.yml /home/prometheus/grafana-config/
+  cp -r dashboards/* /home/prometheus/grafana-config/dashboards/
+  docker network create prometheus-network
+  systemctl daemon-reload
+  systemctl start config-firewall.service
+  systemctl start prometheus.service
+  systemctl start grafana.service
+  systemctl start nodeexporter.service
+  # Wait for Grafana to be ready
+  echo "Waiting for Grafana to start..."
+  for i in {1..60}; do
+    if curl -s -f http://localhost:3000/api/health > /dev/null 2>&1; then
+      echo "Grafana is ready!"
+      curl -X PUT -H "Content-Type: application/json" -d '{"oldPassword": "admin","newPassword": "${grafana_password}","confirmNew": "${grafana_password}"}' http://admin:admin@localhost:3000/api/user/password
+      break
+    fi
+    echo "Attempt $i: Grafana not ready yet, waiting 5 seconds..."
+    sleep 5
+  done
+
+# TODO: pass path to disks as arguments to the script
+bootcmd:
+  - |
+    if ! blkid /dev/disk/by-id/google-${otp_prometheus_disk_name}; then
+      echo "No filesystem found on disk, formatting with ext4..."
+      mkfs.ext4 -F /dev/disk/by-id/google-${otp_prometheus_disk_name}
+    else
+      echo "Filesystem found, running fsck..."
+      fsck.ext4 -vy /dev/disk/by-id/google-${otp_prometheus_disk_name}
+    fi
+  - mkdir -p /mnt/disks/prometheus-data
+  - mount -t ext4 /dev/disk/by-id/google-${otp_prometheus_disk_name} /mnt/disks/prometheus-data
+  - chown 65534:65534 -R /mnt/disks/prometheus-data

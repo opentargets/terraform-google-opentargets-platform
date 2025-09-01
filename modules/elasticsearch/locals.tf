@@ -1,9 +1,13 @@
 locals {
   // Ports
-  elastic_search_port_requests      = 9200
-  elastic_search_port_comms         = 9300
-  elastic_search_port_requests_name = "esportrequests"
-  elastic_search_port_comms_name    = "esportcomms"
+  elastic_search_port_requests           = 9200
+  elastic_search_port_comms              = 9300
+  elastic_search_port_exporter           = 9114
+  elastic_search_port_node_exporter      = 9100
+  elastic_search_port_requests_name      = "esportrequests"
+  elastic_search_port_comms_name         = "esportcomms"
+  elastic_search_port_node_exporter_name = "esportexnodeporter"
+  elastic_search_port_exporter_name      = "esportexporter"
   // Firewall tags
   fw_tag_elasticsearch_requests = "elasticsearchrequests"
   fw_tag_elasticsearch_comms    = "elasticsearchcomms"
@@ -17,7 +21,6 @@ locals {
     ]
   )
   elastic_search_template_machine_type = "custom-${var.vm_elastic_search_vcpus}-${var.vm_elastic_search_mem}"
-  elastic_search_template_source_image = "${var.vm_elastic_search_image_project}/${var.vm_elastic_search_image}"
   // Compute Zones internal parameters
   compute_zones_n_total = length(data.google_compute_zones.available.names)
   // Elastic Search Data Volume
@@ -26,4 +29,7 @@ locals {
   elastic_search_data_disk_device = "es-data"
   // Google Device Disk prefix
   gcp_device_disk_prefix = "/dev/disk/by-id/google-"
+
+  node_exporter_image    = "${var.node_exporter_image_name}:${var.node_exporter_image_version}"
+  elastic_exporter_image = "${var.elastic_exporter_image_name}:${var.elastic_exporter_image_version}"
 }
