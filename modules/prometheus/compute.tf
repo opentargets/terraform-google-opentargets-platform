@@ -18,6 +18,7 @@ resource "random_string" "random" {
     template_source_image               = data.google_compute_image.main.id,
     cloud-init                          = md5(file("${path.module}/config/cloud-init.yaml")),
     datasources                         = md5(file("${path.module}/config/datasource.yml")),
+    alloy-config                        = md5(file("${path.module}/config/config.alloy")),
     dashboards                          = join("-", fileset("${path.module}/config/dashboards", "*.json"))
     vm_flag_preemptible                 = var.vm_flag_preemptible
   }, local.dashboards_md5) //TODO: Calculate md5 of the dashboards
@@ -113,19 +114,21 @@ resource "google_compute_instance" "default" {
   metadata = {
     google-logging-enabled = true
     user-data = templatefile("${path.module}/config/cloud-init.yaml", {
+      git_repository              = var.git_repository
+      git_branch                  = var.git_branch
       node_exporter_image         = local.node_exporter_image
       prometheus_image            = local.prometheus_image
       prometheus_port             = var.prometheus_container_port
+      prometheus_retention_period = var.vm_prometheus_retention_period
+      prometheus_disk_name    = local.otp_prometheus_disk_name
       grafana_image               = local.grafana_image
       grafana_port                = var.grafana_container_port
-      git_repository              = var.git_repository
-      git_branch                  = var.git_branch
-      otp_prometheus_disk_name    = local.otp_prometheus_disk_name
-      prometheus_retention_period = var.vm_prometheus_retention_period
       grafana_password            = random_password.grafana_password.result
     })
-    prom-config = yamlencode(local.prometheus_config_file)
-    svc-account = replace(base64decode(google_service_account_key.gcp_service_acc_prom_key.private_key), "$", "\\$"),
+    config-alloy = templatefile("${path.module}/config/config.alloy", {})
+    # loki-config = templatefile("${path.module}/config/loki-config.yml", {})
+    prom-config  = yamlencode(local.prometheus_config_file)
+    svc-account  = replace(base64decode(google_service_account_key.gcp_service_acc_prom_key.private_key), "$", "\\$"),
   }
 
   service_account {
