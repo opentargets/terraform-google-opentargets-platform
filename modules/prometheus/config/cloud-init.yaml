@@ -46,15 +46,15 @@ write_files:
       [Service]
       ExecStart=docker run -d --name grafana --network=prometheus-network -p ${grafana_port}:3000 --restart unless-stopped -v grafana-data:/var/lib/grafana -v /home/prometheus/grafana-config/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml -v /home/prometheus/grafana-config/dashboards.yml:/etc/grafana/provisioning/dashboards/dashboards.yml -v /home/prometheus/grafana-config/dashboards:/opt/grafana/dashboards ${grafana_image}
   
-  # - path: /etc/systemd/system/loki.service
-  #   permissions: 0644
-  #   owner: root
-  #   content: |
-  #     [Unit]
-  #     Description=Start loki from a docker container
+  - path: /etc/systemd/system/loki.service
+    permissions: 0644
+    owner: root
+    content: |
+      [Unit]
+      Description=Start loki from a docker container
 
-  #     [Service]
-  #     ExecStart=docker run -d --name loki -p 3100:3100 --network=prometheus-network --restart unless-stopped -v /home/prometheus/loki-config/loki-config.yaml:/etc/loki/local-config.yaml grafana/loki:3.4.2 -config.file=/etc/loki/local-config.yaml
+      [Service]
+      ExecStart=docker run -d --name loki -p 3100:3100 --network=prometheus-network --restart unless-stopped -v /home/prometheus/logs-config/loki-config.yaml:/etc/loki/local-config.yaml grafana/loki:3.4.2 -config.file=/etc/loki/local-config.yaml
   
   - path: /etc/systemd/system/alloy.service
     permissions: 0644
@@ -64,14 +64,16 @@ write_files:
       Description=Start alloy from a docker container
 
       [Service]
-      ExecStart=docker run -d --name alloy -p 12345:12345 -p 4317:4317 -p 4318:4318 --network=prometheus-network -v /var/run/docker.sock:/var/run/docker.sock -v /home/prometheus/config.alloy:/etc/alloy/config.alloy grafana/alloy:v1.7.5 run --server.http.listen-addr=0.0.0.0:12345 --storage.path=/var/lib/alloy/data /etc/alloy/config.alloy
+      ExecStart=docker run -d --name alloy -p 12345:12345 -p 4317:4317 -p 4318:4318 --network=prometheus-network -v /var/run/docker.sock:/var/run/docker.sock -v /home/prometheus/logs-config/config.alloy:/etc/alloy/config.alloy grafana/alloy:v1.7.5 run --server.http.listen-addr=0.0.0.0:12345 --storage.path=/var/lib/alloy/data /etc/alloy/config.alloy
       
 runcmd: 
 - |
   cd /home/prometheus
-  mkdir -p loki-config
+  mkdir -p logs-config
   wget --header='Metadata-Flavor: Google' 'http://metadata.google.internal/computeMetadata/v1/instance/attributes/config-alloy'
-  mv config-alloy config.alloy
+  mv config-alloy logs-config/config.alloy
+  wget --header='Metadata-Flavor: Google' 'http://metadata.google.internal/computeMetadata/v1/instance/attributes/loki-config'
+  mv loki-config logs-config/loki-config.yaml
   mkdir -p prometheus-config
   wget --header='Metadata-Flavor: Google' 'http://metadata.google.internal/computeMetadata/v1/instance/attributes/prom-config'
   mv prom-config prometheus-config/
@@ -90,7 +92,7 @@ runcmd:
   systemctl start prometheus.service
   systemctl start grafana.service
   systemctl start nodeexporter.service
-  # systemctl start loki.service
+  systemctl start loki.service
   systemctl start alloy.service
   # Wait for Grafana to be ready
   echo "Waiting for Grafana to start..."

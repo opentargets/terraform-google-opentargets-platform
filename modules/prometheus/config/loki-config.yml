@@ -31,15 +31,23 @@ limits_config:
   volume_enabled: true
   retention_period: 24h   # TODO: rentention period should be configurable
 
+storage_config:
+  tsdb_shipper:
+    active_index_directory: /loki/index
+    cache_location: /loki/index_cache
+    cache_ttl: 24h # Can be increased for faster performance over longer query periods, uses more disk space
+  gcs:
+      bucket_name: ${bucket_path}
+
 schema_config:
   configs:
     - from: 2020-10-24
-      store: tsdb
-      object_store: filesystem #TODO: Needs updating to bucket
+      store: tsdb 
+      object_store: gcs
       schema: v13
       index:
         prefix: index_
-        period: 24h # Retention period
+        period: 24h
 
 pattern_ingester:
   enabled: true
