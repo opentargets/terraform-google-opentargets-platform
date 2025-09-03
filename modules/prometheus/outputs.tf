@@ -24,3 +24,7 @@ output "prometheus_config" {
 output "prometheus_zones" {
   value = local.zones
 }
+
+output "log_bucket_url" {
+  value = google_storage_bucket.log-storage.url
+}
