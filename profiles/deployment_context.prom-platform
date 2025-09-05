@@ -78,4 +78,4 @@ common_tags = [
   "platform"
 ]
 
-git_branch = "rm-prometheus"
+git_branch = "3969-add-loki-and-visualisation"
