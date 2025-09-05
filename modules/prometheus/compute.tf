@@ -146,14 +146,17 @@ resource "google_compute_instance" "default" {
       grafana_image               = local.grafana_image
       grafana_port                = var.grafana_container_port
       grafana_password            = random_password.grafana_password.result
+      loki_container              = local.loki_container
+      alloy_container             = local.alloy_container
     })
     config-alloy = templatefile("${path.module}/config/config.alloy", {})
     loki-config = templatefile("${path.module}/config/loki-config.yml", {
-      bucket_path = google_storage_bucket.log-storage.url
-      storage_config = yamlencode(local.loki_config),
+      bucket_name      = google_storage_bucket.log-storage.name
+      log_level        = var.loki_log_level
+      retention_period = var.loki_rentention_period
     })
     prom-config = yamlencode(local.prometheus_config_file)
-    svc-account = replace(base64decode(google_service_account_key.gcp_service_acc_prom_key.private_key), "$", "\\$"),
+    svc-account = local.prometheus_svc_key,
   }
 
   service_account {
