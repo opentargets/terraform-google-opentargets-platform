@@ -1,9 +1,9 @@
 auth_enabled: false
-#TODO: This section has values that should be configurable in the module
+
 server:
   http_listen_port: 3100
   grpc_listen_port: 9096
-  log_level: info
+  log_level: ${log_level}
   grpc_server_max_concurrent_streams: 1000
 
 common:
@@ -29,16 +29,15 @@ limits_config:
   metric_aggregation_enabled: true
   allow_structured_metadata: true
   volume_enabled: true
-  retention_period: 24h   # TODO: rentention period should be configurable
+  retention_period: ${retention_period}
 
-${storage_config}
-# storage_config:
-#   tsdb_shipper:
-#     active_index_directory: /loki/index
-#     cache_location: /loki/index_cache
-#     cache_ttl: 24h # Can be increased for faster performance over longer query periods, uses more disk space
-#   gcs:
-#       bucket_name: ${bucket_path}
+storage_config:
+  gcs:
+    bucket_name: ${bucket_name}
+  tsdb_shipper:
+    active_index_directory: /loki/index
+    cache_location: /loki/index_cache
+    cache_ttl: 24h
 
 schema_config:
   configs:

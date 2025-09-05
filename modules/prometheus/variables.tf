@@ -171,3 +171,34 @@ variable "node_exporter_image_version" {
   description = "Image version of the node exporter container."
   default     = "v1.9.1"
 }
+
+variable "loki_image_name" {
+  description = "Image used to create the Loki container."
+  default     = "grafana/loki"
+}
+
+variable "loki_image_version" {
+  description = "Image version of the loki container."
+  default     = "3.4.2"
+}
+
+variable "alloy_image_name" {
+  description = "Image used to create the Loki container. This container sends the logs to loki."
+  default     = "grafana/alloy"
+}
+
+variable "alloy_image_version" {
+  description = "Image version of the loki container."
+  default     = "v1.7.5"
+}
+
+variable "loki_rentention_period" {
+  description = "Period of time the logs will be retained. The default value is '24h'. The format is 'Xy' where X is the magnitude and y is the unit."
+  type        = string
+  default     = "24h"
+}
+
+variable "loki_log_level" {
+  description = "Log level to be captured by loki. The default level is 'info'."
+  default     = "info"
+}
