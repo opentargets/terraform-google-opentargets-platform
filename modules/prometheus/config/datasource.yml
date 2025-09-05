@@ -8,3 +8,10 @@ datasources:
     isDefault: true
     editable: false
     uid: prometheusdatasource
+  - name: Loki
+    type: loki
+    access: proxy
+    url: http://gateway:3100
+    isDefault: true
+    editable: true
+    uid: lokidatasource
