@@ -25,6 +25,21 @@ locals {
   dashboards_md5 = zipmap(local.dashboards, [for dashboard in local.dashboards : md5(file("${path.module}/config/dashboards/${dashboard}"))])
   zones          = flatten(data.google_compute_zones.available[*].names)
 
+  loki_config = {
+    storage_config = {
+      tsdb_shipper = {
+        active_index_directory = "/loki/index"
+        cache_location = "/loki/index_cache"
+        cache_ttl = "24h"
+      }
+      gcs = {
+        bucket_name = google_storage_bucket.log-storage.url
+        service_account = replace(base64decode(google_service_account_key.gcp_service_acc_prom_key.private_key), "$", "\\$")
+      }
+    }
+  }
+
+  // Node exporter configuration Start
   //relabling configuration
   relabeling_config = [{
     source_labels = ["__meta_gce_instance_name"]
@@ -108,4 +123,5 @@ locals {
       local.clickhouse_exporter_scraping_config
     ]
   }
+  // Node exporter configuration End
 }

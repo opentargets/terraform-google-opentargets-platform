@@ -37,7 +37,7 @@ loki.process "observability_logs" {
 // This component is responsible for writing the logs to Loki
 loki.write "observability_logs" {
 	endpoint {
-		url  = "http://localhost:3100/loki/api/v1/push"
+		url  = "http://gateway:3100/loki/api/v1/push"
 	}
 }
 

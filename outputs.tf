@@ -45,6 +45,10 @@ output "prometheus_zones" {
   value = yamlencode(module.backend_prometheus.prometheus_zones)
 }
 
+output "log_bucket_url" {
+  value = module.backend_prometheus.log_bucket_url
+}
+
 // --- Development Mode output information --- //
 /*output "inspection_vms" {
   value = zipmap(

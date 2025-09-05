@@ -54,7 +54,7 @@ write_files:
       Description=Start loki from a docker container
 
       [Service]
-      ExecStart=docker run -d --name loki -p 3100:3100 --network=prometheus-network --restart unless-stopped -v /home/prometheus/logs-config/loki-config.yaml:/etc/loki/local-config.yaml grafana/loki:3.4.2 -config.file=/etc/loki/local-config.yaml
+      ExecStart=docker run -d --name loki -p 3100:3100 --network=prometheus-network --network-alias=gateway --restart unless-stopped -v /home/prometheus/logs-config/loki-config.yaml:/etc/loki/local-config.yaml grafana/loki:3.4.2 -config.file=/etc/loki/local-config.yaml
   
   - path: /etc/systemd/system/alloy.service
     permissions: 0644
@@ -64,7 +64,7 @@ write_files:
       Description=Start alloy from a docker container
 
       [Service]
-      ExecStart=docker run -d --name alloy -p 12345:12345 -p 4317:4317 -p 4318:4318 --network=prometheus-network -v /var/run/docker.sock:/var/run/docker.sock -v /home/prometheus/logs-config/config.alloy:/etc/alloy/config.alloy grafana/alloy:v1.7.5 run --server.http.listen-addr=0.0.0.0:12345 --storage.path=/var/lib/alloy/data /etc/alloy/config.alloy
+      ExecStart=docker run -d --name alloy -p 12345:12345 -p 4317:4317 -p 4318:4318 --add-host host.docker.internal:host-gateway --network=prometheus-network --network-alias=gateway -v /var/run/docker.sock:/var/run/docker.sock -v /home/prometheus/logs-config/config.alloy:/etc/alloy/config.alloy grafana/alloy:v1.7.5 run --server.http.listen-addr=0.0.0.0:12345 --storage.path=/var/lib/alloy/data /etc/alloy/config.alloy
       
 runcmd: 
 - |
