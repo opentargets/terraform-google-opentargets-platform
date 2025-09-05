@@ -150,7 +150,7 @@ resource "google_compute_instance" "default" {
     config-alloy = templatefile("${path.module}/config/config.alloy", {})
     loki-config = templatefile("${path.module}/config/loki-config.yml", {
       bucket_path = google_storage_bucket.log-storage.url
-      svc-account = replace(base64decode(google_service_account_key.gcp_service_acc_prom_key.private_key), "$", "\\$"),
+      storage_config = yamlencode(local.loki_config),
     })
     prom-config = yamlencode(local.prometheus_config_file)
     svc-account = replace(base64decode(google_service_account_key.gcp_service_acc_prom_key.private_key), "$", "\\$"),
