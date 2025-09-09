@@ -26,7 +26,7 @@ write_files:
       [Service]
       ExecStart=/usr/bin/docker run --name=nodeexporter --rm -d --net="host" --pid="host" -v "/:/host:ro,rslave" ${node_exporter_image} --path.rootfs=/host
 
-  - path: /etc/systemd/system/cloudservice.service
+  - path: /etc/systemd/system/webapp.service
     permissions: 0644
     owner: root
     content: |
@@ -34,10 +34,10 @@ write_files:
       Description=Start open targets platform Web App docker container
 
       [Service]
-      ExecStart=/usr/bin/docker run -d --log-driver=gcplogs -p 8080:8080 ${env_vars} ghcr.io/opentargets/ot-ui-apps/ot-ui-apps:${webapp_image_version}
+      ExecStart=/usr/bin/docker run --name=ot_webapp -d --log-driver=gcplogs -p 8080:8080 ${env_vars} ghcr.io/opentargets/ot-ui-apps:${webapp_image_version}
 
 runcmd:
 - systemctl daemon-reload
 - systemctl start config-firewall.service
-- systemctl start cloudservice.service
+- systemctl start webapp.service
 - systemctl start nodeexporter.service
