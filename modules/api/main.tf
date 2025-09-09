@@ -117,8 +117,12 @@ resource "google_compute_instance_template" "otpapi_template" {
         JVM_XMS              = var.jvm_xms,
         JVM_XMX              = var.jvm_xmx
         NODE_EXPORTER_IMAGE  = local.node_exporter_image
+        ALLOY_CONTAINER      = local.alloy_container
       }
     )
+    config-alloy = templatefile("${path.module}/config/config.alloy", {
+      SERVER_NAMES = local.alloy_endpoints[count.index]
+    })
     google-logging-enabled = true
   }
 
