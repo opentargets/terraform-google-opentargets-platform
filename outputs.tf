@@ -49,6 +49,10 @@ output "log_bucket_url" {
   value = module.backend_prometheus.log_bucket_url
 }
 
+output "observabilty_server_names" {
+  value = module.backend_prometheus.server_names
+}
+
 // --- Development Mode output information --- //
 /*output "inspection_vms" {
   value = zipmap(

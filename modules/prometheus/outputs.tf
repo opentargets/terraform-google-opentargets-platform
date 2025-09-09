@@ -28,3 +28,8 @@ output "prometheus_zones" {
 output "log_bucket_url" {
   value = google_storage_bucket.log-storage.url
 }
+
+output "server_names" {
+  description = "Name of the observabilty across regions"
+  value = google_compute_instance.default[*].name
+}

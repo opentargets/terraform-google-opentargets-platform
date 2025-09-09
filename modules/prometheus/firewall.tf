@@ -9,7 +9,7 @@ resource "google_compute_firewall" "vpc_netfw_otprometheus_node" {
 
   allow {
     protocol = "tcp"
-    ports    = [local.otp_prometheus_port, local.otp_grafana_port]
+    ports    = [local.otp_prometheus_port, local.otp_grafana_port, local.otp_loki_port]
   }
 
   target_tags = [local.fw_tag_otp_prometheus_node]
