@@ -16,6 +16,7 @@ write_files:
       Type=oneshot
       RemainAfterExit=true
       ExecStart=/sbin/iptables -A INPUT -p tcp --dport 9100 -j ACCEPT
+
   - path: /etc/systemd/system/nodeexporter.service
     permissions: 0644
     owner: root
@@ -26,7 +27,7 @@ write_files:
       [Service]
       ExecStart=/usr/bin/docker run --name=nodeexporter --rm -d --net="host" --pid="host" -v "/:/host:ro,rslave" ${NODE_EXPORTER_IMAGE} --path.rootfs=/host
 
-  - path: /etc/systemd/system/cloudservice.service
+  - path: /etc/systemd/system/otapi.service
     permissions: 0644
     owner: root
     content: |
@@ -34,10 +35,28 @@ write_files:
       Description=Start open targets platform API docker container
 
       [Service]
-      ExecStart=/usr/bin/docker run -d -p ${OTP_API_PORT}:${OTP_API_PORT} --log-driver=gcplogs -e SLICK_CLICKHOUSE_URL='${SLICK_CLICKHOUSE_URL}' -e ELASTICSEARCH_HOST='${ELASTICSEARCH_HOST}' -e META_APIVERSION_MAJOR='${API_VERSION_MAJOR}' -e META_APIVERSION_MINOR='${API_VERSION_MINOR}' -e META_APIVERSION_PATCH='${API_VERSION_PATCH}' -e META_DATA_YEAR='${API_DATA_YEAR}' -e META_DATA_MONTH='${API_DATA_MONTH}' -e META_DATA_ITERATION='${API_DATA_ITER}' -e PLATFORM_API_IGNORE_CACHE='${API_IGNORE_CACHE}' -e JVM_XMS='${JVM_XMS}' -e JVM_XMX='${JVM_XMX}' ghcr.io/opentargets/platform-api:${PLATFORM_API_VERSION}
+      ExecStart=/usr/bin/docker run --name=ot_api --rm -d --network=observality-network -p ${OTP_API_PORT}:${OTP_API_PORT} -e SLICK_CLICKHOUSE_URL='${SLICK_CLICKHOUSE_URL}' -e ELASTICSEARCH_HOST='${ELASTICSEARCH_HOST}' -e META_APIVERSION_MAJOR='${API_VERSION_MAJOR}' -e META_APIVERSION_MINOR='${API_VERSION_MINOR}' -e META_APIVERSION_PATCH='${API_VERSION_PATCH}' -e META_DATA_YEAR='${API_DATA_YEAR}' -e META_DATA_MONTH='${API_DATA_MONTH}' -e META_DATA_ITERATION='${API_DATA_ITER}' -e PLATFORM_API_IGNORE_CACHE='${API_IGNORE_CACHE}' -e JVM_XMS='${JVM_XMS}' -e JVM_XMX='${JVM_XMX}' ghcr.io/opentargets/platform-api:${PLATFORM_API_VERSION}
+
+  - path: /etc/systemd/system/alloy.service
+    permissions: 0644
+    owner: root
+    content: |
+      [Unit]
+      Description=Start alloy to gather container logs and send them to the loki server
+
+      [Service]
+      ExecStart=docker run -d --name alloy --rm -p 12345:12345 -p 4317:4317 -p 4318:4318 --add-host host.docker.internal:host-gateway --network=observality-network --network-alias=gateway -v /var/run/docker.sock:/var/run/docker.sock -v /home/cloudservice/logs-config/config.alloy:/etc/alloy/config.alloy ${ALLOY_CONTAINER} run --server.http.listen-addr=0.0.0.0:12345 --storage.path=/var/lib/alloy/data /etc/alloy/config.alloy
 
 runcmd:
-- systemctl daemon-reload
-- systemctl start config-firewall.service
-- systemctl start cloudservice.service
-- systemctl start nodeexporter.service
+- |
+  cd /home/cloudservice
+  mkdir -p logs-config
+  wget --header='Metadata-Flavor: Google' 'http://metadata.google.internal/computeMetadata/v1/instance/attributes/config-alloy'
+  mv config-alloy logs-config/config.alloy
+  docker network create observality-network
+- |
+  systemctl daemon-reload
+  systemctl start config-firewall.service
+  systemctl start otapi.service
+  systemctl start nodeexporter.service
+  systemctl start alloy.service

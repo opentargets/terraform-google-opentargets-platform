@@ -31,5 +31,5 @@ output "log_bucket_url" {
 
 output "server_names" {
   description = "Name of the observabilty across regions"
-  value = google_compute_instance.default[*].name
+  value       = google_compute_instance.default[*].name
 }
