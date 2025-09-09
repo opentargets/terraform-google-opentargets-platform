@@ -2,6 +2,7 @@ locals {
   // PROMETHEUS Communication Ports
   otp_prometheus_port      = 9090
   otp_grafana_port         = 3000
+  otp_loki_port            = 3100
   otp_prometheus_port_name = "otpprometheusport"
   otp_prometheus_disk_name = "prometheus-data"
   // Firewall
