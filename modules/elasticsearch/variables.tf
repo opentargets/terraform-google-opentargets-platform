@@ -131,3 +131,18 @@ variable "elastic_exporter_image_version" {
   description = "Image version of the elastic exporter image."
   default     = "v1.9.0"
 }
+
+
+variable "alloy_image_name" {
+  description = "Image used to create the Loki container. This container sends the logs to loki."
+  default     = "grafana/alloy"
+}
+
+variable "alloy_image_version" {
+  description = "Image version of the loki container."
+  default     = "v1.7.5"
+}
+
+variable "observabilty_servers" {
+  description = "Prometheus server names across regions"
+}
