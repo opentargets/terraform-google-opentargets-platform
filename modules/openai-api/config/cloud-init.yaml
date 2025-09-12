@@ -36,7 +36,22 @@ write_files:
       [Service]
       ExecStart=/bin/bash -c '/usr/bin/docker run -d -p ${openai_api_external_port}:${openai_api_internal_port} --name ${openai_api_container_name} --log-driver=gcplogs -e OPENAI_TOKEN="$(cat /tmp/openai_api_secret_value)" ${openai_api_docker_image}'
 
+  - path: /etc/systemd/system/alloy.service
+    permissions: 0644
+    owner: root
+    content: |
+      [Unit]
+      Description=Start alloy to gather container logs and send them to the loki server
+
+      [Service]
+      ExecStart=docker run -d --name alloy --rm -p 12345:12345 -p 4317:4317 -p 4318:4318 --add-host host.docker.internal:host-gateway -v /var/run/docker.sock:/var/run/docker.sock -v /home/cloudservice/logs-config/config.alloy:/etc/alloy/config.alloy ${alloy_image} run --server.http.listen-addr=0.0.0.0:12345 --storage.path=/var/lib/alloy/data /etc/alloy/config.alloy
+
 runcmd:
+- |
+  cd /home/cloudservice
+  mkdir -p logs-config
+  wget --header='Metadata-Flavor: Google' 'http://metadata.google.internal/computeMetadata/v1/instance/attributes/config-alloy'
+  mv config-alloy logs-config/config.alloy
 - |
   export access_token="$(curl -s -H 'Metadata-Flavor: Google' 'http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token' | cut -d'"' -f 4)"
   export secret_response=$(curl -s -H "Authorization: Bearer $access_token" -H "X-Goog-User-Project: ${project_id}" "https://secretmanager.googleapis.com/v1/${openai_token}/versions/latest:access")
@@ -47,3 +62,4 @@ runcmd:
   systemctl start config-firewall.service
   systemctl start cloudservice.service
   systemctl start nodeexporter.service
+  systemctl start alloy.service
