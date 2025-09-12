@@ -20,6 +20,7 @@ resource "random_string" "random" {
     vm_platform_api_image_version = var.vm_platform_api_image_version,
     vm_platform_api_image_version = var.vm_platform_api_image_version,
     cloud-init                    = md5(file("${path.module}/config/cloud-init.yaml")),
+    config-alloy                  = md5(file("${path.module}/config/config.alloy")),
     vm_flag_preemptible           = var.vm_flag_preemptible,
     vm_api_version_major          = var.api_v_major,
     vm_api_version_minor          = var.api_v_minor,
@@ -117,11 +118,11 @@ resource "google_compute_instance_template" "otpapi_template" {
         JVM_XMS              = var.jvm_xms,
         JVM_XMX              = var.jvm_xmx
         NODE_EXPORTER_IMAGE  = local.node_exporter_image
-        ALLOY_CONTAINER      = local.alloy_container
+        DOCKER_IMAGE_ALLOY   = local.alloy_container
       }
     )
     config-alloy = templatefile("${path.module}/config/config.alloy", {
-      SERVER_NAMES = local.alloy_endpoints[count.index]
+      SERVER_NAME = local.alloy_endpoints[count.index]
     })
     google-logging-enabled = true
   }
