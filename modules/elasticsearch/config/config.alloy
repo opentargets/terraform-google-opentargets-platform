@@ -1,0 +1,47 @@
+// This component is responsible for disovering new containers within the docker environment
+discovery.docker "observability_logs" {
+	host = "unix:///var/run/docker.sock"
+	refresh_interval = "5s"
+}
+
+// This component is responsible for relabeling the discovered containers
+discovery.relabel "observability_logs" {
+	targets = []
+
+	rule {
+		source_labels = ["__meta_docker_container_name"]
+		regex         = "/(.*)"
+		target_label  = "container"
+	}
+}
+
+// This component is responsible for collecting logs from the discovered containers
+loki.source.docker "observability_logs" {
+	host             = "unix:///var/run/docker.sock"
+	targets          = discovery.docker.observability_logs.targets
+	forward_to       = [loki.process.observability_logs.receiver]
+	relabel_rules    = discovery.relabel.observability_logs.rules
+	refresh_interval = "5s"
+}
+
+// This component is responsible for processing the logs (In this case adding static labels)
+loki.process "observability_logs" {
+    stage.static_labels {
+    values = {
+      env = "production",
+    }
+}
+    forward_to = [loki.write.observability_logs.receiver]
+}
+
+// This component is responsible for writing the logs to Loki
+loki.write "observability_logs" {
+	endpoint {
+		url  = "${SERVER_NAME}"
+	}
+}
+
+// Enables the ability to view logs in the Alloy UI in realtime
+livedebugging {
+  enabled = true
+}

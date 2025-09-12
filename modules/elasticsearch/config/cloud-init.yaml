@@ -36,7 +36,7 @@ write_files:
       [Service]
       ExecStart=/usr/bin/docker run --rm -d --name elasticsearch_exporter -p 9114:9114 ${ELASTIC_EXPORTER_IMAGE} --es.uri=http://localhost:9200
 
-  - path: /etc/systemd/system/cloudservice.service
+  - path: /etc/systemd/system/opensearch.service
     permissions: 0644
     owner: root
     content: |
@@ -46,7 +46,22 @@ write_files:
       [Service]
       ExecStart=/bin/bash -c '/usr/bin/docker run --rm -d --name otp-es --log-driver=gcplogs -p 9200:9200 -p 9300:9600 -e "path.data=/usr/share/opensearch/data" -e "path.logs=/usr/share/opensearch/logs" -e "cluster.name=$(hostname)" -e "network.host=0.0.0.0" -e "discovery.type=single-node" -e "discovery.seed_hosts=[]" -e "bootstrap.memory_lock=true" -e "search.max_open_scroll_context=5000" -e OPENSEARCH_JAVA_OPTS="-Xms$(cat /tmp/jvm_size_half)g -Xmx$(cat /tmp/jvm_size_half)g" -e DISABLE_SECURITY_PLUGIN=true -v /mnt/disks/esdata/data:/usr/share/opensearch/data --ulimit memlock=-1:-1 --ulimit nofile=65536:65536 opensearchproject/opensearch:${ELASTIC_SEARCH_VERSION}'
 
+  - path: /etc/systemd/system/alloy.service
+    permissions: 0644
+    owner: root
+    content: |
+      [Unit]
+      Description=Start alloy to gather container logs and send them to the loki server
+
+      [Service]
+      ExecStart=docker run -d --name alloy --rm -p 12345:12345 -p 4317:4317 -p 4318:4318 --add-host host.docker.internal:host-gateway -v /var/run/docker.sock:/var/run/docker.sock -v /home/cloudservice/logs-config/config.alloy:/etc/alloy/config.alloy ${ALLOY_IMAGE} run --server.http.listen-addr=0.0.0.0:12345 --storage.path=/var/lib/alloy/data /etc/alloy/config.alloy
+
 runcmd:
+- |
+  cd /home/cloudservice
+  mkdir -p logs-config
+  wget --header='Metadata-Flavor: Google' 'http://metadata.google.internal/computeMetadata/v1/instance/attributes/config-alloy'
+  mv config-alloy logs-config/config.alloy
 - |
   export MACHINE_SIZE=`cat /proc/meminfo | grep MemTotal | grep -o '[0-9]\+'`
   export JVM_SIZE=`expr $(expr $MACHINE_SIZE / 1048576) - 1`
@@ -54,9 +69,10 @@ runcmd:
   echo $JVM_SIZE_HALF > /tmp/jvm_size_half
   systemctl daemon-reload
   systemctl start config-firewall.service
-  systemctl start cloudservice.service
+  systemctl start opensearch.service
   systemctl start nodeexporter.service
   systemctl start esexporter.service
+  systemctl start alloy.service
 
 bootcmd:
 - fsck.ext4 -tvy ${GCP_DEVICE_DISK_PREFIX}${DATA_DISK_DEVICE_NAME_ES}
