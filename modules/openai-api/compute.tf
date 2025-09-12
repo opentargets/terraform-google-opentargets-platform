@@ -10,6 +10,7 @@ resource "random_string" "openai_api_node" {
     machine_type          = local.vm_machine_type,
     docker_fqdn_image     = local.openai_api_docker_image,
     cloud_init            = md5(file("${path.module}/config/cloud-init.yaml"))
+    config-alloy          = md5(file("${path.module}/config/config.alloy"))
     openai_token          = var.openai_token
   }
 }
@@ -105,12 +106,12 @@ resource "google_compute_instance_template" "openai_api_node_template" {
         openai_api_internal_port  = local.openai_api_port,
         openai_api_container_name = local.openai_api_container_name,
         node_exporter_image       = local.node_exporter_image
-        alloy_image = local.alloy_container
+        alloy_image               = local.alloy_container
       }
     )
     config-alloy = templatefile("${path.module}/config/config.alloy",
       {
-        server_name = local.alloy_endpoint
+        server_name = local.alloy_endpoints[count.index]
     })
     google-logging-enabled = "true"
   }
