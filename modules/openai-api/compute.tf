@@ -105,8 +105,13 @@ resource "google_compute_instance_template" "openai_api_node_template" {
         openai_api_internal_port  = local.openai_api_port,
         openai_api_container_name = local.openai_api_container_name,
         node_exporter_image       = local.node_exporter_image
+        alloy_image = local.alloy_container
       }
     )
+    config-alloy = templatefile("${path.module}/config/config.alloy",
+      {
+        server_name = local.alloy_endpoint
+    })
     google-logging-enabled = "true"
   }
 

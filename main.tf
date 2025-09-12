@@ -139,6 +139,9 @@ module "openai_api" {
   // Node exporter
   node_exporter_image_name    = var.node_exporter_image_name
   node_exporter_image_version = var.node_exporter_image_version
+  observabilty_servers        = module.backend_prometheus.server_names
+  alloy_image_name            = var.alloy_image_name
+  alloy_image_version         = var.alloy_image_version
 }
 
 // --- API --- //
