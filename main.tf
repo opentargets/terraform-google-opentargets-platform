@@ -289,4 +289,8 @@ module "web_app" {
   webserver_vm_boot_disk_size    = var.config_webapp_webserver_vm_boot_disk_size
   vm_flag_preemptible            = var.config_vm_webserver_flag_preemptible
   deployment_target_size         = 1
+
+  observabilty_servers = module.backend_prometheus.server_names
+  alloy_image_name     = var.alloy_image_name
+  alloy_image_version  = var.alloy_image_version
 }
