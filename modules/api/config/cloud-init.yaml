@@ -45,7 +45,7 @@ write_files:
       Description=Start alloy to gather container logs and send them to the loki server
 
       [Service]
-      ExecStart=docker run -d --name alloy --rm -p 12345:12345 -p 4317:4317 -p 4318:4318 --add-host host.docker.internal:host-gateway --network=observality-network --network-alias=gateway -v /var/run/docker.sock:/var/run/docker.sock -v /home/cloudservice/logs-config/config.alloy:/etc/alloy/config.alloy ${ALLOY_CONTAINER} run --server.http.listen-addr=0.0.0.0:12345 --storage.path=/var/lib/alloy/data /etc/alloy/config.alloy
+      ExecStart=docker run -d --name alloy --rm -p 12345:12345 -p 4317:4317 -p 4318:4318 --add-host host.docker.internal:host-gateway --network=observality-network --network-alias=gateway -v /var/run/docker.sock:/var/run/docker.sock -v /home/cloudservice/logs-config/config.alloy:/etc/alloy/config.alloy ${DOCKER_IMAGE_ALLOY} run --server.http.listen-addr=0.0.0.0:12345 --storage.path=/var/lib/alloy/data /etc/alloy/config.alloy
 
 runcmd:
 - |

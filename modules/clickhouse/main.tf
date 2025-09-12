@@ -19,6 +19,7 @@ resource "random_string" "random" {
     clickhouse_data_image            = var.vm_clickhouse_data_volume_snapshot,
     clickhouse_data_snapshot_project = var.vm_clickhouse_data_volume_snapshot_project
     cloud-init                       = md5(file("${path.module}/config/cloud-init.yaml"))
+    config-alloy                     = md5(file("${path.module}/config/config.alloy")),
     vm_flag_preemptible              = var.vm_flag_preemptible
   }
 }
@@ -113,8 +114,13 @@ resource "google_compute_instance_template" "clickhouse_template" {
         DOCKER_IMAGE_CLICKHOUSE    = local.clickhouse_docker_image
         CH_DATA_VOLUME             = local.ch_data_volume
         DOCKER_IMAGE_NODE_EXPORTER = local.node_exporter_image
+        DOCKER_IMAGE_ALLOY         = local.alloy_container
       }
     )
+    config-alloy = templatefile("${path.module}/config/config.alloy",
+      {
+        SERVER_NAME = local.alloy_endpoint
+    })
     google-logging-enabled = true
   }
 
