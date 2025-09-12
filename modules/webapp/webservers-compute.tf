@@ -13,6 +13,7 @@ resource "random_string" "random_web_server_suffix" {
     webapp_image_version       = var.webapp_image_version
     webapp_env_vars            = local.webapp_env_vars
     cloud-init                 = md5(file("${path.module}/config/cloud-init.yaml"))
+    config-alloy               = md5(file("${path.module}/config/config.alloy"))
     vm_flag_preemptible        = var.vm_flag_preemptible
   }
 }
@@ -91,8 +92,13 @@ resource "google_compute_instance_template" "webserver_template" {
         webapp_image_version = var.webapp_image_version
         env_vars             = local.webapp_env_vars
         node_exporter_image  = local.node_exporter_image
+        alloy_image          = local.alloy_container
       }
     )
+    config-alloy = templatefile("${path.module}/config/config.alloy",
+      {
+        server_name = local.alloy_endpoints[count.index]
+    })
     google-logging-enabled = true
   }
 
