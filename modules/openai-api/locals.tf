@@ -20,6 +20,6 @@ locals {
   openai_api_container_name = "ot-openai-api"
 
   node_exporter_image = "${var.node_exporter_image_name}:${var.node_exporter_image_version}"
-  alloy_container        = "${var.alloy_image_name}:${var.alloy_image_version}"
-  alloy_endpoint         = "http://${var.observabilty_servers[0]}:3100/loki/api/v1/push"
+  alloy_container     = "${var.alloy_image_name}:${var.alloy_image_version}"
+  alloy_endpoints     = [for server in var.observabilty_servers : "http://${server}:3100/loki/api/v1/push"]
 }
