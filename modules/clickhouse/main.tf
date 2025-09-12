@@ -19,7 +19,7 @@ resource "random_string" "random" {
     clickhouse_data_image            = var.vm_clickhouse_data_volume_snapshot,
     clickhouse_data_snapshot_project = var.vm_clickhouse_data_volume_snapshot_project
     cloud-init                       = md5(file("${path.module}/config/cloud-init.yaml"))
-    config-alloy                     = md5(file("${path.module}/config/config.alloy")),
+    config-alloy                     = md5(file("${path.module}/config/config.alloy"))
     vm_flag_preemptible              = var.vm_flag_preemptible
   }
 }

@@ -20,6 +20,7 @@ resource "random_string" "random" {
     elastic_search_data_snapshot_project = var.vm_elastic_search_data_volume_snapshot_project,
     vm_elastic_search_version            = var.vm_elastic_search_version,
     cloud_init                           = md5(file("${path.module}/config/cloud-init.yaml"))
+    config-alloy                         = md5(file("${path.module}/config/config.alloy"))
     vm_flag_preemptible                  = var.vm_flag_preemptible
     vm_api_boot_disk_size                = var.vm_elastic_search_boot_disk_size
   }
