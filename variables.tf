@@ -123,9 +123,9 @@ variable "config_vm_clickhouse_docker_image" {
 }
 
 variable "config_vm_clickhouse_docker_image_version" {
-  description = "Clickhouse docker image version to deploy, default '23.3.1.2823'"
+  description = "Clickhouse docker image version to deploy, default '25.8.2.29'"
   type        = string
-  default     = "23.3.1.2823"
+  default     = "25.8.2.29"
 }
 
 variable "config_vm_clickhouse_flag_preemptible" {

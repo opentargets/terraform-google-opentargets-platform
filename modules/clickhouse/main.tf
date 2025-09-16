@@ -21,6 +21,7 @@ resource "random_string" "random" {
     cloud-init                       = md5(file("${path.module}/config/cloud-init.yaml"))
     config-alloy                     = md5(file("${path.module}/config/config.alloy"))
     vm_flag_preemptible              = var.vm_flag_preemptible
+    clickhouse_version               = var.vm_clickhouse_docker_image_version
   }
 }
 
