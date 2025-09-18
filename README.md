@@ -1,3 +1,6 @@
+> [!IMPORTANT]
+> This repository is archived. For the new Open Targets Platform infrastructure, see: [platform-deployment-nextgen](https://github.com/opentargets/platform-deployment-nextgen)
+
 # Infrastructure definition
 This repository defines the Open Targets Platform infrastructure, using Hashicorp Configuration Language (HCL) and [Terraform](https://terraform.io).
 
