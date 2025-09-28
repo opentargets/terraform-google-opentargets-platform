@@ -9,7 +9,7 @@ resource "google_compute_firewall" "vpc_netfw_otpapi_node" {
 
   allow {
     protocol = "tcp"
-    ports    = [local.otp_api_port]
+    ports    = [local.otp_api_port, local.otp_api_node_exporter_port]
   }
 
   target_tags = [local.fw_tag_otp_api_node]

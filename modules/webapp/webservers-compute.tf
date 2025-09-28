@@ -8,10 +8,11 @@ resource "random_string" "random_web_server_suffix" {
     webapp_bucket_name         = local.bucket_name
     deployment_bundle_filename = local.webapp_deployment_bundle_filename
     deployment_bundle_url      = local.webapp_deployment_bundle_url
+    template_source_image      = data.google_compute_image.main.id,
     nginx_docker_image_version = var.webserver_docker_image_version
     webapp_image_version       = var.webapp_image_version
     webapp_env_vars            = local.webapp_env_vars
-    startup_script             = md5(file("${path.module}/scripts/webserver_vm_startup_script.sh"))
+    cloud-init                 = md5(file("${path.module}/config/cloud-init.yaml"))
     vm_flag_preemptible        = var.vm_flag_preemptible
   }
 }
@@ -67,7 +68,7 @@ resource "google_compute_instance_template" "webserver_template" {
   }
 
   disk {
-    source_image = local.webapp_webserver_template_source_image
+    source_image = data.google_compute_image.main.self_link
     auto_delete  = true
     disk_type    = "pd-ssd"
     boot         = true
@@ -84,11 +85,12 @@ resource "google_compute_instance_template" "webserver_template" {
   }
 
   metadata = {
-    startup-script = templatefile(
-      "${path.module}/scripts/webserver_vm_startup_script.sh",
+    user-data = templatefile(
+      "${path.module}/config/cloud-init.yaml",
       {
         webapp_image_version = var.webapp_image_version
         env_vars             = local.webapp_env_vars
+        node_exporter_image  = local.node_exporter_image
       }
     )
     google-logging-enabled = true
@@ -139,6 +141,11 @@ resource "google_compute_region_instance_group_manager" "regmig_webserver" {
     port = local.webapp_webserver_port
   }
 
+  named_port {
+    name = local.node_exporter_webserver_port_name
+    port = local.node_exporter_webserver_port
+  }
+
   auto_healing_policies {
     health_check      = google_compute_health_check.webserver_healthcheck.id
     initial_delay_sec = 20
@@ -165,7 +172,7 @@ resource "google_compute_region_autoscaler" "autoscaler_webserver" {
   autoscaling_policy {
     max_replicas    = length(data.google_compute_zones.available[count.index].names) * 2
     min_replicas    = 1
-    cooldown_period = 30
+    cooldown_period = 120
     load_balancing_utilization {
       target = 0.5
     }

@@ -1,7 +1,7 @@
 # Open Targets Platform Clickhouse Data Backend
 This submodule defines the infrastructure needed to deploy a Clickhouse based data backend, within the context of Open Targets Platform.
 
-![Open Targets Platform Clickhouse, Deployment Unit](../../docs/img/open_targets_platform_clickhouse.png "Open Targets Platform Clickhouse, Deployment Unit")
+![Open Targets Platform Clickhouse, Deployment Unit](../../docs/img/open_targets_platform_clickhouse.svg "Open Targets Platform Clickhouse, Deployment Unit")
 
 The picture above these lines represents a deployment unit of Open Targets Platform Clickhouse data backend.
 

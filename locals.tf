@@ -24,6 +24,14 @@ locals {
   fw_tag_http  = "http"
   fw_tag_https = "https"
 
+  // Module prefix //
+  module_wide_prefix_es  = "${var.config_release_name}-es"
+  module_wide_prefix_ch  = "${var.config_release_name}-ch"
+  module_wide_prefix_api = "${var.config_release_name}-api"
+  module_wide_prefix_ai  = "${var.config_release_name}-ai"
+  module_wide_prefix_web = "${var.config_release_name}-web"
+  module_wide_prefix_pro = "${var.config_release_name}-pro"
+
   // --- DNS --- //
   // The effective DNS name is the one taking into account a possible subdomain that should scope the deployment
   dns_effective_dns_name           = (var.config_dns_subdomain_prefix == null ? var.config_dns_managed_zone_dns_name : "${var.config_dns_subdomain_prefix}.${var.config_dns_managed_zone_dns_name}")

@@ -9,7 +9,7 @@ resource "google_compute_forwarding_rule" "ilb_forwarding_rule" {
   region                = var.deployment_region
   subnetwork            = var.network_subnet_name
   backend_service       = google_compute_region_backend_service.ilb_backend_service.id
-  ports                 = [local.elastic_search_port_requests]
+  ports                 = [local.elastic_search_port_requests, local.elastic_search_port_exporter, local.elastic_search_port_node_exporter]
   depends_on = [
     google_compute_region_backend_service.ilb_backend_service
   ]

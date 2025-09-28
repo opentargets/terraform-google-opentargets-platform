@@ -38,7 +38,7 @@ module "backend_elastic_search" {
   count = length(var.config_deployment_regions)
 
   depends_on               = [module.vpc_network]
-  module_wide_prefix_scope = "${var.config_release_name}-es-${count.index}"
+  module_wide_prefix_scope = "${local.module_wide_prefix_es}-${count.index}"
   network_name             = module.vpc_network.network_name
   network_self_link        = module.vpc_network.network_self_link
   network_subnet_name      = local.vpc_network_main_subnet_name
@@ -60,6 +60,9 @@ module "backend_elastic_search" {
   vm_firewall_tags       = local.dev_mode_fw_tags
   deployment_region      = var.config_deployment_regions[count.index]
   deployment_target_size = 1
+  // Prometheus
+  node_exporter_image_name    = var.node_exporter_image_name
+  node_exporter_image_version = var.node_exporter_image_version
 }
 
 // --- Clickhouse Backend --- //
@@ -70,7 +73,7 @@ module "backend_clickhouse" {
   count = length(var.config_deployment_regions)
 
   depends_on               = [module.vpc_network]
-  module_wide_prefix_scope = "${var.config_release_name}-ch-${count.index}"
+  module_wide_prefix_scope = "${local.module_wide_prefix_ch}-${count.index}"
   network_name             = module.vpc_network.network_name
   network_self_link        = module.vpc_network.network_self_link
   network_subnet_name      = local.vpc_network_main_subnet_name
@@ -91,6 +94,9 @@ module "backend_clickhouse" {
   vm_firewall_tags       = local.dev_mode_fw_tags
   deployment_region      = var.config_deployment_regions[count.index]
   deployment_target_size = 1
+  // prometheus configs
+  node_exporter_image_name    = var.node_exporter_image_name
+  node_exporter_image_version = var.node_exporter_image_version
 }
 
 // --- OpenAI API --- //
@@ -100,7 +106,7 @@ module "openai_api" {
   project_id               = var.config_project_id
   depends_on               = [module.vpc_network]
   deployment_regions       = var.config_deployment_regions
-  module_wide_prefix_scope = "${var.config_release_name}-ai"
+  module_wide_prefix_scope = local.module_wide_prefix_ai
   network_name             = module.vpc_network.network_name
   network_self_link        = module.vpc_network.network_self_link
   network_subnet_name      = local.vpc_network_main_subnet_name
@@ -123,6 +129,9 @@ module "openai_api" {
   vm_flag_preemptible = var.config_vm_api_flag_preemptible
   // OpenAI
   openai_token = google_secret_manager_secret.openai_api_token.name
+  // Node exporter
+  node_exporter_image_name    = var.node_exporter_image_name
+  node_exporter_image_version = var.node_exporter_image_version
 }
 
 // --- API --- //
@@ -134,7 +143,7 @@ module "backend_api" {
     module.backend_elastic_search,
     module.backend_clickhouse
   ]
-  module_wide_prefix_scope = "${var.config_release_name}-api"
+  module_wide_prefix_scope = local.module_wide_prefix_api
   network_name             = module.vpc_network.network_name
   network_self_link        = module.vpc_network.network_self_link
   network_subnet_name      = local.vpc_network_main_subnet_name
@@ -182,7 +191,39 @@ module "backend_api" {
   //  NONE      - To not attach a load balancer to the instance groups
   load_balancer_type = "NONE"
   // I have to pass this value until I implement a validation mechanism, but the module won't use it, because it's set to 'NONE' LB
-  dns_domain_api = local.dns_platform_api_dns_name
+  dns_domain_api              = local.dns_platform_api_dns_name
+  common_tags                 = var.common_tags
+  node_exporter_image_name    = var.node_exporter_image_name
+  node_exporter_image_version = var.node_exporter_image_version
+}
+
+// --- Prometheus --- //
+module "backend_prometheus" {
+  source     = "./modules/prometheus"
+  project_id = var.config_project_id
+  depends_on = [
+    module.vpc_network
+  ]
+  module_wide_prefix_scope = local.module_wide_prefix_pro
+  module_wide_prefix_api   = local.module_wide_prefix_api
+  module_wide_prefix_es    = local.module_wide_prefix_es
+  module_wide_prefix_ch    = local.module_wide_prefix_ch
+  config_release_name      = var.config_release_name
+  network_name             = module.vpc_network.network_name
+  network_self_link        = module.vpc_network.network_self_link
+  network_subnet_name      = local.vpc_network_main_subnet_name
+  // We are using an root module defined GLB, so we need this tag to be appended to api nodes, for them to be visible to the GLB. Include development mode firewall tags
+  vm_firewall_tags = concat([local.tag_glb_target_node], local.dev_mode_fw_tags)
+  // API VMs configuration
+  vm_flag_preemptible    = var.config_vm_prometheus_flag_preemptible
+  deployment_regions     = var.config_deployment_regions
+  deployment_target_size = 1
+  // I have to pass this value until I implement a validation mechanism, but the module won't use it, because it's set to 'NONE' LB
+  common_tags                 = var.common_tags
+  git_branch                  = var.git_branch
+  git_repository              = var.git_repository
+  node_exporter_image_name    = var.node_exporter_image_name
+  node_exporter_image_version = var.node_exporter_image_version
 }
 
 // --- Web Application --- //
@@ -190,7 +231,7 @@ module "web_app" {
   source                        = "./modules/webapp"
   project_id                    = var.config_project_id
   depends_on                    = [module.vpc_network]
-  module_wide_prefix_scope      = "${var.config_release_name}-web"
+  module_wide_prefix_scope      = local.module_wide_prefix_web
   folder_tmp                    = local.folder_tmp
   location                      = var.config_webapp_location
   webapp_repo_name              = var.config_webapp_repo_name
